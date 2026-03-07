@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, exists, correlated, parameters, escape-hatch
+- Tags: subquery, exists, correlated, parameters, join-subquery
 
 ## Problem
 
@@ -29,12 +29,19 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+customers_by_tier =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "gold"})
 
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "status", "total"])
-  |> Selecto.filter({:exists, EscapeHatch.exists_customer_tier_sql(), ["gold"]})
+  |> Selecto.join_subquery(:customers_by_tier, customers_by_tier,
+    type: :inner,
+    on: [%{left: "customer_id", right: "id"}]
+  )
+  |> Selecto.filter({"customers_by_tier.id", :not_null})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -43,12 +50,12 @@ query =
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `exists (`
+- includes keyword: `inner join`
 - includes keyword: `$1`
 - includes keyword: `order by`
 
 ## Notes
 
-- Keeps correlation explicit against `selecto_root` fields.
-- Keeps raw SQL snippet centralized in a helper module.
+- Uses a parameterized join-subquery equivalent to `EXISTS (...)` semantics.
+- Includes a joined-key `is not null` guard to keep the existence join explicit.
 - Parameters from the subquery are appended to the final params list.

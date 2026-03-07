@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, not-exists, correlated, escape-hatch
+- Tags: subquery, not-exists, correlated, join-subquery
 
 ## Problem
 
@@ -28,12 +28,19 @@ ORDER BY p.name ASC;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+reviewed_products =
+  Selecto.configure(review_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["product_id"])
+  |> Selecto.group_by(["product_id"])
 
 query =
   Selecto.configure(product_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name"])
-  |> Selecto.filter({:not, {:exists, EscapeHatch.not_exists_reviews_sql()}})
+  |> Selecto.join_subquery(:reviewed_products, reviewed_products,
+    type: :left,
+    on: [%{left: "id", right: "product_id"}]
+  )
+  |> Selecto.filter({"reviewed_products.product_id", nil})
   |> Selecto.order_by({"name", :asc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -42,12 +49,11 @@ query =
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `not (`
-- includes keyword: `exists (`
+- includes keyword: `left join`
+- includes keyword: `is null`
 - includes keyword: `order by`
 
 ## Notes
 
-- `NOT EXISTS` is usually preferred over `NOT IN` for nullable key safety.
-- Keeps raw SQL snippet centralized in a helper module.
-- Correlation is explicit via `selecto_root.id` in the subquery.
+- Uses `LEFT JOIN` + `IS NULL` anti-join semantics equivalent to `NOT EXISTS`.
+- The grouped subquery ensures one row per reviewed product key.

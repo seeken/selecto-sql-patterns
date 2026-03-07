@@ -10,7 +10,7 @@ Use this guide for patterns that rely on raw SQL snippets or lateral joins.
 
 ## Required Rules
 
-- Keep reusable raw snippets in `scripts/support/escape_hatch_helpers.exs`.
+- Keep raw SQL snippets minimal and colocated with the pattern that needs them.
 - Never interpolate untrusted values into SQL strings.
 - Pass dynamic values as bind params (`$1`, `$2`, ...).
 - Prefer stable alias names for lateral joins and raw selector refs.
@@ -23,15 +23,12 @@ Use this guide for patterns that rely on raw SQL snippets or lateral joins.
 - Assert bind placeholder presence when params are expected.
 - Keep root query predicates and raw predicates logically separated.
 
-## Helper Usage
+## Explicit Escape-Hatch Usage
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+# Raw projection for lateral alias fields (currently required)
+{:field, {:raw_sql, "delivered_stats.count"}, "delivered_order_count"}
 
-# Raw projection for lateral alias fields
-EscapeHatch.lateral_alias_field("delivered_stats", "count", "delivered_order_count")
-
-# Correlated EXISTS snippets
-{:exists, EscapeHatch.exists_gold_customer_sql()}
-{:exists, EscapeHatch.exists_customer_tier_sql(), ["gold"]}
+# Parameterized raw EXISTS (only when no non-escape equivalent exists)
+{:exists, "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1", ["gold"]}
 ```

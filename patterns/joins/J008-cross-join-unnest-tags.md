@@ -6,7 +6,7 @@
 - Source URL: https://www.postgresql.org/docs/current/tutorial-sql.html
 - Source License: PostgreSQL License
 - Dialect: postgres
-- Tags: joins, cross-join, lateral, unnest, escape-hatch
+- Tags: joins, cross-join, lateral, unnest
 
 ## Problem
 
@@ -24,15 +24,13 @@ WHERE p.active = TRUE;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
-
 query =
   Selecto.configure(product_domain(), :mock_connection, validate: false)
+  |> Selecto.unnest("tags", as: "product_tag")
   |> Selecto.select([
     "name",
-    EscapeHatch.raw_field("product_tag", "product_tag")
+    "product_tag"
   ])
-  |> Selecto.unnest("tags", as: "product_tag")
   |> Selecto.filter({"active", true})
 
 {sql, params} = Selecto.to_sql(query)
@@ -48,5 +46,5 @@ query =
 ## Notes
 
 - Uses `Selecto.unnest/3` which emits a `CROSS JOIN LATERAL UNNEST(...)` clause.
-- Keeps raw selector usage centralized in a helper module.
+- Registers the UNNEST alias as a selectable field, so no raw selector is needed.
 - Helpful for faceting/tag analytics from array-backed columns.

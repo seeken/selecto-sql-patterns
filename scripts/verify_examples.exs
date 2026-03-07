@@ -2,11 +2,7 @@ Mix.install([
   {:selecto, path: "../selecto"}
 ])
 
-Code.require_file("support/escape_hatch_helpers.exs", __DIR__)
-
 defmodule SelectoSqlPatterns.VerifyExamples do
-  alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
-
   def run do
     examples = [
       {"J001", query_j001(), ["select", "inner join", "where", "order by"]},
@@ -35,13 +31,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"W006", query_w006(), ["select", "rank", "partition by", "order by"]},
       {"W007", query_w007(), ["select", "lead", "over", "partition by"]},
       {"W008", query_w008(), ["select", "max", "over", "partition by"]},
-      {"S001", query_s001(), ["select", "where", " in (", "order by"]},
+      {"S001", query_s001(), ["select", "inner join", "from customers", "order by"]},
       {"S002", query_s002(), ["select", "left join", "where", "order by"]},
-      {"S003", query_s003(), ["select", "exists (", "where", "order by"]},
-      {"S004", query_s004(), ["select", "not (", "exists (", "order by"]},
-      {"S005", query_s005(), ["select", " in (", "$1", "order by"]},
-      {"S006", query_s006(), ["select", "exists (", "$1", "order by"]},
-      {"S007", query_s007(), ["select", "where", " and ", " in ("]},
+      {"S003", query_s003(), ["select", "inner join", "from customers", "order by"]},
+      {"S004", query_s004(), ["select", "left join", "is null", "order by"]},
+      {"S005", query_s005(), ["select", "inner join", "$1", "order by"]},
+      {"S006", query_s006(), ["select", "inner join", "$1", "order by"]},
+      {"S007", query_s007(), ["select", "inner join", "where", " and "]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -175,6 +171,26 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           id: %{type: :integer},
           name: %{type: :string},
           tier: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp review_domain do
+    %{
+      name: "Reviews",
+      source: %{
+        source_table: "reviews",
+        primary_key: :id,
+        fields: [:id, :product_id, :rating],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          product_id: %{type: :integer},
+          rating: %{type: :integer}
         },
         associations: %{}
       },
@@ -344,18 +360,18 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select([
       "name",
-      EscapeHatch.lateral_alias_field("delivered_stats", "count", "delivered_order_count")
+      {:field, {:raw_sql, "delivered_stats.count"}, "delivered_order_count"}
     ])
     |> Selecto.lateral_join(:left, fn _ -> subquery_query end, "delivered_stats")
   end
 
   defp query_j008 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.unnest("tags", as: "product_tag")
     |> Selecto.select([
       "name",
-      EscapeHatch.raw_field("product_tag", "product_tag")
+      "product_tag"
     ])
-    |> Selecto.unnest("tags", as: "product_tag")
     |> Selecto.filter({"active", true})
   end
 
@@ -516,11 +532,18 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_s001 do
+    gold_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id"])
+      |> Selecto.filter({"tier", "gold"})
+
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "status", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
+    |> Selecto.join_subquery(:gold_customers, gold_customers,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
     )
+    |> Selecto.filter({"gold_customers.id", :not_null})
     |> Selecto.order_by({"total", :desc})
   end
 
@@ -540,46 +563,83 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_s003 do
+    gold_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id"])
+      |> Selecto.filter({"tier", "gold"})
+
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
-    |> Selecto.filter({:exists, EscapeHatch.exists_gold_customer_sql()})
+    |> Selecto.join_subquery(:gold_customers, gold_customers,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
+    )
+    |> Selecto.filter({"gold_customers.id", :not_null})
     |> Selecto.order_by({"total", :desc})
   end
 
   defp query_s004 do
+    reviewed_products =
+      Selecto.configure(review_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["product_id"])
+      |> Selecto.group_by(["product_id"])
+
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(["name"])
-    |> Selecto.filter({:not, {:exists, EscapeHatch.not_exists_reviews_sql()}})
+    |> Selecto.join_subquery(:reviewed_products, reviewed_products,
+      type: :left,
+      on: [%{left: "id", right: "product_id"}]
+    )
+    |> Selecto.filter({"reviewed_products.product_id", nil})
     |> Selecto.order_by({"name", :asc})
   end
 
   defp query_s005 do
+    silver_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id"])
+      |> Selecto.filter({"tier", "silver"})
+
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter({
-      "customer_id",
-      {:subquery, :in, EscapeHatch.in_customer_tier_ids_sql(), ["silver"]}
-    })
+    |> Selecto.join_subquery(:silver_customers, silver_customers,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
+    )
+    |> Selecto.filter({"silver_customers.id", :not_null})
     |> Selecto.order_by({"total", :desc})
   end
 
   defp query_s006 do
+    customers_by_tier =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id"])
+      |> Selecto.filter({"tier", "gold"})
+
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
-    |> Selecto.filter({:exists, EscapeHatch.exists_customer_tier_sql(), ["gold"]})
+    |> Selecto.join_subquery(:customers_by_tier, customers_by_tier,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
+    )
+    |> Selecto.filter({"customers_by_tier.id", :not_null})
     |> Selecto.order_by({"total", :desc})
   end
 
   defp query_s007 do
+    gold_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id"])
+      |> Selecto.filter({"tier", "gold"})
+
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter(
-      {:and,
-       [
-         {"status", "delivered"},
-         {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
-       ]}
+    |> Selecto.join_subquery(:gold_customers, gold_customers,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
     )
+    |> Selecto.filter({"gold_customers.id", :not_null})
+    |> Selecto.filter({"status", "delivered"})
     |> Selecto.order_by({"total", :desc})
   end
 

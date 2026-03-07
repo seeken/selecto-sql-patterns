@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, exists, correlated, filtering, escape-hatch
+- Tags: subquery, exists, correlated, filtering, join-subquery
 
 ## Problem
 
@@ -29,12 +29,19 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+gold_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "gold"})
 
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "status", "total"])
-  |> Selecto.filter({:exists, EscapeHatch.exists_gold_customer_sql()})
+  |> Selecto.join_subquery(:gold_customers, gold_customers,
+    type: :inner,
+    on: [%{left: "customer_id", right: "id"}]
+  )
+  |> Selecto.filter({"gold_customers.id", :not_null})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -43,12 +50,12 @@ query =
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `exists (`
-- includes keyword: `where`
+- includes keyword: `inner join`
+- includes keyword: `from customers`
 - includes keyword: `order by`
 
 ## Notes
 
-- Uses raw correlated SQL for the `EXISTS` body while keeping outer query composable.
-- Keeps raw SQL snippet centralized in a helper module.
+- Uses a join-subquery shape equivalent to `EXISTS (...)` semantics without raw SQL.
+- Includes a joined-key `is not null` guard to keep the existence join explicit.
 - Works well when translating legacy SQL step by step.

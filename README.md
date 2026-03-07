@@ -28,7 +28,6 @@ and regression checks across the Selecto ecosystem.
 - `patterns/ESCAPE_HATCH_GUIDE.md` rules for lateral/raw SQL escape-hatch patterns
 - `CATALOG.md` high-level tracking for planned pattern coverage
 - `scripts/verify_examples.exs` runs `Selecto.to_sql/1` for every published pattern example
-- `scripts/support/escape_hatch_helpers.exs` shared helper snippets for raw SQL and lateral selectors
 
 ## Notes
 

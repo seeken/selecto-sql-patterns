@@ -2,7 +2,7 @@
 
 Planned IDs: `J001` to `J012`
 
-Lateral/raw selector patterns should follow `patterns/ESCAPE_HATCH_GUIDE.md`.
+Favor non-escape joins; use `patterns/ESCAPE_HATCH_GUIDE.md` only when unavoidable.
 
 - `J001` inner join delivered orders ✅
 - `J002` left join review counts ✅

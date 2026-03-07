@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, in, filtering, escape-hatch
+- Tags: subquery, in, filtering, join-subquery
 
 ## Problem
 
@@ -28,12 +28,19 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+gold_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "gold"})
 
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "status", "total"])
-  |> Selecto.filter({"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}})
+  |> Selecto.join_subquery(:gold_customers, gold_customers,
+    type: :inner,
+    on: [%{left: "customer_id", right: "id"}]
+  )
+  |> Selecto.filter({"gold_customers.id", :not_null})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -42,12 +49,12 @@ query =
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `in (`
+- includes keyword: `inner join`
 - includes keyword: `where`
 - includes keyword: `order by`
 
 ## Notes
 
-- Subquery text remains explicit and can be replaced with parameterized SQL + args list.
-- Keep reusable raw snippets in shared helpers instead of repeating SQL strings.
+- Uses a join-subquery shape equivalent to `IN (...)` semantics without raw SQL.
+- Includes a joined-key `is not null` guard to keep the membership join explicit.
 - This pattern is useful for migrating existing hand-written SQL incrementally.

@@ -2,7 +2,7 @@
 
 Planned IDs: `S001` to `S010`
 
-Escape-hatch subquery patterns should follow `patterns/ESCAPE_HATCH_GUIDE.md`.
+Favor non-escape subquery patterns; use `patterns/ESCAPE_HATCH_GUIDE.md` only when unavoidable.
 
 - `S001` `IN` subquery filter ✅
 - `S002` subquery join delivered orders ✅

@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, in, filtering, conjunction, escape-hatch
+- Tags: subquery, in, filtering, conjunction, join-subquery
 
 ## Problem
 
@@ -29,18 +29,20 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+gold_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "gold"})
 
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "total"])
-  |> Selecto.filter(
-    {:and,
-     [
-       {"status", "delivered"},
-       {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
-     ]}
+  |> Selecto.join_subquery(:gold_customers, gold_customers,
+    type: :inner,
+    on: [%{left: "customer_id", right: "id"}]
   )
+  |> Selecto.filter({"gold_customers.id", :not_null})
+  |> Selecto.filter({"status", "delivered"})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -51,10 +53,11 @@ query =
 - includes keyword: `select`
 - includes keyword: `where`
 - includes keyword: ` and `
-- includes keyword: ` in (`
+- includes keyword: `inner join`
 
 ## Notes
 
 - Demonstrates mixed predicate trees with both root and subquery conditions.
-- Keep reusable raw snippets in shared helpers instead of repeating SQL strings.
+- Uses a join-subquery for the customer slice plus a root-side filter.
+- Includes a joined-key `is not null` guard to keep the membership join explicit.
 - Useful for reproducing common reporting filters from legacy SQL.
