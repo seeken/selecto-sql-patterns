@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, in, filtering, conjunction
+- Tags: subquery, in, filtering, conjunction, escape-hatch
 
 ## Problem
 
@@ -29,6 +29,8 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
+alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "total"])
@@ -36,7 +38,7 @@ query =
     {:and,
      [
        {"status", "delivered"},
-       {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
+       {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
      ]}
   )
   |> Selecto.order_by({"total", :desc})
@@ -54,4 +56,5 @@ query =
 ## Notes
 
 - Demonstrates mixed predicate trees with both root and subquery conditions.
+- Keep reusable raw snippets in shared helpers instead of repeating SQL strings.
 - Useful for reproducing common reporting filters from legacy SQL.

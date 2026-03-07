@@ -6,7 +6,7 @@
 - Source URL: https://www.postgresql.org/docs/current/tutorial-sql.html
 - Source License: PostgreSQL License
 - Dialect: postgres
-- Tags: joins, lateral-join, subquery, correlated
+- Tags: joins, lateral-join, subquery, correlated, escape-hatch
 
 ## Problem
 
@@ -27,6 +27,8 @@ LEFT JOIN LATERAL (
 ## Selecto
 
 ```elixir
+alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+
 subquery_query =
   Selecto.configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select([{:count, "*"}])
@@ -36,7 +38,7 @@ query =
   Selecto.configure(product_domain(), :mock_connection, validate: false)
   |> Selecto.select([
     "name",
-    {:field, {:raw_sql, "delivered_stats.count"}, "delivered_order_count"}
+    EscapeHatch.lateral_alias_field("delivered_stats", "count", "delivered_order_count")
   ])
   |> Selecto.lateral_join(:left, fn _ -> subquery_query end, "delivered_stats")
 
@@ -53,4 +55,5 @@ query =
 ## Notes
 
 - Uses `LATERAL` for subqueries that can be attached as join-time projections.
+- Keeps raw selector usage centralized in a helper module.
 - Keeps subquery parameters in global placeholder order.

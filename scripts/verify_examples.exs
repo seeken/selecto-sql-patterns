@@ -2,7 +2,11 @@ Mix.install([
   {:selecto, path: "../selecto"}
 ])
 
+Code.require_file("support/escape_hatch_helpers.exs", __DIR__)
+
 defmodule SelectoSqlPatterns.VerifyExamples do
+  alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+
   def run do
     examples = [
       {"J001", query_j001(), ["select", "inner join", "where", "order by"]},
@@ -340,7 +344,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select([
       "name",
-      {:field, {:raw_sql, "delivered_stats.count"}, "delivered_order_count"}
+      EscapeHatch.lateral_alias_field("delivered_stats", "count", "delivered_order_count")
     ])
     |> Selecto.lateral_join(:left, fn _ -> subquery_query end, "delivered_stats")
   end
@@ -349,7 +353,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select([
       "name",
-      {:field, {:raw_sql, "product_tag"}, "product_tag"}
+      EscapeHatch.raw_field("product_tag", "product_tag")
     ])
     |> Selecto.unnest("tags", as: "product_tag")
     |> Selecto.filter({"active", true})
@@ -515,7 +519,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "status", "total"])
     |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
+      {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
     )
     |> Selecto.order_by({"total", :desc})
   end
@@ -538,39 +542,31 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_s003 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
-    |> Selecto.filter({
-      :exists,
-      "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold'"
-    })
+    |> Selecto.filter({:exists, EscapeHatch.exists_gold_customer_sql()})
     |> Selecto.order_by({"total", :desc})
   end
 
   defp query_s004 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(["name"])
-    |> Selecto.filter(
-      {:not, {:exists, "SELECT 1 FROM reviews r WHERE r.product_id = selecto_root.id"}}
-    )
+    |> Selecto.filter({:not, {:exists, EscapeHatch.not_exists_reviews_sql()}})
     |> Selecto.order_by({"name", :asc})
   end
 
   defp query_s005 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["silver"]}}
-    )
+    |> Selecto.filter({
+      "customer_id",
+      {:subquery, :in, EscapeHatch.in_customer_tier_ids_sql(), ["silver"]}
+    })
     |> Selecto.order_by({"total", :desc})
   end
 
   defp query_s006 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
-    |> Selecto.filter({
-      :exists,
-      "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1",
-      ["gold"]
-    })
+    |> Selecto.filter({:exists, EscapeHatch.exists_customer_tier_sql(), ["gold"]})
     |> Selecto.order_by({"total", :desc})
   end
 
@@ -581,7 +577,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {:and,
        [
          {"status", "delivered"},
-         {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
+         {"customer_id", {:subquery, :in, EscapeHatch.in_gold_customer_ids_sql(), []}}
        ]}
     )
     |> Selecto.order_by({"total", :desc})

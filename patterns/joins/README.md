@@ -2,6 +2,8 @@
 
 Planned IDs: `J001` to `J012`
 
+Lateral/raw selector patterns should follow `patterns/ESCAPE_HATCH_GUIDE.md`.
+
 - `J001` inner join delivered orders ✅
 - `J002` left join review counts ✅
 - `J003` join subquery high-value orders ✅

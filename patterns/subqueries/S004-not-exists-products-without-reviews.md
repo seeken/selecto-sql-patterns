@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, not-exists, correlated
+- Tags: subquery, not-exists, correlated, escape-hatch
 
 ## Problem
 
@@ -28,10 +28,12 @@ ORDER BY p.name ASC;
 ## Selecto
 
 ```elixir
+alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+
 query =
   Selecto.configure(product_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name"])
-  |> Selecto.filter({:not, {:exists, "SELECT 1 FROM reviews r WHERE r.product_id = selecto_root.id"}})
+  |> Selecto.filter({:not, {:exists, EscapeHatch.not_exists_reviews_sql()}})
   |> Selecto.order_by({"name", :asc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -47,4 +49,5 @@ query =
 ## Notes
 
 - `NOT EXISTS` is usually preferred over `NOT IN` for nullable key safety.
+- Keeps raw SQL snippet centralized in a helper module.
 - Correlation is explicit via `selecto_root.id` in the subquery.

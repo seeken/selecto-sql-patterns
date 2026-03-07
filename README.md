@@ -25,14 +25,17 @@ and regression checks across the Selecto ecosystem.
 - `attribution/sources.md` source list and license notes
 - `patterns/` query patterns grouped by topic
 - `patterns/_template.md` pattern authoring template
+- `patterns/ESCAPE_HATCH_GUIDE.md` rules for lateral/raw SQL escape-hatch patterns
 - `CATALOG.md` high-level tracking for planned pattern coverage
 - `scripts/verify_examples.exs` runs `Selecto.to_sql/1` for every published pattern example
+- `scripts/support/escape_hatch_helpers.exs` shared helper snippets for raw SQL and lateral selectors
 
 ## Notes
 
 - Prefer paraphrasing plus original SQL examples over copying large source text.
 - Keep attribution in each pattern file.
 - For SQL assertions in tests, prefer case-insensitive keyword checks.
+- For lateral/raw SQL examples, follow `patterns/ESCAPE_HATCH_GUIDE.md`.
 
 ## Verify Examples
 

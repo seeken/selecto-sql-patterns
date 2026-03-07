@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, in, parameters, filtering
+- Tags: subquery, in, parameters, filtering, escape-hatch
 
 ## Problem
 
@@ -28,10 +28,12 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
+alias SelectoSqlPatterns.EscapeHatchHelpers, as: EscapeHatch
+
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "total"])
-  |> Selecto.filter({"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["silver"]}})
+  |> Selecto.filter({"customer_id", {:subquery, :in, EscapeHatch.in_customer_tier_ids_sql(), ["silver"]}})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -47,4 +49,5 @@ query =
 ## Notes
 
 - Subquery parameters are appended after outer-query parameters in placeholder order.
+- Keep reusable raw snippets in shared helpers instead of repeating SQL strings.
 - This approach supports safe migration from hand-written SQL to Selecto.
