@@ -4,3 +4,4 @@
 _build/
 deps/
 cover/
+_site/

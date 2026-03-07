@@ -1,0 +1,148 @@
+:root {
+  --bg: #f6f7f4;
+  --surface: #ffffff;
+  --line: #d5d9d0;
+  --ink: #1d2a20;
+  --muted: #5b6a5e;
+  --accent: #2f6f52;
+  --accent-soft: #dbeade;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #eef5ed, var(--bg) 40%);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+.topbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: #fcfcfb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+#search {
+  width: min(440px, 55vw);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  background: var(--surface);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: calc(100vh - 56px);
+}
+
+.sidebar {
+  border-right: 1px solid var(--line);
+  padding: 14px;
+  overflow-y: auto;
+  background: #f8faf7;
+}
+
+.group {
+  margin: 0 0 12px 0;
+}
+
+.group-title {
+  margin: 0 0 8px 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  padding: 8px 10px;
+  margin: 0 0 4px 0;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.item:hover {
+  border-color: var(--line);
+  background: #ffffff;
+}
+
+.item.active {
+  background: var(--accent-soft);
+  border-color: #b8cfbc;
+}
+
+.item-id {
+  display: inline-block;
+  min-width: 52px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.content {
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.doc-meta {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.markdown-body {
+  max-width: 980px;
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    max-height: 260px;
+  }
+
+  #search {
+    width: 60vw;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .markdown-body {
+    padding: 16px;
+  }
+}

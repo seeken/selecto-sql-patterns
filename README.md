@@ -44,3 +44,16 @@ Run all current examples through `Selecto.to_sql/1`:
 ```bash
 elixir scripts/verify_examples.exs
 ```
+
+## Browse as HTML
+
+Build the static HTML book locally:
+
+```bash
+python scripts/build_book_site.py
+```
+
+Then open `_site/index.html` in a browser.
+
+This repository also includes a GitHub Pages workflow at
+`.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`.
