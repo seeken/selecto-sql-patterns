@@ -26,9 +26,10 @@ LEFT JOIN customers AS c_b ON c_b.id = o.customer_id;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.join_parameterize(:customer, "alias_a")
   |> Selecto.join_parameterize(:customer, "alias_b")
@@ -48,3 +49,7 @@ query =
 
 - Parameterized joins let one association be reused multiple times safely.
 - Alias-scoped dot paths avoid field collisions in projections.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

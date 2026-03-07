@@ -24,20 +24,13 @@ ORDER BY o.order_number ASC;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-  |> Selecto.join(:customer_lookup,
-    source: "customers",
-    type: :inner,
-    on: [%{left: "customer_id", right: "id"}],
-    fields: %{
-      name: %{type: :string},
-      tier: %{type: :string}
-    }
-  )
-  |> Selecto.select(["order_number", "customer_lookup.name"])
+  |> Selecto.select(["order_number", "customer.name"])
+  |> Selecto.filter({"customer.id", :not_null})
   |> Selecto.filter({"status", "delivered"})
   |> Selecto.order_by({"order_number", :asc})
 
@@ -47,11 +40,16 @@ query =
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `inner join`
+- includes keyword: `left join`
+- includes keyword: `is not null`
 - includes keyword: `where`
 - includes keyword: `order by`
 
 ## Notes
 
-- Starts from a shared domain-configured customer relationship, then applies a runtime inner-join override.
+- Uses the domain-configured customer join and an `IS NOT NULL` guard for inner-join equivalent semantics.
 - Keeps filters parameterized through Selecto.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

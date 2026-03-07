@@ -23,9 +23,10 @@ ORDER BY e.first_name ASC;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
   |> Selecto.select(["first_name", "manager.first_name"])
   |> Selecto.order_by({"first_name", :asc})
@@ -44,3 +45,7 @@ query =
 
 - Uses a domain-configured self-join (`manager`) against the same physical table.
 - The join alias (`manager`) keeps the selected fields unambiguous.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

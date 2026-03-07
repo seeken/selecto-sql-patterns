@@ -28,9 +28,10 @@ LEFT JOIN customers AS c_standard
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join_filter(), :mock_connection, validate: false)
   |> Selecto.join_parameterize(:customer, "tier_premium", tier: "premium")
   |> Selecto.join_parameterize(:customer, "tier_standard", tier: "standard")
@@ -54,3 +55,7 @@ query =
 
 - Parameterized joins allow multiple instances of one association.
 - Filters are applied in each join `ON` clause with proper bind parameters.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

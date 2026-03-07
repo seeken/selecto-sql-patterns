@@ -5,7 +5,7 @@ Mix.install([
 defmodule SelectoSqlPatterns.VerifyExamples do
   def run do
     examples = [
-      {"J001", query_j001(), ["select", "inner join", "where", "order by"]},
+      {"J001", query_j001(), ["select", "left join", "is not null", "order by"]},
       {"J002", query_j002(), ["select", "left join", "count", "group by"]},
       {"J003", query_j003(), ["select", "inner join", "where", "from customers"]},
       {"J004", query_j004(), ["select", "left join", "manager", "order by"]},
@@ -341,16 +341,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_j001 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.join(:customer_lookup,
-      source: "customers",
-      type: :inner,
-      on: [%{left: "customer_id", right: "id"}],
-      fields: %{
-        name: %{type: :string},
-        tier: %{type: :string}
-      }
-    )
-    |> Selecto.select(["order_number", "customer_lookup.name"])
+    |> Selecto.select(["order_number", "customer.name"])
+    |> Selecto.filter({"customer.id", :not_null})
     |> Selecto.filter({"status", "delivered"})
     |> Selecto.order_by({"order_number", :asc})
   end

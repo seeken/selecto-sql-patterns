@@ -24,9 +24,10 @@ ORDER BY p.name ASC;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
   |> Selecto.select(["name", {:count, "reviews.id"}])
   |> Selecto.group_by(["name"])
@@ -47,3 +48,7 @@ query =
 - Uses `LEFT JOIN` so products with zero related rows still appear.
 - Join definition is domain-configured and reused by multiple join examples.
 - Count targets joined key (`reviews.id`) to avoid counting all rows blindly.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

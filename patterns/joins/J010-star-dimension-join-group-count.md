@@ -24,9 +24,10 @@ ORDER BY c.name ASC;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 star_domain =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   order_domain_with_customer_join()
   |> put_in([:joins, :customer, :type], :star_dimension)
 
@@ -50,3 +51,7 @@ query =
 
 - `:star_dimension` join type keeps BI-style dimension semantics explicit.
 - Query still compiles to standard SQL joins and aggregates.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)

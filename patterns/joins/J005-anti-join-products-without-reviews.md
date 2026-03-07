@@ -24,9 +24,10 @@ ORDER BY p.name ASC;
 
 ## Selecto
 
+Shared domain configuration: [Join Domain Configuration](./DOMAIN_CONFIGURATION.md).
+
 ```elixir
 query =
-  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
   |> Selecto.select(["name"])
   |> Selecto.filter({"reviews.id", nil})
@@ -47,3 +48,7 @@ query =
 - Anti-join is modeled with `LEFT JOIN` plus `IS NULL` filter.
 - Uses the same domain-configured `reviews` join as J002.
 - This pattern is useful for orphan detection and completeness checks.
+
+## References
+
+- [Join Domain Configuration](./DOMAIN_CONFIGURATION.md)
