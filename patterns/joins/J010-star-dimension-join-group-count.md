@@ -26,6 +26,7 @@ ORDER BY c.name ASC;
 
 ```elixir
 star_domain =
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   order_domain_with_customer_join()
   |> put_in([:joins, :customer, :type], :star_dimension)
 

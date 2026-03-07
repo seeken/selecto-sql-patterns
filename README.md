@@ -25,6 +25,7 @@ and regression checks across the Selecto ecosystem.
 - `attribution/sources.md` source list and license notes
 - `patterns/` query patterns grouped by topic
 - `patterns/_template.md` pattern authoring template
+- `patterns/joins/DOMAIN_CONFIGURATION.md` shared domain setup for join-focused examples
 - `patterns/ESCAPE_HATCH_GUIDE.md` rules for lateral/raw SQL escape-hatch patterns
 - `CATALOG.md` high-level tracking for planned pattern coverage
 - `scripts/verify_examples.exs` runs `Selecto.to_sql/1` for every published pattern example

@@ -3,6 +3,7 @@
 Planned IDs: `J001` to `J012`
 
 Favor non-escape joins; use `patterns/ESCAPE_HATCH_GUIDE.md` only when unavoidable.
+Shared join-domain setup lives in `patterns/joins/DOMAIN_CONFIGURATION.md`.
 
 - `J001` inner join delivered orders ✅
 - `J002` left join review counts ✅

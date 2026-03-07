@@ -26,17 +26,8 @@ ORDER BY p.name ASC;
 
 ```elixir
 query =
-  Selecto.configure(product_domain(), :mock_connection, validate: false)
-  |> Selecto.join(:reviews,
-    source: "reviews",
-    type: :left,
-    owner_key: :id,
-    related_key: :product_id,
-    fields: %{
-      id: %{type: :integer},
-      rating: %{type: :integer}
-    }
-  )
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
+  Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
   |> Selecto.select(["name"])
   |> Selecto.filter({"reviews.id", nil})
   |> Selecto.order_by({"name", :asc})
@@ -54,4 +45,5 @@ query =
 ## Notes
 
 - Anti-join is modeled with `LEFT JOIN` plus `IS NULL` filter.
+- Uses the same domain-configured `reviews` join as J002.
 - This pattern is useful for orphan detection and completeness checks.

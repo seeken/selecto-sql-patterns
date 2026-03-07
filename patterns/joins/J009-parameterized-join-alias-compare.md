@@ -28,6 +28,7 @@ LEFT JOIN customers AS c_b ON c_b.id = o.customer_id;
 
 ```elixir
 query =
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.join_parameterize(:customer, "alias_a")
   |> Selecto.join_parameterize(:customer, "alias_b")

@@ -30,6 +30,7 @@ LEFT JOIN customers AS c_standard
 
 ```elixir
 query =
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join_filter(), :mock_connection, validate: false)
   |> Selecto.join_parameterize(:customer, "tier_premium", tier: "premium")
   |> Selecto.join_parameterize(:customer, "tier_standard", tier: "standard")

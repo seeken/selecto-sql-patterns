@@ -95,7 +95,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     }
   end
 
-  defp employee_hierarchy_domain do
+  defp employee_domain_with_manager_join do
     %{
       name: "Employees",
       source: %{
@@ -108,10 +108,39 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           first_name: %{type: :string},
           manager_id: %{type: :integer}
         },
-        associations: %{}
+        associations: %{
+          manager: %{
+            field: :manager,
+            queryable: :managers,
+            owner_key: :manager_id,
+            related_key: :id
+          }
+        }
       },
-      schemas: %{},
-      joins: %{}
+      schemas: %{
+        managers: %{
+          source_table: "employees",
+          primary_key: :id,
+          fields: [:id, :first_name],
+          redact_fields: [],
+          columns: %{
+            id: %{type: :integer},
+            first_name: %{type: :string}
+          }
+        }
+      },
+      joins: %{
+        manager: %{
+          name: "Manager",
+          type: :left,
+          source: "employees",
+          on: [%{left: "manager_id", right: "id"}],
+          fields: %{
+            id: %{type: :integer},
+            first_name: %{type: :string}
+          }
+        }
+      }
     }
   end
 
@@ -135,6 +164,60 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       },
       schemas: %{},
       joins: %{}
+    }
+  end
+
+  defp product_domain_with_reviews_join do
+    %{
+      name: "Products",
+      source: %{
+        source_table: "products",
+        primary_key: :id,
+        fields: [:id, :name, :sku, :price, :active, :tags],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string},
+          sku: %{type: :string},
+          price: %{type: :decimal},
+          active: %{type: :boolean},
+          tags: %{type: {:array, :string}}
+        },
+        associations: %{
+          reviews: %{
+            field: :reviews,
+            queryable: :reviews,
+            owner_key: :id,
+            related_key: :product_id
+          }
+        }
+      },
+      schemas: %{
+        reviews: %{
+          source_table: "reviews",
+          primary_key: :id,
+          fields: [:id, :product_id, :rating],
+          redact_fields: [],
+          columns: %{
+            id: %{type: :integer},
+            product_id: %{type: :integer},
+            rating: %{type: :integer}
+          }
+        }
+      },
+      joins: %{
+        reviews: %{
+          name: "Reviews",
+          type: :left,
+          source: "reviews",
+          on: [%{left: "id", right: "product_id"}],
+          fields: %{
+            id: %{type: :integer},
+            product_id: %{type: :integer},
+            rating: %{type: :integer}
+          }
+        }
+      }
     }
   end
 
@@ -273,17 +356,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_j002 do
-    Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.join(:reviews,
-      source: "reviews",
-      type: :left,
-      owner_key: :id,
-      related_key: :product_id,
-      fields: %{
-        id: %{type: :integer},
-        rating: %{type: :integer}
-      }
-    )
+    Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
     |> Selecto.select(["name", {:count, "reviews.id"}])
     |> Selecto.group_by(["name"])
     |> Selecto.order_by({"name", :asc})
@@ -309,32 +382,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_j004 do
-    Selecto.configure(employee_hierarchy_domain(), :mock_connection, validate: false)
-    |> Selecto.join(:manager,
-      source: "employees",
-      type: :left,
-      on: [%{left: "manager_id", right: "id"}],
-      fields: %{
-        id: %{type: :integer},
-        first_name: %{type: :string}
-      }
-    )
+    Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
     |> Selecto.select(["first_name", "manager.first_name"])
     |> Selecto.order_by({"first_name", :asc})
   end
 
   defp query_j005 do
-    Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.join(:reviews,
-      source: "reviews",
-      type: :left,
-      owner_key: :id,
-      related_key: :product_id,
-      fields: %{
-        id: %{type: :integer},
-        rating: %{type: :integer}
-      }
-    )
+    Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
     |> Selecto.select(["name"])
     |> Selecto.filter({"reviews.id", nil})
     |> Selecto.order_by({"name", :asc})

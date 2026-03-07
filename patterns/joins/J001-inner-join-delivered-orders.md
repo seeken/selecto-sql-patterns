@@ -26,6 +26,7 @@ ORDER BY o.order_number ASC;
 
 ```elixir
 query =
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.join(:customer_lookup,
     source: "customers",
@@ -52,5 +53,5 @@ query =
 
 ## Notes
 
-- Uses dot notation field path (`customer.name`) for joined schema fields.
+- Starts from a shared domain-configured customer relationship, then applies a runtime inner-join override.
 - Keeps filters parameterized through Selecto.

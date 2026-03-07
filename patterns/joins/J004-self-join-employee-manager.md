@@ -25,16 +25,8 @@ ORDER BY e.first_name ASC;
 
 ```elixir
 query =
-  Selecto.configure(employee_hierarchy_domain(), :mock_connection, validate: false)
-  |> Selecto.join(:manager,
-    source: "employees",
-    type: :left,
-    on: [%{left: "manager_id", right: "id"}],
-    fields: %{
-      id: %{type: :integer},
-      first_name: %{type: :string}
-    }
-  )
+  # see shared config: patterns/joins/DOMAIN_CONFIGURATION.md
+  Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
   |> Selecto.select(["first_name", "manager.first_name"])
   |> Selecto.order_by({"first_name", :asc})
 
@@ -50,5 +42,5 @@ query =
 
 ## Notes
 
-- Uses a dynamic custom join against the same physical table.
+- Uses a domain-configured self-join (`manager`) against the same physical table.
 - The join alias (`manager`) keeps the selected fields unambiguous.
