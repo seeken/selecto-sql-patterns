@@ -1,8 +1,6 @@
 name: Deploy Patterns Book
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -31,6 +29,8 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

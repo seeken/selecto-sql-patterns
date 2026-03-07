@@ -56,4 +56,5 @@ python scripts/build_book_site.py
 Then open `_site/index.html` in a browser.
 
 This repository also includes a GitHub Pages workflow at
-`.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`.
+`.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`
+when GitHub Pages is available for the repository plan.
