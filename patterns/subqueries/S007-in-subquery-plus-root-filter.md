@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, in, filtering, conjunction, join-subquery
+- Tags: subquery, in, filtering, conjunction
 
 ## Problem
 
@@ -29,19 +29,10 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-gold_customers =
-  Selecto.configure(customer_domain(), :mock_connection, validate: false)
-  |> Selecto.select(["id"])
-  |> Selecto.filter({"tier", "gold"})
-
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "total"])
-  |> Selecto.join_subquery(:gold_customers, gold_customers,
-    type: :inner,
-    on: [%{left: "customer_id", right: "id"}]
-  )
-  |> Selecto.filter({"gold_customers.id", :not_null})
+  |> Selecto.filter({"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}})
   |> Selecto.filter({"status", "delivered"})
   |> Selecto.order_by({"total", :desc})
 
@@ -52,28 +43,23 @@ query =
 
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) gold_customers on selecto_root.customer_id = gold_customers.id
-        where (( gold_customers.id is not null ) and ( selecto_root.status = $2 ))
+        from orders selecto_root
+        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ) and ( selecto_root.status = $1 ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `["gold", "delivered"]`
+**Params:** `["delivered"]`
 
 ## Expected SQL Shape
 
 - includes keyword: `select`
 - includes keyword: `where`
 - includes keyword: ` and `
-- includes keyword: `inner join`
+- includes keyword: `in (`
 
 ## Notes
 
 - Demonstrates mixed predicate trees with both root and subquery conditions.
-- Uses a join-subquery for the customer slice plus a root-side filter.
-- Includes a joined-key `is not null` guard to keep the membership join explicit.
+- Uses the native `IN` subquery predicate plus a root-side filter.
 - Useful for reproducing common reporting filters from legacy SQL.

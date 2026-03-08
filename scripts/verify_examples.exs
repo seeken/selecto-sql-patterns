@@ -31,13 +31,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"W006", query_w006(), ["select", "rank", "partition by", "order by"]},
       {"W007", query_w007(), ["select", "lead", "over", "partition by"]},
       {"W008", query_w008(), ["select", "max", "over", "partition by"]},
-      {"S001", query_s001(), ["select", "inner join", "from customers", "order by"]},
+      {"S001", query_s001(), ["select", " in (", "from customers", "order by"]},
       {"S002", query_s002(), ["select", "left join", "where", "order by"]},
       {"S003", query_s003(), ["select", "inner join", "from customers", "order by"]},
       {"S004", query_s004(), ["select", "left join", "is null", "order by"]},
       {"S005", query_s005(), ["select", "inner join", "$1", "order by"]},
       {"S006", query_s006(), ["select", "inner join", "$1", "order by"]},
-      {"S007", query_s007(), ["select", "inner join", "where", " and "]},
+      {"S007", query_s007(), ["select", " in (", "where", " and "]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -611,18 +611,11 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_s001 do
-    gold_customers =
-      Selecto.configure(customer_domain(), :mock_connection, validate: false)
-      |> Selecto.select(["id"])
-      |> Selecto.filter({"tier", "gold"})
-
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "status", "total"])
-    |> Selecto.join_subquery(:gold_customers, gold_customers,
-      type: :inner,
-      on: [%{left: "customer_id", right: "id"}]
+    |> Selecto.filter(
+      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
     )
-    |> Selecto.filter({"gold_customers.id", :not_null})
     |> Selecto.order_by({"total", :desc})
   end
 
@@ -706,18 +699,11 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_s007 do
-    gold_customers =
-      Selecto.configure(customer_domain(), :mock_connection, validate: false)
-      |> Selecto.select(["id"])
-      |> Selecto.filter({"tier", "gold"})
-
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.join_subquery(:gold_customers, gold_customers,
-      type: :inner,
-      on: [%{left: "customer_id", right: "id"}]
+    |> Selecto.filter(
+      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
     )
-    |> Selecto.filter({"gold_customers.id", :not_null})
     |> Selecto.filter({"status", "delivered"})
     |> Selecto.order_by({"total", :desc})
   end

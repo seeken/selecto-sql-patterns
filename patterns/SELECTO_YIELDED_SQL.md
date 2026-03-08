@@ -292,17 +292,13 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(s
 
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) gold_customers on selecto_root.customer_id = gold_customers.id
-        where (( gold_customers.id is not null ))
+        from orders selecto_root
+        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `["gold"]`
+**Params:** `[]`
 
 ## S002
 
@@ -386,17 +382,13 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) gold_customers on selecto_root.customer_id = gold_customers.id
-        where (( gold_customers.id is not null ) and ( selecto_root.status = $2 ))
+        from orders selecto_root
+        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ) and ( selecto_root.status = $1 ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `["gold", "delivered"]`
+**Params:** `["delivered"]`
 
 ## C001
 
