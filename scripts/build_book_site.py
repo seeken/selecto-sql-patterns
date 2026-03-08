@@ -95,6 +95,10 @@ def copy_site_files() -> None:
     shutil.copytree(PATTERNS_DIR, SITE_OUT / "patterns", dirs_exist_ok=True)
     shutil.copy2(ROOT / "README.md", SITE_OUT / "README.md")
     shutil.copy2(ROOT / "CATALOG.md", SITE_OUT / "CATALOG.md")
+    shutil.copy2(
+        PATTERNS_DIR / "joins" / "DOMAIN_CONFIGURATION.md",
+        SITE_OUT / "DOMAIN_CONFIGURATION.md",
+    )
 
 
 def write_manifest(manifest: dict) -> None:
