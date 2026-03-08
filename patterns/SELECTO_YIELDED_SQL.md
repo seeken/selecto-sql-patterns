@@ -554,6 +554,18 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 **Params:** `["cancelled", 50]`
 
+## F006
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured"]]`
+
 ## P001
 
 ```sql
@@ -609,6 +621,20 @@ select selecto_root.order_number, customer.name, selecto_root.total
 ```
 
 **Params:** `[]`
+
+## P005
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.inserted_at > $1 ))
+      
+        order by selecto_root.inserted_at asc, selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-01-15 00:00:00]]`
 
 ## JA001
 
@@ -668,6 +694,18 @@ select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' A
 
 **Params:** `[]`
 
+## JA006
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"]]`
+
 ## Q001
 
 ```sql
@@ -702,6 +740,16 @@ select t.product_name, t.quantity
 
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## Q005
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_count"
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -750,6 +798,16 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 
 **Params:** `[]`
 
+## T005
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS previous_total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
 ## G001
 
 ```sql
@@ -792,6 +850,18 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+## G005
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
       
         order by selecto_root.id asc
 ```

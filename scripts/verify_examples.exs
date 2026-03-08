@@ -55,28 +55,34 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"F003", query_f003(), ["between", "any(", "where", "order by"]},
       {"F004", query_f004(), ["@@ websearch_to_tsquery", "where", "order by", "from products"]},
       {"F005", query_f005(), ["not (", "where", ">", "order by"]},
+      {"F006", query_f006(), ["@>", "where", "order by", "from products"]},
       {"P001", query_p001(), ["from orders", "order by", "limit", "offset"]},
       {"P002", query_p002(), ["where", ">", "order by", "limit"]},
       {"P003", query_p003(), ["where", "<", "order by", "limit"]},
       {"P004", query_p004(), ["left join", "order by", "limit", "offset"]},
+      {"P005", query_p005(), ["inserted_at", ">", "order by", "limit"]},
       {"JA001", query_ja001(), ["->>", "@>", "where", "order by"]},
       {"JA002", query_ja002(), ["->", "#>>", "?", "order by"]},
       {"JA003", query_ja003(), ["&&", "where", "order by", "from products"]},
       {"JA004", query_ja004(), ["metadata", "stock", "where", "order by"]},
       {"JA005", query_ja005(), ["->", "->>", "order by", "warehouse"]},
+      {"JA006", query_ja006(), ["@>", "where", "order by", "from products"]},
       {"Q001", query_q001(), ["json_agg", "json_build_object", "from orders", "order_items"]},
       {"Q002", query_q002(), ["from orders", "exists (", "from events", "inner join"]},
       {"Q003", query_q003(), ["from orders", " in (", "from events", "join attendees"]},
       {"Q004", query_q004(), ["json_agg", "array_agg", "products", "quantities"]},
+      {"Q005", query_q005(), ["count(", "order_count", "from orders", "where"]},
       {"T001", query_t001(), [">=", "<", "where", "order by"]},
       {"T002", query_t002(), ["sum", "over", "order by", "running_total"]},
       {"T003", query_t003(),
        ["date_trunc('day'", "from orders", "order by", "selecto_root.inserted_at"]},
       {"T004", query_t004(), ["avg", "over", "preceding", "trailing_avg_total"]},
+      {"T005", query_t005(), ["lag(", "over", "previous_total", "order by"]},
       {"G001", query_g001(), ["st_dwithin", "where", "order by", "from locations"]},
       {"G002", query_g002(), ["exists (", "st_intersects", "where", "from locations"]},
       {"G003", query_g003(), ["st_contains", "st_geomfromtext", "where", "from locations"]},
       {"G004", query_g004(), ["&&", "st_makeenvelope", "where", "from locations"]},
+      {"G005", query_g005(), ["st_buffer", "st_intersects", "where", "from locations"]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -1154,6 +1160,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"total", :desc})
   end
 
+  defp query_f006 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "tags"])
+    |> Selecto.filter({:array_contains, "tags", ["featured"]})
+    |> Selecto.order_by({"name", :asc})
+  end
+
   defp query_p001 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "order_number", "total"])
@@ -1185,6 +1198,15 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"order_number", :asc})
     |> Selecto.limit(15)
     |> Selecto.offset(30)
+  end
+
+  defp query_p005 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "inserted_at", "total"])
+    |> Selecto.filter({"inserted_at", {:>, ~N[2024-01-15 00:00:00]}})
+    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by({"id", :asc})
+    |> Selecto.limit(25)
   end
 
   defp query_ja001 do
@@ -1228,6 +1250,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {:json_extract_text, "metadata", "$.warehouse.zone", as: "warehouse_zone"}
     ])
     |> Selecto.json_order_by({:json_extract_text, "metadata", "$.warehouse.zone", :asc})
+  end
+
+  defp query_ja006 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "tags"])
+    |> Selecto.filter({:array_contains, "tags", ["featured", "clearance"]})
+    |> Selecto.order_by({"name", :asc})
   end
 
   defp query_q001 do
@@ -1278,6 +1307,20 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"name", :asc})
   end
 
+  defp query_q005 do
+    Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "email"])
+    |> Selecto.subselect([
+      %{
+        fields: ["order_id"],
+        target_schema: :orders,
+        format: :count,
+        alias: "order_count"
+      }
+    ])
+    |> Selecto.order_by({"name", :asc})
+  end
+
   defp query_t001 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "inserted_at", "total"])
@@ -1321,6 +1364,16 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"inserted_at", :asc})
   end
 
+  defp query_t005 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.window_function(:lag, ["total", 1],
+      over: [order_by: ["inserted_at"]],
+      as: "previous_total"
+    )
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
   defp query_g001 do
     Selecto.configure(location_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "name"])
@@ -1356,6 +1409,16 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.filter({
       :raw_sql_filter,
       "selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326)"
+    })
+    |> Selecto.order_by({"id", :asc})
+  end
+
+  defp query_g005 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter({
+      :raw_sql_filter,
+      "ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01))"
     })
     |> Selecto.order_by({"id", :asc})
   end

@@ -7,6 +7,6 @@ Planned IDs: `F001` to `F008`
 - `F003` between and IN-list filters ✅
 - `F004` text search predicate ✅
 - `F005` NOT predicate wrapping ✅
-- `F006` array membership filter
+- `F006` array membership filter ✅
 - `F007` JSON path predicate
 - `F008` subquery predicate with params
