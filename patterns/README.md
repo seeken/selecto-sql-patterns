@@ -17,3 +17,9 @@ Each pattern file includes a `Selecto Yielded SQL` section generated from `Selec
 - `subqueries/`
 - `ctes/`
 - `set_operations/`
+- `filtering/`
+- `pagination/`
+- `json_arrays/`
+- `query_shaping/`
+- `time_series/`
+- `geospatial/`

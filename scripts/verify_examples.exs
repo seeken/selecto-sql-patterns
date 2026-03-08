@@ -50,6 +50,33 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"SO007", query_so007(),
        ["except all", "from customers", "from blocked_customers", "select"]},
       {"SO008", query_so008(), ["union", "from customers", "from vendor_contacts", "select"]},
+      {"F001", query_f001(), ["is not null", "not (", "any(", "order by"]},
+      {"F002", query_f002(), ["where", " and ", " or ", "order by"]},
+      {"F003", query_f003(), ["between", "any(", "where", "order by"]},
+      {"F004", query_f004(), ["@@ websearch_to_tsquery", "where", "order by", "from products"]},
+      {"F005", query_f005(), ["not (", "where", ">", "order by"]},
+      {"P001", query_p001(), ["from orders", "order by", "limit", "offset"]},
+      {"P002", query_p002(), ["where", ">", "order by", "limit"]},
+      {"P003", query_p003(), ["where", "<", "order by", "limit"]},
+      {"P004", query_p004(), ["left join", "order by", "limit", "offset"]},
+      {"JA001", query_ja001(), ["->>", "@>", "where", "order by"]},
+      {"JA002", query_ja002(), ["->", "#>>", "?", "order by"]},
+      {"JA003", query_ja003(), ["&&", "where", "order by", "from products"]},
+      {"JA004", query_ja004(), ["metadata", "stock", "where", "order by"]},
+      {"JA005", query_ja005(), ["->", "->>", "order by", "warehouse"]},
+      {"Q001", query_q001(), ["json_agg", "json_build_object", "from orders", "order_items"]},
+      {"Q002", query_q002(), ["from orders", "exists (", "from events", "inner join"]},
+      {"Q003", query_q003(), ["from orders", " in (", "from events", "join attendees"]},
+      {"Q004", query_q004(), ["json_agg", "array_agg", "products", "quantities"]},
+      {"T001", query_t001(), [">=", "<", "where", "order by"]},
+      {"T002", query_t002(), ["sum", "over", "order by", "running_total"]},
+      {"T003", query_t003(),
+       ["date_trunc('day'", "from orders", "order by", "selecto_root.inserted_at"]},
+      {"T004", query_t004(), ["avg", "over", "preceding", "trailing_avg_total"]},
+      {"G001", query_g001(), ["st_dwithin", "where", "order by", "from locations"]},
+      {"G002", query_g002(), ["exists (", "st_intersects", "where", "from locations"]},
+      {"G003", query_g003(), ["st_contains", "st_geomfromtext", "where", "from locations"]},
+      {"G004", query_g004(), ["&&", "st_makeenvelope", "where", "from locations"]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -195,7 +222,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       source: %{
         source_table: "products",
         primary_key: :id,
-        fields: [:id, :name, :sku, :price, :active, :tags],
+        fields: [:id, :name, :sku, :price, :active, :tags, :metadata],
         redact_fields: [],
         columns: %{
           id: %{type: :integer},
@@ -203,7 +230,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           sku: %{type: :string},
           price: %{type: :decimal},
           active: %{type: :boolean},
-          tags: %{type: {:array, :string}}
+          tags: %{type: {:array, :string}},
+          metadata: %{type: :jsonb}
         },
         associations: %{}
       },
@@ -279,6 +307,28 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           order_number: %{type: :string},
           status: %{type: :string},
           total: %{type: :decimal}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp order_timeseries_domain do
+    %{
+      name: "OrderEvents",
+      source: %{
+        source_table: "orders",
+        primary_key: :id,
+        fields: [:id, :order_number, :status, :total, :inserted_at],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          order_number: %{type: :string},
+          status: %{type: :string},
+          total: %{type: :decimal},
+          inserted_at: %{type: :naive_datetime}
         },
         associations: %{}
       },
@@ -416,6 +466,140 @@ defmodule SelectoSqlPatterns.VerifyExamples do
         columns: %{
           id: %{type: :integer},
           name: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp attendee_domain_with_orders_join do
+    %{
+      source: %{
+        source_table: "attendees",
+        primary_key: :attendee_id,
+        fields: [:attendee_id, :event_id, :name, :email],
+        redact_fields: [],
+        columns: %{
+          attendee_id: %{type: :integer},
+          event_id: %{type: :integer},
+          name: %{type: :string},
+          email: %{type: :string}
+        },
+        associations: %{
+          orders: %{
+            queryable: :orders,
+            field: :orders,
+            owner_key: :attendee_id,
+            related_key: :attendee_id
+          }
+        }
+      },
+      schemas: %{
+        orders: %{
+          source_table: "orders",
+          primary_key: :order_id,
+          fields: [:order_id, :attendee_id, :product_name, :quantity, :price],
+          redact_fields: [],
+          columns: %{
+            order_id: %{type: :integer},
+            attendee_id: %{type: :integer},
+            product_name: %{type: :string},
+            quantity: %{type: :integer},
+            price: %{type: :decimal}
+          },
+          associations: %{}
+        }
+      },
+      name: "Attendee",
+      joins: %{
+        orders: %{type: :left, name: "orders"}
+      }
+    }
+  end
+
+  defp event_pivot_domain do
+    %{
+      source: %{
+        source_table: "events",
+        primary_key: :event_id,
+        fields: [:event_id, :name, :date],
+        redact_fields: [],
+        columns: %{
+          event_id: %{type: :integer},
+          name: %{type: :string},
+          date: %{type: :date}
+        },
+        associations: %{
+          attendees: %{
+            queryable: :attendees,
+            field: :attendees,
+            owner_key: :event_id,
+            related_key: :event_id
+          }
+        }
+      },
+      schemas: %{
+        attendees: %{
+          source_table: "attendees",
+          primary_key: :attendee_id,
+          fields: [:attendee_id, :event_id, :name, :email],
+          redact_fields: [],
+          columns: %{
+            attendee_id: %{type: :integer},
+            event_id: %{type: :integer},
+            name: %{type: :string},
+            email: %{type: :string}
+          },
+          associations: %{
+            orders: %{
+              queryable: :orders,
+              field: :orders,
+              owner_key: :attendee_id,
+              related_key: :attendee_id
+            }
+          }
+        },
+        orders: %{
+          source_table: "orders",
+          primary_key: :order_id,
+          fields: [:order_id, :attendee_id, :product_name, :quantity],
+          redact_fields: [],
+          columns: %{
+            order_id: %{type: :integer},
+            attendee_id: %{type: :integer},
+            product_name: %{type: :string},
+            quantity: %{type: :integer}
+          },
+          associations: %{}
+        }
+      },
+      name: "Event",
+      joins: %{
+        attendees: %{
+          type: :left,
+          name: "attendees",
+          joins: %{
+            orders: %{type: :left, name: "orders"}
+          }
+        }
+      }
+    }
+  end
+
+  defp location_domain do
+    %{
+      name: "Locations",
+      source: %{
+        source_table: "locations",
+        primary_key: :id,
+        fields: [:id, :name, :geom],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string},
+          geom: %{type: :geometry}
         },
         associations: %{}
       },
@@ -924,6 +1108,256 @@ defmodule SelectoSqlPatterns.VerifyExamples do
         {"tier", "segment"}
       ]
     )
+  end
+
+  defp query_f001 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "customer.name", "status"])
+    |> Selecto.filter({"customer.id", :not_null})
+    |> Selecto.filter({"status", {:not_in, ["cancelled", "returned"]}})
+    |> Selecto.order_by({"order_number", :asc})
+  end
+
+  defp query_f002 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.filter(
+      {:and,
+       [
+         {:or, [{"status", "processing"}, {"status", "shipped"}]},
+         {"total", {:>, 100}}
+       ]}
+    )
+    |> Selecto.order_by({"total", :desc})
+  end
+
+  defp query_f003 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.filter({"total", {:between, 100, 500}})
+    |> Selecto.filter({"status", {:in, ["processing", "shipped", "delivered"]}})
+    |> Selecto.order_by({"order_number", :asc})
+  end
+
+  defp query_f004 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "sku"])
+    |> Selecto.filter({"name", {:text_search, "wireless charger"}})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_f005 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.filter({:not, {"status", "cancelled"}})
+    |> Selecto.filter({"total", {:>, 50}})
+    |> Selecto.order_by({"total", :desc})
+  end
+
+  defp query_p001 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "total"])
+    |> Selecto.order_by({"id", :asc})
+    |> Selecto.limit(25)
+    |> Selecto.offset(50)
+  end
+
+  defp query_p002 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "total"])
+    |> Selecto.filter({"id", {:>, 1000}})
+    |> Selecto.order_by({"id", :asc})
+    |> Selecto.limit(25)
+  end
+
+  defp query_p003 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "total"])
+    |> Selecto.filter({"id", {:<, 5000}})
+    |> Selecto.order_by({"id", :desc})
+    |> Selecto.limit(20)
+  end
+
+  defp query_p004 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "customer.name", "total"])
+    |> Selecto.order_by({"customer.name", :asc})
+    |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.limit(15)
+    |> Selecto.offset(30)
+  end
+
+  defp query_ja001 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "sku"])
+    |> Selecto.json_select([{:json_extract_text, "metadata", "$.price_band", as: "price_band"}])
+    |> Selecto.json_filter({:json_contains, "metadata", %{"price_band" => "premium"}})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja002 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "metadata.warehouse.zone"])
+    |> Selecto.filter({"metadata.warehouse.zone", :exists})
+    |> Selecto.filter({"metadata.warehouse.zone", "A1"})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja003 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "tags"])
+    |> Selecto.filter({:array_overlap, "tags", ["featured", "clearance"]})
+    |> Selecto.filter({"active", true})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja004 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name"])
+    |> Selecto.json_select([
+      {:json_extract_text, "metadata", "$.stock.quantity", as: "stock_quantity"}
+    ])
+    |> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity", nil})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja005 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "sku"])
+    |> Selecto.json_select([
+      {:json_extract_text, "metadata", "$.warehouse.zone", as: "warehouse_zone"}
+    ])
+    |> Selecto.json_order_by({:json_extract_text, "metadata", "$.warehouse.zone", :asc})
+  end
+
+  defp query_q001 do
+    Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "email"])
+    |> Selecto.subselect([
+      %{
+        fields: ["product_name", "quantity"],
+        target_schema: :orders,
+        format: :json_agg,
+        alias: "order_items"
+      }
+    ])
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_q002 do
+    Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+    |> Selecto.filter({"event_id", 1000})
+    |> Selecto.select(["orders.product_name", "orders.quantity"])
+    |> Selecto.pivot(:orders, subquery_strategy: :exists)
+  end
+
+  defp query_q003 do
+    Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+    |> Selecto.filter({"event_id", 2000})
+    |> Selecto.select(["orders.product_name", "orders.quantity"])
+    |> Selecto.pivot(:orders, subquery_strategy: :in)
+  end
+
+  defp query_q004 do
+    Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "email"])
+    |> Selecto.subselect([
+      %{
+        fields: ["product_name"],
+        target_schema: :orders,
+        format: :json_agg,
+        alias: "products"
+      },
+      %{
+        fields: ["quantity"],
+        target_schema: :orders,
+        format: :array_agg,
+        alias: "quantities"
+      }
+    ])
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_t001 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.filter({
+      "inserted_at",
+      {:between, ~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]}
+    })
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
+  defp query_t002 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.window_function(:sum, ["total"],
+      over: [order_by: ["inserted_at"]],
+      as: "running_total"
+    )
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
+  defp query_t003 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      "order_number",
+      {:field, {:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"},
+      "total"
+    ])
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
+  defp query_t004 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.window_function(:avg, ["total"],
+      over: [
+        order_by: ["inserted_at"],
+        frame: {:rows, {:preceding, 2}, :current_row}
+      ],
+      as: "trailing_avg_total"
+    )
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
+  defp query_g001 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter({
+      :raw_sql_filter,
+      "ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000)"
+    })
+    |> Selecto.order_by({"id", :asc})
+  end
+
+  defp query_g002 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter(
+      {:exists, "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)"}
+    )
+    |> Selecto.order_by({"id", :asc})
+  end
+
+  defp query_g003 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter({
+      :raw_sql_filter,
+      "ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom)"
+    })
+    |> Selecto.order_by({"id", :asc})
+  end
+
+  defp query_g004 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter({
+      :raw_sql_filter,
+      "selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326)"
+    })
+    |> Selecto.order_by({"id", :asc})
   end
 
   defp query_c001 do

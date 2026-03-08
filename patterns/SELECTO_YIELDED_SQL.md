@@ -494,6 +494,310 @@ UNION
 
 **Params:** `[]`
 
+## F001
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.status
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( NOT (selecto_root.status = ANY($1)) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[["cancelled", "returned"]]`
+
+## F002
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "shipped", 100]`
+
+## F003
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status = ANY($3) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+
+## F004
+
+```sql
+select selecto_root.name, selecto_root.sku
+        from products selecto_root
+        where (( selecto_root.name @@ websearch_to_tsquery($1) ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["wireless charger"]`
+
+## F005
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["cancelled", 50]`
+
+## P001
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.id asc
+      
+        limit 25
+      
+        offset 50
+```
+
+**Params:** `[]`
+
+## P002
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id > $1 ))
+      
+        order by selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[1000]`
+
+## P003
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id < $1 ))
+      
+        order by selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[5000]`
+
+## P004
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by customer.name asc, selecto_root.order_number asc
+      
+        limit 15
+      
+        offset 30
+```
+
+**Params:** `[]`
+
+## JA001
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
+        from products selecto_root
+        where (( metadata @> '{"price_band":"premium"}' ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## JA002
+
+```sql
+select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1"]`
+
+## JA003
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"], true]`
+
+## JA004
+
+```sql
+select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+        from products selecto_root
+        where (( JSONB_PATH_EXISTS(metadata, '$.stock.quantity') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## JA005
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone"
+        from products selecto_root
+        order by metadata -> 'warehouse' ->> 'zone' asc
+```
+
+**Params:** `[]`
+
+## Q001
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## Q002
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)
+```
+
+**Params:** `[1000]`
+
+## Q003
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)
+```
+
+**Params:** `[2000]`
+
+## Q004
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## T001
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
+      
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
+
+## T002
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS running_total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## T003
+
+```sql
+select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## T004
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS trailing_avg_total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## G001
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+## G002
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+## G003
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+## G004
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
 ## C001
 
 ```sql

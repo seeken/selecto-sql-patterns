@@ -38,6 +38,12 @@ def build_manifest() -> dict:
         ("subqueries", "Subqueries"),
         ("ctes", "CTEs"),
         ("set_operations", "Set Operations"),
+        ("filtering", "Filtering & Predicate Logic"),
+        ("pagination", "Pagination"),
+        ("json_arrays", "JSON & Array"),
+        ("query_shaping", "Query Shaping"),
+        ("time_series", "Time-Series"),
+        ("geospatial", "Geospatial"),
     ]
 
     groups: list[dict] = []

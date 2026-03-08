@@ -20,6 +20,12 @@ and regression checks across the Selecto ecosystem.
 - Subqueries
 - CTEs
 - Set operations
+- Filtering and predicate logic
+- Pagination
+- JSON and array
+- Query shaping
+- Time-series
+- Geospatial
 
 ## Repository Layout
 

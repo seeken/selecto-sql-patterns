@@ -10,7 +10,13 @@ Tracking plan for the first rebuild pack.
 | Subqueries | 10 | 7 |
 | CTEs | 8 | 8 |
 | Set operations | 8 | 8 |
-| **Total** | **58** | **49** |
+| Filtering and predicate logic | 8 | 5 |
+| Pagination | 8 | 4 |
+| JSON and array | 8 | 5 |
+| Query shaping | 8 | 4 |
+| Time-series | 8 | 4 |
+| Geospatial | 8 | 4 |
+| **Total** | **106** | **75** |
 
 ## Naming
 
@@ -20,3 +26,9 @@ Tracking plan for the first rebuild pack.
 - `S###` for subqueries
 - `C###` for CTEs
 - `SO###` for set operations
+- `F###` for filtering and predicate logic
+- `P###` for pagination
+- `JA###` for JSON and array patterns
+- `Q###` for query shaping
+- `T###` for time-series
+- `G###` for geospatial
