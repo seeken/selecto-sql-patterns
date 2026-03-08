@@ -378,6 +378,80 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 **Params:** `["delivered"]`
 
+## SO001
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.name, selecto_root.tier
+        from vendors selecto_root)
+```
+
+**Params:** `[]`
+
+## SO002
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+## SO003
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+## SO004
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+## SO005
+
+```sql
+((
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+UNION
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root))
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+```
+
+**Params:** `[]`
+
 ## C001
 
 ```sql

@@ -38,6 +38,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"S005", query_s005(), ["select", " in (", "$1", "order by"]},
       {"S006", query_s006(), ["select", "exists (", "$1", "order by"]},
       {"S007", query_s007(), ["select", " in (", "where", " and "]},
+      {"SO001", query_so001(), ["union", "from customers", "from vendors", "select"]},
+      {"SO002", query_so002(), ["union all", "from orders", "from archived_orders", "select"]},
+      {"SO003", query_so003(),
+       ["intersect", "from premium_customers", "from active_customers", "select"]},
+      {"SO004", query_so004(), ["except", "from customers", "from blocked_customers", "select"]},
+      {"SO005", query_so005(),
+       ["union", "intersect", "from premium_customers", "from customers"]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -287,6 +294,103 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           id: %{type: :integer},
           name: %{type: :string},
           tier: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp vendor_domain do
+    %{
+      name: "Vendors",
+      source: %{
+        source_table: "vendors",
+        primary_key: :id,
+        fields: [:id, :name, :tier],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string},
+          tier: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp archived_order_domain do
+    %{
+      name: "ArchivedOrders",
+      source: %{
+        source_table: "archived_orders",
+        primary_key: :id,
+        fields: [:id, :order_number, :total],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          order_number: %{type: :string},
+          total: %{type: :decimal}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp premium_customer_domain do
+    %{
+      name: "PremiumCustomers",
+      source: %{
+        source_table: "premium_customers",
+        primary_key: :id,
+        fields: [:id, :name],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp active_customer_domain do
+    %{
+      name: "ActiveCustomers",
+      source: %{
+        source_table: "active_customers",
+        primary_key: :id,
+        fields: [:id, :name],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp blocked_customer_domain do
+    %{
+      name: "BlockedCustomers",
+      source: %{
+        source_table: "blocked_customers",
+        primary_key: :id,
+        fields: [:id, :name],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          name: %{type: :string}
         },
         associations: %{}
       },
@@ -688,6 +792,72 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     )
     |> Selecto.filter({"status", "delivered"})
     |> Selecto.order_by({"total", :desc})
+  end
+
+  defp query_so001 do
+    customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["name", "tier"])
+
+    vendors =
+      Selecto.configure(vendor_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["name", "tier"])
+
+    Selecto.union(customers, vendors)
+  end
+
+  defp query_so002 do
+    current_orders =
+      Selecto.configure(order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+
+    archived_orders =
+      Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+
+    Selecto.union(current_orders, archived_orders, all: true)
+  end
+
+  defp query_so003 do
+    premium_customers =
+      Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    active_customers =
+      Selecto.configure(active_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    Selecto.intersect(premium_customers, active_customers)
+  end
+
+  defp query_so004 do
+    all_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    blocked_customers =
+      Selecto.configure(blocked_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    Selecto.except(all_customers, blocked_customers)
+  end
+
+  defp query_so005 do
+    premium_customers =
+      Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    active_customers =
+      Selecto.configure(active_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    all_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    premium_or_active = Selecto.union(premium_customers, active_customers)
+
+    Selecto.intersect(premium_or_active, all_customers)
   end
 
   defp query_c001 do

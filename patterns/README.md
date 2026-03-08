@@ -16,3 +16,4 @@ Each pattern file includes a `Selecto Yielded SQL` section generated from `Selec
 - `windows/`
 - `subqueries/`
 - `ctes/`
+- `set_operations/`

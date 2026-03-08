@@ -19,6 +19,7 @@ and regression checks across the Selecto ecosystem.
 - Window functions
 - Subqueries
 - CTEs
+- Set operations
 
 ## Repository Layout
 

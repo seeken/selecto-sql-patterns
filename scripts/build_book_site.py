@@ -24,7 +24,7 @@ def extract_title(path: Path) -> str:
 
 def pattern_sort_key(path: Path):
     stem = path.stem
-    match = re.match(r"([A-Z])(\d+)", stem)
+    match = re.match(r"([A-Z]{1,2})(\d+)", stem)
     if not match:
         return ("Z", 9999, stem)
     return (match.group(1), int(match.group(2)), stem)
@@ -37,6 +37,7 @@ def build_manifest() -> dict:
         ("windows", "Window Functions"),
         ("subqueries", "Subqueries"),
         ("ctes", "CTEs"),
+        ("set_operations", "Set Operations"),
     ]
 
     groups: list[dict] = []
