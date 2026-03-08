@@ -318,17 +318,13 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) gold_customers on selecto_root.customer_id = gold_customers.id
-        where (( gold_customers.id is not null ))
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `["gold"]`
+**Params:** `[]`
 
 ## S004
 
@@ -350,12 +346,8 @@ select selecto_root.name
 
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) silver_customers on selecto_root.customer_id = silver_customers.id
-        where (( silver_customers.id is not null ))
+        from orders selecto_root
+        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = $1) ))
       
         order by selecto_root.total desc
 ```
@@ -366,12 +358,8 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) customers_by_tier on selecto_root.customer_id = customers_by_tier.id
-        where (( customers_by_tier.id is not null ))
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))
       
         order by selecto_root.total desc
 ```

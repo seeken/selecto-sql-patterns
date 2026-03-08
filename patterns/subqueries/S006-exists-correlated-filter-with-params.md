@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, exists, correlated, parameters, join-subquery
+- Tags: subquery, exists, correlated, parameters, escape-hatch
 
 ## Problem
 
@@ -29,19 +29,14 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
-customers_by_tier =
-  Selecto.configure(customer_domain(), :mock_connection, validate: false)
-  |> Selecto.select(["id"])
-  |> Selecto.filter({"tier", "gold"})
-
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "status", "total"])
-  |> Selecto.join_subquery(:customers_by_tier, customers_by_tier,
-    type: :inner,
-    on: [%{left: "customer_id", right: "id"}]
-  )
-  |> Selecto.filter({"customers_by_tier.id", :not_null})
+  |> Selecto.filter({
+    :exists,
+    "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1",
+    ["gold"]
+  })
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -51,12 +46,8 @@ query =
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
-        from orders selecto_root inner join (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
-      ) customers_by_tier on selecto_root.customer_id = customers_by_tier.id
-        where (( customers_by_tier.id is not null ))
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))
       
         order by selecto_root.total desc
 ```
@@ -66,12 +57,12 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ## Expected SQL Shape
 
 - includes keyword: `select`
-- includes keyword: `inner join`
+- includes keyword: `exists (`
 - includes keyword: `$1`
 - includes keyword: `order by`
 
 ## Notes
 
-- Uses a parameterized join-subquery equivalent to `EXISTS (...)` semantics.
-- Includes a joined-key `is not null` guard to keep the existence join explicit.
+- Uses Selecto's `{:exists, query, params}` predicate for parameterized `EXISTS` semantics.
+- Keeps the correlated subquery body explicit for parity with hand-written SQL.
 - Parameters from the subquery are appended to the final params list.
