@@ -65,33 +65,50 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"F004", query_f004(), ["@@ websearch_to_tsquery", "where", "order by", "from products"]},
       {"F005", query_f005(), ["not (", "where", ">", "order by"]},
       {"F006", query_f006(), ["@>", "where", "order by", "from products"]},
+      {"F007", query_f007(), ["#>>", "?", "where", "order by"]},
+      {"F008", query_f008(), [" in (", "$1", "where", "order by"]},
       {"P001", query_p001(), ["from orders", "order by", "limit", "offset"]},
       {"P002", query_p002(), ["where", ">", "order by", "limit"]},
       {"P003", query_p003(), ["where", "<", "order by", "limit"]},
       {"P004", query_p004(), ["left join", "order by", "limit", "offset"]},
       {"P005", query_p005(), ["inserted_at", ">", "order by", "limit"]},
+      {"P006", query_p006(), ["order by", "desc", "limit", "offset"]},
+      {"P007", query_p007(), ["union all", "order by", "limit", "offset"]},
+      {"P008", query_p008(), ["where", " or ", "order by", "limit"]},
       {"JA001", query_ja001(), ["->>", "@>", "where", "order by"]},
       {"JA002", query_ja002(), ["->", "#>>", "?", "order by"]},
       {"JA003", query_ja003(), ["&&", "where", "order by", "from products"]},
       {"JA004", query_ja004(), ["metadata", "stock", "where", "order by"]},
       {"JA005", query_ja005(), ["->", "->>", "order by", "warehouse"]},
       {"JA006", query_ja006(), ["@>", "where", "order by", "from products"]},
+      {"JA007", query_ja007(), ["#>>", "active", "where", "order by"]},
+      {"JA008", query_ja008(), ["->>", "warehouse_zone", "stock_quantity", "order by"]},
       {"Q001", query_q001(), ["json_agg", "json_build_object", "from orders", "order_items"]},
       {"Q002", query_q002(), ["from orders", "exists (", "from events", "inner join"]},
       {"Q003", query_q003(), ["from orders", " in (", "from events", "join attendees"]},
       {"Q004", query_q004(), ["json_agg", "array_agg", "products", "quantities"]},
       {"Q005", query_q005(), ["count(", "order_count", "from orders", "where"]},
+      {"Q006", query_q006(),
+       ["left join", "processing_orders_member", "from customers", "order by"]},
+      {"Q007", query_q007(), ["with", "delivered_totals", "left join", "order by"]},
+      {"Q008", query_q008(), ["union all", "except", "from archived_orders", "select"]},
       {"T001", query_t001(), [">=", "<", "where", "order by"]},
       {"T002", query_t002(), ["sum", "over", "order by", "running_total"]},
       {"T003", query_t003(),
        ["date_trunc('day'", "from orders", "order by", "selecto_root.inserted_at"]},
       {"T004", query_t004(), ["avg", "over", "preceding", "trailing_avg_total"]},
       {"T005", query_t005(), ["lag(", "over", "previous_total", "order by"]},
+      {"T006", query_t006(), ["sum", "partition by", "order by", "status_running_total"]},
+      {"T007", query_t007(), ["where", " or ", "order by", "limit"]},
+      {"T008", query_t008(), ["union all", "inserted_at", "order by", "limit"]},
       {"G001", query_g001(), ["st_dwithin", "where", "order by", "from locations"]},
       {"G002", query_g002(), ["exists (", "st_intersects", "where", "from locations"]},
       {"G003", query_g003(), ["st_contains", "st_geomfromtext", "where", "from locations"]},
       {"G004", query_g004(), ["&&", "st_makeenvelope", "where", "from locations"]},
       {"G005", query_g005(), ["st_buffer", "st_intersects", "where", "from locations"]},
+      {"G006", query_g006(), ["st_distance", "order by", "limit", "from locations"]},
+      {"G007", query_g007(), ["st_geometrytype", "count", "group by", "order by"]},
+      {"G008", query_g008(), ["exists (", "st_intersects", "$1", "from locations"]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -621,6 +638,75 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       schemas: %{},
       joins: %{}
     }
+  end
+
+  defp archived_order_timeseries_domain do
+    %{
+      name: "ArchivedOrderEvents",
+      source: %{
+        source_table: "archived_orders",
+        primary_key: :id,
+        fields: [:id, :order_number, :inserted_at, :total],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          order_number: %{type: :string},
+          inserted_at: %{type: :naive_datetime},
+          total: %{type: :decimal}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp customer_domain_with_shape_members do
+    domain = customer_domain()
+
+    query_members = %{
+      ctes: %{},
+      values: %{},
+      subqueries: %{
+        processing_orders_member: %{
+          query: fn _selecto ->
+            Selecto.configure(order_domain_with_customer_join(), :mock_connection,
+              validate: false
+            )
+            |> Selecto.select(["customer_id", "order_number", "total"])
+            |> Selecto.filter({"status", "processing"})
+          end,
+          type: :left,
+          on: [%{left: "id", right: "customer_id"}]
+        }
+      }
+    }
+
+    Map.put(domain, :query_members, query_members)
+  end
+
+  defp order_domain_with_shape_members do
+    domain = order_domain_with_customer_join()
+
+    query_members = %{
+      ctes: %{
+        delivered_totals: %{
+          query: fn _selecto ->
+            Selecto.configure(order_domain_with_customer_join(), :mock_connection,
+              validate: false
+            )
+            |> Selecto.select(["id", "total"])
+            |> Selecto.filter({"status", "delivered"})
+          end,
+          columns: ["id", "total"],
+          join: [owner_key: :id, related_key: :id, fields: :infer]
+        }
+      },
+      values: %{},
+      subqueries: %{}
+    }
+
+    Map.put(domain, :query_members, query_members)
   end
 
   defp review_domain do
@@ -1276,6 +1362,23 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"name", :asc})
   end
 
+  defp query_f007 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "metadata.warehouse.zone"])
+    |> Selecto.filter({"metadata.warehouse.zone", :exists})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_f008 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "customer_id", "total"])
+    |> Selecto.filter(
+      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["platinum"]}}
+    )
+    |> Selecto.filter({"status", "processing"})
+    |> Selecto.order_by({"total", :desc})
+  end
+
   defp query_p001 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "order_number", "total"])
@@ -1316,6 +1419,49 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"inserted_at", :asc})
     |> Selecto.order_by({"id", :asc})
     |> Selecto.limit(25)
+  end
+
+  defp query_p006 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "total"])
+    |> Selecto.order_by({"total", :desc})
+    |> Selecto.order_by({"id", :desc})
+    |> Selecto.limit(20)
+    |> Selecto.offset(40)
+  end
+
+  defp query_p007 do
+    current_orders =
+      Selecto.configure(order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+      |> Selecto.order_by({"order_number", :asc})
+      |> Selecto.limit(20)
+      |> Selecto.offset(20)
+
+    archived_orders =
+      Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+      |> Selecto.order_by({"order_number", :asc})
+      |> Selecto.limit(20)
+      |> Selecto.offset(20)
+
+    Selecto.union(current_orders, archived_orders, all: true)
+    |> Selecto.order_by({"order_number", :asc})
+  end
+
+  defp query_p008 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "total"])
+    |> Selecto.filter(
+      {:or,
+       [
+         {"total", {:<, 1000}},
+         {:and, [{"total", 1000}, {"id", {:<, 500}}]}
+       ]}
+    )
+    |> Selecto.order_by({"total", :desc})
+    |> Selecto.order_by({"id", :desc})
+    |> Selecto.limit(20)
   end
 
   defp query_ja001 do
@@ -1365,6 +1511,24 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(["name", "tags"])
     |> Selecto.filter({:array_contains, "tags", ["featured", "clearance"]})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja007 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "sku", "metadata.warehouse.zone"])
+    |> Selecto.filter({"metadata.warehouse.zone", "A1"})
+    |> Selecto.filter({"active", true})
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_ja008 do
+    Selecto.configure(product_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["name", "sku"])
+    |> Selecto.json_select([
+      {:json_extract_text, "metadata", "$.warehouse.zone", as: "warehouse_zone"},
+      {:json_extract_text, "metadata", "$.stock.quantity", as: "stock_quantity"}
+    ])
     |> Selecto.order_by({"name", :asc})
   end
 
@@ -1430,6 +1594,34 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"name", :asc})
   end
 
+  defp query_q006 do
+    Selecto.configure(customer_domain_with_shape_members(), :mock_connection, validate: false)
+    |> Selecto.with_subquery(:processing_orders_member)
+    |> Selecto.select(["name", "tier", "processing_orders_member.order_number"])
+    |> Selecto.order_by({"name", :asc})
+  end
+
+  defp query_q007 do
+    Selecto.configure(order_domain_with_shape_members(), :mock_connection, validate: false)
+    |> Selecto.with_cte(:delivered_totals)
+    |> Selecto.select(["order_number", "customer.name", "delivered_totals.total"])
+    |> Selecto.order_by({"order_number", :asc})
+  end
+
+  defp query_q008 do
+    current_orders =
+      Selecto.configure(order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+
+    archived_orders =
+      Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "total"])
+
+    merged_orders = Selecto.union(current_orders, archived_orders, all: true)
+
+    Selecto.except(merged_orders, archived_orders)
+  end
+
   defp query_t001 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "inserted_at", "total"])
@@ -1483,6 +1675,52 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"inserted_at", :asc})
   end
 
+  defp query_t006 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "inserted_at", "total"])
+    |> Selecto.window_function(:sum, ["total"],
+      over: [partition_by: ["status"], order_by: ["inserted_at"]],
+      as: "status_running_total"
+    )
+    |> Selecto.order_by({"inserted_at", :asc})
+  end
+
+  defp query_t007 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "order_number", "inserted_at", "total"])
+    |> Selecto.filter(
+      {:or,
+       [
+         {"inserted_at", {:<, ~N[2024-02-01 00:00:00]}},
+         {:and,
+          [
+            {"inserted_at", ~N[2024-02-01 00:00:00]},
+            {"id", {:<, 2000}}
+          ]}
+       ]}
+    )
+    |> Selecto.order_by({"inserted_at", :desc})
+    |> Selecto.order_by({"id", :desc})
+    |> Selecto.limit(25)
+  end
+
+  defp query_t008 do
+    current_events =
+      Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "inserted_at", "total"])
+      |> Selecto.order_by({"inserted_at", :desc})
+      |> Selecto.limit(50)
+
+    archived_events =
+      Selecto.configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["order_number", "inserted_at", "total"])
+      |> Selecto.order_by({"inserted_at", :desc})
+      |> Selecto.limit(50)
+
+    Selecto.union(current_events, archived_events, all: true)
+    |> Selecto.order_by({"inserted_at", :desc})
+  end
+
   defp query_g001 do
     Selecto.configure(location_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "name"])
@@ -1528,6 +1766,43 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.filter({
       :raw_sql_filter,
       "ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01))"
+    })
+    |> Selecto.order_by({"id", :asc})
+  end
+
+  defp query_g006 do
+    distance_expr =
+      "ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))"
+
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      "id",
+      "name",
+      {:field, {:raw_sql, distance_expr}, "distance"}
+    ])
+    |> Selecto.order_by({{:raw_sql, distance_expr}, :asc})
+    |> Selecto.limit(10)
+  end
+
+  defp query_g007 do
+    geom_type_expr = "ST_GeometryType(selecto_root.geom)"
+
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      {:field, {:raw_sql, geom_type_expr}, "geom_type"},
+      {:count, "*"}
+    ])
+    |> Selecto.group_by([{:raw_sql, geom_type_expr}])
+    |> Selecto.order_by({{:raw_sql, geom_type_expr}, :asc})
+  end
+
+  defp query_g008 do
+    Selecto.configure(location_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "name"])
+    |> Selecto.filter({
+      :exists,
+      "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1",
+      ["delivery"]
     })
     |> Selecto.order_by({"id", :asc})
   end

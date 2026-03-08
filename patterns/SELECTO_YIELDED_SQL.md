@@ -31,9 +31,9 @@ select selecto_root.name, count(reviews.id)
 ```sql
 select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
         from customers selecto_root inner join (
-        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
-        from orders selecto_root
-        where (((( selecto_root.status = $1 ) and ( selecto_root.total > $2 ))))
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = $1 ) and ( subq_root_orders_high_value_delivered.total > $2 ))))
       ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
 ```
 
@@ -119,9 +119,9 @@ select customer.name, count(*)
 ```sql
 select selecto_root.order_number, gold_customers.name, selecto_root.total
         from orders selecto_root inner join (
-        select selecto_root.id, selecto_root.name, selecto_root.tier
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = $1 ))
       ) gold_customers on selecto_root.customer_id = gold_customers.id
         order by selecto_root.order_number asc
 ```
@@ -133,9 +133,9 @@ select selecto_root.order_number, gold_customers.name, selecto_root.total
 ```sql
 select selecto_root.name, selecto_root.tier, processing_orders.order_number
         from customers selecto_root left join (
-        select selecto_root.customer_id, selecto_root.order_number
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = $1 ))
       ) processing_orders on selecto_root.id = processing_orders.customer_id
         order by selecto_root.name asc
 ```
@@ -375,9 +375,9 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
 ```sql
 select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         from customers selecto_root left join (
-        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = $1 ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
         order by selecto_root.name asc
 ```
@@ -401,9 +401,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ```sql
 select selecto_root.name
         from products selecto_root left join (
-        select selecto_root.product_id
-        from reviews selecto_root
-        group by selecto_root.product_id
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
       
@@ -672,6 +672,30 @@ select selecto_root.name, selecto_root.tags
 
 **Params:** `[["featured"]]`
 
+## F007
+
+```sql
+select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## F008
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = $1) ) and ( selecto_root.status = $2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["platinum", "processing"]`
+
 ## P001
 
 ```sql
@@ -741,6 +765,61 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 ```
 
 **Params:** `[~N[2024-01-15 00:00:00]]`
+
+## P006
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+      
+        offset 40
+```
+
+**Params:** `[]`
+
+## P007
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.order_number asc
+      
+        limit 20
+      
+        offset 20
+      )
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root
+        order by selecto_root.order_number asc
+      
+        limit 20
+      
+        offset 20
+      )
+ORDER BY selecto_root.order_number asc, selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+## P008
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))
+      
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[1000, 1000, 500]`
 
 ## JA001
 
@@ -812,6 +891,28 @@ select selecto_root.name, selecto_root.tags
 
 **Params:** `[["featured", "clearance"]]`
 
+## JA007
+
+```sql
+select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1", true]`
+
+## JA008
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone", metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+        from products selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## Q001
 
 ```sql
@@ -858,6 +959,56 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_count"
         from attendees selecto_root
         order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## Q006
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders_member.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total
+        from orders subq_root_orders_processing_orders_member
+        where (( subq_root_orders_processing_orders_member.status = $1 ))
+      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+## Q007
+
+```sql
+WITH delivered_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+)
+
+        select selecto_root.order_number, customer.name, delivered_totals.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+## Q008
+
+```sql
+((
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root))
+EXCEPT
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
 ```
 
 **Params:** `[]`
@@ -910,6 +1061,53 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS previous_total
         from orders selecto_root
         order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## T006
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS status_running_total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## T007
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))
+      
+        order by selecto_root.inserted_at desc, selecto_root.id desc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-02-01 00:00:00], ~N[2024-02-01 00:00:00], 2000]`
+
+## T008
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at desc
+      
+        limit 50
+      )
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from archived_orders selecto_root
+        order by selecto_root.inserted_at desc
+      
+        limit 50
+      )
+ORDER BY selecto_root.inserted_at desc, selecto_root.inserted_at desc
 ```
 
 **Params:** `[]`
@@ -973,6 +1171,42 @@ select selecto_root.id, selecto_root.name
 ```
 
 **Params:** `[]`
+
+## G006
+
+```sql
+select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
+        from locations selecto_root
+        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+      
+        limit 10
+```
+
+**Params:** `[]`
+
+## G007
+
+```sql
+select ST_GeometryType(selecto_root.geom), count(*)
+        from locations selecto_root
+        group by ST_GeometryType(selecto_root.geom)
+      
+        order by ST_GeometryType(selecto_root.geom) asc
+```
+
+**Params:** `[]`
+
+## G008
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `["delivery"]`
 
 ## C001
 

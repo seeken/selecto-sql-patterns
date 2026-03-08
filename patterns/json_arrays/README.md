@@ -8,5 +8,5 @@ Planned IDs: `JA001` to `JA008`
 - `JA004` JSON path exists filter ✅
 - `JA005` JSON path ordering ✅
 - `JA006` array contains-all filter ✅
-- `JA007` JSON and scalar predicate mix
-- `JA008` nested JSON projection pack
+- `JA007` JSON and scalar predicate mix ✅
+- `JA008` nested JSON projection pack ✅
