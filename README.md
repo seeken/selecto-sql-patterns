@@ -5,6 +5,9 @@ Open-source SQL examples rebuilt as Selecto patterns.
 This repository is a working set of query patterns we can reuse for docs, tests,
 and regression checks across the Selecto ecosystem.
 
+> Disclaimer: This project is actively in progress and is being used to refine
+> the Selecto interface. Patterns and APIs may evolve as that work continues.
+
 ## Goals
 
 - Build practical SQL-to-Selecto examples from permissively licensed sources.
