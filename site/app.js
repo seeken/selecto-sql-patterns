@@ -212,9 +212,14 @@
   }
 
   function entryFromUrl(entries) {
+    const defaultEntry =
+      entries.find((entry) => entry.path === "README.md") ||
+      entries.find((entry) => entry.path === "patterns/README.md") ||
+      entries[0]
+
     const path = new URL(window.location.href).searchParams.get("file")
-    if (!path) return entries[0]
-    return entries.find((entry) => entry.path === path) || entries[0]
+    if (!path) return defaultEntry
+    return entries.find((entry) => entry.path === path) || defaultEntry
   }
 
   async function init() {
