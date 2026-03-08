@@ -114,6 +114,34 @@ select customer.name, count(*)
 
 **Params:** `[]`
 
+## J011
+
+```sql
+select selecto_root.order_number, gold_customers.name, selecto_root.total
+        from orders selecto_root inner join (
+        select selecto_root.id, selecto_root.name, selecto_root.tier
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["gold"]`
+
+## J012
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders.order_number
+        from customers selecto_root left join (
+        select selecto_root.customer_id, selecto_root.order_number
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) processing_orders on selecto_root.id = processing_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
 ## A001
 
 ```sql
@@ -216,6 +244,30 @@ select customer.tier, AVG(selecto_root.total)
 
 **Params:** `["delivered"]`
 
+## A009
+
+```sql
+select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+## A010
+
+```sql
+select selecto_root.name, count(reviews.id), AVG(reviews.rating)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## W001
 
 ```sql
@@ -283,6 +335,24 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selec
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS status_max_total
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+## W009
+
+```sql
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS total_percent_rank
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+## W010
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS customer_order_count
         from orders selecto_root
 ```
 
@@ -377,6 +447,42 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 ```
 
 **Params:** `["delivered"]`
+
+## S008
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total > all (SELECT total FROM orders WHERE status = 'returned') ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `[]`
+
+## S009
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total < any (SELECT total FROM orders WHERE status = 'delivered') ))
+      
+        order by selecto_root.total asc
+```
+
+**Params:** `[]`
+
+## S010
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "suspended"]`
 
 ## SO001
 

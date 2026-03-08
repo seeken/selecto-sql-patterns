@@ -15,3 +15,5 @@ Shared join-domain setup lives in `patterns/joins/DOMAIN_CONFIGURATION.md`.
 - `J008` cross join unnest tags ✅
 - `J009` parameterized join alias compare ✅
 - `J010` star dimension join group count ✅
+- `J011` inner join customer tier filter ✅
+- `J012` join subquery processing orders ✅

@@ -4,10 +4,10 @@ Tracking plan for the first rebuild pack.
 
 | Category | Target | Done |
 | --- | ---: | ---: |
-| Joins | 12 | 10 |
-| Aggregates | 10 | 8 |
-| Window functions | 10 | 8 |
-| Subqueries | 10 | 7 |
+| Joins | 12 | 12 |
+| Aggregates | 10 | 10 |
+| Window functions | 10 | 10 |
+| Subqueries | 10 | 10 |
 | CTEs | 8 | 8 |
 | Set operations | 8 | 8 |
 | Filtering and predicate logic | 8 | 6 |
@@ -16,7 +16,7 @@ Tracking plan for the first rebuild pack.
 | Query shaping | 8 | 5 |
 | Time-series | 8 | 5 |
 | Geospatial | 8 | 5 |
-| **Total** | **106** | **81** |
+| **Total** | **106** | **90** |
 
 ## Naming
 

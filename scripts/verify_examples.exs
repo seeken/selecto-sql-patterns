@@ -15,6 +15,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"J008", query_j008(), ["select", "cross join lateral unnest", "where", "product_tag"]},
       {"J009", query_j009(), ["select", "left join", "customer:alias_a", "customer:alias_b"]},
       {"J010", query_j010(), ["select", "left join", "count", "group by"]},
+      {"J011", query_j011(), ["select", "inner join", "where", "order by"]},
+      {"J012", query_j012(), ["select", "left join", "where", "order by"]},
       {"A001", query_a001(), ["select", "count", "group by", "order by"]},
       {"A002", query_a002(), ["select", "sum", "where", "group by"]},
       {"A003", query_a003(), ["select", "avg", "group by", "order by"]},
@@ -23,6 +25,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"A006", query_a006(), ["select", "count", "where", "group by"]},
       {"A007", query_a007(), ["select", "sum", "count", "group by"]},
       {"A008", query_a008(), ["select", "avg", "where", "group by"]},
+      {"A009", query_a009(), ["select", "min", "max", "group by"]},
+      {"A010", query_a010(), ["select", "count", "avg", "group by"]},
       {"W001", query_w001(), ["select", "row_number", "over", "partition by"]},
       {"W002", query_w002(), ["select", "sum", "over", "order by"]},
       {"W003", query_w003(), ["select", "lag", "over", "partition by"]},
@@ -31,6 +35,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"W006", query_w006(), ["select", "rank", "partition by", "order by"]},
       {"W007", query_w007(), ["select", "lead", "over", "partition by"]},
       {"W008", query_w008(), ["select", "max", "over", "partition by"]},
+      {"W009", query_w009(), ["select", "percent_rank", "over", "order by"]},
+      {"W010", query_w010(), ["select", "count", "over", "partition by"]},
       {"S001", query_s001(), ["select", " in (", "from customers", "order by"]},
       {"S002", query_s002(), ["select", "left join", "where", "order by"]},
       {"S003", query_s003(), ["select", "exists (", "from customers", "order by"]},
@@ -38,6 +44,9 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"S005", query_s005(), ["select", " in (", "$1", "order by"]},
       {"S006", query_s006(), ["select", "exists (", "$1", "order by"]},
       {"S007", query_s007(), ["select", " in (", "where", " and "]},
+      {"S008", query_s008(), ["select", " all (", "where", "order by"]},
+      {"S009", query_s009(), ["select", " any (", "where", "order by"]},
+      {"S010", query_s010(), ["select", "not (", "exists (", "$1"]},
       {"SO001", query_so001(), ["union", "from customers", "from vendors", "select"]},
       {"SO002", query_so002(), ["union all", "from orders", "from archived_orders", "select"]},
       {"SO003", query_so003(),
@@ -791,6 +800,36 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.order_by({"customer.name", :asc})
   end
 
+  defp query_j011 do
+    gold_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name", "tier"])
+      |> Selecto.filter({"tier", "gold"})
+
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.join_subquery(:gold_customers, gold_customers,
+      type: :inner,
+      on: [%{left: "customer_id", right: "id"}]
+    )
+    |> Selecto.select(["order_number", "gold_customers.name", "total"])
+    |> Selecto.order_by({"order_number", :asc})
+  end
+
+  defp query_j012 do
+    processing_orders =
+      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      |> Selecto.select(["customer_id", "order_number"])
+      |> Selecto.filter({"status", "processing"})
+
+    Selecto.configure(customer_domain(), :mock_connection, validate: false)
+    |> Selecto.join_subquery(:processing_orders, processing_orders,
+      type: :left,
+      on: [%{left: "id", right: "customer_id"}]
+    )
+    |> Selecto.select(["name", "tier", "processing_orders.order_number"])
+    |> Selecto.order_by({"name", :asc})
+  end
+
   defp query_a001 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["status", {:count, "*"}])
@@ -852,6 +891,28 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.filter({"status", "delivered"})
     |> Selecto.group_by(["customer.tier"])
     |> Selecto.order_by({"customer.tier", :asc})
+  end
+
+  defp query_a009 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      "status",
+      {:func, "MIN", ["total"], as: "min_total"},
+      {:func, "MAX", ["total"], as: "max_total"}
+    ])
+    |> Selecto.group_by(["status"])
+    |> Selecto.order_by({"status", :asc})
+  end
+
+  defp query_a010 do
+    Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
+    |> Selecto.select([
+      "name",
+      {:count, "reviews.id"},
+      {:func, "AVG", ["reviews.rating"], as: "avg_rating"}
+    ])
+    |> Selecto.group_by(["name"])
+    |> Selecto.order_by({"name", :asc})
   end
 
   defp query_w001 do
@@ -926,6 +987,24 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.window_function(:max, ["total"],
       over: [partition_by: ["status"]],
       as: "status_max_total"
+    )
+  end
+
+  defp query_w009 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "total"])
+    |> Selecto.window_function(:percent_rank, [],
+      over: [order_by: [{"total", :desc}]],
+      as: "total_percent_rank"
+    )
+  end
+
+  defp query_w010 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(["id", "customer_id", "total"])
+    |> Selecto.window_function(:count, ["*"],
+      over: [partition_by: ["customer_id"]],
+      as: "customer_order_count"
     )
   end
 
@@ -1006,6 +1085,36 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
     )
     |> Selecto.filter({"status", "delivered"})
+    |> Selecto.order_by({"total", :desc})
+  end
+
+  defp query_s008 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.filter(
+      {"total", :>, {:subquery, :all, "SELECT total FROM orders WHERE status = 'returned'", []}}
+    )
+    |> Selecto.order_by({"total", :desc})
+  end
+
+  defp query_s009 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.filter(
+      {"total", :<, {:subquery, :any, "SELECT total FROM orders WHERE status = 'delivered'", []}}
+    )
+    |> Selecto.order_by({"total", :asc})
+  end
+
+  defp query_s010 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(["order_number", "customer_id", "total"])
+    |> Selecto.filter({"status", "processing"})
+    |> Selecto.filter({
+      :not,
+      {:exists, "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1",
+       ["suspended"]}
+    })
     |> Selecto.order_by({"total", :desc})
   end
 
