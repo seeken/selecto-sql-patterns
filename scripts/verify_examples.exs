@@ -3,8 +3,8 @@ Mix.install([
 ])
 
 defmodule SelectoSqlPatterns.VerifyExamples do
-  def run do
-    examples = [
+  def examples do
+    [
       {"J001", query_j001(), ["select", "left join", "is not null", "order by"]},
       {"J002", query_j002(), ["select", "left join", "count", "group by"]},
       {"J003", query_j003(), ["select", "inner join", "where", "from customers"]},
@@ -47,6 +47,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"C007", query_c007(), ["with recursive", "union all", "left join", "select"]},
       {"C008", query_c008(), ["with status_labels", "values", "left join", "select"]}
     ]
+  end
+
+  def run do
+    examples = examples()
 
     Enum.each(examples, fn {id, query, fragments} ->
       {sql, _params} = Selecto.to_sql(query)
@@ -56,6 +60,35 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     end)
 
     IO.puts("Verified #{length(examples)} pattern examples with Selecto.to_sql/1")
+  end
+
+  def dump_sql_markdown(output_path \\ "patterns/SELECTO_YIELDED_SQL.md") do
+    body =
+      examples()
+      |> Enum.map(fn {id, query, _fragments} ->
+        {sql, params} = Selecto.to_sql(query)
+
+        [
+          "## ",
+          id,
+          "\n\n",
+          "```sql\n",
+          String.trim(sql),
+          "\n```\n\n",
+          "**Params:** `",
+          inspect(params),
+          "`\n\n"
+        ]
+      end)
+
+    content = [
+      "# Selecto Yielded SQL\n\n",
+      "Generated from `Selecto.to_sql/1` for every example in this repository.\n\n",
+      body
+    ]
+
+    File.write!(output_path, IO.iodata_to_binary(content))
+    IO.puts("Wrote #{output_path}")
   end
 
   defp normalize_sql(sql) do
@@ -837,4 +870,13 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 end
 
-SelectoSqlPatterns.VerifyExamples.run()
+case System.argv() do
+  ["--dump-sql", output_path] ->
+    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(output_path)
+
+  ["--dump-sql"] ->
+    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
+
+  _ ->
+    SelectoSqlPatterns.VerifyExamples.run()
+end

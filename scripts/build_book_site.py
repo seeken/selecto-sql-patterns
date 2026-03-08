@@ -66,6 +66,11 @@ def build_manifest() -> dict:
             "path": "patterns/joins/DOMAIN_CONFIGURATION.md",
         },
         {
+            "id": "YIELDED-SQL",
+            "title": extract_title(PATTERNS_DIR / "SELECTO_YIELDED_SQL.md"),
+            "path": "patterns/SELECTO_YIELDED_SQL.md",
+        },
+        {
             "id": "GUIDE",
             "title": extract_title(PATTERNS_DIR / "ESCAPE_HATCH_GUIDE.md"),
             "path": "patterns/ESCAPE_HATCH_GUIDE.md",

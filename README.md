@@ -45,6 +45,12 @@ Run all current examples through `Selecto.to_sql/1`:
 elixir scripts/verify_examples.exs
 ```
 
+Export yielded SQL for all examples:
+
+```bash
+elixir scripts/verify_examples.exs --dump-sql patterns/SELECTO_YIELDED_SQL.md
+```
+
 ## Browse as HTML
 
 Build the static HTML book locally:
