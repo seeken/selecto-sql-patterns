@@ -3,6 +3,7 @@
   const doc = document.getElementById("doc")
   const docMeta = document.getElementById("doc-meta")
   const search = document.getElementById("search")
+  const content = document.querySelector(".content")
 
   let manifest = null
   let allEntries = []
@@ -20,7 +21,7 @@
     const q = (filterText || "").trim().toLowerCase()
     sidebar.innerHTML = ""
 
-    const groups = [...manifest.groups, { title: "Reference", entries: manifest.extras }]
+    const groups = [{ title: "Reference", entries: manifest.extras }, ...manifest.groups]
 
     groups.forEach((group) => {
       const entries = group.entries.filter((entry) => {
@@ -71,7 +72,13 @@
   function updateUrl(path) {
     const url = new URL(window.location.href)
     url.searchParams.set("file", path)
+    url.hash = ""
     window.history.replaceState({}, "", url)
+  }
+
+  function scrollContentToTop() {
+    if (content) content.scrollTop = 0
+    window.scrollTo(0, 0)
   }
 
   function isExternalHref(href) {
@@ -186,6 +193,7 @@
     activePath = entry.path
     renderSidebar(search.value)
     updateUrl(entry.path)
+    scrollContentToTop()
 
     docMeta.textContent = `${entry.group} - ${entry.path}`
     doc.innerHTML = "<p>Loading...</p>"

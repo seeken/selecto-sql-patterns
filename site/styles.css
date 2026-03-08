@@ -14,6 +14,7 @@
 
 html,
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   background: radial-gradient(circle at top, #eef5ed, var(--bg) 40%);
@@ -51,12 +52,13 @@ body {
 .layout {
   display: grid;
   grid-template-columns: 320px 1fr;
-  min-height: calc(100vh - 56px);
+  height: calc(100vh - 56px);
 }
 
 .sidebar {
   border-right: 1px solid var(--line);
   padding: 14px;
+  min-height: 0;
   overflow-y: auto;
   background: #f8faf7;
 }
@@ -105,6 +107,8 @@ body {
 
 .content {
   padding: 20px;
+  min-height: 0;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -137,12 +141,13 @@ body {
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
+    grid-template-rows: 260px 1fr;
   }
 
   .sidebar {
     border-right: 0;
     border-bottom: 1px solid var(--line);
-    max-height: 260px;
+    max-height: none;
   }
 
   #search {
