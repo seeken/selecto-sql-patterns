@@ -52,6 +52,27 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `with recursive`

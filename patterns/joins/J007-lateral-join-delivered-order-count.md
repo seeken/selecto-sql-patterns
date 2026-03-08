@@ -43,6 +43,19 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.name, delivered_stats.count
+        from products selecto_root LEFT JOIN LATERAL (
+        select count(*)
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) AS delivered_stats ON true
+```
+
+**Params:** `["delivered"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

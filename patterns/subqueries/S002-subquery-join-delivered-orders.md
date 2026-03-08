@@ -45,6 +45,20 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.name, delivered_orders.order_number, delivered_orders.total
+        from customers selecto_root left join (
+        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) delivered_orders on selecto_root.id = delivered_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["delivered"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

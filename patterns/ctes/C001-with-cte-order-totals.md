@@ -45,6 +45,23 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `["delivered"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `with`

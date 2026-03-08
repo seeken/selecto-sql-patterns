@@ -36,6 +36,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS total_rank
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

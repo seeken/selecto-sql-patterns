@@ -40,6 +40,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS department_rank
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

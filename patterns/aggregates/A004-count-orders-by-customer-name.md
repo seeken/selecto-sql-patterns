@@ -34,6 +34,18 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

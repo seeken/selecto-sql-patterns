@@ -44,6 +44,19 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
+        from customers selecto_root inner join (
+        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.status = $1 ) and ( selecto_root.total > $2 ))))
+      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
+```
+
+**Params:** `["delivered", 1000]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

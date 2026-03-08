@@ -64,6 +64,26 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+WITH customer_spend (customer_id, total) AS (
+    
+        select selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+),
+    order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total, customer_spend.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `with`

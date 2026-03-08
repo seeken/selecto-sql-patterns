@@ -24,6 +24,14 @@ Describe the question this query answers.
 # Selecto equivalent
 ```
 
+## Selecto Yielded SQL
+
+```sql
+-- output of Selecto.to_sql/1
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

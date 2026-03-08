@@ -34,6 +34,16 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.first_name, manager.first_name
+        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
+        order by selecto_root.first_name asc
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

@@ -47,6 +47,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root inner join (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        where (( gold_customers.id is not null ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

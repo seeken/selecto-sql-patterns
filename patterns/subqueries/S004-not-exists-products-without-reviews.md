@@ -46,6 +46,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.name
+        from products selecto_root left join (
+        select selecto_root.product_id
+        from reviews selecto_root
+        group by selecto_root.product_id
+      ) reviewed_products on selecto_root.id = reviewed_products.product_id
+        where (( reviewed_products.product_id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

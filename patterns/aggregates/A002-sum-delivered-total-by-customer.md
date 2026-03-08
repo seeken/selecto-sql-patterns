@@ -35,6 +35,20 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+select selecto_root.customer_id, SUM(selecto_root.total)
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+        group by selecto_root.customer_id
+      
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `["delivered"]`
+
 ## Expected SQL Shape
 
 - includes keyword: `select`

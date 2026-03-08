@@ -46,6 +46,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Yielded SQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
 ## Expected SQL Shape
 
 - includes keyword: `with`
