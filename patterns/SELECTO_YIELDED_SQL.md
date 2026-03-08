@@ -452,6 +452,48 @@ INTERSECT
 
 **Params:** `[]`
 
+## SO006
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+## SO007
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+## SO008
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.company_name, selecto_root.segment
+        from vendor_contacts selecto_root)
+```
+
+**Params:** `[]`
+
 ## C001
 
 ```sql

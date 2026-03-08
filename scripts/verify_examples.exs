@@ -45,6 +45,11 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"SO004", query_so004(), ["except", "from customers", "from blocked_customers", "select"]},
       {"SO005", query_so005(),
        ["union", "intersect", "from premium_customers", "from customers"]},
+      {"SO006", query_so006(),
+       ["intersect all", "from premium_customers", "from active_customers", "select"]},
+      {"SO007", query_so007(),
+       ["except all", "from customers", "from blocked_customers", "select"]},
+      {"SO008", query_so008(), ["union", "from customers", "from vendor_contacts", "select"]},
       {"C001", query_c001(), ["with", "select", "left join", "where"]},
       {"C002", query_c002(), ["with recursive", "union all", "left join", "select"]},
       {"C003", query_c003(), ["with", "order_totals", "customer_spend", "left join"]},
@@ -314,6 +319,26 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           id: %{type: :integer},
           name: %{type: :string},
           tier: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp vendor_contact_domain do
+    %{
+      name: "VendorContacts",
+      source: %{
+        source_table: "vendor_contacts",
+        primary_key: :id,
+        fields: [:id, :company_name, :segment],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          company_name: %{type: :string},
+          segment: %{type: :string}
         },
         associations: %{}
       },
@@ -858,6 +883,47 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     premium_or_active = Selecto.union(premium_customers, active_customers)
 
     Selecto.intersect(premium_or_active, all_customers)
+  end
+
+  defp query_so006 do
+    premium_customers =
+      Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    active_customers =
+      Selecto.configure(active_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    Selecto.intersect(premium_customers, active_customers, all: true)
+  end
+
+  defp query_so007 do
+    all_customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    blocked_customers =
+      Selecto.configure(blocked_customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["id", "name"])
+
+    Selecto.except(all_customers, blocked_customers, all: true)
+  end
+
+  defp query_so008 do
+    customers =
+      Selecto.configure(customer_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["name", "tier"])
+
+    vendor_contacts =
+      Selecto.configure(vendor_contact_domain(), :mock_connection, validate: false)
+      |> Selecto.select(["company_name", "segment"])
+
+    Selecto.union(customers, vendor_contacts,
+      column_mapping: [
+        {"name", "company_name"},
+        {"tier", "segment"}
+      ]
+    )
   end
 
   defp query_c001 do

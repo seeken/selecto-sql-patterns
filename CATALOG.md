@@ -9,8 +9,8 @@ Tracking plan for the first rebuild pack.
 | Window functions | 10 | 8 |
 | Subqueries | 10 | 7 |
 | CTEs | 8 | 8 |
-| Set operations | 8 | 5 |
-| **Total** | **58** | **46** |
+| Set operations | 8 | 8 |
+| **Total** | **58** | **49** |
 
 ## Naming
 
