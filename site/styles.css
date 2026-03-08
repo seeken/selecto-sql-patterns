@@ -123,6 +123,17 @@ body {
   padding: 24px;
 }
 
+.markdown-body code,
+.markdown-body pre code {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.markdown-body pre code.hljs {
+  border: 1px solid #d7ddd1;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

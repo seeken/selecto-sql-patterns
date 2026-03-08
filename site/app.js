@@ -154,6 +154,34 @@
     })
   }
 
+  function prettifySqlBlocks() {
+    if (!window.sqlFormatter || typeof window.sqlFormatter.format !== "function") return
+
+    const sqlBlocks = doc.querySelectorAll("pre code.language-sql")
+
+    sqlBlocks.forEach((block) => {
+      const original = block.textContent || ""
+
+      try {
+        const pretty = window.sqlFormatter.format(original, {
+          language: "postgresql",
+          keywordCase: "upper"
+        })
+
+        block.textContent = pretty.trimEnd()
+      } catch (_err) {
+        block.textContent = original
+      }
+    })
+  }
+
+  function highlightCodeBlocks() {
+    if (!window.hljs || typeof window.hljs.highlightElement !== "function") return
+
+    const codeBlocks = doc.querySelectorAll("pre code")
+    codeBlocks.forEach((block) => window.hljs.highlightElement(block))
+  }
+
   async function loadEntry(entry) {
     activePath = entry.path
     renderSidebar(search.value)
@@ -170,6 +198,8 @@
 
     const markdown = await res.text()
     doc.innerHTML = marked.parse(markdown)
+    prettifySqlBlocks()
+    highlightCodeBlocks()
     wireDocumentLinks(entry.path)
   }
 
