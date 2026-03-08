@@ -43,7 +43,8 @@ def build_manifest() -> dict:
 
     for slug, title in categories:
         dir_path = PATTERNS_DIR / slug
-        files = [path for path in dir_path.glob("*.md") if path.name != "README.md"]
+        excluded = {"README.md", "DOMAIN_CONFIGURATION.md"}
+        files = [path for path in dir_path.glob("*.md") if path.name not in excluded]
         files = sorted(files, key=pattern_sort_key)
 
         entries = []
@@ -59,6 +60,11 @@ def build_manifest() -> dict:
         groups.append({"slug": slug, "title": title, "entries": entries})
 
     extras = [
+        {
+            "id": "JOIN-DOMAIN",
+            "title": extract_title(PATTERNS_DIR / "joins" / "DOMAIN_CONFIGURATION.md"),
+            "path": "patterns/joins/DOMAIN_CONFIGURATION.md",
+        },
         {
             "id": "GUIDE",
             "title": extract_title(PATTERNS_DIR / "ESCAPE_HATCH_GUIDE.md"),

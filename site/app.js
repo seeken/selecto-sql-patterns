@@ -74,6 +74,86 @@
     window.history.replaceState({}, "", url)
   }
 
+  function isExternalHref(href) {
+    return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)
+  }
+
+  function normalizePath(path) {
+    const parts = path.split("/")
+    const normalized = []
+
+    parts.forEach((part) => {
+      if (!part || part === ".") return
+      if (part === "..") {
+        if (normalized.length > 0) normalized.pop()
+        return
+      }
+      normalized.push(part)
+    })
+
+    return normalized.join("/")
+  }
+
+  function resolvePath(baseFilePath, relativePath) {
+    if (!relativePath) return baseFilePath
+    if (relativePath.startsWith("/")) return normalizePath(relativePath.slice(1))
+
+    const lastSlash = baseFilePath.lastIndexOf("/")
+    const baseDir = lastSlash >= 0 ? baseFilePath.slice(0, lastSlash + 1) : ""
+    return normalizePath(baseDir + relativePath)
+  }
+
+  function buildEntryUrl(path, hash) {
+    const url = new URL(window.location.href)
+    url.hash = ""
+    url.searchParams.set("file", path)
+    const query = url.searchParams.toString()
+    return `${url.pathname}?${query}${hash ? `#${hash}` : ""}`
+  }
+
+  function wireDocumentLinks(currentPath) {
+    const links = doc.querySelectorAll("a[href]")
+
+    links.forEach((link) => {
+      const href = link.getAttribute("href")
+      if (!href || href.startsWith("#")) return
+
+      if (isExternalHref(href)) {
+        link.setAttribute("target", "_blank")
+        link.setAttribute("rel", "noopener noreferrer")
+        return
+      }
+
+      const [hrefPath, hrefHash = ""] = href.split("#", 2)
+      const resolvedPath = resolvePath(currentPath, hrefPath)
+
+      if (resolvedPath.endsWith(".md")) {
+        link.setAttribute("href", buildEntryUrl(resolvedPath, hrefHash))
+        link.addEventListener("click", (event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+            return
+
+          event.preventDefault()
+
+          const entry =
+            allEntries.find((candidate) => candidate.path === resolvedPath) ||
+            ({
+              id: "DOC",
+              title: resolvedPath,
+              path: resolvedPath,
+              group: "Reference"
+            })
+
+          loadEntry(entry)
+        })
+        return
+      }
+
+      const resolvedHref = hrefHash ? `${resolvedPath}#${hrefHash}` : resolvedPath
+      link.setAttribute("href", resolvedHref)
+    })
+  }
+
   async function loadEntry(entry) {
     activePath = entry.path
     renderSidebar(search.value)
@@ -90,6 +170,7 @@
 
     const markdown = await res.text()
     doc.innerHTML = marked.parse(markdown)
+    wireDocumentLinks(entry.path)
   }
 
   function entryFromUrl(entries) {
