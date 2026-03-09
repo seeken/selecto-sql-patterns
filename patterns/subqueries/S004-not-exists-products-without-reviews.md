@@ -51,9 +51,9 @@ query =
 ```sql
 select selecto_root.name
         from products selecto_root left join (
-        select selecto_root.product_id
-        from reviews selecto_root
-        group by selecto_root.product_id
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
       

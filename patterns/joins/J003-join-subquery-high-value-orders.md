@@ -49,9 +49,9 @@ query =
 ```sql
 select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
         from customers selecto_root inner join (
-        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
-        from orders selecto_root
-        where (((( selecto_root.status = $1 ) and ( selecto_root.total > $2 ))))
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = $1 ) and ( subq_root_orders_high_value_delivered.total > $2 ))))
       ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
 ```
 

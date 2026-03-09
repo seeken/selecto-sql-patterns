@@ -48,9 +48,9 @@ query =
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total > all (
-        select selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
       ) ))
       
         order by selecto_root.total desc

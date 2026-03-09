@@ -50,9 +50,9 @@ query =
 ```sql
 select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         from customers selecto_root left join (
-        select selecto_root.customer_id, selecto_root.order_number, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = $1 ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
         order by selecto_root.name asc
 ```

@@ -52,9 +52,9 @@ query =
 ```sql
 select selecto_root.order_number, gold_customers.name, selecto_root.total
         from orders selecto_root inner join (
-        select selecto_root.id, selecto_root.name, selecto_root.tier
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = $1 ))
       ) gold_customers on selecto_root.customer_id = gold_customers.id
         order by selecto_root.order_number asc
 ```

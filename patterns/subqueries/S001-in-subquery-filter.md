@@ -48,9 +48,9 @@ query =
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.customer_id in (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
       ) ))
       
         order by selecto_root.total desc

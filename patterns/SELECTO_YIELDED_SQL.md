@@ -364,9 +364,9 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) O
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.customer_id in (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
       ) ))
       
         order by selecto_root.total desc
@@ -422,9 +422,9 @@ select selecto_root.name
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.customer_id in (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
       ) ))
       
         order by selecto_root.total desc
@@ -450,9 +450,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.customer_id in (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
       
         order by selecto_root.total desc
@@ -466,9 +466,9 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total > all (
-        select selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
       ) ))
       
         order by selecto_root.total desc
@@ -482,9 +482,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total < any (
-        select selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
       ) ))
       
         order by selecto_root.total asc
@@ -710,9 +710,9 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.customer_id in (
-        select selecto_root.id
-        from customers selecto_root
-        where (( selecto_root.tier = $1 ))
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
       
         order by selecto_root.total desc

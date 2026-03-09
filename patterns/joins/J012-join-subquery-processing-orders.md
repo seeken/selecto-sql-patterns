@@ -52,9 +52,9 @@ query =
 ```sql
 select selecto_root.name, selecto_root.tier, processing_orders.order_number
         from customers selecto_root left join (
-        select selecto_root.customer_id, selecto_root.order_number
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = $1 ))
       ) processing_orders on selecto_root.id = processing_orders.customer_id
         order by selecto_root.name asc
 ```
