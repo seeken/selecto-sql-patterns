@@ -4,6 +4,8 @@ Planned IDs: `S001` to `S010`
 
 Favor non-escape subquery patterns; use `patterns/ESCAPE_HATCH_GUIDE.md` only when unavoidable.
 
+Current intentional escape-hatch cases are correlated `EXISTS`/`NOT EXISTS` (`S003`, `S006`, `S010`).
+
 - `S001` `IN` subquery filter ✅
 - `S002` subquery join delivered orders ✅
 - `S003` `EXISTS` correlated filter ✅

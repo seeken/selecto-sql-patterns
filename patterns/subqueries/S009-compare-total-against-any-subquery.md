@@ -28,12 +28,15 @@ ORDER BY o.total ASC;
 ## Selecto
 
 ```elixir
+delivered_totals =
+  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["total"])
+  |> Selecto.filter({"status", "delivered"})
+
 query =
   Selecto.configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "status", "total"])
-  |> Selecto.filter(
-    {"total", :<, {:subquery, :any, "SELECT total FROM orders WHERE status = 'delivered'", []}}
-  )
+  |> Selecto.filter({"total", :<, {:subquery, :any, delivered_totals}})
   |> Selecto.order_by({"total", :asc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -44,12 +47,16 @@ query =
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total < any (SELECT total FROM orders WHERE status = 'delivered') ))
+        where (( selecto_root.total < any (
+        select selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) ))
       
         order by selecto_root.total asc
 ```
 
-**Params:** `[]`
+**Params:** `["delivered"]`
 
 ## Expected SQL Shape
 
@@ -61,4 +68,5 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ## Notes
 
 - `ANY` compares against at least one row from the subquery.
+- The reference totals come from a composed Selecto subquery.
 - Useful for relative comparisons without hardcoded thresholds.

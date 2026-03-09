@@ -63,6 +63,6 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 ## Notes
 
-- Uses Selecto's `{:exists, query, params}` predicate for parameterized `EXISTS` semantics.
-- Keeps the correlated subquery body explicit for parity with hand-written SQL.
+- Uses raw `{:exists, query, params}` intentionally because this is a correlated subquery against `selecto_root.customer_id`.
+- A composed subquery can express uncorrelated sets, but not this correlated `EXISTS` predicate directly today.
 - Parameters from the subquery are appended to the final params list.

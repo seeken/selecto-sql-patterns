@@ -1094,12 +1094,22 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     )
   end
 
+  defp customer_id_subquery_by_tier(tier) do
+    Selecto.configure(customer_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["id"])
+    |> Selecto.filter({"tier", tier})
+  end
+
+  defp order_total_subquery_by_status(status) do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(["total"])
+    |> Selecto.filter({"status", status})
+  end
+
   defp query_s001 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "status", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
-    )
+    |> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("gold")}})
     |> Selecto.order_by({"total", :desc})
   end
 
@@ -1147,9 +1157,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_s005 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["silver"]}}
-    )
+    |> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("silver")}})
     |> Selecto.order_by({"total", :desc})
   end
 
@@ -1167,9 +1175,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_s007 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}}
-    )
+    |> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("gold")}})
     |> Selecto.filter({"status", "delivered"})
     |> Selecto.order_by({"total", :desc})
   end
@@ -1178,7 +1184,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
     |> Selecto.filter(
-      {"total", :>, {:subquery, :all, "SELECT total FROM orders WHERE status = 'returned'", []}}
+      {"total", :>, {:subquery, :all, order_total_subquery_by_status("returned")}}
     )
     |> Selecto.order_by({"total", :desc})
   end
@@ -1187,7 +1193,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "status", "total"])
     |> Selecto.filter(
-      {"total", :<, {:subquery, :any, "SELECT total FROM orders WHERE status = 'delivered'", []}}
+      {"total", :<, {:subquery, :any, order_total_subquery_by_status("delivered")}}
     )
     |> Selecto.order_by({"total", :asc})
   end
@@ -1372,9 +1378,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_f008 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["order_number", "customer_id", "total"])
-    |> Selecto.filter(
-      {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["platinum"]}}
-    )
+    |> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("platinum")}})
     |> Selecto.filter({"status", "processing"})
     |> Selecto.order_by({"total", :desc})
   end
@@ -1434,19 +1438,15 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     current_orders =
       Selecto.configure(order_domain(), :mock_connection, validate: false)
       |> Selecto.select(["order_number", "total"])
-      |> Selecto.order_by({"order_number", :asc})
-      |> Selecto.limit(20)
-      |> Selecto.offset(20)
 
     archived_orders =
       Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
       |> Selecto.select(["order_number", "total"])
-      |> Selecto.order_by({"order_number", :asc})
-      |> Selecto.limit(20)
-      |> Selecto.offset(20)
 
     Selecto.union(current_orders, archived_orders, all: true)
     |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.limit(20)
+    |> Selecto.offset(20)
   end
 
   defp query_p008 do
@@ -1708,17 +1708,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     current_events =
       Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
       |> Selecto.select(["order_number", "inserted_at", "total"])
-      |> Selecto.order_by({"inserted_at", :desc})
-      |> Selecto.limit(50)
 
     archived_events =
       Selecto.configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
       |> Selecto.select(["order_number", "inserted_at", "total"])
-      |> Selecto.order_by({"inserted_at", :desc})
-      |> Selecto.limit(50)
 
     Selecto.union(current_events, archived_events, all: true)
     |> Selecto.order_by({"inserted_at", :desc})
+    |> Selecto.limit(50)
   end
 
   defp query_g001 do

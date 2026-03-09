@@ -29,12 +29,15 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
+platinum_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "platinum"})
+
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "total"])
-  |> Selecto.filter(
-    {"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = $1", ["platinum"]}}
-  )
+  |> Selecto.filter({"customer_id", {:subquery, :in, platinum_customers}})
   |> Selecto.filter({"status", "processing"})
   |> Selecto.order_by({"total", :desc})
 
@@ -46,7 +49,11 @@ query =
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = $1) ) and ( selecto_root.status = $2 ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ) and ( selecto_root.status = $2 ))
       
         order by selecto_root.total desc
 ```
@@ -62,5 +69,5 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 ## Notes
 
-- Paramized subqueries keep shared filters reusable.
+- Uses a constructed Selecto subquery instead of embedding SQL text.
 - Combining root and subquery predicates captures common reporting patterns.

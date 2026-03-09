@@ -28,10 +28,15 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
+gold_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id"])
+  |> Selecto.filter({"tier", "gold"})
+
 query =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "customer_id", "status", "total"])
-  |> Selecto.filter({"customer_id", {:subquery, :in, "SELECT id FROM customers WHERE tier = 'gold'", []}})
+  |> Selecto.filter({"customer_id", {:subquery, :in, gold_customers}})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -42,12 +47,16 @@ query =
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `[]`
+**Params:** `["gold"]`
 
 ## Expected SQL Shape
 
@@ -58,5 +67,5 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
 
 ## Notes
 
-- Uses Selecto's native `{:subquery, :in, ...}` predicate form.
+- Uses a fully constructed Selecto query as the `IN` subquery source.
 - This pattern is useful for migrating existing hand-written SQL incrementally.

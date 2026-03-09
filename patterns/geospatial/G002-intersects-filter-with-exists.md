@@ -59,4 +59,5 @@ select selecto_root.id, selecto_root.name
 ## Notes
 
 - `EXISTS` keeps spatial intersection checks correlated without expanding rows.
-- This pattern is compatible with native filters plus spatial escape-hatch clauses.
+- Raw `EXISTS` is used intentionally because this correlation uses a non-equi spatial predicate (`ST_Intersects`) against an unjoined table.
+- This pattern is compatible with native filters plus a focused spatial escape hatch clause.

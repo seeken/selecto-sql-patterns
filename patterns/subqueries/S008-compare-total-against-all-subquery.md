@@ -28,12 +28,15 @@ ORDER BY o.total DESC;
 ## Selecto
 
 ```elixir
+returned_totals =
+  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["total"])
+  |> Selecto.filter({"status", "returned"})
+
 query =
   Selecto.configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "status", "total"])
-  |> Selecto.filter(
-    {"total", :>, {:subquery, :all, "SELECT total FROM orders WHERE status = 'returned'", []}}
-  )
+  |> Selecto.filter({"total", :>, {:subquery, :all, returned_totals}})
   |> Selecto.order_by({"total", :desc})
 
 {sql, params} = Selecto.to_sql(query)
@@ -44,12 +47,16 @@ query =
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total > all (SELECT total FROM orders WHERE status = 'returned') ))
+        where (( selecto_root.total > all (
+        select selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `[]`
+**Params:** `["returned"]`
 
 ## Expected SQL Shape
 
@@ -61,4 +68,5 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ## Notes
 
 - `ALL` compares against every row produced by the subquery.
+- The comparison set is built with Selecto, not embedded SQL text.
 - This pattern is useful for outlier detection and threshold checks.

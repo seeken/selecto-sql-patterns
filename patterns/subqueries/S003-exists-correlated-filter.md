@@ -62,6 +62,6 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 ## Notes
 
-- Uses Selecto's `{:exists, ...}` predicate for direct `EXISTS` semantics.
-- Keeps the correlated subquery body explicit for parity with hand-written SQL.
+- Uses raw `{:exists, ...}` intentionally because this is a correlated predicate (`c.id = selecto_root.customer_id`).
+- Current non-escape APIs can build derived-table joins, but not this correlated `EXISTS` shape directly.
 - Works well when translating legacy SQL step by step.

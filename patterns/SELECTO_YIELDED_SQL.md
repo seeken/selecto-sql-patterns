@@ -363,12 +363,16 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) O
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `[]`
+**Params:** `["gold"]`
 
 ## S002
 
@@ -417,7 +421,11 @@ select selecto_root.name
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = $1) ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ))
       
         order by selecto_root.total desc
 ```
@@ -441,36 +449,48 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = 'gold') ) and ( selecto_root.status = $1 ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ) and ( selecto_root.status = $2 ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `["delivered"]`
+**Params:** `["gold", "delivered"]`
 
 ## S008
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total > all (SELECT total FROM orders WHERE status = 'returned') ))
+        where (( selecto_root.total > all (
+        select selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) ))
       
         order by selecto_root.total desc
 ```
 
-**Params:** `[]`
+**Params:** `["returned"]`
 
 ## S009
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total < any (SELECT total FROM orders WHERE status = 'delivered') ))
+        where (( selecto_root.total < any (
+        select selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      ) ))
       
         order by selecto_root.total asc
 ```
 
-**Params:** `[]`
+**Params:** `["delivered"]`
 
 ## S010
 
@@ -689,7 +709,11 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 ```sql
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.customer_id in (SELECT id FROM customers WHERE tier = $1) ) and ( selecto_root.status = $2 ))
+        where (( selecto_root.customer_id in (
+        select selecto_root.id
+        from customers selecto_root
+        where (( selecto_root.tier = $1 ))
+      ) ) and ( selecto_root.status = $2 ))
       
         order by selecto_root.total desc
 ```
@@ -785,24 +809,14 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 (
         select selecto_root.order_number, selecto_root.total
-        from orders selecto_root
-        order by selecto_root.order_number asc
-      
-        limit 20
-      
-        offset 20
-      )
+        from orders selecto_root)
 UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
-        from archived_orders selecto_root
-        order by selecto_root.order_number asc
-      
-        limit 20
-      
-        offset 20
-      )
-ORDER BY selecto_root.order_number asc, selecto_root.order_number asc
+        from archived_orders selecto_root)
+ORDER BY selecto_root.order_number asc
+LIMIT 20
+OFFSET 20
 ```
 
 **Params:** `[]`
@@ -1094,20 +1108,13 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 ```sql
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from orders selecto_root
-        order by selecto_root.inserted_at desc
-      
-        limit 50
-      )
+        from orders selecto_root)
 UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from archived_orders selecto_root
-        order by selecto_root.inserted_at desc
-      
-        limit 50
-      )
-ORDER BY selecto_root.inserted_at desc, selecto_root.inserted_at desc
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+LIMIT 50
 ```
 
 **Params:** `[]`

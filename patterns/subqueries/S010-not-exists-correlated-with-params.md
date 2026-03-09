@@ -6,7 +6,7 @@
 - Source URL: http://goalkicker.com/SQLBook/
 - Source License: CC BY-SA (Stack Overflow Documentation derivative)
 - Dialect: postgres
-- Tags: subquery, not-exists, correlated, params
+- Tags: subquery, not-exists, correlated, params, escape-hatch
 
 ## Problem
 
@@ -65,4 +65,5 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 ## Notes
 
 - Wrapping `EXISTS` in `:not` provides a clear anti-correlation pattern.
+- Raw SQL is used intentionally because the inner predicate must correlate on `selecto_root.customer_id`.
 - Parameterized inner predicates keep this shape reusable.

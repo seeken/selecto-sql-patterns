@@ -64,4 +64,5 @@ select selecto_root.id, selecto_root.name
 ## Notes
 
 - Attribute-constrained spatial joins are common in service-area lookups.
+- Raw `EXISTS` is used intentionally because the correlation depends on `ST_Intersects(selecto_root.geom, r.geom)` plus an inner attribute predicate.
 - Parameterizing the region attribute keeps this pattern reusable.

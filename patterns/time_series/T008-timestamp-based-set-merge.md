@@ -48,20 +48,13 @@ query =
 ```sql
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from orders selecto_root
-        order by selecto_root.inserted_at desc
-      
-        limit 50
-      )
+        from orders selecto_root)
 UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from archived_orders selecto_root
-        order by selecto_root.inserted_at desc
-      
-        limit 50
-      )
-ORDER BY selecto_root.inserted_at desc, selecto_root.inserted_at desc
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+LIMIT 50
 ```
 
 **Params:** `[]`
