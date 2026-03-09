@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Selecto
         uses: actions/checkout@v4
         with:
-          repository: selecto-elixir/selecto
+          repository: seeken/selecto
           ref: main
           path: selecto
 
