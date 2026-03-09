@@ -1,5 +1,7 @@
+selecto_path = System.get_env("SELECTO_PATH", "../selecto")
+
 Mix.install([
-  {:selecto, path: "../selecto"}
+  {:selecto, path: selecto_path}
 ])
 
 defmodule SelectoSqlPatterns.VerifyExamples do

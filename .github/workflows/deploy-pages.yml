@@ -19,10 +19,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout Selecto
+        uses: actions/checkout@v4
+        with:
+          repository: selecto-elixir/selecto
+          ref: main
+          path: selecto
+
+      - name: Setup BEAM
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: "27"
+          elixir-version: "1.18"
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+
+      - name: Regenerate yielded SQL
+        env:
+          SELECTO_PATH: selecto
+        run: elixir scripts/verify_examples.exs --dump-sql patterns/SELECTO_YIELDED_SQL.md
 
       - name: Build static book site
         run: python scripts/build_book_site.py
