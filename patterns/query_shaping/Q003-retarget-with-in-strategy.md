@@ -1,16 +1,16 @@
-# Q003 Pivot With IN Strategy
+# Q003 Retarget With IN Strategy
 
 ## Metadata
 
-- Source: Selecto Pivot Integration Tests
+- Source: Selecto Retarget Integration Tests
 - Source URL: https://github.com/seeken/selecto
 - Source License: MIT
 - Dialect: postgres
-- Tags: shaping, pivot, in-subquery
+- Tags: shaping, retarget, in-subquery
 
 ## Problem
 
-Retarget an event-filtered query to orders using the pivot IN-subquery strategy.
+Retarget an event-filtered query to orders using the retarget IN-subquery strategy.
 
 ## SQL
 
@@ -30,10 +30,10 @@ WHERE o.order_id IN (
 
 ```elixir
 query =
-  Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+  Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
   |> Selecto.filter({"event_id", 2000})
   |> Selecto.select(["orders.product_name", "orders.quantity"])
-  |> Selecto.pivot(:orders, subquery_strategy: :in)
+  |> Selecto.retarget(:orders, subquery_strategy: :in)
 
 {sql, params} = Selecto.to_sql(query)
 ```
@@ -57,5 +57,5 @@ select t.product_name, t.quantity
 
 ## Notes
 
-- `subquery_strategy: :in` produces an ID-set membership pivot shape.
+- `subquery_strategy: :in` produces an ID-set membership retarget shape.
 - This strategy works well when target primary keys are natural correlation anchors.

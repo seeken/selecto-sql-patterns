@@ -553,7 +553,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     }
   end
 
-  defp event_pivot_domain do
+  defp event_retarget_domain do
     %{
       source: %{
         source_table: "events",
@@ -1549,17 +1549,17 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp query_q002 do
-    Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+    Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
     |> Selecto.filter({"event_id", 1000})
     |> Selecto.select(["orders.product_name", "orders.quantity"])
-    |> Selecto.pivot(:orders, subquery_strategy: :exists)
+    |> Selecto.retarget(:orders, subquery_strategy: :exists)
   end
 
   defp query_q003 do
-    Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+    Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
     |> Selecto.filter({"event_id", 2000})
     |> Selecto.select(["orders.product_name", "orders.quantity"])
-    |> Selecto.pivot(:orders, subquery_strategy: :in)
+    |> Selecto.retarget(:orders, subquery_strategy: :in)
   end
 
   defp query_q004 do

@@ -1,16 +1,16 @@
-# Q002 Pivot To Joined Target Schema
+# Q002 Retarget To Joined Target Schema
 
 ## Metadata
 
-- Source: Selecto Pivot Integration Tests
+- Source: Selecto Retarget Integration Tests
 - Source URL: https://github.com/seeken/selecto
 - Source License: MIT
 - Dialect: postgres
-- Tags: shaping, pivot, exists, retargeting
+- Tags: shaping, retarget, exists, retargeting
 
 ## Problem
 
-Start from event filters, then pivot the query root to related orders while preserving filter context.
+Start from event filters, then retarget the query root to related orders while preserving filter context.
 
 ## SQL
 
@@ -31,10 +31,10 @@ WHERE EXISTS (
 
 ```elixir
 query =
-  Selecto.configure(event_pivot_domain(), :mock_connection, validate: false)
+  Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
   |> Selecto.filter({"event_id", 1000})
   |> Selecto.select(["orders.product_name", "orders.quantity"])
-  |> Selecto.pivot(:orders, subquery_strategy: :exists)
+  |> Selecto.retarget(:orders, subquery_strategy: :exists)
 
 {sql, params} = Selecto.to_sql(query)
 ```
@@ -58,5 +58,5 @@ select t.product_name, t.quantity
 
 ## Notes
 
-- `pivot/3` retargets output to a joined schema while reusing existing root predicates.
+- `retarget/3` retargets output to a joined schema while reusing existing root predicates.
 - `subquery_strategy: :exists` emits a correlated EXISTS envelope.
