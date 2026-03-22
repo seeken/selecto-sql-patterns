@@ -39,7 +39,7 @@ query =
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, nil.product_tag
+select selecto_root.name, product_tag
         from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
         where (( selecto_root.active = $1 ))
 ```

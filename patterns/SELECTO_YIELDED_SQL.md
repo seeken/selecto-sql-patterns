@@ -86,7 +86,7 @@ select selecto_root.name, delivered_stats.count
 ## J008
 
 ```sql
-select selecto_root.name, nil.product_tag
+select selecto_root.name, product_tag
         from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
         where (( selecto_root.active = $1 ))
 ```
@@ -728,7 +728,6 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         order by selecto_root.id asc
       
         limit 25
-      
         offset 50
 ```
 
@@ -770,7 +769,6 @@ select selecto_root.order_number, customer.name, selecto_root.total
         order by customer.name asc, selecto_root.order_number asc
       
         limit 15
-      
         offset 30
 ```
 
@@ -798,7 +796,6 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         order by selecto_root.total desc, selecto_root.id desc
       
         limit 20
-      
         offset 40
 ```
 
@@ -815,8 +812,8 @@ UNION ALL
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
 ORDER BY selecto_root.order_number asc
-LIMIT 20
-OFFSET 20
+limit 20
+offset 20
 ```
 
 **Params:** `[]`
@@ -1114,7 +1111,7 @@ UNION ALL
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
 ORDER BY selecto_root.inserted_at desc
-LIMIT 50
+limit 50
 ```
 
 **Params:** `[]`

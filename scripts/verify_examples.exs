@@ -128,9 +128,12 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Enum.each(examples, fn {id, query, fragments} ->
       {sql, _params} = Selecto.to_sql(query)
       normalized = normalize_sql(sql)
+      assert_sql_sanity!(id, normalized)
       assert_fragments!(id, normalized, fragments)
       IO.puts("PASS #{id}")
     end)
+
+    run_validation_sensitive_examples!()
 
     IO.puts("Verified #{length(examples)} pattern examples with Selecto.to_sql/1")
   end
@@ -140,6 +143,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       examples()
       |> Enum.map(fn {id, query, _fragments} ->
         {sql, params} = Selecto.to_sql(query)
+        assert_sql_sanity!(id, normalize_sql(sql))
 
         [
           "## ",
@@ -176,6 +180,29 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       if not String.contains?(sql, fragment) do
         raise "#{id} failed: expected SQL to include '#{fragment}'. SQL was: #{sql}"
       end
+    end)
+  end
+
+  defp assert_sql_sanity!(id, sql) do
+    if String.contains?(sql, "nil.") do
+      raise "#{id} failed: SQL contained invalid nil-qualified selector. SQL was: #{sql}"
+    end
+  end
+
+  defp run_validation_sensitive_examples! do
+    validation_examples = [
+      {"EV001", validation_query_unnest_registered_field(),
+       ["cross join lateral unnest", "product_tag"]},
+      {"EV002", validation_query_cte_registered_field(),
+       ["with active_orders", "active_orders.status"]}
+    ]
+
+    Enum.each(validation_examples, fn {id, query, fragments} ->
+      {sql, _params} = Selecto.to_sql(query)
+      normalized = normalize_sql(sql)
+      assert_sql_sanity!(id, normalized)
+      assert_fragments!(id, normalized, fragments)
+      IO.puts("PASS #{id}")
     end)
   end
 
@@ -875,6 +902,28 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.join_parameterize(:customer, "alias_a")
     |> Selecto.join_parameterize(:customer, "alias_b")
     |> Selecto.select(["order_number", "customer:alias_a.name", "customer:alias_b.tier"])
+  end
+
+  defp validation_query_unnest_registered_field do
+    Selecto.configure(product_domain(), :mock_connection)
+    |> Selecto.unnest("tags", as: "product_tag")
+    |> Selecto.select(["name", "product_tag"])
+    |> Selecto.filter({"active", true})
+  end
+
+  defp validation_query_cte_registered_field do
+    Selecto.configure(order_domain(), :mock_connection)
+    |> Selecto.with_cte(
+      "active_orders",
+      fn ->
+        Selecto.configure(order_domain(), :mock_connection)
+        |> Selecto.select(["id", "status"])
+        |> Selecto.filter({"status", "processing"})
+      end,
+      columns: ["id", "status"],
+      join: true
+    )
+    |> Selecto.select(["order_number", "active_orders.status"])
   end
 
   defp query_j010 do
