@@ -5,6 +5,10 @@ Mix.install([
 ])
 
 defmodule SelectoSqlPatterns.VerifyExamples do
+  import Selecto.ExprMacros
+
+  alias Selecto.Expr, as: X
+
   def examples do
     [
       {"J001", query_j001(), ["select", "left join", "is not null", "order by"]},
@@ -834,19 +838,16 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     high_value_delivered_orders =
       Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
       |> Selecto.select(["customer_id", "order_number", "total"])
-      |> Selecto.filter({:and, [{"status", "delivered"}, {"total", {:>, 1000}}]})
+      |> Selecto.filter(where(status == "delivered" and total > 1000))
 
     Selecto.configure(customer_domain(), :mock_connection, validate: false)
     |> Selecto.join_subquery(:high_value_delivered, high_value_delivered_orders,
       type: :inner,
       on: [%{left: "id", right: "customer_id"}]
     )
-    |> Selecto.select([
-      "name",
-      "tier",
-      "high_value_delivered.order_number",
-      "high_value_delivered.total"
-    ])
+    |> Selecto.select(
+      select([name, tier, high_value_delivered.order_number, high_value_delivered.total])
+    )
   end
 
   defp query_j004 do
@@ -894,7 +895,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       "name",
       "product_tag"
     ])
-    |> Selecto.filter({"active", true})
+    |> Selecto.filter(X.eq("active", true))
   end
 
   defp query_j009 do
@@ -969,9 +970,9 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_a001 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["status", {:count, "*"}])
+    |> Selecto.select(select([status, count()]))
     |> Selecto.group_by(["status"])
-    |> Selecto.order_by({"status", :asc})
+    |> Selecto.order_by(order_by([asc(status)]))
   end
 
   defp query_a002 do
@@ -1054,9 +1055,9 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_w001 do
     Selecto.configure(employee_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["first_name", "department", "salary"])
+    |> Selecto.select(select([first_name, department, salary]))
     |> Selecto.window_function(:row_number, [],
-      over: [partition_by: ["department"], order_by: [{"salary", :desc}]],
+      over: [partition_by: ["department"], order_by: order_by([desc(salary)])],
       as: "department_salary_rank"
     )
   end
@@ -1378,15 +1379,9 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_f002 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "status", "total"])
-    |> Selecto.filter(
-      {:and,
-       [
-         {:or, [{"status", "processing"}, {"status", "shipped"}]},
-         {"total", {:>, 100}}
-       ]}
-    )
-    |> Selecto.order_by({"total", :desc})
+    |> Selecto.select(select([order_number, status, total]))
+    |> Selecto.filter(where((status == "processing" or status == "shipped") and total > 100))
+    |> Selecto.order_by(order_by([desc(total)]))
   end
 
   defp query_f003 do
@@ -1738,20 +1733,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_t007 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "inserted_at", "total"])
+    |> Selecto.select(select([id, order_number, inserted_at, total]))
     |> Selecto.filter(
-      {:or,
-       [
-         {"inserted_at", {:<, ~N[2024-02-01 00:00:00]}},
-         {:and,
-          [
-            {"inserted_at", ~N[2024-02-01 00:00:00]},
-            {"id", {:<, 2000}}
-          ]}
-       ]}
+      where(
+        inserted_at < ~N[2024-02-01 00:00:00] or
+          (inserted_at == ~N[2024-02-01 00:00:00] and id < 2000)
+      )
     )
-    |> Selecto.order_by({"inserted_at", :desc})
-    |> Selecto.order_by({"id", :desc})
+    |> Selecto.order_by(order_by([desc(inserted_at), desc(id)]))
     |> Selecto.limit(25)
   end
 

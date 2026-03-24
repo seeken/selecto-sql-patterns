@@ -34,6 +34,7 @@ and regression checks across the Selecto ecosystem.
 
 - `attribution/sources.md` source list and license notes
 - `patterns/` query patterns grouped by topic
+- `patterns/EXPRESSION_DSL_GUIDE.md` guidance for using `Selecto.Expr` and macro-based examples
 - `patterns/_template.md` pattern authoring template
 - `patterns/joins/DOMAIN_CONFIGURATION.md` shared domain setup for join-focused examples
 - `patterns/ESCAPE_HATCH_GUIDE.md` rules for lateral/raw SQL escape-hatch patterns
@@ -46,6 +47,7 @@ and regression checks across the Selecto ecosystem.
 - Keep attribution in each pattern file.
 - For SQL assertions in tests, prefer case-insensitive keyword checks.
 - For lateral/raw SQL examples, follow `patterns/ESCAPE_HATCH_GUIDE.md`.
+- Prefer `Selecto.Expr` and `Selecto.ExprMacros` in new examples when they make patterns easier to read.
 
 ## Verify Examples
 
