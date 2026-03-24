@@ -977,80 +977,68 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_a002 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["customer_id", {:func, "SUM", ["total"], as: "total_spend"}])
-    |> Selecto.filter({"status", "delivered"})
+    |> Selecto.select(select([customer_id, as(sum(total), "total_spend")]))
+    |> Selecto.filter(where(status == "delivered"))
     |> Selecto.group_by(["customer_id"])
-    |> Selecto.order_by({"customer_id", :asc})
+    |> Selecto.order_by(order_by([asc(customer_id)]))
   end
 
   defp query_a003 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["status", {:func, "AVG", ["total"], as: "avg_total"}])
+    |> Selecto.select(select([status, as(avg(total), "avg_total")]))
     |> Selecto.group_by(["status"])
-    |> Selecto.order_by({"status", :asc})
+    |> Selecto.order_by(order_by([asc(status)]))
   end
 
   defp query_a004 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["customer.name", {:count, "*"}])
+    |> Selecto.select(select([customer.name, count()]))
     |> Selecto.group_by(["customer.name"])
-    |> Selecto.order_by({"customer.name", :asc})
+    |> Selecto.order_by(order_by([asc(customer.name)]))
   end
 
   defp query_a005 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["customer.tier", {:func, "SUM", ["total"], as: "tier_total"}])
+    |> Selecto.select(select([customer.tier, as(sum(total), "tier_total")]))
     |> Selecto.group_by(["customer.tier"])
-    |> Selecto.order_by({"customer.tier", :asc})
+    |> Selecto.order_by(order_by([asc(customer.tier)]))
   end
 
   defp query_a006 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["customer.tier", {:count, "*"}])
-    |> Selecto.filter({"status", "delivered"})
+    |> Selecto.select(select([customer.tier, count()]))
+    |> Selecto.filter(where(status == "delivered"))
     |> Selecto.group_by(["customer.tier"])
-    |> Selecto.order_by({"customer.tier", :asc})
+    |> Selecto.order_by(order_by([asc(customer.tier)]))
   end
 
   defp query_a007 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select([
-      "status",
-      {:func, "SUM", ["total"], as: "total_amount"},
-      {:count, "*"}
-    ])
+    |> Selecto.select(select([status, as(sum(total), "total_amount"), count()]))
     |> Selecto.group_by(["status"])
-    |> Selecto.order_by({"status", :asc})
+    |> Selecto.order_by(order_by([asc(status)]))
   end
 
   defp query_a008 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["customer.tier", {:func, "AVG", ["total"], as: "avg_delivered_total"}])
-    |> Selecto.filter({"status", "delivered"})
+    |> Selecto.select(select([customer.tier, as(avg(total), "avg_delivered_total")]))
+    |> Selecto.filter(where(status == "delivered"))
     |> Selecto.group_by(["customer.tier"])
-    |> Selecto.order_by({"customer.tier", :asc})
+    |> Selecto.order_by(order_by([asc(customer.tier)]))
   end
 
   defp query_a009 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select([
-      "status",
-      {:func, "MIN", ["total"], as: "min_total"},
-      {:func, "MAX", ["total"], as: "max_total"}
-    ])
+    |> Selecto.select(select([status, as(min(total), "min_total"), as(max(total), "max_total")]))
     |> Selecto.group_by(["status"])
-    |> Selecto.order_by({"status", :asc})
+    |> Selecto.order_by(order_by([asc(status)]))
   end
 
   defp query_a010 do
     Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
-    |> Selecto.select([
-      "name",
-      {:count, "reviews.id"},
-      {:func, "AVG", ["reviews.rating"], as: "avg_rating"}
-    ])
+    |> Selecto.select(select([name, count(reviews.id), as(avg(reviews.rating), "avg_rating")]))
     |> Selecto.group_by(["name"])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_w001 do
@@ -1064,37 +1052,37 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_w002 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "customer_id", "total"])
+    |> Selecto.select(select([id, customer_id, total]))
     |> Selecto.window_function(:sum, ["total"],
-      over: [partition_by: ["customer_id"], order_by: ["id"]],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(id)])],
       as: "running_total"
     )
   end
 
   defp query_w003 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "customer_id", "total"])
+    |> Selecto.select(select([id, customer_id, total]))
     |> Selecto.window_function(:lag, ["total", 1],
-      over: [partition_by: ["customer_id"], order_by: ["id"]],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(id)])],
       as: "prev_total"
     )
   end
 
   defp query_w004 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "total"])
+    |> Selecto.select(select([order_number, total]))
     |> Selecto.window_function(:dense_rank, [],
-      over: [order_by: [{"total", :desc}]],
+      over: [order_by: order_by([desc(total)])],
       as: "total_rank"
     )
   end
 
   defp query_w005 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "total"])
+    |> Selecto.select(select([id, total]))
     |> Selecto.window_function(:avg, ["total"],
       over: [
-        order_by: ["id"],
+        order_by: order_by([asc(id)]),
         frame: {:rows, :unbounded_preceding, :current_row}
       ],
       as: "moving_avg_total"
@@ -1103,25 +1091,25 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_w006 do
     Selecto.configure(employee_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["first_name", "department", "salary"])
+    |> Selecto.select(select([first_name, department, salary]))
     |> Selecto.window_function(:rank, [],
-      over: [partition_by: ["department"], order_by: [{"salary", :desc}]],
+      over: [partition_by: ["department"], order_by: order_by([desc(salary)])],
       as: "department_rank"
     )
   end
 
   defp query_w007 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "customer_id", "total"])
+    |> Selecto.select(select([id, customer_id, total]))
     |> Selecto.window_function(:lead, ["total", 1],
-      over: [partition_by: ["customer_id"], order_by: ["id"]],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(id)])],
       as: "next_total"
     )
   end
 
   defp query_w008 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "status", "total"])
+    |> Selecto.select(select([order_number, status, total]))
     |> Selecto.window_function(:max, ["total"],
       over: [partition_by: ["status"]],
       as: "status_max_total"
@@ -1130,16 +1118,16 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_w009 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "total"])
+    |> Selecto.select(select([order_number, total]))
     |> Selecto.window_function(:percent_rank, [],
-      over: [order_by: [{"total", :desc}]],
+      over: [order_by: order_by([desc(total)])],
       as: "total_percent_rank"
     )
   end
 
   defp query_w010 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "customer_id", "total"])
+    |> Selecto.select(select([id, customer_id, total]))
     |> Selecto.window_function(:count, ["*"],
       over: [partition_by: ["customer_id"]],
       as: "customer_order_count"
@@ -1439,43 +1427,43 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_p002 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "total"])
-    |> Selecto.filter({"id", {:>, 1000}})
-    |> Selecto.order_by({"id", :asc})
+    |> Selecto.select(select([id, order_number, total]))
+    |> Selecto.filter(where(id > 1000))
+    |> Selecto.order_by(order_by([asc(id)]))
     |> Selecto.limit(25)
   end
 
   defp query_p003 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "total"])
-    |> Selecto.filter({"id", {:<, 5000}})
-    |> Selecto.order_by({"id", :desc})
+    |> Selecto.select(select([id, order_number, total]))
+    |> Selecto.filter(where(id < 5000))
+    |> Selecto.order_by(order_by([desc(id)]))
     |> Selecto.limit(20)
   end
 
   defp query_p004 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "customer.name", "total"])
-    |> Selecto.order_by({"customer.name", :asc})
-    |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.select(select([order_number, customer.name, total]))
+    |> Selecto.order_by(order_by([asc(customer.name)]))
+    |> Selecto.order_by(order_by([asc(order_number)]))
     |> Selecto.limit(15)
     |> Selecto.offset(30)
   end
 
   defp query_p005 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "inserted_at", "total"])
-    |> Selecto.filter({"inserted_at", {:>, ~N[2024-01-15 00:00:00]}})
-    |> Selecto.order_by({"inserted_at", :asc})
-    |> Selecto.order_by({"id", :asc})
+    |> Selecto.select(select([id, order_number, inserted_at, total]))
+    |> Selecto.filter(where(inserted_at > ~N[2024-01-15 00:00:00]))
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
+    |> Selecto.order_by(order_by([asc(id)]))
     |> Selecto.limit(25)
   end
 
   defp query_p006 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "total"])
-    |> Selecto.order_by({"total", :desc})
-    |> Selecto.order_by({"id", :desc})
+    |> Selecto.select(select([id, order_number, total]))
+    |> Selecto.order_by(order_by([desc(total)]))
+    |> Selecto.order_by(order_by([desc(id)]))
     |> Selecto.limit(20)
     |> Selecto.offset(40)
   end
@@ -1497,16 +1485,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_p008 do
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["id", "order_number", "total"])
-    |> Selecto.filter(
-      {:or,
-       [
-         {"total", {:<, 1000}},
-         {:and, [{"total", 1000}, {"id", {:<, 500}}]}
-       ]}
-    )
-    |> Selecto.order_by({"total", :desc})
-    |> Selecto.order_by({"id", :desc})
+    |> Selecto.select(select([id, order_number, total]))
+    |> Selecto.filter(where(total < 1000 or (total == 1000 and id < 500)))
+    |> Selecto.order_by(order_by([desc(total)]))
+    |> Selecto.order_by(order_by([desc(id)]))
     |> Selecto.limit(20)
   end
 
@@ -1643,15 +1625,15 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_q006 do
     Selecto.configure(customer_domain_with_shape_members(), :mock_connection, validate: false)
     |> Selecto.with_subquery(:processing_orders_member)
-    |> Selecto.select(["name", "tier", "processing_orders_member.order_number"])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.select(select([name, tier, processing_orders_member.order_number]))
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_q007 do
     Selecto.configure(order_domain_with_shape_members(), :mock_connection, validate: false)
     |> Selecto.with_cte(:delivered_totals)
-    |> Selecto.select(["order_number", "customer.name", "delivered_totals.total"])
-    |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.select(select([order_number, customer.name, delivered_totals.total]))
+    |> Selecto.order_by(order_by([asc(order_number)]))
   end
 
   defp query_q008 do
@@ -1670,22 +1652,21 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_t001 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "inserted_at", "total"])
-    |> Selecto.filter({
-      "inserted_at",
-      {:between, ~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]}
-    })
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.select(select([order_number, inserted_at, total]))
+    |> Selecto.filter(
+      where(between(inserted_at, ~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]))
+    )
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t002 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.select(select([order_number, inserted_at, total]))
     |> Selecto.window_function(:sum, ["total"],
-      over: [order_by: ["inserted_at"]],
+      over: [order_by: order_by([asc(inserted_at)])],
       as: "running_total"
     )
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t003 do
