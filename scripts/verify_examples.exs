@@ -1360,8 +1360,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_f001 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(select([order_number, customer.name, status]))
-    |> Selecto.filter({"customer.id", :not_null})
-    |> Selecto.filter({"status", {:not_in, ["cancelled", "returned"]}})
+    |> Selecto.filter(where(customer.id != nil))
+    |> Selecto.filter(where(not_in(status, ["cancelled", "returned"])))
     |> Selecto.order_by(order_by([asc(order_number)]))
   end
 
@@ -1383,7 +1383,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_f004 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(select([name, sku]))
-    |> Selecto.filter({"name", {:text_search, "wireless charger"}})
+    |> Selecto.filter(where(text_search(name, "wireless charger")))
     |> Selecto.order_by(order_by([asc(name)]))
   end
 
@@ -1398,14 +1398,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_f006 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(select([name, tags]))
-    |> Selecto.filter({:array_contains, "tags", ["featured"]})
+    |> Selecto.filter(where(array_contains(tags, ["featured"])))
     |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_f007 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(select([name, metadata.warehouse.zone]))
-    |> Selecto.filter({"metadata.warehouse.zone", :exists})
+    |> Selecto.filter(where(field_exists(metadata.warehouse.zone)))
     |> Selecto.order_by(order_by([asc(name)]))
   end
 
@@ -1511,7 +1511,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_ja003 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(select([name, tags]))
-    |> Selecto.filter({:array_overlap, "tags", ["featured", "clearance"]})
+    |> Selecto.filter(where(array_overlap(tags, ["featured", "clearance"])))
     |> Selecto.filter(where(active == true))
     |> Selecto.order_by(order_by([asc(name)]))
   end
@@ -1538,7 +1538,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_ja006 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
     |> Selecto.select(select([name, tags]))
-    |> Selecto.filter({:array_contains, "tags", ["featured", "clearance"]})
+    |> Selecto.filter(where(array_contains(tags, ["featured", "clearance"])))
     |> Selecto.order_by(order_by([asc(name)]))
   end
 
