@@ -821,17 +821,17 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_j001 do
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "customer.name"])
-    |> Selecto.filter({"customer.id", :not_null})
-    |> Selecto.filter({"status", "delivered"})
-    |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.select(select([order_number, customer.name]))
+    |> Selecto.filter(where(customer.id != nil))
+    |> Selecto.filter(where(status == "delivered"))
+    |> Selecto.order_by(order_by([asc(order_number)]))
   end
 
   defp query_j002 do
     Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
-    |> Selecto.select(["name", {:count, "reviews.id"}])
+    |> Selecto.select(select([name, count(reviews.id)]))
     |> Selecto.group_by(["name"])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_j003 do
@@ -852,15 +852,15 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_j004 do
     Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
-    |> Selecto.select(["first_name", "manager.first_name"])
-    |> Selecto.order_by({"first_name", :asc})
+    |> Selecto.select(select([first_name, manager.first_name]))
+    |> Selecto.order_by(order_by([asc(first_name)]))
   end
 
   defp query_j005 do
     Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
-    |> Selecto.select(["name"])
-    |> Selecto.filter({"reviews.id", nil})
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.select(select([name]))
+    |> Selecto.filter(where(reviews.id == nil))
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_j006 do
@@ -933,16 +933,16 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       |> put_in([:joins, :customer, :type], :star_dimension)
 
     Selecto.configure(star_domain, :mock_connection, validate: false)
-    |> Selecto.select(["customer.name", {:count, "*"}])
+    |> Selecto.select(select([customer.name, count()]))
     |> Selecto.group_by(["customer.name"])
-    |> Selecto.order_by({"customer.name", :asc})
+    |> Selecto.order_by(order_by([asc(customer.name)]))
   end
 
   defp query_j011 do
     gold_customers =
       Selecto.configure(customer_domain(), :mock_connection, validate: false)
       |> Selecto.select(["id", "name", "tier"])
-      |> Selecto.filter({"tier", "gold"})
+      |> Selecto.filter(where(tier == "gold"))
 
     Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.join_subquery(:gold_customers, gold_customers,
@@ -950,14 +950,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       on: [%{left: "customer_id", right: "id"}]
     )
     |> Selecto.select(["order_number", "gold_customers.name", "total"])
-    |> Selecto.order_by({"order_number", :asc})
+    |> Selecto.order_by(order_by([asc(order_number)]))
   end
 
   defp query_j012 do
     processing_orders =
       Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
       |> Selecto.select(["customer_id", "order_number"])
-      |> Selecto.filter({"status", "processing"})
+      |> Selecto.filter(where(status == "processing"))
 
     Selecto.configure(customer_domain(), :mock_connection, validate: false)
     |> Selecto.join_subquery(:processing_orders, processing_orders,
@@ -965,7 +965,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       on: [%{left: "id", right: "customer_id"}]
     )
     |> Selecto.select(["name", "tier", "processing_orders.order_number"])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_a001 do
@@ -1518,51 +1518,51 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   defp query_ja004 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["name"])
+    |> Selecto.select(select([name]))
     |> Selecto.json_select([
-      {:json_extract_text, "metadata", "$.stock.quantity", as: "stock_quantity"}
+      X.json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")
     ])
     |> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity", nil})
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_ja005 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["name", "sku"])
+    |> Selecto.select(select([name, sku]))
     |> Selecto.json_select([
-      {:json_extract_text, "metadata", "$.warehouse.zone", as: "warehouse_zone"}
+      X.json_extract_text("metadata", "$.warehouse.zone", as: "warehouse_zone")
     ])
-    |> Selecto.json_order_by({:json_extract_text, "metadata", "$.warehouse.zone", :asc})
+    |> Selecto.json_order_by(X.json_extract_text("metadata", "$.warehouse.zone", :asc))
   end
 
   defp query_ja006 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["name", "tags"])
+    |> Selecto.select(select([name, tags]))
     |> Selecto.filter({:array_contains, "tags", ["featured", "clearance"]})
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_ja007 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["name", "sku", "metadata.warehouse.zone"])
-    |> Selecto.filter({"metadata.warehouse.zone", "A1"})
-    |> Selecto.filter({"active", true})
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.select(select([name, sku, metadata.warehouse.zone]))
+    |> Selecto.filter(where(metadata.warehouse.zone == "A1"))
+    |> Selecto.filter(where(active == true))
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_ja008 do
     Selecto.configure(product_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["name", "sku"])
+    |> Selecto.select(select([name, sku]))
     |> Selecto.json_select([
-      {:json_extract_text, "metadata", "$.warehouse.zone", as: "warehouse_zone"},
-      {:json_extract_text, "metadata", "$.stock.quantity", as: "stock_quantity"}
+      X.json_extract_text("metadata", "$.warehouse.zone", as: "warehouse_zone"),
+      X.json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")
     ])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_q001 do
     Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
-    |> Selecto.select(["name", "email"])
+    |> Selecto.select(select([name, email]))
     |> Selecto.subselect([
       %{
         fields: ["product_name", "quantity"],
@@ -1571,7 +1571,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
         alias: "order_items"
       }
     ])
-    |> Selecto.order_by({"name", :asc})
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_q002 do
@@ -1672,44 +1672,44 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_t003 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
     |> Selecto.select([
-      "order_number",
+      X.field("order_number"),
       {:field, {:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"},
-      "total"
+      X.field("total")
     ])
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t004 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.select(select([order_number, inserted_at, total]))
     |> Selecto.window_function(:avg, ["total"],
       over: [
-        order_by: ["inserted_at"],
+        order_by: order_by([asc(inserted_at)]),
         frame: {:rows, {:preceding, 2}, :current_row}
       ],
       as: "trailing_avg_total"
     )
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t005 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "inserted_at", "total"])
+    |> Selecto.select(select([order_number, inserted_at, total]))
     |> Selecto.window_function(:lag, ["total", 1],
-      over: [order_by: ["inserted_at"]],
+      over: [order_by: order_by([asc(inserted_at)])],
       as: "previous_total"
     )
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t006 do
     Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-    |> Selecto.select(["order_number", "status", "inserted_at", "total"])
+    |> Selecto.select(select([order_number, status, inserted_at, total]))
     |> Selecto.window_function(:sum, ["total"],
-      over: [partition_by: ["status"], order_by: ["inserted_at"]],
+      over: [partition_by: ["status"], order_by: order_by([asc(inserted_at)])],
       as: "status_running_total"
     )
-    |> Selecto.order_by({"inserted_at", :asc})
+    |> Selecto.order_by(order_by([asc(inserted_at)]))
   end
 
   defp query_t007 do
@@ -1728,14 +1728,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_t008 do
     current_events =
       Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-      |> Selecto.select(["order_number", "inserted_at", "total"])
+      |> Selecto.select(select([order_number, inserted_at, total]))
 
     archived_events =
       Selecto.configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
-      |> Selecto.select(["order_number", "inserted_at", "total"])
+      |> Selecto.select(select([order_number, inserted_at, total]))
 
     Selecto.union(current_events, archived_events, all: true)
-    |> Selecto.order_by({"inserted_at", :desc})
+    |> Selecto.order_by(order_by([desc(inserted_at)]))
     |> Selecto.limit(50)
   end
 
