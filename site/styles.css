@@ -270,6 +270,51 @@ body {
   color: var(--muted);
 }
 
+.adapter-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+.adapter-card-header .adapter-card-title {
+  margin: 0;
+}
+
+.adapter-validation {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 11px;
+  line-height: 1.2;
+  border: 1px solid transparent;
+}
+
+.adapter-validation-success {
+  background: #dff1e4;
+  color: #24553a;
+  border-color: #b9dec4;
+}
+
+.adapter-validation-warning {
+  background: #f6dfc8;
+  color: #7a3f08;
+  border-color: #ebc49b;
+}
+
+.adapter-validation-error {
+  background: #f8d8d8;
+  color: #7c1f1f;
+  border-color: #ecb3b3;
+}
+
+.adapter-validation-muted {
+  background: #edf1eb;
+  color: #5e6c61;
+  border-color: #d2d9cf;
+}
+
 .adapter-card pre {
   margin: 0;
 }
@@ -315,6 +360,11 @@ body {
 
 .adapter-params,
 .adapter-unavailable {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.adapter-runtime-note {
   margin: 10px 0 0;
   color: var(--muted);
 }

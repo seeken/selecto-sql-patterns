@@ -41,6 +41,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   def adapters, do: @adapters
 
+  def example(id) do
+    Enum.find(examples(), fn {example_id, _query, _fragments} -> example_id == id end)
+  end
+
   def examples do
     [
       {"J001", query_j001(), ["select", "left join", "is not null", "order by"]},
@@ -2179,36 +2183,38 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 end
 
-case System.argv() do
-  ["--dump-sql", output_path] ->
-    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(output_path)
+unless System.get_env("SELECTO_SQL_PATTERNS_NO_AUTO") == "1" do
+  case System.argv() do
+    ["--dump-sql", output_path] ->
+      SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(output_path)
 
-  ["--dump-sql"] ->
-    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
+    ["--dump-sql"] ->
+      SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
 
-  ["--dump-adapter-json", output_path] ->
-    SelectoSqlPatterns.VerifyExamples.dump_adapter_json(output_path)
+    ["--dump-adapter-json", output_path] ->
+      SelectoSqlPatterns.VerifyExamples.dump_adapter_json(output_path)
 
-  ["--dump-adapter-json"] ->
-    SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
+    ["--dump-adapter-json"] ->
+      SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
 
-  ["--dump-expr-json", output_path] ->
-    SelectoSqlPatterns.VerifyExamples.dump_expr_json(output_path)
+    ["--dump-expr-json", output_path] ->
+      SelectoSqlPatterns.VerifyExamples.dump_expr_json(output_path)
 
-  ["--dump-expr-json"] ->
-    SelectoSqlPatterns.VerifyExamples.dump_expr_json()
+    ["--dump-expr-json"] ->
+      SelectoSqlPatterns.VerifyExamples.dump_expr_json()
 
-  ["--dump-all", markdown_path, json_path, expr_path] ->
-    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(markdown_path)
-    SelectoSqlPatterns.VerifyExamples.dump_adapter_json(json_path)
+    ["--dump-all", markdown_path, json_path, expr_path] ->
+      SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(markdown_path)
+      SelectoSqlPatterns.VerifyExamples.dump_adapter_json(json_path)
 
-    SelectoSqlPatterns.VerifyExamples.dump_expr_json(expr_path)
+      SelectoSqlPatterns.VerifyExamples.dump_expr_json(expr_path)
 
-  ["--dump-all"] ->
-    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
-    SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
-    SelectoSqlPatterns.VerifyExamples.dump_expr_json()
+    ["--dump-all"] ->
+      SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
+      SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
+      SelectoSqlPatterns.VerifyExamples.dump_expr_json()
 
-  _ ->
-    SelectoSqlPatterns.VerifyExamples.run()
+    _ ->
+      SelectoSqlPatterns.VerifyExamples.run()
+  end
 end

@@ -51,7 +51,7 @@ and regression checks across the Selecto ecosystem.
 
 ## Verify Examples
 
-Run all current examples through `Selecto.to_sql/1` for PostgreSQL and SQLite:
+Run all current examples through `Selecto.to_sql/1` for the configured adapter matrix:
 
 ```bash
 elixir scripts/verify_examples.exs
@@ -81,6 +81,12 @@ Sync the pattern markdown files so each one includes a `## Selecto Expr` section
 python scripts/sync_expr_sections.py
 ```
 
+Run the real-DB smoke validation harness and export execution status:
+
+```bash
+elixir scripts/validate_live_examples.exs --output patterns/SELECTO_LIVE_VALIDATION.json
+```
+
 ## Browse as HTML
 
 Build the static HTML book locally:
@@ -92,7 +98,8 @@ python scripts/build_book_site.py
 Then open `_site/index.html` in a browser.
 
 Each pattern page keeps the original SQL visible and adds adapter switchers for
-PostgreSQL and SQLite, plus a command-mode toggle for classic vs Expr Selecto examples.
+PostgreSQL, SQLite, MySQL, MariaDB, MSSQL, and DuckDB, plus a command-mode toggle
+for classic vs Expr Selecto examples and live-validation status badges when available.
 
 This repository also includes a GitHub Pages workflow at
 `.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`

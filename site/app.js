@@ -9,6 +9,7 @@
   let manifest = null
   let adapterOutputs = { patterns: {} }
   let exprExamples = { patterns: {} }
+  let liveValidation = { patterns: {} }
   let allEntries = []
   let activePath = null
   let gapOnly = false
@@ -86,6 +87,29 @@
       detail,
       missingKeys: missing.map((adapter) => adapter.key),
       missing
+    }
+  }
+
+  function liveValidationResult(entry, adapterKey) {
+    return liveValidation.patterns?.[entry.id]?.[adapterKey] || null
+  }
+
+  function liveValidationLabel(result) {
+    if (!result) return null
+
+    switch (result.status) {
+      case "executed":
+        return { text: "Executed", tone: "success" }
+      case "failed":
+        return { text: "Failed", tone: "error" }
+      case "unsupported_expected":
+        return { text: "Unsupported", tone: "warning" }
+      case "generated_only":
+        return { text: "Generated Only", tone: "muted" }
+      case "skipped":
+        return { text: "Skipped", tone: "muted" }
+      default:
+        return { text: result.status, tone: "muted" }
     }
   }
 
@@ -631,9 +655,22 @@
       const outputCard = document.createElement("div")
       outputCard.className = "adapter-card"
 
-      const outputLabel = document.createElement("h3")
-      outputLabel.className = "adapter-card-title"
-      outputLabel.textContent = `${adapter.label} SQL`
+      const outputLabel = document.createElement("div")
+      outputLabel.className = "adapter-card-header"
+
+      const outputTitle = document.createElement("h3")
+      outputTitle.className = "adapter-card-title"
+      outputTitle.textContent = `${adapter.label} SQL`
+      outputLabel.appendChild(outputTitle)
+
+      const validation = liveValidationLabel(liveValidationResult(entry, adapter.key))
+      if (validation) {
+        const badge = document.createElement("span")
+        badge.className = `adapter-validation adapter-validation-${validation.tone}`
+        badge.textContent = validation.text
+        outputLabel.appendChild(badge)
+      }
+
       outputCard.appendChild(outputLabel)
 
       if (output && output.status === "ok") {
@@ -666,6 +703,14 @@
         unavailable.appendChild(unavailableDetail)
         unavailable.appendChild(unavailableReason)
         outputCard.appendChild(unavailable)
+      }
+
+      const validationResult = liveValidationResult(entry, adapter.key)
+      if (validationResult && validationResult.reason) {
+        const runtimeNote = document.createElement("p")
+        runtimeNote.className = "adapter-runtime-note"
+        runtimeNote.innerHTML = `<strong>Live validation:</strong> <code>${validationResult.reason}</code>`
+        outputCard.appendChild(runtimeNote)
       }
 
       panel.appendChild(outputCard)
@@ -768,10 +813,11 @@
   }
 
   async function init() {
-    const [manifestRes, adapterRes, exprRes] = await Promise.all([
+    const [manifestRes, adapterRes, exprRes, liveRes] = await Promise.all([
       fetch("book.json"),
       fetch("patterns/SELECTO_ADAPTER_OUTPUTS.json"),
-      fetch("patterns/SELECTO_EXPR_EXAMPLES.json")
+      fetch("patterns/SELECTO_EXPR_EXAMPLES.json"),
+      fetch("patterns/SELECTO_LIVE_VALIDATION.json")
     ])
 
     manifest = await manifestRes.json()
@@ -782,6 +828,10 @@
 
     if (exprRes.ok) {
       exprExamples = await exprRes.json()
+    }
+
+    if (liveRes.ok) {
+      liveValidation = await liveRes.json()
     }
 
     allEntries = flattenEntries(manifest)

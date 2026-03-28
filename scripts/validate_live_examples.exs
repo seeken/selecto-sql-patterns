@@ -1,0 +1,376 @@
+#!/usr/bin/env elixir
+
+System.put_env("SELECTO_SQL_PATTERNS_NO_AUTO", "1")
+Code.require_file("verify_examples.exs", __DIR__)
+
+defmodule SelectoSqlPatterns.LiveValidation do
+  @moduledoc false
+
+  @output_path "patterns/SELECTO_LIVE_VALIDATION.json"
+  @tmp_dir Path.expand("../tmp/live_validation", __DIR__)
+
+  @smoke_patterns [
+    %{id: "J001", assert: {:columns_include, ["order_number", "name"]}},
+    %{id: "A003", assert: {:columns_include, ["status"]}},
+    %{id: "W001", assert: {:columns_include, ["first_name", "department", "salary"]}},
+    %{id: "P002", assert: {:columns_include, ["id", "order_number", "total"]}},
+    %{id: "T001", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
+    %{
+      id: "J007",
+      assert: {:columns_include, ["name"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful."},
+        "sqlite" => {:unsupported_expected, "Adapter does not support lateral/apply joins"},
+        "mysql" => {:unsupported_expected, "Adapter does not support lateral/apply joins"},
+        "mariadb" => {:unsupported_expected, "Adapter does not support lateral/apply joins"},
+        "mssql" =>
+          {:generated_only,
+           "APPLY join smoke case needs a richer seeded product/order dataset before live execution is meaningful."},
+        "duckdb" => {:unsupported_expected, "Adapter does not support lateral/apply joins"}
+      }
+    },
+    %{
+      id: "SO001",
+      assert: {:columns_include, ["name", "tier"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still rejects the parenthesized UNION form generated for this pattern during execution."}
+      }
+    }
+  ]
+
+  @adapters [
+    %{
+      key: "postgresql",
+      label: "PostgreSQL",
+      module: SelectoDBPostgreSQL.Adapter,
+      connection: :postgresql
+    },
+    %{key: "sqlite", label: "SQLite", module: SelectoDBSQLite.Adapter, connection: :sqlite},
+    %{key: "mysql", label: "MySQL", module: SelectoDBMySQL.Adapter, connection: :mysql},
+    %{key: "mariadb", label: "MariaDB", module: SelectoDBMariaDB.Adapter, connection: :mariadb},
+    %{key: "mssql", label: "MSSQL", module: SelectoDBMSSQL.Adapter, connection: :mssql},
+    %{key: "duckdb", label: "DuckDB", module: SelectoDBDuckDB.Adapter, connection: :duckdb}
+  ]
+
+  def run(argv \\ System.argv()) do
+    opts = parse_args(argv)
+    File.mkdir_p!(@tmp_dir)
+
+    contexts = connect_available_adapters(opts)
+    payload = build_payload(contexts)
+    output_path = opts[:output] || @output_path
+
+    File.write!(output_path, Jason.encode_to_iodata!(payload, pretty: true))
+    IO.puts("Wrote #{output_path}")
+
+    if opts[:summary] do
+      print_summary(payload)
+    end
+  end
+
+  defp parse_args(argv) do
+    {opts, _args, _invalid} =
+      OptionParser.parse(argv,
+        strict: [output: :string, summary: :boolean],
+        aliases: [o: :output]
+      )
+
+    Keyword.put_new(opts, :summary, true)
+  end
+
+  defp build_payload(contexts) do
+    patterns =
+      Enum.into(@smoke_patterns, %{}, fn spec ->
+        {spec.id,
+         Enum.into(@adapters, %{}, fn adapter ->
+           {adapter.key, validate_pattern(spec, adapter, Map.get(contexts, adapter.key))}
+         end)}
+      end)
+
+    %{
+      generated_at: DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601(),
+      mode: "smoke",
+      adapters: Enum.map(@adapters, &Map.take(&1, [:key, :label])),
+      patterns: patterns
+    }
+  end
+
+  defp connect_available_adapters(opts) do
+    Enum.into(@adapters, %{}, fn adapter ->
+      {adapter.key, connect_and_seed(adapter, opts)}
+    end)
+  end
+
+  defp connect_and_seed(adapter, _opts) do
+    with {:ok, connection_opts} <- connection_options(adapter.connection),
+         {:ok, connection} <- adapter.module.connect(connection_opts),
+         :ok <- seed_fixture_data(adapter, connection) do
+      %{status: :ok, connection: connection}
+    else
+      {:skip, reason} -> %{status: :skipped, reason: reason}
+      {:error, reason} -> %{status: :skipped, reason: inspect(reason)}
+    end
+  end
+
+  defp connection_options(:postgresql) do
+    env_connection_options("SELECTO_LIVE_POSTGRES")
+  end
+
+  defp connection_options(:mysql) do
+    env_connection_options("SELECTO_LIVE_MYSQL")
+  end
+
+  defp connection_options(:mariadb) do
+    env_connection_options("SELECTO_LIVE_MARIADB")
+  end
+
+  defp connection_options(:mssql) do
+    env_connection_options("SELECTO_LIVE_MSSQL")
+  end
+
+  defp connection_options(:sqlite) do
+    path = System.get_env("SELECTO_LIVE_SQLITE_PATH", Path.join(@tmp_dir, "patterns.sqlite3"))
+    File.rm(path)
+    {:ok, [database: path]}
+  end
+
+  defp connection_options(:duckdb) do
+    path = System.get_env("SELECTO_LIVE_DUCKDB_PATH", Path.join(@tmp_dir, "patterns.duckdb"))
+    File.rm(path)
+    {:ok, [database: path]}
+  end
+
+  defp env_connection_options(prefix) do
+    url = System.get_env(prefix <> "_URL")
+
+    cond do
+      is_binary(url) and url != "" ->
+        {:ok, url_to_keyword(url)}
+
+      true ->
+        host = System.get_env(prefix <> "_HOST")
+        db = System.get_env(prefix <> "_DB") || System.get_env(prefix <> "_DATABASE")
+
+        if host && db do
+          {:ok,
+           [
+             hostname: host,
+             port: parse_int(System.get_env(prefix <> "_PORT")),
+             username: System.get_env(prefix <> "_USER") || System.get_env(prefix <> "_USERNAME"),
+             password: System.get_env(prefix <> "_PASS") || System.get_env(prefix <> "_PASSWORD"),
+             database: db
+           ]
+           |> Enum.reject(fn {_key, value} -> is_nil(value) end)}
+        else
+          {:skip, "connection not configured"}
+        end
+    end
+  end
+
+  defp url_to_keyword(url) do
+    uri = URI.parse(url)
+
+    base = [
+      hostname: uri.host,
+      port: uri.port,
+      username: if(uri.userinfo, do: String.split(uri.userinfo, ":", parts: 2) |> Enum.at(0)),
+      password: if(uri.userinfo, do: String.split(uri.userinfo, ":", parts: 2) |> Enum.at(1)),
+      database: uri.path |> to_string() |> String.trim_leading("/")
+    ]
+
+    query_opts =
+      (uri.query || "")
+      |> URI.decode_query()
+      |> Enum.map(fn {key, value} -> {String.to_atom(key), normalize_url_value(value)} end)
+
+    (base ++ query_opts)
+    |> Enum.reject(fn {_key, value} -> is_nil(value) or value == "" end)
+  end
+
+  defp normalize_url_value(value) do
+    case Integer.parse(value) do
+      {int, ""} -> int
+      _ -> value
+    end
+  end
+
+  defp parse_int(nil), do: nil
+
+  defp parse_int(value) do
+    case Integer.parse(value) do
+      {int, _} -> int
+      :error -> nil
+    end
+  end
+
+  defp seed_fixture_data(adapter, connection) do
+    statements = fixture_sql(adapter.key)
+
+    Enum.reduce_while(statements, :ok, fn statement, :ok ->
+      case execute_seed_statement(adapter.key, connection, statement) do
+        {:ok, _result} -> {:cont, :ok}
+        {:error, reason} -> {:halt, {:error, reason}}
+      end
+    end)
+  end
+
+  defp execute_seed_statement("postgresql", connection, statement),
+    do: Postgrex.query(connection, statement, [])
+
+  defp execute_seed_statement("mysql", connection, statement),
+    do: MyXQL.query(connection, statement, [])
+
+  defp execute_seed_statement("mariadb", connection, statement),
+    do: MyXQL.query(connection, statement, [])
+
+  defp execute_seed_statement("mssql", connection, statement),
+    do: Tds.query(connection, statement, [])
+
+  defp execute_seed_statement("duckdb", connection, statement),
+    do: SelectoDBDuckDB.Adapter.execute(connection, statement, [], [])
+
+  defp execute_seed_statement("sqlite", connection, statement),
+    do: SelectoDBSQLite.Adapter.execute(connection, statement, [], [])
+
+  defp execute_seed_statement(_adapter_key, _connection, statement),
+    do: {:error, {:unsupported_seed_adapter, statement}}
+
+  defp validate_pattern(_spec, _adapter, %{status: :skipped, reason: reason}) do
+    %{status: "skipped", reason: reason}
+  end
+
+  defp validate_pattern(spec, adapter, %{status: :ok, connection: connection}) do
+    case adapter_expectation(spec, adapter.key) do
+      {:unsupported_expected, reason} ->
+        %{status: "unsupported_expected", reason: reason}
+
+      {:generated_only, reason} ->
+        %{status: "generated_only", reason: reason}
+
+      :execute ->
+        execute_pattern(spec, adapter, connection)
+    end
+  end
+
+  defp execute_pattern(spec, adapter, connection) do
+    {_id, query, _fragments} = SelectoSqlPatterns.VerifyExamples.example(spec.id)
+    bound_query = bind_query(query, adapter, connection)
+
+    try do
+      case Selecto.execute(bound_query, analyze_complexity: false) do
+        {:ok, {rows, columns, aliases}} ->
+          case assert_result(spec.assert, rows, columns, aliases) do
+            :ok ->
+              %{
+                status: "executed",
+                row_count: length(rows),
+                columns: columns,
+                aliases: alias_names(aliases)
+              }
+
+            {:error, reason} ->
+              attach_debug(%{status: "failed", reason: reason}, bound_query)
+          end
+
+        {:error, reason} ->
+          attach_debug(%{status: "failed", reason: inspect(reason)}, bound_query)
+      end
+    rescue
+      error ->
+        attach_debug(%{status: "failed", reason: Exception.message(error)}, bound_query)
+    end
+  end
+
+  defp adapter_expectation(spec, adapter_key) do
+    case Map.get(Map.get(spec, :adapters, %{}), adapter_key, :execute) do
+      expectation -> expectation
+    end
+  end
+
+  defp bind_query(query, %{key: "postgresql"}, connection) do
+    %{query | adapter: nil, connection: connection, postgrex_opts: connection}
+  end
+
+  defp bind_query(query, adapter, connection) do
+    %{query | adapter: adapter.module, connection: connection, postgrex_opts: connection}
+  end
+
+  defp assert_result({:columns_include, expected_columns}, rows, columns, aliases) do
+    available_columns = columns ++ alias_names(aliases)
+
+    cond do
+      rows == [] ->
+        {:error, "query returned no rows"}
+
+      Enum.all?(expected_columns, &(&1 in available_columns)) ->
+        :ok
+
+      true ->
+        {:error, "missing expected columns: #{inspect(expected_columns -- available_columns)}"}
+    end
+  end
+
+  defp alias_names(aliases) when is_map(aliases), do: Map.keys(aliases)
+  defp alias_names(_aliases), do: []
+
+  defp attach_debug(result, selecto) do
+    {sql, params} = Selecto.to_sql(selecto)
+    Map.merge(result, %{sql: sql, params: params})
+  rescue
+    _error -> result
+  end
+
+  defp print_summary(payload) do
+    Enum.each(payload.patterns, fn {pattern_id, adapter_results} ->
+      line =
+        Enum.map(@adapters, fn adapter ->
+          result = Map.fetch!(adapter_results, adapter.key)
+          "#{adapter.key}=#{result.status}"
+        end)
+        |> Enum.join(" ")
+
+      IO.puts("#{pattern_id}: #{line}")
+    end)
+  end
+
+  defp fixture_sql("mssql") do
+    [
+      "IF OBJECT_ID('orders', 'U') IS NOT NULL DROP TABLE orders",
+      "IF OBJECT_ID('customers', 'U') IS NOT NULL DROP TABLE customers",
+      "IF OBJECT_ID('employees', 'U') IS NOT NULL DROP TABLE employees",
+      "IF OBJECT_ID('vendors', 'U') IS NOT NULL DROP TABLE vendors",
+      "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      "CREATE TABLE orders (id INT PRIMARY KEY, order_number VARCHAR(50), customer_id INT, status VARCHAR(50), total DECIMAL(10,2), inserted_at DATETIME2)",
+      "CREATE TABLE employees (id INT PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
+      "CREATE TABLE vendors (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+    ] ++ insert_statements()
+  end
+
+  defp fixture_sql(_adapter_key) do
+    [
+      "DROP TABLE IF EXISTS orders",
+      "DROP TABLE IF EXISTS customers",
+      "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendors",
+      "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+    ] ++ insert_statements()
+  end
+
+  defp insert_statements do
+    [
+      "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium')",
+      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00')",
+      "INSERT INTO employees (id, first_name, department, salary) VALUES (1, 'Ellen', 'Sales', 90000.00), (2, 'Marco', 'Sales', 85000.00), (3, 'Priya', 'Engineering', 120000.00), (4, 'Luis', 'Engineering', 110000.00)",
+      "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')"
+    ]
+  end
+end
+
+SelectoSqlPatterns.LiveValidation.run()

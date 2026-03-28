@@ -1,0 +1,413 @@
+{
+  "mode": "smoke",
+  "adapters": [
+    {
+      "label": "PostgreSQL",
+      "key": "postgresql"
+    },
+    {
+      "label": "SQLite",
+      "key": "sqlite"
+    },
+    {
+      "label": "MySQL",
+      "key": "mysql"
+    },
+    {
+      "label": "MariaDB",
+      "key": "mariadb"
+    },
+    {
+      "label": "MSSQL",
+      "key": "mssql"
+    },
+    {
+      "label": "DuckDB",
+      "key": "duckdb"
+    }
+  ],
+  "patterns": {
+    "A003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "avg(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          ""
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "avg"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      }
+    },
+    "J001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      }
+    },
+    "J007": {
+      "duckdb": {
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
+      },
+      "mssql": {
+        "reason": "APPLY join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
+      },
+      "postgresql": {
+        "reason": "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
+      }
+    },
+    "P002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      }
+    },
+    "SO001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "sqlite": {
+        "reason": "SQLite still rejects the parenthesized UNION form generated for this pattern during execution.",
+        "status": "generated_only"
+      }
+    },
+    "T001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      }
+    },
+    "W001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      }
+    }
+  },
+  "generated_at": "2026-03-28T23:26:45Z"
+}
