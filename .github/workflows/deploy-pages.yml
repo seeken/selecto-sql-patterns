@@ -19,44 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout Selecto
-        uses: actions/checkout@v4
-        with:
-          repository: seeken/selecto
-          ref: main
-          path: selecto
-
-      - name: Checkout Selecto PostgreSQL adapter
-        uses: actions/checkout@v4
-        with:
-          repository: seeken/selecto_db_postgresql
-          ref: main
-          path: vendor/selecto_db_postgresql
-
-      - name: Checkout Selecto SQLite adapter
-        uses: actions/checkout@v4
-        with:
-          repository: seeken/selecto_db_sqlite
-          ref: main
-          path: vendor/selecto_db_sqlite
-
-      - name: Setup BEAM
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: "27"
-          elixir-version: "1.18"
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-
-      - name: Regenerate yielded SQL
-        env:
-          SELECTO_PATH: selecto
-          SELECTO_DB_POSTGRESQL_PATH: vendor/selecto_db_postgresql
-          SELECTO_DB_SQLITE_PATH: vendor/selecto_db_sqlite
-        run: elixir scripts/verify_examples.exs --dump-all
 
       - name: Build static book site
         run: python scripts/build_book_site.py
