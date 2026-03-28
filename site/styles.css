@@ -250,6 +250,40 @@ body {
   margin: 0;
 }
 
+.code-mode-tabs {
+  display: inline-flex;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 4px;
+  border: 1px solid #d7ddd1;
+  border-radius: 999px;
+  background: #fcfdfb;
+}
+
+.code-mode-tab {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.code-mode-tab.active {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.code-mode-panel {
+  display: none;
+}
+
+.code-mode-panel.active {
+  display: block;
+}
+
 .adapter-params,
 .adapter-unavailable {
   margin: 10px 0 0;

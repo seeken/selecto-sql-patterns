@@ -69,6 +69,12 @@ Export the adapter matrix consumed by the site toggle:
 elixir scripts/verify_examples.exs --dump-adapter-json patterns/SELECTO_ADAPTER_OUTPUTS.json
 ```
 
+Export the Expr examples consumed by the site command-mode toggle:
+
+```bash
+elixir scripts/verify_examples.exs --dump-expr-json patterns/SELECTO_EXPR_EXAMPLES.json
+```
+
 ## Browse as HTML
 
 Build the static HTML book locally:
@@ -79,8 +85,8 @@ python scripts/build_book_site.py
 
 Then open `_site/index.html` in a browser.
 
-Each pattern page keeps the original SQL visible and adds an adapter switcher for
-PostgreSQL and SQLite Selecto commands plus yielded SQL output.
+Each pattern page keeps the original SQL visible and adds adapter switchers for
+PostgreSQL and SQLite, plus a command-mode toggle for classic vs Expr Selecto examples.
 
 This repository also includes a GitHub Pages workflow at
 `.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`

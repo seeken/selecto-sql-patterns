@@ -13,6 +13,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
   alias Selecto.Expr, as: X
 
+  @source_file Path.expand(__ENV__.file)
+
   @adapters [
     %{
       key: "postgresql",
@@ -199,11 +201,49 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     IO.puts("Wrote #{output_path}")
   end
 
+  def dump_expr_json(output_path \\ "patterns/SELECTO_EXPR_EXAMPLES.json") do
+    payload = %{
+      generated_at: DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601(),
+      patterns: expr_examples()
+    }
+
+    File.write!(output_path, Jason.encode_to_iodata!(payload, pretty: true))
+    IO.puts("Wrote #{output_path}")
+  end
+
   def adapter_outputs do
     examples()
     |> Enum.into(%{}, fn {id, query, fragments} ->
       {id, adapter_outputs_for_example(id, query, fragments)}
     end)
+  end
+
+  def expr_examples do
+    source = File.read!(@source_file)
+
+    examples()
+    |> Enum.map(fn {id, _query, _fragments} ->
+      {id, extract_expr_source!(source, id)}
+    end)
+    |> Map.new()
+  end
+
+  defp extract_expr_source!(source, id) do
+    function_name = "query_" <> String.downcase(id)
+
+    regex = ~r/^  defp #{function_name} do\n(?<body>[\s\S]*?)^  end$/m
+
+    case Regex.named_captures(regex, source) do
+      %{"body" => body} ->
+        body
+        |> String.split("\n")
+        |> Enum.map(fn line -> String.replace_prefix(line, "    ", "") end)
+        |> Enum.join("\n")
+        |> String.trim()
+
+      _ ->
+        raise "Could not extract Expr source for #{id}"
+    end
   end
 
   defp adapter_outputs_for_example(id, query, fragments) do
@@ -2078,13 +2118,22 @@ case System.argv() do
   ["--dump-adapter-json"] ->
     SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
 
-  ["--dump-all", markdown_path, json_path] ->
+  ["--dump-expr-json", output_path] ->
+    SelectoSqlPatterns.VerifyExamples.dump_expr_json(output_path)
+
+  ["--dump-expr-json"] ->
+    SelectoSqlPatterns.VerifyExamples.dump_expr_json()
+
+  ["--dump-all", markdown_path, json_path, expr_path] ->
     SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(markdown_path)
     SelectoSqlPatterns.VerifyExamples.dump_adapter_json(json_path)
+
+    SelectoSqlPatterns.VerifyExamples.dump_expr_json(expr_path)
 
   ["--dump-all"] ->
     SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
     SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
+    SelectoSqlPatterns.VerifyExamples.dump_expr_json()
 
   _ ->
     SelectoSqlPatterns.VerifyExamples.run()

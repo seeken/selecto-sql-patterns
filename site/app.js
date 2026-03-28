@@ -8,6 +8,7 @@
 
   let manifest = null
   let adapterOutputs = { patterns: {} }
+  let exprExamples = { patterns: {} }
   let allEntries = []
   let activePath = null
   let gapOnly = false
@@ -295,6 +296,19 @@
     return lines.join("\n")
   }
 
+  function exprExampleForEntry(entry, adapterKey) {
+    const baseCode = exprExamples.patterns[entry.id]
+    if (!baseCode) return null
+
+    const lines = baseCode.split("\n")
+    const prefix = ["import Selecto.ExprMacros", "alias Selecto.Expr, as: X", ""]
+
+    const hasAssignment = lines.some((line) => line.trimStart().startsWith("query ="))
+    const body = hasAssignment ? lines.join("\n") : ["query =", ...lines.map((line) => `  ${line}`)].join("\n")
+
+    return transformSelectoCode([...prefix, body].join("\n"), adapterKey)
+  }
+
   function buildCodeBlock(language, source) {
     const pre = document.createElement("pre")
     const code = document.createElement("code")
@@ -302,6 +316,61 @@
     code.textContent = source
     pre.appendChild(code)
     return pre
+  }
+
+  function buildModeCard(title, blocks) {
+    const card = document.createElement("div")
+    card.className = "adapter-card"
+
+    const heading = document.createElement("h3")
+    heading.className = "adapter-card-title"
+    heading.textContent = title
+    card.appendChild(heading)
+
+    const modes = blocks.filter((block) => block && block.source)
+    if (modes.length === 0) return card
+
+    if (modes.length === 1) {
+      card.appendChild(buildCodeBlock(modes[0].language, modes[0].source))
+      return card
+    }
+
+    const tabs = document.createElement("div")
+    tabs.className = "code-mode-tabs"
+
+    const body = document.createElement("div")
+    body.className = "code-mode-body"
+
+    modes.forEach((mode, index) => {
+      const button = document.createElement("button")
+      button.className = "code-mode-tab"
+      button.type = "button"
+      button.textContent = mode.label
+
+      const panel = document.createElement("div")
+      panel.className = "code-mode-panel"
+      panel.appendChild(buildCodeBlock(mode.language, mode.source))
+
+      function setActive() {
+        tabs.querySelectorAll(".code-mode-tab").forEach((item) => item.classList.remove("active"))
+        body.querySelectorAll(".code-mode-panel").forEach((item) => item.classList.remove("active"))
+        button.classList.add("active")
+        panel.classList.add("active")
+      }
+
+      button.addEventListener("click", setActive)
+
+      if (index === 0) {
+        setActive()
+      }
+
+      tabs.appendChild(button)
+      body.appendChild(panel)
+    })
+
+    card.appendChild(tabs)
+    card.appendChild(body)
+    return card
   }
 
   function prettifySqlString(sql) {
@@ -334,7 +403,7 @@
 
     const note = document.createElement("p")
     note.className = "adapter-note"
-    note.textContent = "Switch between generated Selecto commands and yielded SQL by adapter."
+    note.textContent = "Compare classic and Expr Selecto commands, then inspect yielded SQL by adapter."
 
     header.appendChild(title)
     header.appendChild(note)
@@ -360,16 +429,18 @@
       panel.className = "adapter-view"
 
       const output = outputs[adapter.key]
-      const commandCard = document.createElement("div")
-      commandCard.className = "adapter-card"
-
-      const commandLabel = document.createElement("h3")
-      commandLabel.className = "adapter-card-title"
-      commandLabel.textContent = `${adapter.label} Selecto`
-      commandCard.appendChild(commandLabel)
-      commandCard.appendChild(
-        buildCodeBlock(selectoSection.language, transformSelectoCode(selectoSection.code, adapter.key))
-      )
+      const commandCard = buildModeCard(`${adapter.label} Selecto`, [
+        {
+          label: "Classic",
+          language: selectoSection.language,
+          source: transformSelectoCode(selectoSection.code, adapter.key)
+        },
+        {
+          label: "Expr",
+          language: "elixir",
+          source: exprExampleForEntry(entry, adapter.key)
+        }
+      ])
 
       const outputCard = document.createElement("div")
       outputCard.className = "adapter-card"
@@ -495,15 +566,20 @@
   }
 
   async function init() {
-    const [manifestRes, adapterRes] = await Promise.all([
+    const [manifestRes, adapterRes, exprRes] = await Promise.all([
       fetch("book.json"),
-      fetch("patterns/SELECTO_ADAPTER_OUTPUTS.json")
+      fetch("patterns/SELECTO_ADAPTER_OUTPUTS.json"),
+      fetch("patterns/SELECTO_EXPR_EXAMPLES.json")
     ])
 
     manifest = await manifestRes.json()
 
     if (adapterRes.ok) {
       adapterOutputs = await adapterRes.json()
+    }
+
+    if (exprRes.ok) {
+      exprExamples = await exprRes.json()
     }
 
     allEntries = flattenEntries(manifest)
