@@ -32,6 +32,25 @@
     }
   }
 
+  function adapterShortLabel(adapterKey) {
+    switch (adapterKey) {
+      case "postgresql":
+        return "PG"
+      case "sqlite":
+        return "SQ"
+      case "mysql":
+        return "MY"
+      case "mariadb":
+        return "MA"
+      case "mssql":
+        return "MS"
+      case "duckdb":
+        return "DU"
+      default:
+        return adapterKey.slice(0, 2).toUpperCase()
+    }
+  }
+
   function flattenEntries(data) {
     const grouped = data.groups.flatMap((group) =>
       group.entries.map((entry) => ({ ...entry, group: group.title }))
@@ -62,7 +81,12 @@
       })
       .join(" | ")
 
-    return { text, detail, missingKeys: missing.map((adapter) => adapter.key) }
+    return {
+      text,
+      detail,
+      missingKeys: missing.map((adapter) => adapter.key),
+      missing
+    }
   }
 
   function renderSidebar(filterText) {
@@ -110,16 +134,23 @@
 
         const coverage = adapterCoverage(entry)
         if (coverage) {
-          const badge = document.createElement("span")
-          badge.className = "item-badge"
-          badge.textContent = coverage.text
-          badge.title = coverage.detail
+          const icons = document.createElement("span")
+          icons.className = "item-gap-icons"
           button.title = coverage.detail
-          badge.addEventListener("click", (event) => {
-            event.stopPropagation()
-            loadEntry(entry, coverage.missingKeys[0] || null)
+
+          coverage.missing.forEach((adapter) => {
+            const icon = document.createElement("span")
+            icon.className = "item-gap-icon"
+            icon.title = `${adapter.label} unavailable`
+            icon.textContent = `${adapterShortLabel(adapter.key)} x`
+            icon.addEventListener("click", (event) => {
+              event.stopPropagation()
+              loadEntry(entry, adapter.key)
+            })
+            icons.appendChild(icon)
           })
-          button.appendChild(badge)
+
+          button.appendChild(icons)
         }
 
         button.addEventListener("click", () => {
@@ -311,6 +342,35 @@
     return lines.join("\n")
   }
 
+  function stripAdapterLine(source) {
+    if (!source) return ""
+    return source
+      .split("\n")
+      .filter((line) => !line.includes("|> Map.put(:adapter,"))
+      .join("\n")
+      .trim()
+  }
+
+  function syntaxSummary(sharedSource, adapterSource) {
+    const sharedLines = stripAdapterLine(sharedSource).split("\n")
+    const adapterLines = stripAdapterLine(adapterSource).split("\n")
+    const added = adapterLines.filter((line) => line && !sharedLines.includes(line))
+    const removed = sharedLines.filter((line) => line && !adapterLines.includes(line))
+    const fragments = []
+
+    if (added.length > 0) {
+      fragments.push(`adds ${added.slice(0, 2).map((line) => `\`${line.trim()}\``).join(", ")}`)
+    }
+
+    if (removed.length > 0) {
+      fragments.push(`omits ${removed.slice(0, 2).map((line) => `\`${line.trim()}\``).join(", ")}`)
+    }
+
+    return fragments.length > 0
+      ? `Differs from the shared syntax above: ${fragments.join("; ")}.`
+      : "Differs from the shared syntax above."
+  }
+
   function exprExampleForEntry(entry, adapterKey) {
     const baseCode = exprExamples.patterns[entry.id]
     if (!baseCode) return null
@@ -388,6 +448,43 @@
     return card
   }
 
+  function buildSharedSyntaxPanel(entry, markdown) {
+    const selectoSection = extractSectionCode(markdown, "Selecto")
+    const exprSource = exprExampleForEntry(entry, "postgresql")
+
+    if (!selectoSection && !exprSource) return null
+
+    const section = document.createElement("section")
+    section.className = "shared-syntax-panel"
+
+    const title = document.createElement("h2")
+    title.className = "shared-syntax-title"
+    title.textContent = "Shared Selecto Syntax"
+
+    const note = document.createElement("p")
+    note.className = "shared-syntax-note"
+    note.textContent = "These Selecto examples are shared across adapters unless an adapter tab calls out a syntax difference."
+
+    section.appendChild(title)
+    section.appendChild(note)
+    section.appendChild(
+      buildModeCard("Selecto", [
+        {
+          label: "Classic",
+          language: selectoSection ? selectoSection.language : "elixir",
+          source: selectoSection ? selectoSection.code : null
+        },
+        {
+          label: "Expr",
+          language: "elixir",
+          source: exprSource ? stripAdapterLine(exprSource) : null
+        }
+      ])
+    )
+
+    return section
+  }
+
   function prettifySqlString(sql) {
     if (!window.sqlFormatter || typeof window.sqlFormatter.format !== "function") return sql
 
@@ -436,8 +533,10 @@
   function buildAdapterPanel(entry, markdown, preferredAdapterKey) {
     const outputs = adapterOutputs.patterns[entry.id]
     const selectoSection = extractSectionCode(markdown, "Selecto")
+    const sharedClassic = selectoSection ? selectoSection.code.trim() : null
+    const sharedExpr = exprExampleForEntry(entry, "postgresql")
 
-    if (!outputs || !selectoSection) return null
+    if (!outputs) return null
 
     const section = document.createElement("section")
     section.className = "adapter-panel"
@@ -477,20 +576,38 @@
       panel.className = "adapter-view"
 
       const output = outputs[adapter.key]
-      const commandCard = buildModeCard(`${adapter.label} Selecto`, [
-        {
-          label: "Classic",
-          language: selectoSection.language,
-          source: transformSelectoCode(selectoSection.code, adapter.key)
-        },
-        {
-          label: "Expr",
-          language: "elixir",
-          source: exprExampleForEntry(entry, adapter.key)
-        }
-      ])
+      const adapterClassic = selectoSection ? transformSelectoCode(selectoSection.code, adapter.key) : null
+      const adapterExpr = exprExampleForEntry(entry, adapter.key)
+      const hasClassicDifference =
+        sharedClassic && adapterClassic && stripAdapterLine(adapterClassic) !== sharedClassic.trim()
+      const hasExprDifference =
+        sharedExpr && adapterExpr && stripAdapterLine(adapterExpr) !== stripAdapterLine(sharedExpr)
+      const hasAdapterSyntaxDifference = hasClassicDifference || hasExprDifference
 
-      panel.appendChild(commandCard)
+      if (hasAdapterSyntaxDifference) {
+        const commandCard = buildModeCard(`${adapter.label} Selecto`, [
+          {
+            label: "Classic",
+            language: selectoSection ? selectoSection.language : "elixir",
+            source: hasClassicDifference ? adapterClassic : null
+          },
+          {
+            label: "Expr",
+            language: "elixir",
+            source: hasExprDifference ? adapterExpr : null
+          }
+        ])
+
+        const syntaxNote = document.createElement("p")
+        syntaxNote.className = "adapter-diff-note"
+        syntaxNote.textContent = syntaxSummary(
+          hasExprDifference ? sharedExpr : sharedClassic,
+          hasExprDifference ? adapterExpr : adapterClassic
+        )
+
+        commandCard.appendChild(syntaxNote)
+        panel.appendChild(commandCard)
+      }
 
       const outputCard = document.createElement("div")
       outputCard.className = "adapter-card"
@@ -569,19 +686,22 @@
   }
 
   function injectAdapterPanel(entry, markdown, preferredAdapterKey) {
+    const sharedSyntaxPanel = buildSharedSyntaxPanel(entry, markdown)
     const panel = buildAdapterPanel(entry, markdown, preferredAdapterKey)
-    if (!panel) return
+    if (!panel && !sharedSyntaxPanel) return
 
     const notesHeading = Array.from(doc.querySelectorAll("h2")).find(
       (heading) => heading.textContent.trim() === "Notes"
     )
 
     if (notesHeading) {
-      notesHeading.insertAdjacentElement("beforebegin", panel)
+      if (sharedSyntaxPanel) notesHeading.insertAdjacentElement("beforebegin", sharedSyntaxPanel)
+      if (panel) notesHeading.insertAdjacentElement("beforebegin", panel)
       return
     }
 
-    doc.appendChild(panel)
+    if (sharedSyntaxPanel) doc.appendChild(sharedSyntaxPanel)
+    if (panel) doc.appendChild(panel)
   }
 
   async function loadEntry(entry, preferredAdapterKey = activeAdapterKey) {

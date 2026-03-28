@@ -129,15 +129,21 @@ body {
   font-size: 12px;
 }
 
-.item span:not(.item-id):not(.item-badge) {
+.item span:not(.item-id):not(.item-gap-icons):not(.item-gap-icon) {
   flex: 1;
   min-width: 0;
 }
 
-.item-badge {
+.item-gap-icons {
+  display: inline-flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.item-gap-icon {
   flex: 0 0 auto;
   border-radius: 999px;
-  padding: 3px 8px;
+  padding: 3px 7px;
   font-size: 11px;
   line-height: 1.2;
   color: #7a3f08;
@@ -185,6 +191,24 @@ body {
   border: 1px solid #ccd7c9;
   border-radius: 14px;
   background: linear-gradient(180deg, #f7fbf5, #f2f7f1);
+}
+
+.shared-syntax-panel {
+  margin: 22px 0 18px;
+  padding: 18px;
+  border: 1px solid #d2dbcf;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fbfcfa, #f4f8f2);
+}
+
+.shared-syntax-title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.shared-syntax-note {
+  margin: 6px 0 14px;
+  color: var(--muted);
 }
 
 .adapter-header {
@@ -248,6 +272,11 @@ body {
 
 .adapter-card pre {
   margin: 0;
+}
+
+.adapter-diff-note {
+  margin: 10px 0 0;
+  color: var(--muted);
 }
 
 .code-mode-tabs {
