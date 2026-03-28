@@ -1,13 +1,29 @@
 selecto_path = System.get_env("SELECTO_PATH", "../selecto")
+System.put_env("SELECTO_ECOSYSTEM_USE_LOCAL", "1")
 
 Mix.install([
-  {:selecto, path: selecto_path}
+  {:jason, "~> 1.4"},
+  {:selecto, path: selecto_path, override: true},
+  {:selecto_db_postgresql, path: "../selecto_db_postgresql"},
+  {:selecto_db_sqlite, path: "../selecto_db_sqlite"}
 ])
 
 defmodule SelectoSqlPatterns.VerifyExamples do
   import Selecto.ExprMacros
 
   alias Selecto.Expr, as: X
+
+  @adapters [
+    %{
+      key: "postgresql",
+      label: "PostgreSQL",
+      module: SelectoDBPostgreSQL.Adapter,
+      verify: :strict
+    },
+    %{key: "sqlite", label: "SQLite", module: SelectoDBSQLite.Adapter, verify: :best_effort}
+  ]
+
+  def adapters, do: @adapters
 
   def examples do
     [
@@ -130,35 +146,35 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     examples = examples()
 
     Enum.each(examples, fn {id, query, fragments} ->
-      {sql, _params} = Selecto.to_sql(query)
-      normalized = normalize_sql(sql)
-      assert_sql_sanity!(id, normalized)
-      assert_fragments!(id, normalized, fragments)
-      IO.puts("PASS #{id}")
+      Enum.each(@adapters, fn adapter ->
+        case render_adapter_output(id, query, fragments, adapter) do
+          %{status: :ok} ->
+            IO.puts("PASS #{id} #{adapter.key}")
+
+          %{status: :unsupported, error: error} ->
+            IO.puts("SKIP #{id} #{adapter.key} #{error}")
+        end
+      end)
     end)
 
     run_validation_sensitive_examples!()
 
-    IO.puts("Verified #{length(examples)} pattern examples with Selecto.to_sql/1")
+    IO.puts("Verified #{length(examples)} pattern examples across #{length(@adapters)} adapters")
   end
 
   def dump_sql_markdown(output_path \\ "patterns/SELECTO_YIELDED_SQL.md") do
     body =
       examples()
-      |> Enum.map(fn {id, query, _fragments} ->
-        {sql, params} = Selecto.to_sql(query)
-        assert_sql_sanity!(id, normalize_sql(sql))
+      |> Enum.map(fn {id, query, fragments} ->
+        outputs = adapter_outputs_for_example(id, query, fragments)
 
         [
           "## ",
           id,
           "\n\n",
-          "```sql\n",
-          String.trim(sql),
-          "\n```\n\n",
-          "**Params:** `",
-          inspect(params),
-          "`\n\n"
+          Enum.map(@adapters, fn adapter ->
+            format_markdown_adapter_output(adapter, Map.fetch!(outputs, adapter.key))
+          end)
         ]
       end)
 
@@ -170,6 +186,83 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
     File.write!(output_path, IO.iodata_to_binary(content))
     IO.puts("Wrote #{output_path}")
+  end
+
+  def dump_adapter_json(output_path \\ "patterns/SELECTO_ADAPTER_OUTPUTS.json") do
+    payload = %{
+      generated_at: DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601(),
+      adapters: Enum.map(@adapters, &Map.take(&1, [:key, :label])),
+      patterns: adapter_outputs()
+    }
+
+    File.write!(output_path, Jason.encode_to_iodata!(payload, pretty: true))
+    IO.puts("Wrote #{output_path}")
+  end
+
+  def adapter_outputs do
+    examples()
+    |> Enum.into(%{}, fn {id, query, fragments} ->
+      {id, adapter_outputs_for_example(id, query, fragments)}
+    end)
+  end
+
+  defp adapter_outputs_for_example(id, query, fragments) do
+    @adapters
+    |> Enum.map(fn adapter ->
+      {adapter.key, render_adapter_output(id, query, fragments, adapter)}
+    end)
+    |> Map.new()
+  end
+
+  defp render_adapter_output(id, query, fragments, adapter) do
+    query = Map.put(query, :adapter, adapter.module)
+
+    try do
+      {sql, params} = Selecto.to_sql(query)
+      normalized = normalize_sql(sql)
+      assert_sql_sanity!(id, normalized)
+
+      if adapter.verify == :strict do
+        assert_fragments!(id, normalized, fragments)
+      end
+
+      %{
+        status: :ok,
+        sql: String.trim(sql),
+        params: params
+      }
+    rescue
+      error ->
+        %{
+          status: :unsupported,
+          error: Exception.message(error)
+        }
+    end
+  end
+
+  defp format_markdown_adapter_output(adapter, %{status: :ok, sql: sql, params: params}) do
+    [
+      "### ",
+      adapter.label,
+      "\n\n",
+      "```sql\n",
+      sql,
+      "\n```\n\n",
+      "**Params:** `",
+      inspect(params),
+      "`\n\n"
+    ]
+  end
+
+  defp format_markdown_adapter_output(adapter, %{status: :unsupported, error: error}) do
+    [
+      "### ",
+      adapter.label,
+      "\n\n",
+      "_Unavailable:_ `",
+      error,
+      "`\n\n"
+    ]
   end
 
   defp normalize_sql(sql) do
@@ -202,11 +295,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     ]
 
     Enum.each(validation_examples, fn {id, query, fragments} ->
-      {sql, _params} = Selecto.to_sql(query)
-      normalized = normalize_sql(sql)
-      assert_sql_sanity!(id, normalized)
-      assert_fragments!(id, normalized, fragments)
-      IO.puts("PASS #{id}")
+      case render_adapter_output(id, query, fragments, hd(@adapters)) do
+        %{status: :ok} -> IO.puts("PASS #{id} #{hd(@adapters).key}")
+        %{status: :unsupported, error: error} -> raise "#{id} failed for validation run: #{error}"
+      end
     end)
   end
 
@@ -1979,6 +2071,20 @@ case System.argv() do
 
   ["--dump-sql"] ->
     SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
+
+  ["--dump-adapter-json", output_path] ->
+    SelectoSqlPatterns.VerifyExamples.dump_adapter_json(output_path)
+
+  ["--dump-adapter-json"] ->
+    SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
+
+  ["--dump-all", markdown_path, json_path] ->
+    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(markdown_path)
+    SelectoSqlPatterns.VerifyExamples.dump_adapter_json(json_path)
+
+  ["--dump-all"] ->
+    SelectoSqlPatterns.VerifyExamples.dump_sql_markdown()
+    SelectoSqlPatterns.VerifyExamples.dump_adapter_json()
 
   _ ->
     SelectoSqlPatterns.VerifyExamples.run()

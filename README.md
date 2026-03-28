@@ -51,7 +51,7 @@ and regression checks across the Selecto ecosystem.
 
 ## Verify Examples
 
-Run all current examples through `Selecto.to_sql/1`:
+Run all current examples through `Selecto.to_sql/1` for PostgreSQL and SQLite:
 
 ```bash
 elixir scripts/verify_examples.exs
@@ -63,6 +63,12 @@ Export yielded SQL for all examples:
 elixir scripts/verify_examples.exs --dump-sql patterns/SELECTO_YIELDED_SQL.md
 ```
 
+Export the adapter matrix consumed by the site toggle:
+
+```bash
+elixir scripts/verify_examples.exs --dump-adapter-json patterns/SELECTO_ADAPTER_OUTPUTS.json
+```
+
 ## Browse as HTML
 
 Build the static HTML book locally:
@@ -72,6 +78,9 @@ python scripts/build_book_site.py
 ```
 
 Then open `_site/index.html` in a browser.
+
+Each pattern page keeps the original SQL visible and adds an adapter switcher for
+PostgreSQL and SQLite Selecto commands plus yielded SQL output.
 
 This repository also includes a GitHub Pages workflow at
 `.github/workflows/deploy-pages.yml` that publishes the generated site from `_site`

@@ -1,0 +1,1517 @@
+{
+  "adapters": [
+    {
+      "label": "PostgreSQL",
+      "key": "postgresql"
+    },
+    {
+      "label": "SQLite",
+      "key": "sqlite"
+    }
+  ],
+  "generated_at": "2026-03-28T05:07:39Z",
+  "patterns": {
+    "C002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      }
+    },
+    "F007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"->'warehouse' ? 'zone' ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')\n        from products selecto_root\n        where (( json_type(\"selecto_root\".\"metadata\", '$.warehouse.zone') IS NOT NULL ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "J004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      }
+    },
+    "A010": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "Q008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      }
+    },
+    "Q003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)"
+      }
+    },
+    "G007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      }
+    },
+    "A009": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      }
+    },
+    "P004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        limit 15\n        offset 30"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        limit 15\n        offset 30"
+      }
+    },
+    "J011": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = $1 ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = ? ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      }
+    },
+    "T004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS \"trailing_avg_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS \"trailing_avg_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "J012": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = $1 ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = ? ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      }
+    },
+    "S008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "Q006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = $1 ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = ? ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      }
+    },
+    "Q002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)"
+      }
+    },
+    "C007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      }
+    },
+    "J003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = $1 ) and ( subq_root_orders_high_value_delivered.total > $2 ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      }
+    },
+    "W010": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS \"customer_order_count\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS \"customer_order_count\"\n        from orders selecto_root"
+      }
+    },
+    "JA002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"->'warehouse' ? 'zone' ) and ( \"selecto_root\".\"metadata\"#>>'{warehouse,zone}' = $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')\n        from products selecto_root\n        where (( json_type(\"selecto_root\".\"metadata\", '$.warehouse.zone') IS NOT NULL ) and ( json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone') = ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "Q001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      }
+    },
+    "W007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"next_total\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"next_total\"\n        from orders selecto_root"
+      }
+    },
+    "A004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      }
+    },
+    "G002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "C006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      }
+    },
+    "J009": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, \"customer:alias_a\".name, \"customer:alias_b\".tier\n        from orders selecto_root left join customers \"customer:alias_a\" on \"customer:alias_a\".id = selecto_root.customer_id left join customers \"customer:alias_b\" on \"customer:alias_b\".id = selecto_root.customer_id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, \"customer:alias_a\".name, \"customer:alias_b\".tier\n        from orders selecto_root left join customers \"customer:alias_a\" on \"customer:alias_a\".id = selecto_root.customer_id left join customers \"customer:alias_b\" on \"customer:alias_b\".id = selecto_root.customer_id"
+      }
+    },
+    "P007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\nlimit 20\noffset 20"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\nlimit 20\noffset 20"
+      }
+    },
+    "SO005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      }
+    },
+    "P001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        limit 25\n        offset 50"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        limit 25\n        offset 50"
+      }
+    },
+    "JA006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "SO002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      }
+    },
+    "S006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "SO003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      }
+    },
+    "J001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = $1 ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.order_number asc"
+      }
+    },
+    "F006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "G004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "C008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      }
+    },
+    "W006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_rank\"\n        from employees selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_rank\"\n        from employees selecto_root"
+      }
+    },
+    "JA007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')\n        from products selecto_root\n        where (( json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone') = ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "Q007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      }
+    },
+    "J006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, \"customer:tier_premium\".name, \"customer:tier_standard\".name\n        from orders selecto_root left join customers \"customer:tier_premium\" on \"customer:tier_premium\".id = selecto_root.customer_id and \"customer:tier_premium\".tier = $1 left join customers \"customer:tier_standard\" on \"customer:tier_standard\".id = selecto_root.customer_id and \"customer:tier_standard\".tier = $2"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, \"customer:tier_premium\".name, \"customer:tier_standard\".name\n        from orders selecto_root left join customers \"customer:tier_premium\" on \"customer:tier_premium\".id = selecto_root.customer_id and \"customer:tier_premium\".tier = ? left join customers \"customer:tier_standard\" on \"customer:tier_standard\".id = selecto_root.customer_id and \"customer:tier_standard\".tier = ?"
+      }
+    },
+    "F008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ) and ( selecto_root.status = $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "T002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "SO007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      }
+    },
+    "SO001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      }
+    },
+    "S005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "J005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "T001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))\n      \n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))\n      \n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "S009": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = $1 ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      }
+    },
+    "S002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = $1 ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = ? ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      }
+    },
+    "P002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > $1 ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > ? ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
+      }
+    },
+    "JA005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS \"warehouse_zone\"\n        from products selecto_root\n        order by metadata -> 'warehouse' ->> 'zone' asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone') AS \"warehouse_zone\"\n        from products selecto_root\n        order by json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone') asc"
+      }
+    },
+    "P008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20"
+      }
+    },
+    "S007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ) and ( selecto_root.status = $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "J010": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      }
+    },
+    "A006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = $1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      }
+    },
+    "SO004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      }
+    },
+    "Q005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_count\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_count\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      }
+    },
+    "G005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "T005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"previous_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"previous_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "Q004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      }
+    },
+    "W003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"prev_total\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"prev_total\"\n        from orders selecto_root"
+      }
+    },
+    "G008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "C005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      }
+    },
+    "W005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"moving_avg_total\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"moving_avg_total\"\n        from orders selecto_root"
+      }
+    },
+    "G001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "S010": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "T003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "J007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_stats.count\n        from products selecto_root LEFT JOIN LATERAL (\n        select count(*)\n        from orders subq_root_orders\n        where (( subq_root_orders.status = $1 ))\n      ) AS delivered_stats ON true"
+      },
+      "sqlite": {
+        "error": "Adapter does not support lateral/apply joins",
+        "status": "unsupported"
+      }
+    },
+    "G006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        limit 10"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        limit 10"
+      }
+    },
+    "F002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "SO008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      }
+    },
+    "P003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < $1 ))\n      \n        order by selecto_root.id desc\n      \n        limit 20"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < ? ))\n      \n        order by selecto_root.id desc\n      \n        limit 20"
+      }
+    },
+    "A003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      }
+    },
+    "A008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = $1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      }
+    },
+    "A005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      }
+    },
+    "C003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      }
+    },
+    "JA008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS \"warehouse_zone\", metadata -> 'stock' ->> 'quantity' AS \"stock_quantity\"\n        from products selecto_root\n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone') AS \"warehouse_zone\", json_extract(\"selecto_root\".\"metadata\", '$.stock.quantity') AS \"stock_quantity\"\n        from products selecto_root\n        order by selecto_root.name asc"
+      }
+    },
+    "P005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > $1 ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        limit 25"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > ? ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        limit 25"
+      }
+    },
+    "T006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS \"status_running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS \"status_running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      }
+    },
+    "JA003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "T007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        limit 25"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        limit 25"
+      }
+    },
+    "J008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(\"selecto_root\".\"tags\") AS product_tag\n        where (( selecto_root.active = $1 ))"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(\"selecto_root\".\"tags\") AS product_tag\n        where (( selecto_root.active = ? ))"
+      }
+    },
+    "C004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      }
+    },
+    "W008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS \"status_max_total\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS \"status_max_total\"\n        from orders selecto_root"
+      }
+    },
+    "W004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_rank\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_rank\"\n        from orders selecto_root"
+      }
+    },
+    "SO006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      }
+    },
+    "P006": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20\n        offset 40"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20\n        offset 40"
+      }
+    },
+    "S004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "F005": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "C001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      }
+    },
+    "S003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "A001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      }
+    },
+    "T008": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\nlimit 50"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\nlimit 50"
+      }
+    },
+    "A002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      }
+    },
+    "F004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "wireless charger"
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku\n        from products selecto_root\n        where (( selecto_root.name @@ websearch_to_tsquery($1) ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "error": "SQLite text search requires an FTS5-configured field",
+        "status": "unsupported"
+      }
+    },
+    "W001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_salary_rank\"\n        from employees selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_salary_rank\"\n        from employees selecto_root"
+      }
+    },
+    "JA004": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS \"stock_quantity\"\n        from products selecto_root\n        where (( \"metadata\"->'stock' ? 'quantity' ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, json_extract(\"selecto_root\".\"metadata\", '$.stock.quantity') AS \"stock_quantity\"\n        from products selecto_root\n        where (( json_type(\"selecto_root\".\"metadata\", '$.stock.quantity') IS NOT NULL ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "A007": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      }
+    },
+    "S001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      }
+    },
+    "W009": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_percent_rank\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_percent_rank\"\n        from orders selecto_root"
+      }
+    },
+    "J002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "F003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status = ANY($3) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      }
+    },
+    "G003": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "W002": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"running_total\"\n        from orders selecto_root"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"running_total\"\n        from orders selecto_root"
+      }
+    },
+    "JA001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS \"price_band\"\n        from products selecto_root\n        where (( \"metadata\" @> '{\"price_band\":\"premium\"}'::jsonb ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, json_extract(\"selecto_root\".\"metadata\", '$.price_band') AS \"price_band\"\n        from products selecto_root\n        where (( json_extract(\"selecto_root\".\"metadata\", '$.price_band') = 'premium' ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "F001": {
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( NOT (selecto_root.status = ANY($1)) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      }
+    }
+  }
+}

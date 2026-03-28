@@ -3,11 +3,15 @@
   const doc = document.getElementById("doc")
   const docMeta = document.getElementById("doc-meta")
   const search = document.getElementById("search")
+  const gapFilter = document.getElementById("gap-filter")
   const content = document.querySelector(".content")
 
   let manifest = null
+  let adapterOutputs = { patterns: {} }
   let allEntries = []
   let activePath = null
+  let gapOnly = false
+  let activeAdapterKey = null
 
   function flattenEntries(data) {
     const grouped = data.groups.flatMap((group) =>
@@ -15,6 +19,31 @@
     )
     const extras = data.extras.map((entry) => ({ ...entry, group: "Reference" }))
     return [...grouped, ...extras]
+  }
+
+  function adapterCoverage(entry) {
+    const patternOutputs = adapterOutputs.patterns[entry.id]
+    const adapters = adapterOutputs.adapters || []
+
+    if (!patternOutputs || adapters.length === 0) return null
+
+    const missing = adapters.filter((adapter) => {
+      const output = patternOutputs[adapter.key]
+      return !output || output.status !== "ok"
+    })
+
+    if (missing.length === 0) return null
+
+    const text = missing.length === 1 ? `${missing[0].label} gap` : "adapter gaps"
+    const detail = missing
+      .map((adapter) => {
+        const output = patternOutputs[adapter.key]
+        const reason = output && output.error ? `: ${output.error}` : ""
+        return `${adapter.label}${reason}`
+      })
+      .join(" | ")
+
+    return { text, detail, missingKeys: missing.map((adapter) => adapter.key) }
   }
 
   function renderSidebar(filterText) {
@@ -25,6 +54,8 @@
 
     groups.forEach((group) => {
       const entries = group.entries.filter((entry) => {
+        const coverage = adapterCoverage(entry)
+        if (gapOnly && !coverage) return false
         if (!q) return true
         return (
           entry.id.toLowerCase().includes(q) ||
@@ -58,6 +89,20 @@
         button.appendChild(id)
         button.appendChild(title)
 
+        const coverage = adapterCoverage(entry)
+        if (coverage) {
+          const badge = document.createElement("span")
+          badge.className = "item-badge"
+          badge.textContent = coverage.text
+          badge.title = coverage.detail
+          button.title = coverage.detail
+          badge.addEventListener("click", (event) => {
+            event.stopPropagation()
+            loadEntry(entry, coverage.missingKeys[0] || null)
+          })
+          button.appendChild(badge)
+        }
+
         button.addEventListener("click", () => {
           loadEntry(entry)
         })
@@ -69,9 +114,25 @@
     })
   }
 
-  function updateUrl(path) {
+  function updateGapFilterUi() {
+    if (!gapFilter) return
+    gapFilter.classList.toggle("active", gapOnly)
+    gapFilter.textContent = gapOnly ? "Showing gaps" : "Show gaps"
+  }
+
+  function updateUrl(path, adapterKey) {
     const url = new URL(window.location.href)
     url.searchParams.set("file", path)
+    if (adapterKey) {
+      url.searchParams.set("adapter", adapterKey)
+    } else {
+      url.searchParams.delete("adapter")
+    }
+    if (gapOnly) {
+      url.searchParams.set("gaps", "1")
+    } else {
+      url.searchParams.delete("gaps")
+    }
     url.hash = ""
     window.history.replaceState({}, "", url)
   }
@@ -189,10 +250,214 @@
     codeBlocks.forEach((block) => window.hljs.highlightElement(block))
   }
 
-  async function loadEntry(entry) {
+  function extractSectionCode(markdown, heading) {
+    const pattern = new RegExp(
+      "(^|\\n)## " + heading + "\\n\\n```([\\w-]+)?\\n([\\s\\S]*?)\\n```",
+      "m"
+    )
+    const match = markdown.match(pattern)
+    if (!match) return null
+    return {
+      language: match[2] || "text",
+      code: match[3].trim()
+    }
+  }
+
+  function stripSection(markdown, heading) {
+    const pattern = new RegExp(`(^|\\n)## ${heading}\\n[\\s\\S]*?(?=\\n## |$)`, "m")
+    return markdown.replace(pattern, "\n")
+  }
+
+  function transformSelectoCode(baseCode, adapterKey) {
+    if (!baseCode) return null
+
+    const adapterLine =
+      adapterKey === "sqlite"
+        ? "  |> Map.put(:adapter, SelectoDBSQLite.Adapter)"
+        : "  |> Map.put(:adapter, SelectoDBPostgreSQL.Adapter)"
+
+    const lines = baseCode.split("\n")
+    const configureIndex = lines.findIndex((line) => line.includes("Selecto.configure("))
+
+    if (configureIndex === -1) {
+      return baseCode
+    }
+
+    const insertAt = configureIndex + 1
+    const nextLine = lines[insertAt]
+
+    if (nextLine && nextLine.trim().startsWith("|> Map.put(:adapter,")) {
+      lines[insertAt] = adapterLine
+      return lines.join("\n")
+    }
+
+    lines.splice(insertAt, 0, adapterLine)
+    return lines.join("\n")
+  }
+
+  function buildCodeBlock(language, source) {
+    const pre = document.createElement("pre")
+    const code = document.createElement("code")
+    code.className = `language-${language}`
+    code.textContent = source
+    pre.appendChild(code)
+    return pre
+  }
+
+  function prettifySqlString(sql) {
+    if (!window.sqlFormatter || typeof window.sqlFormatter.format !== "function") return sql
+
+    try {
+      return window.sqlFormatter
+        .format(sql, { language: "postgresql", keywordCase: "upper" })
+        .trimEnd()
+    } catch (_err) {
+      return sql
+    }
+  }
+
+  function buildAdapterPanel(entry, markdown, preferredAdapterKey) {
+    const outputs = adapterOutputs.patterns[entry.id]
+    const selectoSection = extractSectionCode(markdown, "Selecto")
+
+    if (!outputs || !selectoSection) return null
+
+    const section = document.createElement("section")
+    section.className = "adapter-panel"
+
+    const header = document.createElement("div")
+    header.className = "adapter-header"
+
+    const title = document.createElement("h2")
+    title.className = "adapter-title"
+    title.textContent = "Adapter Output"
+
+    const note = document.createElement("p")
+    note.className = "adapter-note"
+    note.textContent = "Switch between generated Selecto commands and yielded SQL by adapter."
+
+    header.appendChild(title)
+    header.appendChild(note)
+    section.appendChild(header)
+
+    const tabs = document.createElement("div")
+    tabs.className = "adapter-tabs"
+
+    const body = document.createElement("div")
+    body.className = "adapter-body"
+
+    const adapters = adapterOutputs.adapters || []
+
+    let activated = false
+
+    adapters.forEach((adapter, index) => {
+      const button = document.createElement("button")
+      button.className = "adapter-tab"
+      button.type = "button"
+      button.textContent = adapter.label
+
+      const panel = document.createElement("div")
+      panel.className = "adapter-view"
+
+      const output = outputs[adapter.key]
+      const commandCard = document.createElement("div")
+      commandCard.className = "adapter-card"
+
+      const commandLabel = document.createElement("h3")
+      commandLabel.className = "adapter-card-title"
+      commandLabel.textContent = `${adapter.label} Selecto`
+      commandCard.appendChild(commandLabel)
+      commandCard.appendChild(
+        buildCodeBlock(selectoSection.language, transformSelectoCode(selectoSection.code, adapter.key))
+      )
+
+      const outputCard = document.createElement("div")
+      outputCard.className = "adapter-card"
+
+      const outputLabel = document.createElement("h3")
+      outputLabel.className = "adapter-card-title"
+      outputLabel.textContent = `${adapter.label} SQL`
+      outputCard.appendChild(outputLabel)
+
+      if (output && output.status === "ok") {
+        outputCard.appendChild(buildCodeBlock("sql", prettifySqlString(output.sql)))
+
+        const params = document.createElement("p")
+        params.className = "adapter-params"
+        params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
+        outputCard.appendChild(params)
+      } else {
+        const unavailable = document.createElement("p")
+        unavailable.className = "adapter-unavailable"
+        unavailable.textContent = output && output.error ? output.error : "No adapter output available."
+        outputCard.appendChild(unavailable)
+      }
+
+      panel.appendChild(commandCard)
+      panel.appendChild(outputCard)
+      body.appendChild(panel)
+      tabs.appendChild(button)
+
+      function setActive() {
+        const tabButtons = tabs.querySelectorAll(".adapter-tab")
+        const views = body.querySelectorAll(".adapter-view")
+
+        tabButtons.forEach((tabButton) => tabButton.classList.remove("active"))
+        views.forEach((view) => view.classList.remove("active"))
+
+        button.classList.add("active")
+        panel.classList.add("active")
+        activeAdapterKey = adapter.key
+        updateUrl(entry.path, adapter.key)
+      }
+
+      button.addEventListener("click", setActive)
+
+      if (adapter.key === preferredAdapterKey || (!preferredAdapterKey && index === 0)) {
+        setActive()
+        activated = true
+      }
+    })
+
+    if (!activated) {
+      const firstTab = tabs.querySelector(".adapter-tab")
+      if (firstTab) firstTab.click()
+    }
+
+    section.appendChild(tabs)
+    section.appendChild(body)
+    return section
+  }
+
+  function injectAdapterPanel(entry, markdown, preferredAdapterKey) {
+    const panel = buildAdapterPanel(entry, markdown, preferredAdapterKey)
+    if (!panel) return
+
+    const sqlHeading = Array.from(doc.querySelectorAll("h2")).find(
+      (heading) => heading.textContent.trim() === "SQL"
+    )
+
+    if (!sqlHeading) {
+      doc.prepend(panel)
+      return
+    }
+
+    let anchor = sqlHeading.nextElementSibling
+    while (anchor && anchor.tagName !== "H2") {
+      if (anchor.tagName === "PRE") {
+        anchor.insertAdjacentElement("afterend", panel)
+        return
+      }
+      anchor = anchor.nextElementSibling
+    }
+
+    sqlHeading.insertAdjacentElement("afterend", panel)
+  }
+
+  async function loadEntry(entry, preferredAdapterKey = activeAdapterKey) {
     activePath = entry.path
     renderSidebar(search.value)
-    updateUrl(entry.path)
+    updateUrl(entry.path, preferredAdapterKey)
     scrollContentToTop()
 
     docMeta.textContent = `${entry.group} - ${entry.path}`
@@ -205,7 +470,10 @@
     }
 
     const markdown = await res.text()
-    doc.innerHTML = marked.parse(markdown)
+    const cleanedMarkdown = stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto")
+
+    doc.innerHTML = marked.parse(cleanedMarkdown)
+    injectAdapterPanel(entry, markdown, preferredAdapterKey)
     prettifySqlBlocks()
     highlightCodeBlocks()
     wireDocumentLinks(entry.path)
@@ -222,18 +490,44 @@
     return entries.find((entry) => entry.path === path) || defaultEntry
   }
 
+  function adapterFromUrl() {
+    return new URL(window.location.href).searchParams.get("adapter")
+  }
+
   async function init() {
-    const res = await fetch("book.json")
-    manifest = await res.json()
+    const [manifestRes, adapterRes] = await Promise.all([
+      fetch("book.json"),
+      fetch("patterns/SELECTO_ADAPTER_OUTPUTS.json")
+    ])
+
+    manifest = await manifestRes.json()
+
+    if (adapterRes.ok) {
+      adapterOutputs = await adapterRes.json()
+    }
+
     allEntries = flattenEntries(manifest)
+
+    gapOnly = new URL(window.location.href).searchParams.get("gaps") === "1"
+    activeAdapterKey = adapterFromUrl()
+    updateGapFilterUi()
 
     renderSidebar("")
     const initial = entryFromUrl(allEntries)
-    await loadEntry(initial)
+    await loadEntry(initial, activeAdapterKey)
 
     search.addEventListener("input", () => {
       renderSidebar(search.value)
     })
+
+    if (gapFilter) {
+      gapFilter.addEventListener("click", () => {
+        gapOnly = !gapOnly
+        updateGapFilterUi()
+        renderSidebar(search.value)
+        updateUrl(activePath || initial.path, activeAdapterKey)
+      })
+    }
   }
 
   init().catch((err) => {
