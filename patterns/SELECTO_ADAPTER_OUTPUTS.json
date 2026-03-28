@@ -7,11 +7,55 @@
     {
       "label": "SQLite",
       "key": "sqlite"
+    },
+    {
+      "label": "MySQL",
+      "key": "mysql"
+    },
+    {
+      "label": "MariaDB",
+      "key": "mariadb"
+    },
+    {
+      "label": "MSSQL",
+      "key": "mssql"
+    },
+    {
+      "label": "DuckDB",
+      "key": "duckdb"
     }
   ],
-  "generated_at": "2026-03-28T18:56:20Z",
+  "generated_at": "2026-03-28T19:18:24Z",
   "patterns": {
     "C002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -28,6 +72,26 @@
       }
     },
     "F007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"->'warehouse' ? 'zone' ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')\n        from products selecto_root\n        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -40,6 +104,26 @@
       }
     },
     "J004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, manager.first_name\n        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id\n        order by selecto_root.first_name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -52,6 +136,26 @@
       }
     },
     "A010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -64,6 +168,26 @@
       }
     },
     "Q008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root))\nEXCEPT\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -76,6 +200,34 @@
       }
     },
     "Q003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = @p1)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          2000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -92,6 +244,26 @@
       }
     },
     "G007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select ST_GeometryType(selecto_root.geom), count(*)\n        from locations selecto_root\n        group by ST_GeometryType(selecto_root.geom)\n      \n        order by ST_GeometryType(selecto_root.geom) asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -104,6 +276,26 @@
       }
     },
     "A009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -116,6 +308,26 @@
       }
     },
     "P004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        limit 15\n        offset 30"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        limit 15\n        offset 30"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        offset 30 rows fetch next 15 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by customer.name asc, selecto_root.order_number asc\n      \n        limit 15\n        offset 30"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -128,6 +340,34 @@
       }
     },
     "J011": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = $1 ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = ? ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = @p1 ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = ? ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -144,6 +384,26 @@
       }
     },
     "T004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS \"trailing_avg_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS [trailing_avg_total]\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -156,6 +416,34 @@
       }
     },
     "J012": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = $1 ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = ? ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = @p1 ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number\n        from orders subq_root_orders_processing_orders\n        where (( subq_root_orders_processing_orders.status = ? ))\n      ) processing_orders on selecto_root.id = processing_orders.customer_id\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -172,6 +460,34 @@
       }
     },
     "S008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = @p1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "returned"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total > all (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -188,6 +504,34 @@
       }
     },
     "Q006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = $1 ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = ? ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = @p1 ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, processing_orders_member.order_number\n        from customers selecto_root left join (\n        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total\n        from orders subq_root_orders_processing_orders_member\n        where (( subq_root_orders_processing_orders_member.status = ? ))\n      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -204,6 +548,34 @@
       }
     },
     "Q002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = @p1)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select t.product_name, t.quantity\n        from orders t\n        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -220,6 +592,34 @@
       }
     },
     "C007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing"
+        ],
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -236,6 +636,38 @@
       }
     },
     "J003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = $1 ) and ( subq_root_orders_high_value_delivered.total > $2 ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = @p1 ) and ( subq_root_orders_high_value_delivered.total > @p2 ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered",
+          1000
+        ],
+        "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -254,6 +686,26 @@
       }
     },
     "W010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS \"customer_order_count\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS `customer_order_count`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS [customer_order_count]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS `customer_order_count`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -266,6 +718,34 @@
       }
     },
     "JA002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"->'warehouse' ? 'zone' ) and ( \"selecto_root\".\"metadata\"#>>'{warehouse,zone}' = $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')\n        from products selecto_root\n        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ) and ( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "A1"
+        ],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -282,6 +762,26 @@
       }
     },
     "Q001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_orders.[product_name] AS [product_name], sub_orders.[quantity] AS [quantity] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [order_items]\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -294,6 +794,26 @@
       }
     },
     "W007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"next_total\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [next_total]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -306,6 +826,26 @@
       }
     },
     "A004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -318,6 +858,26 @@
       }
     },
     "G002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -330,6 +890,26 @@
       }
     },
     "C006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -342,6 +922,26 @@
       }
     },
     "J009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, \"customer:alias_a\".name, \"customer:alias_b\".tier\n        from orders selecto_root left join customers \"customer:alias_a\" on \"customer:alias_a\".id = selecto_root.customer_id left join customers \"customer:alias_b\" on \"customer:alias_b\".id = selecto_root.customer_id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, `customer:alias_a`.name, `customer:alias_b`.tier\n        from orders selecto_root left join customers `customer:alias_a` on `customer:alias_a`.id = selecto_root.customer_id left join customers `customer:alias_b` on `customer:alias_b`.id = selecto_root.customer_id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, [customer:alias_a].name, [customer:alias_b].tier\n        from orders selecto_root left join customers [customer:alias_a] on [customer:alias_a].id = selecto_root.customer_id left join customers [customer:alias_b] on [customer:alias_b].id = selecto_root.customer_id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, `customer:alias_a`.name, `customer:alias_b`.tier\n        from orders selecto_root left join customers `customer:alias_a` on `customer:alias_a`.id = selecto_root.customer_id left join customers `customer:alias_b` on `customer:alias_b`.id = selecto_root.customer_id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -354,6 +954,26 @@
       }
     },
     "P007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\nlimit 20\noffset 20"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\nlimit 20\noffset 20"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\noffset 20 rows fetch next 20 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.order_number asc\nlimit 20\noffset 20"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -366,6 +986,26 @@
       }
     },
     "SO005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "((\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nUNION\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root))\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -378,6 +1018,26 @@
       }
     },
     "P001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        limit 25\n        offset 50"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        limit 25\n        offset 50"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        offset 50 rows fetch next 25 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.id asc\n      \n        limit 25\n        offset 50"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -390,6 +1050,46 @@
       }
     },
     "JA006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> @p1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -412,6 +1112,26 @@
       }
     },
     "SO002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.total\n        from archived_orders selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -424,6 +1144,34 @@
       }
     },
     "S006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p1) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -440,6 +1188,26 @@
       }
     },
     "SO003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -452,6 +1220,34 @@
       }
     },
     "J001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = $1 ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = @p1 ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.order_number asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -468,6 +1264,42 @@
       }
     },
     "F006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> @p1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured"
+          ]
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags @> ? ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -488,6 +1320,26 @@
       }
     },
     "G004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -500,6 +1352,26 @@
       }
     },
     "C008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -512,6 +1384,26 @@
       }
     },
     "W006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_rank\"\n        from employees selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`\n        from employees selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS [department_rank]\n        from employees selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`\n        from employees selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -524,6 +1416,38 @@
       }
     },
     "JA007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, \"selecto_root\".\"metadata\"#>>'{warehouse,zone}'\n        from products selecto_root\n        where (( \"selecto_root\".\"metadata\"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')\n        from products selecto_root\n        where (( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ) and ( selecto_root.active = @p2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "A1",
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))\n        from products selecto_root\n        where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -542,6 +1466,34 @@
       }
     },
     "Q007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -558,6 +1510,38 @@
       }
     },
     "J006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, \"customer:tier_premium\".name, \"customer:tier_standard\".name\n        from orders selecto_root left join customers \"customer:tier_premium\" on \"customer:tier_premium\".id = selecto_root.customer_id and \"customer:tier_premium\".tier = $1 left join customers \"customer:tier_standard\" on \"customer:tier_standard\".id = selecto_root.customer_id and \"customer:tier_standard\".tier = $2"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name\n        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, [customer:tier_premium].name, [customer:tier_standard].name\n        from orders selecto_root left join customers [customer:tier_premium] on [customer:tier_premium].id = selecto_root.customer_id and [customer:tier_premium].tier = @p1 left join customers [customer:tier_standard] on [customer:tier_standard].id = selecto_root.customer_id and [customer:tier_standard].tier = @p2"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "premium",
+          "standard"
+        ],
+        "sql": "select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name\n        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -576,6 +1560,38 @@
       }
     },
     "F008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ) and ( selecto_root.status = $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = @p1 ))\n      ) ) and ( selecto_root.status = @p2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "platinum",
+          "processing"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -594,6 +1610,26 @@
       }
     },
     "T002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS [running_total]\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -606,6 +1642,26 @@
       }
     },
     "SO007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -618,6 +1674,26 @@
       }
     },
     "SO001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.name, selecto_root.tier\n        from vendors selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -630,6 +1706,34 @@
       }
     },
     "S005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = @p1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "silver"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -646,6 +1750,26 @@
       }
     },
     "J005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        where (( reviews.id is null ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -658,6 +1782,38 @@
       }
     },
     "T001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))\n      \n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))\n      \n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= @p1 and selecto_root.inserted_at < @p2) ))\n      \n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "2024-01-01T00:00:00",
+          "2024-02-01T00:00:00"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))\n      \n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -676,6 +1832,34 @@
       }
     },
     "S009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = $1 ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = @p1 ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total < any (\n        select subq_root_orders.total\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) ))\n      \n        order by selecto_root.total asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -692,6 +1876,34 @@
       }
     },
     "S002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = $1 ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = ? ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = @p1 ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_orders.order_number, delivered_orders.total\n        from customers selecto_root left join (\n        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total\n        from orders subq_root_orders_delivered_orders\n        where (( subq_root_orders_delivered_orders.status = ? ))\n      ) delivered_orders on selecto_root.id = delivered_orders.customer_id\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -708,6 +1920,34 @@
       }
     },
     "P002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > $1 ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > ? ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > @p1 ))\n      \n        order by selecto_root.id asc\n      \n        offset 0 rows fetch next 25 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          1000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > ? ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -724,6 +1964,26 @@
       }
     },
     "JA005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS \"warehouse_zone\"\n        from products selecto_root\n        order by metadata -> 'warehouse' ->> 'zone' asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`\n        from products selecto_root\n        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone]\n        from products selecto_root\n        order by JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`\n        from products selecto_root\n        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -736,6 +1996,42 @@
       }
     },
     "P008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < @p1 ) or ((( selecto_root.total = @p2 ) and ( selecto_root.id < @p3 ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        offset 0 rows fetch next 20 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          1000,
+          1000,
+          500
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -756,6 +2052,38 @@
       }
     },
     "S007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ) and ( selecto_root.status = $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = @p1 ))\n      ) ) and ( selecto_root.status = @p2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "gold",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -774,6 +2102,26 @@
       }
     },
     "J010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.name, count(*)\n        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id\n        group by customer.name\n      \n        order by customer.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -786,6 +2134,34 @@
       }
     },
     "A006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = $1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = @p1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -802,6 +2178,26 @@
       }
     },
     "SO004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from customers selecto_root)\nEXCEPT\n(\n        select selecto_root.id, selecto_root.name\n        from blocked_customers selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -814,6 +2210,26 @@
       }
     },
     "Q005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_count\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id]) AS [order_count]\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -826,6 +2242,26 @@
       }
     },
     "G005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -838,6 +2274,26 @@
       }
     },
     "T005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS \"previous_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS [previous_total]\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -850,6 +2306,26 @@
       }
     },
     "Q004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_orders.[product_name] AS [product_name] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [products], (SELECT COALESCE((SELECT sub_orders.[quantity] AS [quantity] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [quantities]\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -862,6 +2338,26 @@
       }
     },
     "W003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"prev_total\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [prev_total]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -874,6 +2370,34 @@
       }
     },
     "G008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = @p1) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivery"
+        ],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -890,6 +2414,26 @@
       }
     },
     "C005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -902,6 +2446,26 @@
       }
     },
     "W005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS \"moving_avg_total\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS [moving_avg_total]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -914,6 +2478,26 @@
       }
     },
     "G001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -926,6 +2510,38 @@
       }
     },
     "S010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p2)  ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "suspended"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -944,6 +2560,26 @@
       }
     },
     "T003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -956,6 +2592,25 @@
       }
     },
     "J007": {
+      "duckdb": {
+        "error": "Adapter does not support lateral/apply joins",
+        "status": "unsupported"
+      },
+      "mariadb": {
+        "error": "Adapter does not support lateral/apply joins",
+        "status": "unsupported"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.name, delivered_stats.count\n        from products selecto_root OUTER APPLY (\n        select count(*)\n        from orders subq_root_orders\n        where (( subq_root_orders.status = @p1 ))\n      ) AS delivered_stats"
+      },
+      "mysql": {
+        "error": "Adapter does not support lateral/apply joins",
+        "status": "unsupported"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -969,6 +2624,26 @@
       }
     },
     "G006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        limit 10"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        limit 10"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        offset 0 rows fetch next 10 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))\n        from locations selecto_root\n        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc\n      \n        limit 10"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -981,6 +2656,42 @@
       }
     },
     "F002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = @p1 ) or ( selecto_root.status = @p2 ))) and ( selecto_root.total > @p3 ))))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          100
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1001,6 +2712,26 @@
       }
     },
     "SO008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1013,6 +2744,34 @@
       }
     },
     "P003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < $1 ))\n      \n        order by selecto_root.id desc\n      \n        limit 20"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < ? ))\n      \n        order by selecto_root.id desc\n      \n        limit 20"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < @p1 ))\n      \n        order by selecto_root.id desc\n      \n        offset 0 rows fetch next 20 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          5000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id < ? ))\n      \n        order by selecto_root.id desc\n      \n        limit 20"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1029,6 +2788,26 @@
       }
     },
     "A003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, AVG(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1041,6 +2820,34 @@
       }
     },
     "A008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = $1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = @p1 ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select customer.tier, AVG(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1057,6 +2864,26 @@
       }
     },
     "A005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, SUM(selecto_root.total)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier\n      \n        order by customer.tier asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1069,6 +2896,26 @@
       }
     },
     "C003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1081,6 +2928,26 @@
       }
     },
     "JA008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS \"warehouse_zone\", metadata -> 'stock' ->> 'quantity' AS \"stock_quantity\"\n        from products selecto_root\n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`\n        from products selecto_root\n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone], JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]\n        from products selecto_root\n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`\n        from products selecto_root\n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1093,6 +2960,34 @@
       }
     },
     "P005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > $1 ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        limit 25"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > ? ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        limit 25"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > @p1 ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        offset 0 rows fetch next 25 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "2024-01-15T00:00:00"
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.inserted_at > ? ))\n      \n        order by selecto_root.inserted_at asc, selecto_root.id asc\n      \n        limit 25"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1109,6 +3004,26 @@
       }
     },
     "T006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS \"status_running_total\"\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS [status_running_total]\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`\n        from orders selecto_root\n        order by selecto_root.inserted_at asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1121,6 +3036,50 @@
       }
     },
     "JA003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && @p1 ) and ( selecto_root.active = @p2 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          [
+            "featured",
+            "clearance"
+          ],
+          true
+        ],
+        "sql": "select selecto_root.name, selecto_root.tags\n        from products selecto_root\n        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1145,6 +3104,42 @@
       }
     },
     "T007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        limit 25"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        limit 25"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < @p1 ) or ((( selecto_root.inserted_at = @p2 ) and ( selecto_root.id < @p3 ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        offset 0 rows fetch next 25 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "2024-02-01T00:00:00",
+          "2024-02-01T00:00:00",
+          2000
+        ],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root\n        where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))\n      \n        order by selecto_root.inserted_at desc, selecto_root.id desc\n      \n        limit 25"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1165,6 +3160,34 @@
       }
     },
     "J008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(\"selecto_root\".\"tags\") AS product_tag\n        where (( selecto_root.active = $1 ))"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag\n        where (( selecto_root.active = ? ))"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST([selecto_root].[tags]) AS product_tag\n        where (( selecto_root.active = @p1 ))"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          true
+        ],
+        "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag\n        where (( selecto_root.active = ? ))"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1181,6 +3204,26 @@
       }
     },
     "C004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1193,6 +3236,26 @@
       }
     },
     "W008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS \"status_max_total\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS `status_max_total`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS [status_max_total]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS `status_max_total`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1205,6 +3268,26 @@
       }
     },
     "W004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_rank\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS [total_rank]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1217,6 +3300,26 @@
       }
     },
     "SO006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.id, selecto_root.name\n        from premium_customers selecto_root)\nINTERSECT ALL\n(\n        select selecto_root.id, selecto_root.name\n        from active_customers selecto_root)"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1229,6 +3332,26 @@
       }
     },
     "P006": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20\n        offset 40"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20\n        offset 40"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        offset 40 rows fetch next 20 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        order by selecto_root.total desc, selecto_root.id desc\n      \n        limit 20\n        offset 40"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1241,6 +3364,26 @@
       }
     },
     "S004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name\n        from products selecto_root left join (\n        select subq_root_reviews_reviewed_products.product_id\n        from reviews subq_root_reviews_reviewed_products\n        group by subq_root_reviews_reviewed_products.product_id\n      ) reviewed_products on selecto_root.id = reviewed_products.product_id\n        where (( reviewed_products.product_id is null ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1253,6 +3396,38 @@
       }
     },
     "F005": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = @p1  ) ) and ( selecto_root.total > @p2 ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "cancelled",
+          50
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1271,6 +3446,34 @@
       }
     },
     "C001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1287,6 +3490,26 @@
       }
     },
     "S003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1299,6 +3522,26 @@
       }
     },
     "A001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1311,6 +3554,26 @@
       }
     },
     "T008": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\nlimit 50"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\nlimit 50"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\noffset 0 rows fetch next 50 rows only"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from orders selecto_root)\nUNION ALL\n(\n        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total\n        from archived_orders selecto_root)\nORDER BY selecto_root.inserted_at desc\nlimit 50"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1323,6 +3586,34 @@
       }
     },
     "A002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "delivered"
+        ],
+        "sql": "select selecto_root.customer_id, SUM(selecto_root.total)\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1339,6 +3630,25 @@
       }
     },
     "F004": {
+      "duckdb": {
+        "error": "Adapter does not support text search",
+        "status": "unsupported"
+      },
+      "mariadb": {
+        "error": "Adapter does not support text search",
+        "status": "unsupported"
+      },
+      "mssql": {
+        "error": "Adapter does not support text search",
+        "status": "unsupported"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "wireless charger"
+        ],
+        "sql": "select selecto_root.name, selecto_root.sku\n        from products selecto_root\n        where (( MATCH(selecto_root.name) AGAINST (? IN NATURAL LANGUAGE MODE) ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1352,6 +3662,26 @@
       }
     },
     "W001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS \"department_salary_rank\"\n        from employees selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`\n        from employees selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS [department_salary_rank]\n        from employees selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`\n        from employees selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1364,6 +3694,26 @@
       }
     },
     "JA004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS \"stock_quantity\"\n        from products selecto_root\n        where (( \"metadata\"->'stock' ? 'quantity' ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]\n        from products selecto_root\n        where (( (JSON_QUERY(selecto_root.metadata, '$.stock.quantity') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.stock.quantity') IS NOT NULL) ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`\n        from products selecto_root\n        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1376,6 +3726,26 @@
       }
     },
     "A007": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1388,6 +3758,34 @@
       }
     },
     "S001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = $1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = @p1 ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "gold"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1404,6 +3802,26 @@
       }
     },
     "W009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS \"total_percent_rank\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS [total_percent_rank]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1416,6 +3834,26 @@
       }
     },
     "J002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, COUNT(reviews.id)\n        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id\n        group by selecto_root.name\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1428,6 +3866,58 @@
       }
     },
     "F003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          100,
+          500,
+          [
+            "processing",
+            "shipped",
+            "delivered"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [
@@ -1456,6 +3946,26 @@
       }
     },
     "G003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))\n      \n        order by selecto_root.id asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1468,6 +3978,26 @@
       }
     },
     "W002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"running_total\"\n        from orders selecto_root"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`\n        from orders selecto_root"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [running_total]\n        from orders selecto_root"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`\n        from orders selecto_root"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1480,6 +4010,26 @@
       }
     },
     "JA001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS \"price_band\"\n        from products selecto_root\n        where (( \"metadata\" @> '{\"price_band\":\"premium\"}'::jsonb ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`\n        from products selecto_root\n        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{\"price_band\":\"premium\"}') ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.price_band') AS [price_band]\n        from products selecto_root\n        where (( JSON_VALUE(selecto_root.metadata, '$.price_band') = 'premium' ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`\n        from products selecto_root\n        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{\"price_band\":\"premium\"}') ))\n      \n        order by selecto_root.name asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [],
@@ -1492,6 +4042,46 @@
       }
     },
     "F001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1) ))\n      \n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          [
+            "cancelled",
+            "returned"
+          ]
+        ],
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+      },
       "postgresql": {
         "status": "ok",
         "params": [

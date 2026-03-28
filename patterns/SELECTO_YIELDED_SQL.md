@@ -28,6 +28,54 @@ select selecto_root.order_number, customer.name
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status = @p1 ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status = $1 ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
 ## J002
 
 ### PostgreSQL
@@ -43,6 +91,54 @@ select selecto_root.name, COUNT(reviews.id)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.name, COUNT(reviews.id)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, COUNT(reviews.id)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, COUNT(reviews.id)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, COUNT(reviews.id)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.name, COUNT(reviews.id)
@@ -82,6 +178,58 @@ select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, 
 
 **Params:** `["delivered", 1000]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
+        from customers selecto_root inner join (
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))
+      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
+```
+
+**Params:** `["delivered", 1000]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
+        from customers selecto_root inner join (
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))
+      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
+```
+
+**Params:** `["delivered", 1000]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
+        from customers selecto_root inner join (
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = @p1 ) and ( subq_root_orders_high_value_delivered.total > @p2 ))))
+      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
+```
+
+**Params:** `["delivered", 1000]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total
+        from customers selecto_root inner join (
+        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total
+        from orders subq_root_orders_high_value_delivered
+        where (((( subq_root_orders_high_value_delivered.status = $1 ) and ( subq_root_orders_high_value_delivered.total > $2 ))))
+      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id
+```
+
+**Params:** `["delivered", 1000]`
+
 ## J004
 
 ### PostgreSQL
@@ -95,6 +243,46 @@ select selecto_root.first_name, manager.first_name
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.first_name, manager.first_name
+        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
+        order by selecto_root.first_name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.first_name, manager.first_name
+        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
+        order by selecto_root.first_name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.first_name, manager.first_name
+        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
+        order by selecto_root.first_name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.first_name, manager.first_name
+        from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
+        order by selecto_root.first_name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.first_name, manager.first_name
@@ -130,6 +318,54 @@ select selecto_root.name
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        where (( reviews.id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        where (( reviews.id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        where (( reviews.id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        where (( reviews.id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## J006
 
 ### PostgreSQL
@@ -150,6 +386,42 @@ select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_s
 
 **Params:** `["premium", "standard"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name
+        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?
+```
+
+**Params:** `["premium", "standard"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name
+        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?
+```
+
+**Params:** `["premium", "standard"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, [customer:tier_premium].name, [customer:tier_standard].name
+        from orders selecto_root left join customers [customer:tier_premium] on [customer:tier_premium].id = selecto_root.customer_id and [customer:tier_premium].tier = @p1 left join customers [customer:tier_standard] on [customer:tier_standard].id = selecto_root.customer_id and [customer:tier_standard].tier = @p2
+```
+
+**Params:** `["premium", "standard"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_standard".name
+        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and "customer:tier_premium".tier = $1 left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and "customer:tier_standard".tier = $2
+```
+
+**Params:** `["premium", "standard"]`
+
 ## J007
 
 ### PostgreSQL
@@ -166,6 +438,31 @@ select selecto_root.name, delivered_stats.count
 **Params:** `["delivered"]`
 
 ### SQLite
+
+_Unavailable:_ `Adapter does not support lateral/apply joins`
+
+### MySQL
+
+_Unavailable:_ `Adapter does not support lateral/apply joins`
+
+### MariaDB
+
+_Unavailable:_ `Adapter does not support lateral/apply joins`
+
+### MSSQL
+
+```sql
+select selecto_root.name, delivered_stats.count
+        from products selecto_root OUTER APPLY (
+        select count(*)
+        from orders subq_root_orders
+        where (( subq_root_orders.status = @p1 ))
+      ) AS delivered_stats
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
 
 _Unavailable:_ `Adapter does not support lateral/apply joins`
 
@@ -191,6 +488,46 @@ select selecto_root.name, product_tag
 
 **Params:** `[true]`
 
+### MySQL
+
+```sql
+select selecto_root.name, product_tag
+        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag
+        where (( selecto_root.active = ? ))
+```
+
+**Params:** `[true]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, product_tag
+        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag
+        where (( selecto_root.active = ? ))
+```
+
+**Params:** `[true]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, product_tag
+        from products selecto_root CROSS JOIN LATERAL UNNEST([selecto_root].[tags]) AS product_tag
+        where (( selecto_root.active = @p1 ))
+```
+
+**Params:** `[true]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, product_tag
+        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
+        where (( selecto_root.active = $1 ))
+```
+
+**Params:** `[true]`
+
 ## J009
 
 ### PostgreSQL
@@ -203,6 +540,42 @@ select selecto_root.order_number, "customer:alias_a".name, "customer:alias_b".ti
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.order_number, "customer:alias_a".name, "customer:alias_b".tier
+        from orders selecto_root left join customers "customer:alias_a" on "customer:alias_a".id = selecto_root.customer_id left join customers "customer:alias_b" on "customer:alias_b".id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, `customer:alias_a`.name, `customer:alias_b`.tier
+        from orders selecto_root left join customers `customer:alias_a` on `customer:alias_a`.id = selecto_root.customer_id left join customers `customer:alias_b` on `customer:alias_b`.id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, `customer:alias_a`.name, `customer:alias_b`.tier
+        from orders selecto_root left join customers `customer:alias_a` on `customer:alias_a`.id = selecto_root.customer_id left join customers `customer:alias_b` on `customer:alias_b`.id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, [customer:alias_a].name, [customer:alias_b].tier
+        from orders selecto_root left join customers [customer:alias_a] on [customer:alias_a].id = selecto_root.customer_id left join customers [customer:alias_b] on [customer:alias_b].id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.order_number, "customer:alias_a".name, "customer:alias_b".tier
@@ -226,6 +599,54 @@ select customer.name, count(*)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select customer.name, count(*)
@@ -267,6 +688,62 @@ select selecto_root.order_number, gold_customers.name, selecto_root.total
 
 **Params:** `["gold"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, gold_customers.name, selecto_root.total
+        from orders selecto_root inner join (
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = ? ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["gold"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, gold_customers.name, selecto_root.total
+        from orders selecto_root inner join (
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = ? ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["gold"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, gold_customers.name, selecto_root.total
+        from orders selecto_root inner join (
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = @p1 ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["gold"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, gold_customers.name, selecto_root.total
+        from orders selecto_root inner join (
+        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier
+        from customers subq_root_customers_gold_customers
+        where (( subq_root_customers_gold_customers.tier = $1 ))
+      ) gold_customers on selecto_root.customer_id = gold_customers.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["gold"]`
+
 ## J012
 
 ### PostgreSQL
@@ -297,6 +774,62 @@ select selecto_root.name, selecto_root.tier, processing_orders.order_number
 
 **Params:** `["processing"]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = ? ))
+      ) processing_orders on selecto_root.id = processing_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = ? ))
+      ) processing_orders on selecto_root.id = processing_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = @p1 ))
+      ) processing_orders on selecto_root.id = processing_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders.customer_id, subq_root_orders_processing_orders.order_number
+        from orders subq_root_orders_processing_orders
+        where (( subq_root_orders_processing_orders.status = $1 ))
+      ) processing_orders on selecto_root.id = processing_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
 ## A001
 
 ### PostgreSQL
@@ -312,6 +845,54 @@ select selecto_root.status, count(*)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.status, count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.status, count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.status, count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.status, count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.status, count(*)
@@ -353,6 +934,62 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+select selecto_root.customer_id, SUM(selecto_root.total)
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+        group by selecto_root.customer_id
+      
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, SUM(selecto_root.total)
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+        group by selecto_root.customer_id
+      
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, SUM(selecto_root.total)
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ))
+      
+        group by selecto_root.customer_id
+      
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, SUM(selecto_root.total)
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+        group by selecto_root.customer_id
+      
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `["delivered"]`
+
 ## A003
 
 ### PostgreSQL
@@ -368,6 +1005,54 @@ select selecto_root.status, AVG(selecto_root.total)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.status, AVG(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.status, AVG(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.status, AVG(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.status, AVG(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.status, AVG(selecto_root.total)
@@ -405,6 +1090,54 @@ select customer.name, count(*)
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select customer.name, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.name
+      
+        order by customer.name asc
+```
+
+**Params:** `[]`
+
 ## A005
 
 ### PostgreSQL
@@ -420,6 +1153,54 @@ select customer.tier, SUM(selecto_root.total)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select customer.tier, SUM(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select customer.tier, SUM(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select customer.tier, SUM(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select customer.tier, SUM(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select customer.tier, SUM(selecto_root.total)
@@ -461,6 +1242,62 @@ select customer.tier, count(*)
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+select customer.tier, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = ? ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select customer.tier, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = ? ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select customer.tier, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = @p1 ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select customer.tier, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = $1 ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
 ## A007
 
 ### PostgreSQL
@@ -476,6 +1313,54 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.status, SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.status, SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.status, SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.status, SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.status, SUM(selecto_root.total), count(*)
@@ -517,6 +1402,62 @@ select customer.tier, AVG(selecto_root.total)
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+select customer.tier, AVG(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = ? ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select customer.tier, AVG(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = ? ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select customer.tier, AVG(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = @p1 ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select customer.tier, AVG(selecto_root.total)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( selecto_root.status = $1 ))
+      
+        group by customer.tier
+      
+        order by customer.tier asc
+```
+
+**Params:** `["delivered"]`
+
 ## A009
 
 ### PostgreSQL
@@ -532,6 +1473,54 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+      
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
@@ -569,6 +1558,54 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
+        from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
+        group by selecto_root.name
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## W001
 
 ### PostgreSQL
@@ -581,6 +1618,42 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RO
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_salary_rank"
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS [department_salary_rank]
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_salary_rank"
@@ -609,6 +1682,42 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(select
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [running_total]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "running_total"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
 ## W003
 
 ### PostgreSQL
@@ -621,6 +1730,42 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(select
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "prev_total"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [prev_total]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "prev_total"
@@ -649,6 +1794,42 @@ select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER B
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS [total_rank]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS "total_rank"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
 ## W005
 
 ### PostgreSQL
@@ -661,6 +1842,42 @@ select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER 
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "moving_avg_total"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS [moving_avg_total]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "moving_avg_total"
@@ -689,6 +1906,42 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RA
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS [department_rank]
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_rank"
+        from employees selecto_root
+```
+
+**Params:** `[]`
+
 ## W007
 
 ### PostgreSQL
@@ -701,6 +1954,42 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selec
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "next_total"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS [next_total]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "next_total"
@@ -729,6 +2018,42 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(s
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS `status_max_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS `status_max_total`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS [status_max_total]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS "status_max_total"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
 ## W009
 
 ### PostgreSQL
@@ -749,6 +2074,42 @@ select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS [total_percent_rank]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS "total_percent_rank"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
 ## W010
 
 ### PostgreSQL
@@ -761,6 +2122,42 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) O
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS "customer_order_count"
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS `customer_order_count`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS `customer_order_count`
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS [customer_order_count]
+        from orders selecto_root
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS "customer_order_count"
@@ -803,6 +2200,70 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
 
 **Params:** `["gold"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = @p1 ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
 ## S002
 
 ### PostgreSQL
@@ -827,6 +2288,62 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
         from orders subq_root_orders_delivered_orders
         where (( subq_root_orders_delivered_orders.status = ? ))
+      ) delivered_orders on selecto_root.id = delivered_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["delivered"]`
+
+### MySQL
+
+```sql
+select selecto_root.name, delivered_orders.order_number, delivered_orders.total
+        from customers selecto_root left join (
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = ? ))
+      ) delivered_orders on selecto_root.id = delivered_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, delivered_orders.order_number, delivered_orders.total
+        from customers selecto_root left join (
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = ? ))
+      ) delivered_orders on selecto_root.id = delivered_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, delivered_orders.order_number, delivered_orders.total
+        from customers selecto_root left join (
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = @p1 ))
+      ) delivered_orders on selecto_root.id = delivered_orders.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, delivered_orders.order_number, delivered_orders.total
+        from customers selecto_root left join (
+        select subq_root_orders_delivered_orders.customer_id, subq_root_orders_delivered_orders.order_number, subq_root_orders_delivered_orders.total
+        from orders subq_root_orders_delivered_orders
+        where (( subq_root_orders_delivered_orders.status = $1 ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
         order by selecto_root.name asc
 ```
@@ -859,6 +2376,54 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `[]`
+
 ## S004
 
 ### PostgreSQL
@@ -878,6 +2443,70 @@ select selecto_root.name
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.name
+        from products selecto_root left join (
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
+      ) reviewed_products on selecto_root.id = reviewed_products.product_id
+        where (( reviewed_products.product_id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name
+        from products selecto_root left join (
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
+      ) reviewed_products on selecto_root.id = reviewed_products.product_id
+        where (( reviewed_products.product_id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name
+        from products selecto_root left join (
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
+      ) reviewed_products on selecto_root.id = reviewed_products.product_id
+        where (( reviewed_products.product_id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name
+        from products selecto_root left join (
+        select subq_root_reviews_reviewed_products.product_id
+        from reviews subq_root_reviews_reviewed_products
+        group by subq_root_reviews_reviewed_products.product_id
+      ) reviewed_products on selecto_root.id = reviewed_products.product_id
+        where (( reviewed_products.product_id is null ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.name
@@ -927,6 +2556,70 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 **Params:** `["silver"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["silver"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["silver"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = @p1 ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["silver"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["silver"]`
+
 ## S006
 
 ### PostgreSQL
@@ -947,6 +2640,54 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p1) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))
       
         order by selecto_root.total desc
 ```
@@ -987,6 +2728,70 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 **Params:** `["gold", "delivered"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold", "delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold", "delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = @p1 ))
+      ) ) and ( selecto_root.status = @p2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold", "delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
+      ) ) and ( selecto_root.status = $2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["gold", "delivered"]`
+
 ## S008
 
 ### PostgreSQL
@@ -1014,6 +2819,70 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         select subq_root_orders.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["returned"]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total > all (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["returned"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total > all (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = ? ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["returned"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total > all (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = @p1 ))
+      ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["returned"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total > all (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
       ) ))
       
         order by selecto_root.total desc
@@ -1055,6 +2924,70 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total < any (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = ? ))
+      ) ))
+      
+        order by selecto_root.total asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total < any (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = ? ))
+      ) ))
+      
+        order by selecto_root.total asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total < any (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = @p1 ))
+      ) ))
+      
+        order by selecto_root.total asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total < any (
+        select subq_root_orders.total
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
+      ) ))
+      
+        order by selecto_root.total asc
+```
+
+**Params:** `["delivered"]`
+
 ## S010
 
 ### PostgreSQL
@@ -1081,6 +3014,54 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 **Params:** `["processing", "suspended"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "suspended"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "suspended"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p2)  ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "suspended"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "suspended"]`
+
 ## SO001
 
 ### PostgreSQL
@@ -1098,6 +3079,62 @@ UNION
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.name, selecto_root.tier
+        from vendors selecto_root)
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.name, selecto_root.tier
+        from vendors selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.name, selecto_root.tier
+        from vendors selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.name, selecto_root.tier
+        from vendors selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 (
@@ -1141,6 +3178,62 @@ UNION ALL
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
 ## SO003
 
 ### PostgreSQL
@@ -1171,6 +3264,62 @@ INTERSECT
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
 ## SO004
 
 ### PostgreSQL
@@ -1188,6 +3337,62 @@ EXCEPT
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 (
@@ -1239,6 +3444,78 @@ INTERSECT
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+((
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+UNION
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root))
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+((
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+UNION
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root))
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+((
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+UNION
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root))
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+((
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+UNION
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root))
+INTERSECT
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+```
+
+**Params:** `[]`
+
 ## SO006
 
 ### PostgreSQL
@@ -1256,6 +3533,62 @@ INTERSECT ALL
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from premium_customers selecto_root)
+INTERSECT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from active_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 (
@@ -1299,6 +3632,62 @@ EXCEPT ALL
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+(
+        select selecto_root.id, selecto_root.name
+        from customers selecto_root)
+EXCEPT ALL
+(
+        select selecto_root.id, selecto_root.name
+        from blocked_customers selecto_root)
+```
+
+**Params:** `[]`
+
 ## SO008
 
 ### PostgreSQL
@@ -1316,6 +3705,62 @@ UNION
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.company_name, selecto_root.segment
+        from vendor_contacts selecto_root)
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.company_name, selecto_root.segment
+        from vendor_contacts selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.company_name, selecto_root.segment
+        from vendor_contacts selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.name, selecto_root.tier
+        from customers selecto_root)
+UNION
+(
+        select selecto_root.company_name, selecto_root.segment
+        from vendor_contacts selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 (
@@ -1355,6 +3800,54 @@ select selecto_root.order_number, customer.name, selecto_root.status
 
 **Params:** `[["cancelled", "returned"]]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.status
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[["cancelled", "returned"]]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.status
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[["cancelled", "returned"]]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.status
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[["cancelled", "returned"]]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.status
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[["cancelled", "returned"]]`
+
 ## F002
 
 ### PostgreSQL
@@ -1375,6 +3868,54 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "shipped", 100]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "shipped", 100]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "shipped", 100]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (((((( selecto_root.status = @p1 ) or ( selecto_root.status = @p2 ))) and ( selecto_root.total > @p3 ))))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["processing", "shipped", 100]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))
       
         order by selecto_root.total desc
 ```
@@ -1407,6 +3948,54 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 
 **Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3) ))
+      
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+
 ## F004
 
 ### PostgreSQL
@@ -1424,6 +4013,30 @@ select selecto_root.name, selecto_root.sku
 ### SQLite
 
 _Unavailable:_ `SQLite text search requires an FTS5-configured field`
+
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.sku
+        from products selecto_root
+        where (( MATCH(selecto_root.name) AGAINST (? IN NATURAL LANGUAGE MODE) ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["wireless charger"]`
+
+### MariaDB
+
+_Unavailable:_ `Adapter does not support text search`
+
+### MSSQL
+
+_Unavailable:_ `Adapter does not support text search`
+
+### DuckDB
+
+_Unavailable:_ `Adapter does not support text search`
 
 ## F005
 
@@ -1445,6 +4058,54 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["cancelled", 50]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["cancelled", 50]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["cancelled", 50]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where ((not (  selecto_root.status = @p1  ) ) and ( selecto_root.total > @p2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["cancelled", 50]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.total
+        from orders selecto_root
+        where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))
       
         order by selecto_root.total desc
 ```
@@ -1477,6 +4138,54 @@ select selecto_root.name, selecto_root.tags
 
 **Params:** `[["featured"]]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured"]]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured"]]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> @p1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured"]]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured"]]`
+
 ## F007
 
 ### PostgreSQL
@@ -1497,6 +4206,54 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+        from products selecto_root
+        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
       
         order by selecto_root.name asc
 ```
@@ -1537,6 +4294,70 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 
 **Params:** `["platinum", "processing"]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["platinum", "processing"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = ? ))
+      ) ) and ( selecto_root.status = ? ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["platinum", "processing"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = @p1 ))
+      ) ) and ( selecto_root.status = @p2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["platinum", "processing"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.customer_id in (
+        select subq_root_customers.id
+        from customers subq_root_customers
+        where (( subq_root_customers.tier = $1 ))
+      ) ) and ( selecto_root.status = $2 ))
+      
+        order by selecto_root.total desc
+```
+
+**Params:** `["platinum", "processing"]`
+
 ## P001
 
 ### PostgreSQL
@@ -1553,6 +4374,57 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.id asc
+      
+        limit 25
+        offset 50
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.id asc
+      
+        limit 25
+        offset 50
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.id asc
+      
+        limit 25
+        offset 50
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.id asc
+      
+        offset 50 rows fetch next 25 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
@@ -1595,6 +4467,62 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 
 **Params:** `[1000]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id > ? ))
+      
+        order by selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[1000]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id > ? ))
+      
+        order by selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[1000]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id > @p1 ))
+      
+        order by selecto_root.id asc
+      
+        offset 0 rows fetch next 25 rows only
+```
+
+**Params:** `[1000]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id > $1 ))
+      
+        order by selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[1000]`
+
 ## P003
 
 ### PostgreSQL
@@ -1625,6 +4553,62 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 
 **Params:** `[5000]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id < ? ))
+      
+        order by selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[5000]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id < ? ))
+      
+        order by selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[5000]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id < @p1 ))
+      
+        order by selecto_root.id desc
+      
+        offset 0 rows fetch next 20 rows only
+```
+
+**Params:** `[5000]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.id < $1 ))
+      
+        order by selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[5000]`
+
 ## P004
 
 ### PostgreSQL
@@ -1641,6 +4625,57 @@ select selecto_root.order_number, customer.name, selecto_root.total
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by customer.name asc, selecto_root.order_number asc
+      
+        limit 15
+        offset 30
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by customer.name asc, selecto_root.order_number asc
+      
+        limit 15
+        offset 30
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by customer.name asc, selecto_root.order_number asc
+      
+        limit 15
+        offset 30
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, customer.name, selecto_root.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by customer.name asc, selecto_root.order_number asc
+      
+        offset 30 rows fetch next 15 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.total
@@ -1683,6 +4718,62 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 
 **Params:** `[~N[2024-01-15 00:00:00]]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.inserted_at > ? ))
+      
+        order by selecto_root.inserted_at asc, selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-01-15 00:00:00]]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.inserted_at > ? ))
+      
+        order by selecto_root.inserted_at asc, selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-01-15 00:00:00]]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.inserted_at > @p1 ))
+      
+        order by selecto_root.inserted_at asc, selecto_root.id asc
+      
+        offset 0 rows fetch next 25 rows only
+```
+
+**Params:** `[~N[2024-01-15 00:00:00]]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.inserted_at > $1 ))
+      
+        order by selecto_root.inserted_at asc, selecto_root.id asc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-01-15 00:00:00]]`
+
 ## P006
 
 ### PostgreSQL
@@ -1699,6 +4790,57 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+        offset 40
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+        offset 40
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+        offset 40
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        offset 40 rows fetch next 20 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
@@ -1747,6 +4889,73 @@ offset 20
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.order_number asc
+limit 20
+offset 20
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.order_number asc
+limit 20
+offset 20
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.order_number asc
+offset 20 rows fetch next 20 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.order_number asc
+limit 20
+offset 20
+```
+
+**Params:** `[]`
+
 ## P008
 
 ### PostgreSQL
@@ -1769,6 +4978,62 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[1000, 1000, 500]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[1000, 1000, 500]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        limit 20
+```
+
+**Params:** `[1000, 1000, 500]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.total < @p1 ) or ((( selecto_root.total = @p2 ) and ( selecto_root.id < @p3 ))))))
+      
+        order by selecto_root.total desc, selecto_root.id desc
+      
+        offset 0 rows fetch next 20 rows only
+```
+
+**Params:** `[1000, 1000, 500]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))
       
         order by selecto_root.total desc, selecto_root.id desc
       
@@ -1803,6 +5068,54 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
+        from products selecto_root
+        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
+        from products selecto_root
+        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.price_band') AS [price_band]
+        from products selecto_root
+        where (( JSON_VALUE(selecto_root.metadata, '$.price_band') = 'premium' ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
+        from products selecto_root
+        where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## JA002
 
 ### PostgreSQL
@@ -1823,6 +5136,54 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ) and ( json_extract("selecto_root"."metadata", '$.warehouse.zone') = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1"]`
+
+### MySQL
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1"]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1"]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+        from products selecto_root
+        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ) and ( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1"]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
       
         order by selecto_root.name asc
 ```
@@ -1855,6 +5216,54 @@ select selecto_root.name, selecto_root.tags
 
 **Params:** `[["featured", "clearance"], true]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"], true]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"], true]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags && @p1 ) and ( selecto_root.active = @p2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"], true]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"], true]`
+
 ## JA004
 
 ### PostgreSQL
@@ -1875,6 +5284,54 @@ select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.stock.quantity') AS "stock_quantity"
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.stock.quantity') IS NOT NULL ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
+        from products selecto_root
+        where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]
+        from products selecto_root
+        where (( (JSON_QUERY(selecto_root.metadata, '$.stock.quantity') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.stock.quantity') IS NOT NULL) ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+        from products selecto_root
+        where (( "metadata"->'stock' ? 'quantity' ))
       
         order by selecto_root.name asc
 ```
@@ -1903,6 +5360,46 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`
+        from products selecto_root
+        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`
+        from products selecto_root
+        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone]
+        from products selecto_root
+        order by JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone"
+        from products selecto_root
+        order by metadata -> 'warehouse' ->> 'zone' asc
+```
+
+**Params:** `[]`
+
 ## JA006
 
 ### PostgreSQL
@@ -1923,6 +5420,54 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"]]`
+
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"]]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"]]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> @p1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `[["featured", "clearance"]]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_root.tags @> $1 ))
       
         order by selecto_root.name asc
 ```
@@ -1955,6 +5500,54 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 
 **Params:** `["A1", true]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1", true]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
+        from products selecto_root
+        where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1", true]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+        from products selecto_root
+        where (( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ) and ( selecto_root.active = @p2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1", true]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
+        from products selecto_root
+        where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["A1", true]`
+
 ## JA008
 
 ### PostgreSQL
@@ -1977,6 +5570,46 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
+        from products selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
+        from products selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone], JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]
+        from products selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone", metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+        from products selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## Q001
 
 ### PostgreSQL
@@ -1990,6 +5623,46 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_orders.[product_name] AS [product_name], sub_orders.[quantity] AS [quantity] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [order_items]
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
@@ -2021,6 +5694,46 @@ select t.product_name, t.quantity
 
 **Params:** `[1000]`
 
+### MySQL
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)
+```
+
+**Params:** `[1000]`
+
+### MariaDB
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)
+```
+
+**Params:** `[1000]`
+
+### MSSQL
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = @p1)
+```
+
+**Params:** `[1000]`
+
+### DuckDB
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)
+```
+
+**Params:** `[1000]`
+
 ## Q003
 
 ### PostgreSQL
@@ -2039,6 +5752,46 @@ select t.product_name, t.quantity
 select t.product_name, t.quantity
         from orders t
         where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+```
+
+**Params:** `[2000]`
+
+### MySQL
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+```
+
+**Params:** `[2000]`
+
+### MariaDB
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+```
+
+**Params:** `[2000]`
+
+### MSSQL
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = @p1)
+```
+
+**Params:** `[2000]`
+
+### DuckDB
+
+```sql
+select t.product_name, t.quantity
+        from orders t
+        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)
 ```
 
 **Params:** `[2000]`
@@ -2065,6 +5818,46 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_orders.[product_name] AS [product_name] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [products], (SELECT COALESCE((SELECT sub_orders.[quantity] AS [quantity] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [quantities]
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
 ## Q005
 
 ### PostgreSQL
@@ -2078,6 +5871,46 @@ select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_o
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_count"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id]) AS [order_count]
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_count"
@@ -2117,6 +5950,62 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
 
 **Params:** `["processing"]`
 
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders_member.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total
+        from orders subq_root_orders_processing_orders_member
+        where (( subq_root_orders_processing_orders_member.status = ? ))
+      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders_member.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total
+        from orders subq_root_orders_processing_orders_member
+        where (( subq_root_orders_processing_orders_member.status = ? ))
+      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders_member.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total
+        from orders subq_root_orders_processing_orders_member
+        where (( subq_root_orders_processing_orders_member.status = @p1 ))
+      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
+### DuckDB
+
+```sql
+select selecto_root.name, selecto_root.tier, processing_orders_member.order_number
+        from customers selecto_root left join (
+        select subq_root_orders_processing_orders_member.customer_id, subq_root_orders_processing_orders_member.order_number, subq_root_orders_processing_orders_member.total
+        from orders subq_root_orders_processing_orders_member
+        where (( subq_root_orders_processing_orders_member.status = $1 ))
+      ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
+        order by selecto_root.name asc
+```
+
+**Params:** `["processing"]`
+
 ## Q007
 
 ### PostgreSQL
@@ -2145,6 +6034,78 @@ WITH delivered_totals (id, total) AS (
         select selecto_root.id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ))
+      
+)
+
+        select selecto_root.order_number, customer.name, delivered_totals.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### MySQL
+
+```sql
+WITH delivered_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+)
+
+        select selecto_root.order_number, customer.name, delivered_totals.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+WITH delivered_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+)
+
+        select selecto_root.order_number, customer.name, delivered_totals.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+WITH delivered_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ))
+      
+)
+
+        select selecto_root.order_number, customer.name, delivered_totals.total
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+WITH delivered_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
       
 )
 
@@ -2193,6 +6154,78 @@ EXCEPT
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+((
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root))
+EXCEPT
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+((
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root))
+EXCEPT
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+((
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root))
+EXCEPT
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+((
+        select selecto_root.order_number, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root))
+EXCEPT
+(
+        select selecto_root.order_number, selecto_root.total
+        from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
 ## T001
 
 ### PostgreSQL
@@ -2219,6 +6252,54 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 
 **Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
+      
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
+      
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( (selecto_root.inserted_at >= @p1 and selecto_root.inserted_at < @p2) ))
+      
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
+      
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
+
 ## T002
 
 ### PostgreSQL
@@ -2232,6 +6313,46 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "running_total"
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS [running_total]
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "running_total"
@@ -2263,6 +6384,46 @@ select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), s
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
 ## T004
 
 ### PostgreSQL
@@ -2276,6 +6437,46 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS "trailing_avg_total"
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS [trailing_avg_total]
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS "trailing_avg_total"
@@ -2307,6 +6508,46 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS [previous_total]
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "previous_total"
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
 ## T006
 
 ### PostgreSQL
@@ -2320,6 +6561,46 @@ select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at,
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS "status_running_total"
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS [status_running_total]
+        from orders selecto_root
+        order by selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS "status_running_total"
@@ -2351,6 +6632,62 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.inserted_at desc, selecto_root.id desc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-02-01 00:00:00], ~N[2024-02-01 00:00:00], 2000]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.inserted_at desc, selecto_root.id desc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-02-01 00:00:00], ~N[2024-02-01 00:00:00], 2000]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
+      
+        order by selecto_root.inserted_at desc, selecto_root.id desc
+      
+        limit 25
+```
+
+**Params:** `[~N[2024-02-01 00:00:00], ~N[2024-02-01 00:00:00], 2000]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.inserted_at < @p1 ) or ((( selecto_root.inserted_at = @p2 ) and ( selecto_root.id < @p3 ))))))
+      
+        order by selecto_root.inserted_at desc, selecto_root.id desc
+      
+        offset 0 rows fetch next 25 rows only
+```
+
+**Params:** `[~N[2024-02-01 00:00:00], ~N[2024-02-01 00:00:00], 2000]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root
+        where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))
       
         order by selecto_root.inserted_at desc, selecto_root.id desc
       
@@ -2393,6 +6730,70 @@ limit 50
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+limit 50
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+limit 50
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+offset 0 rows fetch next 50 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from orders selecto_root)
+UNION ALL
+(
+        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        from archived_orders selecto_root)
+ORDER BY selecto_root.inserted_at desc
+limit 50
+```
+
+**Params:** `[]`
+
 ## G001
 
 ### PostgreSQL
@@ -2408,6 +6809,54 @@ select selecto_root.id, selecto_root.name
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.name
@@ -2445,6 +6894,54 @@ select selecto_root.id, selecto_root.name
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
 ## G003
 
 ### PostgreSQL
@@ -2460,6 +6957,54 @@ select selecto_root.id, selecto_root.name
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.name
@@ -2497,6 +7042,54 @@ select selecto_root.id, selecto_root.name
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
 ## G005
 
 ### PostgreSQL
@@ -2512,6 +7105,54 @@ select selecto_root.id, selecto_root.name
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select selecto_root.id, selecto_root.name
@@ -2549,6 +7190,54 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
+        from locations selecto_root
+        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+      
+        limit 10
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
+        from locations selecto_root
+        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+      
+        limit 10
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
+        from locations selecto_root
+        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+      
+        offset 0 rows fetch next 10 rows only
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
+        from locations selecto_root
+        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+      
+        limit 10
+```
+
+**Params:** `[]`
+
 ## G007
 
 ### PostgreSQL
@@ -2564,6 +7253,54 @@ select ST_GeometryType(selecto_root.geom), count(*)
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+select ST_GeometryType(selecto_root.geom), count(*)
+        from locations selecto_root
+        group by ST_GeometryType(selecto_root.geom)
+      
+        order by ST_GeometryType(selecto_root.geom) asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select ST_GeometryType(selecto_root.geom), count(*)
+        from locations selecto_root
+        group by ST_GeometryType(selecto_root.geom)
+      
+        order by ST_GeometryType(selecto_root.geom) asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select ST_GeometryType(selecto_root.geom), count(*)
+        from locations selecto_root
+        group by ST_GeometryType(selecto_root.geom)
+      
+        order by ST_GeometryType(selecto_root.geom) asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select ST_GeometryType(selecto_root.geom), count(*)
+        from locations selecto_root
+        group by ST_GeometryType(selecto_root.geom)
+      
+        order by ST_GeometryType(selecto_root.geom) asc
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 select ST_GeometryType(selecto_root.geom), count(*)
@@ -2595,6 +7332,54 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `["delivery"]`
+
+### MySQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `["delivery"]`
+
+### MariaDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `["delivery"]`
+
+### MSSQL
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = @p1) ))
+      
+        order by selecto_root.id asc
+```
+
+**Params:** `["delivery"]`
+
+### DuckDB
+
+```sql
+select selecto_root.id, selecto_root.name
+        from locations selecto_root
+        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))
       
         order by selecto_root.id asc
 ```
@@ -2637,6 +7422,74 @@ WITH order_totals (id, total) AS (
 
 **Params:** `["delivered"]`
 
+### MySQL
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `["delivered"]`
+
+### MariaDB
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `["delivered"]`
+
+### MSSQL
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ))
+      
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `["delivered"]`
+
+### DuckDB
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `["delivered"]`
+
 ## C002
 
 ### PostgreSQL
@@ -2668,6 +7521,90 @@ WITH RECURSIVE order_chain (id, status) AS (
         select selecto_root.id, selecto_root.status
         from orders selecto_root
         where (( selecto_root.status = ? ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### MySQL
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### MariaDB
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### MSSQL
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### DuckDB
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
       
     UNION ALL
     
@@ -2723,6 +7660,86 @@ WITH customer_spend (customer_id, total) AS (
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+WITH customer_spend (customer_id, total) AS (
+    
+        select selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+),
+    order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total, customer_spend.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+WITH customer_spend (customer_id, total) AS (
+    
+        select selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+),
+    order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total, customer_spend.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+WITH customer_spend (customer_id, total) AS (
+    
+        select selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+),
+    order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total, customer_spend.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+WITH customer_spend (customer_id, total) AS (
+    
+        select selecto_root.customer_id, selecto_root.total
+        from orders selecto_root
+),
+    order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total, customer_spend.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id
+```
+
+**Params:** `[]`
+
 ## C004
 
 ### PostgreSQL
@@ -2737,6 +7754,50 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
@@ -2779,6 +7840,66 @@ WITH order_totals (id, total) AS (
 
 **Params:** `[]`
 
+### MySQL
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+WITH order_totals (id, total) AS (
+    
+        select selecto_root.id, selecto_root.total
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_totals.total
+        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id
+```
+
+**Params:** `[]`
+
 ## C006
 
 ### PostgreSQL
@@ -2793,6 +7914,50 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+
+        select selecto_root.order_number, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
@@ -2847,6 +8012,90 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 **Params:** `["processing"]`
 
+### MySQL
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### MariaDB
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = ? ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### MSSQL
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = @p1 ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
+### DuckDB
+
+```sql
+WITH RECURSIVE order_chain (id, status) AS (
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+        where (( selecto_root.status = $1 ))
+      
+    UNION ALL
+    
+        select selecto_root.id, selecto_root.status
+        from orders selecto_root
+)
+
+        select selecto_root.order_number, order_chain.status
+        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id
+```
+
+**Params:** `["processing"]`
+
 ## C008
 
 ### PostgreSQL
@@ -2861,6 +8110,50 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 **Params:** `[]`
 
 ### SQLite
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, selecto_root.status, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, selecto_root.status, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, selecto_root.status, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+
+        select selecto_root.order_number, selecto_root.status, status_labels.status_label
+        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
+```
+
+**Params:** `[]`
+
+### DuckDB
 
 ```sql
 WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))

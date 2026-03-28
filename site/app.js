@@ -13,6 +13,25 @@
   let activePath = null
   let gapOnly = false
   let activeAdapterKey = null
+  const canonicalSqlAdapterKey = "postgresql"
+
+  function adapterModuleName(adapterKey) {
+    switch (adapterKey) {
+      case "sqlite":
+        return "SelectoDBSQLite.Adapter"
+      case "mysql":
+        return "SelectoDBMySQL.Adapter"
+      case "mariadb":
+        return "SelectoDBMariaDB.Adapter"
+      case "mssql":
+        return "SelectoDBMSSQL.Adapter"
+      case "duckdb":
+        return "SelectoDBDuckDB.Adapter"
+      case "postgresql":
+      default:
+        return "SelectoDBPostgreSQL.Adapter"
+    }
+  }
 
   function flattenEntries(data) {
     const grouped = data.groups.flatMap((group) =>
@@ -272,10 +291,7 @@
   function transformSelectoCode(baseCode, adapterKey) {
     if (!baseCode) return null
 
-    const adapterLine =
-      adapterKey === "sqlite"
-        ? "  |> Map.put(:adapter, SelectoDBSQLite.Adapter)"
-        : "  |> Map.put(:adapter, SelectoDBPostgreSQL.Adapter)"
+    const adapterLine = `  |> Map.put(:adapter, ${adapterModuleName(adapterKey)})`
 
     const lines = baseCode.split("\n")
     const configureIndex = lines.findIndex((line) => line.includes("Selecto.configure("))
@@ -442,30 +458,41 @@
         }
       ])
 
-      const outputCard = document.createElement("div")
-      outputCard.className = "adapter-card"
+      panel.appendChild(commandCard)
 
-      const outputLabel = document.createElement("h3")
-      outputLabel.className = "adapter-card-title"
-      outputLabel.textContent = `${adapter.label} SQL`
-      outputCard.appendChild(outputLabel)
+      if (adapter.key === canonicalSqlAdapterKey) {
+        panel.classList.add("single-card")
 
-      if (output && output.status === "ok") {
-        outputCard.appendChild(buildCodeBlock("sql", prettifySqlString(output.sql)))
-
-        const params = document.createElement("p")
-        params.className = "adapter-params"
-        params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
-        outputCard.appendChild(params)
+        const canonicalNote = document.createElement("p")
+        canonicalNote.className = "adapter-reference-note"
+        canonicalNote.textContent = "Reference SQL is shown above in the original SQL section."
+        commandCard.appendChild(canonicalNote)
       } else {
-        const unavailable = document.createElement("p")
-        unavailable.className = "adapter-unavailable"
-        unavailable.textContent = output && output.error ? output.error : "No adapter output available."
-        outputCard.appendChild(unavailable)
+        const outputCard = document.createElement("div")
+        outputCard.className = "adapter-card"
+
+        const outputLabel = document.createElement("h3")
+        outputLabel.className = "adapter-card-title"
+        outputLabel.textContent = `${adapter.label} SQL`
+        outputCard.appendChild(outputLabel)
+
+        if (output && output.status === "ok") {
+          outputCard.appendChild(buildCodeBlock("sql", prettifySqlString(output.sql)))
+
+          const params = document.createElement("p")
+          params.className = "adapter-params"
+          params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
+          outputCard.appendChild(params)
+        } else {
+          const unavailable = document.createElement("p")
+          unavailable.className = "adapter-unavailable"
+          unavailable.textContent = output && output.error ? output.error : "No adapter output available."
+          outputCard.appendChild(unavailable)
+        }
+
+        panel.appendChild(outputCard)
       }
 
-      panel.appendChild(commandCard)
-      panel.appendChild(outputCard)
       body.appendChild(panel)
       tabs.appendChild(button)
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-28T18:56:20Z",
+  "generated_at": "2026-03-28T19:18:24Z",
   "patterns": {
     "C002": "Selecto.configure(order_domain(), :mock_connection, validate: false)\n|> Selecto.with_recursive_cte(\"order_chain\",\n  base_query: fn ->\n    Selecto.configure(order_domain(), :mock_connection, validate: false)\n    |> Selecto.select([\"id\", \"status\"])\n    |> Selecto.filter(eq(\"status\", \"processing\"))\n  end,\n  recursive_query: fn _cte_ref ->\n    Selecto.configure(order_domain(), :mock_connection, validate: false)\n    |> Selecto.select([\"id\", \"status\"])\n  end,\n  columns: [\"id\", \"status\"],\n  join: true\n)\n|> Selecto.select([\"order_number\", \"order_chain.status\"])",
     "F007": "Selecto.configure(product_domain(), :mock_connection, validate: false)\n|> Selecto.select([\"name\", \"metadata.warehouse.zone\"])\n|> Selecto.filter(field_exists(\"metadata.warehouse.zone\"))\n|> Selecto.order_by([asc(\"name\")])",
