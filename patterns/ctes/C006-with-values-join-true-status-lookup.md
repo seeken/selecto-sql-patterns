@@ -44,6 +44,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.with_values(
+  [
+    ["processing", "In Progress"],
+    ["shipped", "In Transit"]
+  ],
+  columns: ["status", "status_label"],
+  as: "status_labels",
+  join: true
+)
+|> Selecto.select(select([order_number, status_labels.status_label]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

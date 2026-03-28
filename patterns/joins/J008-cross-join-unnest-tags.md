@@ -36,6 +36,18 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(product_domain(), :mock_connection, validate: false)
+|> Selecto.unnest("tags", as: "product_tag")
+|> Selecto.select([
+  "name",
+  "product_tag"
+])
+|> Selecto.filter(X.eq("active", true))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

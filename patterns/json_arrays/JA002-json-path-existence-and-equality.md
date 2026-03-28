@@ -36,6 +36,16 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(product_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([name, metadata.warehouse.zone]))
+|> Selecto.filter({"metadata.warehouse.zone", :exists})
+|> Selecto.filter(where(metadata.warehouse.zone == "A1"))
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

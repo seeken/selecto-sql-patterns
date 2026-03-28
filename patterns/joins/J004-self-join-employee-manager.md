@@ -34,6 +34,14 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
+|> Selecto.select(select([first_name, manager.first_name]))
+|> Selecto.order_by(order_by([asc(first_name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

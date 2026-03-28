@@ -38,6 +38,20 @@ query = Selecto.union(current_orders, archived_orders, all: true)
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+current_orders =
+  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["order_number", "total"])
+
+archived_orders =
+  Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["order_number", "total"])
+
+Selecto.union(current_orders, archived_orders, all: true)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

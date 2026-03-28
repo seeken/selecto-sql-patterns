@@ -38,6 +38,20 @@ query = Selecto.union(customers, vendors)
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["name", "tier"])
+
+vendors =
+  Selecto.configure(vendor_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["name", "tier"])
+
+Selecto.union(customers, vendors)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -46,6 +46,24 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+reviewed_products =
+  Selecto.configure(review_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["product_id"])
+  |> Selecto.group_by(["product_id"])
+
+Selecto.configure(product_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([name]))
+|> Selecto.join_subquery(:reviewed_products, reviewed_products,
+  type: :left,
+  on: [%{left: "id", right: "product_id"}]
+)
+|> Selecto.filter(where(reviewed_products.product_id == nil))
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -43,6 +43,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+subquery_query =
+  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  |> Selecto.select([{:count, "*"}])
+  |> Selecto.filter({"status", "delivered"})
+
+Selecto.configure(product_domain(), :mock_connection, validate: false)
+|> Selecto.select([
+  "name",
+  {:field, {:raw_sql, "delivered_stats.count"}, "delivered_order_count"}
+])
+|> Selecto.lateral_join(:left, fn _ -> subquery_query end, "delivered_stats")
+```
+
 ## Selecto Yielded SQL
 
 ```sql

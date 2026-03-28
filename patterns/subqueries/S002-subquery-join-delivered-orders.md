@@ -45,6 +45,23 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+delivered_orders =
+  Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+  |> Selecto.select(["customer_id", "order_number", "total"])
+  |> Selecto.filter({"status", "delivered"})
+
+Selecto.configure(customer_domain(), :mock_connection, validate: false)
+|> Selecto.join_subquery(:delivered_orders, delivered_orders,
+  type: :left,
+  on: [%{left: "id", right: "customer_id"}]
+)
+|> Selecto.select(select([name, delivered_orders.order_number, delivered_orders.total]))
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

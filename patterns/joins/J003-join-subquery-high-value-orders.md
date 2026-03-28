@@ -44,6 +44,24 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+high_value_delivered_orders =
+  Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+  |> Selecto.select(["customer_id", "order_number", "total"])
+  |> Selecto.filter(where(status == "delivered" and total > 1000))
+
+Selecto.configure(customer_domain(), :mock_connection, validate: false)
+|> Selecto.join_subquery(:high_value_delivered, high_value_delivered_orders,
+  type: :inner,
+  on: [%{left: "id", right: "customer_id"}]
+)
+|> Selecto.select(
+  select([name, tier, high_value_delivered.order_number, high_value_delivered.total])
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

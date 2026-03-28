@@ -36,6 +36,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
+|> Selecto.select(select([name, count(reviews.id)]))
+|> Selecto.group_by(["name"])
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

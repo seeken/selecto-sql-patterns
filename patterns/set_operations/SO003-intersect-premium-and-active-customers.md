@@ -38,6 +38,20 @@ query = Selecto.intersect(premium_customers, active_customers)
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+premium_customers =
+  Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id", "name"])
+
+active_customers =
+  Selecto.configure(active_customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id", "name"])
+
+Selecto.intersect(premium_customers, active_customers)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

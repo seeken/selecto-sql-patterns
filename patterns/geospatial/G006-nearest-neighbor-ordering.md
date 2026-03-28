@@ -42,6 +42,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+distance_expr =
+  "ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))"
+
+Selecto.configure(location_domain(), :mock_connection, validate: false)
+|> Selecto.select([
+  "id",
+  "name",
+  {:field, {:raw_sql, distance_expr}, "distance"}
+])
+|> Selecto.order_by({{:raw_sql, distance_expr}, :asc})
+|> Selecto.limit(10)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

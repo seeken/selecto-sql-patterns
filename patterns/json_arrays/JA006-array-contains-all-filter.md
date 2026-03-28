@@ -33,6 +33,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(product_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([name, tags]))
+|> Selecto.filter(where(array_contains(tags, ["featured", "clearance"])))
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

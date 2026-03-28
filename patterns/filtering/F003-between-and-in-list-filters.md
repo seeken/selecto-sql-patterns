@@ -35,6 +35,16 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([order_number, status, total]))
+|> Selecto.filter(where(between(total, 100, 500)))
+|> Selecto.filter(X.in("status", ["processing", "shipped", "delivered"]))
+|> Selecto.order_by(order_by([asc(order_number)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -40,6 +40,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.select(select([id, customer_id, total]))
+|> Selecto.window_function(:lag, ["total", 1],
+  over: [partition_by: ["customer_id"], order_by: order_by([asc(id)])],
+  as: "prev_total"
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

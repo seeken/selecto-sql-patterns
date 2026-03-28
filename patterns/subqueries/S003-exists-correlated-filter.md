@@ -41,6 +41,18 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.select(select([order_number, status, total]))
+|> Selecto.filter({
+  :exists,
+  "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold'"
+})
+|> Selecto.order_by(order_by([desc(total)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

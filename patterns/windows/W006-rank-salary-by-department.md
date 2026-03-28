@@ -40,6 +40,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(employee_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([first_name, department, salary]))
+|> Selecto.window_function(:rank, [],
+  over: [partition_by: ["department"], order_by: order_by([desc(salary)])],
+  as: "department_rank"
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

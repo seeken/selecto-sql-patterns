@@ -51,6 +51,26 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.with_recursive_cte("order_chain",
+  base_query: fn ->
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([id, status]))
+    |> Selecto.filter(where(status == "processing"))
+  end,
+  recursive_query: fn _cte_ref ->
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([id, status]))
+  end,
+  columns: ["id", "status"],
+  join: true
+)
+|> Selecto.select(select([order_number, order_chain.status]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

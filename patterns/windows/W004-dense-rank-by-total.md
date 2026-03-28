@@ -36,6 +36,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([order_number, total]))
+|> Selecto.window_function(:dense_rank, [],
+  over: [order_by: order_by([desc(total)])],
+  as: "total_rank"
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

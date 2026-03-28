@@ -38,6 +38,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.join_parameterize(:customer, "alias_a")
+|> Selecto.join_parameterize(:customer, "alias_b")
+|> Selecto.select(["order_number", "customer:alias_a.name", "customer:alias_b.tier"])
+```
+
 ## Selecto Yielded SQL
 
 ```sql

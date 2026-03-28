@@ -47,6 +47,23 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+gold_customers =
+  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  |> Selecto.select(["id", "name", "tier"])
+  |> Selecto.filter(where(tier == "gold"))
+
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.join_subquery(:gold_customers, gold_customers,
+  type: :inner,
+  on: [%{left: "customer_id", right: "id"}]
+)
+|> Selecto.select(["order_number", "gold_customers.name", "total"])
+|> Selecto.order_by(order_by([asc(order_number)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

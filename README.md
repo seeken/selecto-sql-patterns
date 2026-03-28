@@ -75,6 +75,12 @@ Export the Expr examples consumed by the site command-mode toggle:
 elixir scripts/verify_examples.exs --dump-expr-json patterns/SELECTO_EXPR_EXAMPLES.json
 ```
 
+Sync the pattern markdown files so each one includes a `## Selecto Expr` section:
+
+```bash
+python scripts/sync_expr_sections.py
+```
+
 ## Browse as HTML
 
 Build the static HTML book locally:

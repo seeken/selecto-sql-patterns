@@ -33,6 +33,15 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([status, count()]))
+|> Selecto.group_by(["status"])
+|> Selecto.order_by(order_by([asc(status)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -37,6 +37,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([order_number, status, total]))
+|> Selecto.window_function(:max, ["total"],
+  over: [partition_by: ["status"]],
+  as: "status_max_total"
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -42,6 +42,20 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([id, total]))
+|> Selecto.window_function(:avg, ["total"],
+  over: [
+    order_by: order_by([asc(id)]),
+    frame: {:rows, :unbounded_preceding, :current_row}
+  ],
+  as: "moving_avg_total"
+)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

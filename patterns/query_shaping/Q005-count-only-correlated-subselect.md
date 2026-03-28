@@ -45,6 +45,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+|> Selecto.select(select([name, email]))
+|> Selecto.subselect([
+  %{
+    fields: ["order_id"],
+    target_schema: :orders,
+    format: :count,
+    alias: "order_count"
+  }
+])
+|> Selecto.order_by(order_by([asc(name)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

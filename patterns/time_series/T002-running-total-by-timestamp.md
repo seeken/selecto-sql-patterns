@@ -38,6 +38,18 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([order_number, inserted_at, total]))
+|> Selecto.window_function(:sum, ["total"],
+  over: [order_by: order_by([asc(inserted_at)])],
+  as: "running_total"
+)
+|> Selecto.order_by(order_by([asc(inserted_at)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

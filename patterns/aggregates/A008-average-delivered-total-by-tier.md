@@ -36,6 +36,16 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.select(select([customer.tier, as(avg(total), "avg_delivered_total")]))
+|> Selecto.filter(where(status == "delivered"))
+|> Selecto.group_by(["customer.tier"])
+|> Selecto.order_by(order_by([asc(customer.tier)]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

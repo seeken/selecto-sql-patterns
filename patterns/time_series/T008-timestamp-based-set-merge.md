@@ -43,6 +43,22 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+current_events =
+  Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+  |> Selecto.select(select([order_number, inserted_at, total]))
+
+archived_events =
+  Selecto.configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
+  |> Selecto.select(select([order_number, inserted_at, total]))
+
+Selecto.union(current_events, archived_events, all: true)
+|> Selecto.order_by(order_by([desc(inserted_at)]))
+|> Selecto.limit(50)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

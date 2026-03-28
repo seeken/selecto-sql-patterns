@@ -64,6 +64,34 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+order_totals_cte =
+  Selecto.Advanced.CTE.create_cte(
+    "order_totals",
+    fn ->
+      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      |> Selecto.select(select([id, total]))
+    end,
+    columns: ["id", "total"]
+  )
+
+customer_spend_cte =
+  Selecto.Advanced.CTE.create_cte(
+    "customer_spend",
+    fn ->
+      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      |> Selecto.select(select([customer_id, total]))
+    end,
+    columns: ["customer_id", "total"]
+  )
+
+Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+|> Selecto.with_ctes([order_totals_cte, customer_spend_cte], joins: true)
+|> Selecto.select(select([order_number, order_totals.total, customer_spend.total]))
+```
+
 ## Selecto Yielded SQL
 
 ```sql

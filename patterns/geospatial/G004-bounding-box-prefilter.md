@@ -36,6 +36,18 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(location_domain(), :mock_connection, validate: false)
+|> Selecto.select(["id", "name"])
+|> Selecto.filter({
+  :raw_sql_filter,
+  "selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326)"
+})
+|> Selecto.order_by({"id", :asc})
+```
+
 ## Selecto Yielded SQL
 
 ```sql

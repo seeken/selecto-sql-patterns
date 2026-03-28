@@ -34,6 +34,16 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_domain(), :mock_connection, validate: false)
+|> Selecto.select(["id", "order_number", "total"])
+|> Selecto.order_by({"id", :asc})
+|> Selecto.limit(25)
+|> Selecto.offset(50)
+```
+
 ## Selecto Yielded SQL
 
 ```sql

@@ -37,6 +37,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(location_domain(), :mock_connection, validate: false)
+|> Selecto.select(["id", "name"])
+|> Selecto.filter(
+  {:exists, "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)"}
+)
+|> Selecto.order_by({"id", :asc})
+```
+
 ## Selecto Yielded SQL
 
 ```sql

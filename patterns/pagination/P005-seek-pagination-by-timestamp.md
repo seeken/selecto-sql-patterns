@@ -36,6 +36,17 @@ query =
 {sql, params} = Selecto.to_sql(query)
 ```
 
+## Selecto Expr
+
+```elixir
+Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+|> Selecto.select(select([id, order_number, inserted_at, total]))
+|> Selecto.filter(where(inserted_at > ~N[2024-01-15 00:00:00]))
+|> Selecto.order_by(order_by([asc(inserted_at)]))
+|> Selecto.order_by(order_by([asc(id)]))
+|> Selecto.limit(25)
+```
+
 ## Selecto Yielded SQL
 
 ```sql
