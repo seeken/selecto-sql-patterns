@@ -43,10 +43,17 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, status, total]))
-|> Selecto.filter(where((status == "processing" or status == "shipped") and total > 100))
-|> Selecto.order_by(order_by([desc(total)]))
+|> Selecto.select(["order_number", "status", "total"])
+|> Selecto.filter(
+  compact_and([
+    compact_or([eq("status", "processing"), eq("status", "shipped")]),
+    gt("total", 100)
+  ])
+)
+|> Selecto.order_by([desc("total")])
 ```
 
 ## Selecto Yielded SQL

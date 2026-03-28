@@ -47,14 +47,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join_filter(), :mock_connection, validate: false)
 |> Selecto.join_parameterize(:customer, "tier_premium", tier: "premium")
 |> Selecto.join_parameterize(:customer, "tier_standard", tier: "standard")
-|> Selecto.select([
-  "order_number",
-  "customer:tier_premium.name",
-  "customer:tier_standard.name"
-])
+|> Selecto.select(["order_number", "customer:tier_premium.name", "customer:tier_standard.name"])
 ```
 
 ## Selecto Yielded SQL

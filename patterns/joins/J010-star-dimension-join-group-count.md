@@ -43,14 +43,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 star_domain =
-  order_domain_with_customer_join()
-  |> put_in([:joins, :customer, :type], :star_dimension)
+  order_domain_with_customer_join() |> put_in([:joins, :customer, :type], :star_dimension)
 
 Selecto.configure(star_domain, :mock_connection, validate: false)
-|> Selecto.select(select([customer.name, count()]))
+|> Selecto.select(["customer.name", count("*")])
 |> Selecto.group_by(["customer.name"])
-|> Selecto.order_by(order_by([asc(customer.name)]))
+|> Selecto.order_by([asc("customer.name")])
 ```
 
 ## Selecto Yielded SQL

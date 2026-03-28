@@ -13,7 +13,12 @@ EXPR_JSON = PATTERNS_DIR / "SELECTO_EXPR_EXAMPLES.json"
 
 
 def build_expr_section(expr_code: str) -> str:
-    return "## Selecto Expr\n\n```elixir\n" + expr_code.rstrip() + "\n```\n\n"
+    return (
+        "## Selecto Expr\n\n```elixir\n"
+        + "import Selecto.Expr\n\n"
+        + expr_code.rstrip()
+        + "\n```\n\n"
+    )
 
 
 def pattern_path(pattern_id: str) -> Path:

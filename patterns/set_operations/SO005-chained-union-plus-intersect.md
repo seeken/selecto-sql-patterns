@@ -51,6 +51,8 @@ query = Selecto.intersect(premium_or_active, all_customers)
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 premium_customers =
   Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])
@@ -64,7 +66,6 @@ all_customers =
   |> Selecto.select(["id", "name"])
 
 premium_or_active = Selecto.union(premium_customers, active_customers)
-
 Selecto.intersect(premium_or_active, all_customers)
 ```
 

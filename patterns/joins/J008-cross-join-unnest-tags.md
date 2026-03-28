@@ -39,13 +39,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.unnest("tags", as: "product_tag")
-|> Selecto.select([
-  "name",
-  "product_tag"
-])
-|> Selecto.filter(X.eq("active", true))
+|> Selecto.select(["name", "product_tag"])
+|> Selecto.filter(eq("active", true))
 ```
 
 ## Selecto Yielded SQL

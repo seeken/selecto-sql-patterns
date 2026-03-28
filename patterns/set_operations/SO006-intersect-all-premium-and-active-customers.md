@@ -41,6 +41,8 @@ query = Selecto.intersect(premium_customers, active_customers, all: true)
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 premium_customers =
   Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])

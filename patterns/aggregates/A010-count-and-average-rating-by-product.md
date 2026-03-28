@@ -41,10 +41,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
-|> Selecto.select(select([name, count(reviews.id), as(avg(reviews.rating), "avg_rating")]))
+|> Selecto.select(["name", count("reviews.id"), as(avg("reviews.rating"), "avg_rating")])
 |> Selecto.group_by(["name"])
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

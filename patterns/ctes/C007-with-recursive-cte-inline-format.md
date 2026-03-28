@@ -55,22 +55,24 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.with_recursive_cte(
   "order_chain",
   fn ->
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(select([id, status]))
-    |> Selecto.filter(where(status == "processing"))
+    |> Selecto.select(["id", "status"])
+    |> Selecto.filter(eq("status", "processing"))
   end,
   fn _cte_ref ->
     Selecto.configure(order_domain(), :mock_connection, validate: false)
-    |> Selecto.select(select([id, status]))
+    |> Selecto.select(["id", "status"])
   end,
   columns: ["id", "status"],
   join: true
 )
-|> Selecto.select(select([order_number, order_chain.status]))
+|> Selecto.select(["order_number", "order_chain.status"])
 ```
 
 ## Selecto Yielded SQL

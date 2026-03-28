@@ -40,13 +40,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([name]))
-|> Selecto.json_select([
-  X.json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")
-])
+|> Selecto.select(["name"])
+|> Selecto.json_select([json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")])
 |> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity", nil})
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

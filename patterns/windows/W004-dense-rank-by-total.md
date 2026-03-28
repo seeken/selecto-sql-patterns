@@ -39,12 +39,11 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, total]))
-|> Selecto.window_function(:dense_rank, [],
-  over: [order_by: order_by([desc(total)])],
-  as: "total_rank"
-)
+|> Selecto.select(["order_number", "total"])
+|> Selecto.window_function(:dense_rank, [], over: [order_by: [desc("total")]], as: "total_rank")
 ```
 
 ## Selecto Yielded SQL

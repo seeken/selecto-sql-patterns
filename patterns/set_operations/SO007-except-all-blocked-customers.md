@@ -41,6 +41,8 @@ query = Selecto.except(all_customers, blocked_customers, all: true)
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 all_customers =
   Selecto.configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])

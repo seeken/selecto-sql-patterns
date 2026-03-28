@@ -37,10 +37,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([customer.name, count()]))
+|> Selecto.select(["customer.name", count("*")])
 |> Selecto.group_by(["customer.name"])
-|> Selecto.order_by(order_by([asc(customer.name)]))
+|> Selecto.order_by([asc("customer.name")])
 ```
 
 ## Selecto Yielded SQL

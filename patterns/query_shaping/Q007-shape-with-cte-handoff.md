@@ -42,10 +42,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_shape_members(), :mock_connection, validate: false)
 |> Selecto.with_cte(:delivered_totals)
-|> Selecto.select(select([order_number, customer.name, delivered_totals.total]))
-|> Selecto.order_by(order_by([asc(order_number)]))
+|> Selecto.select(["order_number", "customer.name", "delivered_totals.total"])
+|> Selecto.order_by([asc("order_number")])
 ```
 
 ## Selecto Yielded SQL

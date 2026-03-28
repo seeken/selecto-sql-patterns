@@ -45,13 +45,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
-|> Selecto.filter({
-  :exists,
-  "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1",
-  ["delivery"]
-})
+|> Selecto.filter(
+  {:exists,
+   "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1",
+   ["delivery"]}
+)
 |> Selecto.order_by({"id", :asc})
 ```
 

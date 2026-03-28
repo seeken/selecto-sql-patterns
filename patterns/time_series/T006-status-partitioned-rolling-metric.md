@@ -45,13 +45,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, status, inserted_at, total]))
+|> Selecto.select(["order_number", "status", "inserted_at", "total"])
 |> Selecto.window_function(:sum, ["total"],
-  over: [partition_by: ["status"], order_by: order_by([asc(inserted_at)])],
+  over: [partition_by: ["status"], order_by: [asc("inserted_at")]],
   as: "status_running_total"
 )
-|> Selecto.order_by(order_by([asc(inserted_at)]))
+|> Selecto.order_by([asc("inserted_at")])
 ```
 
 ## Selecto Yielded SQL

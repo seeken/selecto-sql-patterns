@@ -36,10 +36,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([name, metadata.warehouse.zone]))
-|> Selecto.filter(where(field_exists(metadata.warehouse.zone)))
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.select(["name", "metadata.warehouse.zone"])
+|> Selecto.filter(field_exists("metadata.warehouse.zone"))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

@@ -39,11 +39,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([customer.tier, as(avg(total), "avg_delivered_total")]))
-|> Selecto.filter(where(status == "delivered"))
+|> Selecto.select(["customer.tier", as(avg("total"), "avg_delivered_total")])
+|> Selecto.filter(eq("status", "delivered"))
 |> Selecto.group_by(["customer.tier"])
-|> Selecto.order_by(order_by([asc(customer.tier)]))
+|> Selecto.order_by([asc("customer.tier")])
 ```
 
 ## Selecto Yielded SQL

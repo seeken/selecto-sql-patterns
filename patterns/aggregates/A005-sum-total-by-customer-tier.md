@@ -37,10 +37,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([customer.tier, as(sum(total), "tier_total")]))
+|> Selecto.select(["customer.tier", as(sum("total"), "tier_total")])
 |> Selecto.group_by(["customer.tier"])
-|> Selecto.order_by(order_by([asc(customer.tier)]))
+|> Selecto.order_by([asc("customer.tier")])
 ```
 
 ## Selecto Yielded SQL

@@ -45,12 +45,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, status, total]))
-|> Selecto.filter(
-  {"total", :<, {:subquery, :any, order_total_subquery_by_status("delivered")}}
-)
-|> Selecto.order_by(order_by([asc(total)]))
+|> Selecto.select(["order_number", "status", "total"])
+|> Selecto.filter({"total", :<, {:subquery, :any, order_total_subquery_by_status("delivered")}})
+|> Selecto.order_by([asc("total")])
 ```
 
 ## Selecto Yielded SQL

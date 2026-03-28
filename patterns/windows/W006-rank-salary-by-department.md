@@ -43,10 +43,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(employee_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([first_name, department, salary]))
+|> Selecto.select(["first_name", "department", "salary"])
 |> Selecto.window_function(:rank, [],
-  over: [partition_by: ["department"], order_by: order_by([desc(salary)])],
+  over: [partition_by: ["department"], order_by: [desc("salary")]],
   as: "department_rank"
 )
 ```

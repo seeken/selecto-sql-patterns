@@ -39,10 +39,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
-|> Selecto.select(select([name]))
-|> Selecto.filter(where(reviews.id == nil))
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.select(["name"])
+|> Selecto.filter(is_null("reviews.id"))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

@@ -42,12 +42,14 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
-|> Selecto.filter({
-  :raw_sql_filter,
-  "ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01))"
-})
+|> Selecto.filter(
+  {:raw_sql_filter,
+   "ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01))"}
+)
 |> Selecto.order_by({"id", :asc})
 ```
 

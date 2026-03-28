@@ -48,19 +48,21 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 order_totals_cte =
   Selecto.Advanced.CTE.create_cte(
     "order_totals",
     fn ->
       Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-      |> Selecto.select(select([id, total]))
+      |> Selecto.select(["id", "total"])
     end,
     columns: ["id", "total"]
   )
 
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.with_ctes([order_totals_cte], joins: true)
-|> Selecto.select(select([order_number, order_totals.total]))
+|> Selecto.select(["order_number", "order_totals.total"])
 ```
 
 ## Selecto Yielded SQL

@@ -41,13 +41,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, inserted_at, total]))
+|> Selecto.select(["order_number", "inserted_at", "total"])
 |> Selecto.window_function(:lag, ["total", 1],
-  over: [order_by: order_by([asc(inserted_at)])],
+  over: [order_by: [asc("inserted_at")]],
   as: "previous_total"
 )
-|> Selecto.order_by(order_by([asc(inserted_at)]))
+|> Selecto.order_by([asc("inserted_at")])
 ```
 
 ## Selecto Yielded SQL

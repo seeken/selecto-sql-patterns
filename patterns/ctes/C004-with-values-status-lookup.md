@@ -49,18 +49,16 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.with_values(
-  [
-    ["processing", "In Progress"],
-    ["shipped", "In Transit"],
-    ["delivered", "Completed"]
-  ],
+  [["processing", "In Progress"], ["shipped", "In Transit"], ["delivered", "Completed"]],
   columns: ["status", "status_label"],
   as: "status_labels",
   join: [owner_key: :status, related_key: :status]
 )
-|> Selecto.select(select([order_number, status_labels.status_label]))
+|> Selecto.select(["order_number", "status_labels.status_label"])
 ```
 
 ## Selecto Yielded SQL

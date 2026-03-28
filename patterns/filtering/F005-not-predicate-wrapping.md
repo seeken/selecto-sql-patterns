@@ -38,11 +38,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, status, total]))
-|> Selecto.filter(where(not (status == "cancelled")))
-|> Selecto.filter(where(total > 50))
-|> Selecto.order_by(order_by([desc(total)]))
+|> Selecto.select(["order_number", "status", "total"])
+|> Selecto.filter(not eq("status", "cancelled"))
+|> Selecto.filter(gt("total", 50))
+|> Selecto.order_by([desc("total")])
 ```
 
 ## Selecto Yielded SQL

@@ -37,12 +37,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([name, sku]))
-|> Selecto.json_select([
-  X.json_extract_text("metadata", "$.warehouse.zone", as: "warehouse_zone")
-])
-|> Selecto.json_order_by(X.json_extract_text("metadata", "$.warehouse.zone", :asc))
+|> Selecto.select(["name", "sku"])
+|> Selecto.json_select([json_extract_text("metadata", "$.warehouse.zone", as: "warehouse_zone")])
+|> Selecto.json_order_by(json_extract_text("metadata", "$.warehouse.zone", :asc))
 ```
 
 ## Selecto Yielded SQL

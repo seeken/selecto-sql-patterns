@@ -41,6 +41,8 @@ query = Selecto.union(current_orders, archived_orders, all: true)
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 current_orders =
   Selecto.configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "total"])

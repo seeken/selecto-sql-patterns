@@ -38,11 +38,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([customer_id, as(sum(total), "total_spend")]))
-|> Selecto.filter(where(status == "delivered"))
+|> Selecto.select(["customer_id", as(sum("total"), "total_spend")])
+|> Selecto.filter(eq("status", "delivered"))
 |> Selecto.group_by(["customer_id"])
-|> Selecto.order_by(order_by([asc(customer_id)]))
+|> Selecto.order_by([asc("customer_id")])
 ```
 
 ## Selecto Yielded SQL

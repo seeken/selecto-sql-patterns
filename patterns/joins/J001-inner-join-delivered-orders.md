@@ -40,11 +40,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, customer.name]))
-|> Selecto.filter(where(customer.id != nil))
-|> Selecto.filter(where(status == "delivered"))
-|> Selecto.order_by(order_by([asc(order_number)]))
+|> Selecto.select(["order_number", "customer.name"])
+|> Selecto.filter(not_null("customer.id"))
+|> Selecto.filter(eq("status", "delivered"))
+|> Selecto.order_by([asc("order_number")])
 ```
 
 ## Selecto Yielded SQL

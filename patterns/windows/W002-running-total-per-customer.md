@@ -43,10 +43,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([id, customer_id, total]))
+|> Selecto.select(["id", "customer_id", "total"])
 |> Selecto.window_function(:sum, ["total"],
-  over: [partition_by: ["customer_id"], order_by: order_by([asc(id)])],
+  over: [partition_by: ["customer_id"], order_by: [asc("id")]],
   as: "running_total"
 )
 ```

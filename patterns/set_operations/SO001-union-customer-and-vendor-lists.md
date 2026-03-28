@@ -41,6 +41,8 @@ query = Selecto.union(customers, vendors)
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 customers =
   Selecto.configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name", "tier"])

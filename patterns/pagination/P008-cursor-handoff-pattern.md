@@ -46,11 +46,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([id, order_number, total]))
-|> Selecto.filter(where(total < 1000 or (total == 1000 and id < 500)))
-|> Selecto.order_by(order_by([desc(total)]))
-|> Selecto.order_by(order_by([desc(id)]))
+|> Selecto.select(["id", "order_number", "total"])
+|> Selecto.filter(
+  compact_or([lt("total", 1000), compact_and([eq("total", 1000), lt("id", 500)])])
+)
+|> Selecto.order_by([desc("total")])
+|> Selecto.order_by([desc("id")])
 |> Selecto.limit(20)
 ```
 

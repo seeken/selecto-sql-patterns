@@ -50,15 +50,26 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([id, order_number, inserted_at, total]))
+|> Selecto.select(["id", "order_number", "inserted_at", "total"])
 |> Selecto.filter(
-  where(
-    inserted_at < ~N[2024-02-01 00:00:00] or
-      (inserted_at == ~N[2024-02-01 00:00:00] and id < 2000)
-  )
+  compact_or([
+    lt(
+      "inserted_at",
+      ~N[2024-02-01 00:00:00]
+    ),
+    compact_and([
+      eq(
+        "inserted_at",
+        ~N[2024-02-01 00:00:00]
+      ),
+      lt("id", 2000)
+    ])
+  ])
 )
-|> Selecto.order_by(order_by([desc(inserted_at), desc(id)]))
+|> Selecto.order_by([desc("inserted_at"), desc("id")])
 |> Selecto.limit(25)
 ```
 

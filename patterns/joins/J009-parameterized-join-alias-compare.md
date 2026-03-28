@@ -41,6 +41,8 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.join_parameterize(:customer, "alias_a")
 |> Selecto.join_parameterize(:customer, "alias_b")

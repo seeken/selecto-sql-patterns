@@ -42,12 +42,14 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
-|> Selecto.filter({
-  :raw_sql_filter,
-  "ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom)"
-})
+|> Selecto.filter(
+  {:raw_sql_filter,
+   "ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom)"}
+)
 |> Selecto.order_by({"id", :asc})
 ```
 

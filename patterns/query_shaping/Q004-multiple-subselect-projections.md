@@ -59,23 +59,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
-|> Selecto.select(select([name, email]))
+|> Selecto.select(["name", "email"])
 |> Selecto.subselect([
-  %{
-    fields: ["product_name"],
-    target_schema: :orders,
-    format: :json_agg,
-    alias: "products"
-  },
-  %{
-    fields: ["quantity"],
-    target_schema: :orders,
-    format: :array_agg,
-    alias: "quantities"
-  }
+  %{fields: ["product_name"], target_schema: :orders, format: :json_agg, alias: "products"},
+  %{fields: ["quantity"], target_schema: :orders, format: :array_agg, alias: "quantities"}
 ])
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

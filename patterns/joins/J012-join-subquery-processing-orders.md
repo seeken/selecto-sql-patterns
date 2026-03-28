@@ -50,10 +50,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 processing_orders =
   Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["customer_id", "order_number"])
-  |> Selecto.filter(where(status == "processing"))
+  |> Selecto.filter(eq("status", "processing"))
 
 Selecto.configure(customer_domain(), :mock_connection, validate: false)
 |> Selecto.join_subquery(:processing_orders, processing_orders,
@@ -61,7 +63,7 @@ Selecto.configure(customer_domain(), :mock_connection, validate: false)
   on: [%{left: "id", right: "customer_id"}]
 )
 |> Selecto.select(["name", "tier", "processing_orders.order_number"])
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

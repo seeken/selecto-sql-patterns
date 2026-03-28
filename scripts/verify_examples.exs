@@ -225,7 +225,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
     examples()
     |> Enum.map(fn {id, _query, _fragments} ->
-      {id, extract_expr_source!(source, id)}
+      {id, source |> extract_expr_source!(id) |> to_runtime_expr_source!()}
     end)
     |> Map.new()
   end
@@ -246,6 +246,66 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       _ ->
         raise "Could not extract Expr source for #{id}"
     end
+  end
+
+  defp to_runtime_expr_source!(source) do
+    ast = Code.string_to_quoted!(source)
+
+    ast
+    |> expand_expr_macros()
+    |> unqualify_expr_calls()
+    |> simplify_runtime_expr_ast()
+    |> Macro.to_string()
+    |> Code.format_string!()
+    |> IO.iodata_to_binary()
+    |> String.trim()
+  end
+
+  defp expand_expr_macros(ast) do
+    Macro.postwalk(ast, fn
+      {:where, _meta, [expression]} ->
+        Selecto.ExprCompiler.compile_filter!(expression)
+
+      {:select, _meta, [expression]} ->
+        Selecto.ExprCompiler.compile_select!(expression)
+
+      {:order_by, _meta, [expression]} ->
+        Selecto.ExprCompiler.compile_order!(expression)
+
+      other ->
+        other
+    end)
+  end
+
+  defp unqualify_expr_calls(ast) do
+    Macro.postwalk(ast, fn
+      {:apply, meta, [{:__aliases__, _alias_meta, [:Selecto, :Expr]}, fun_name, args]}
+      when is_atom(fun_name) and is_list(args) ->
+        {fun_name, meta, args}
+
+      {:apply, meta, [{:__aliases__, _alias_meta, [:X]}, fun_name, args]}
+      when is_atom(fun_name) and is_list(args) ->
+        {fun_name, meta, args}
+
+      {{:., _dot_meta, [{:__aliases__, _alias_meta, [:Selecto, :Expr]}, fun]}, meta, args} ->
+        {fun, meta, args}
+
+      {{:., _dot_meta, [{:__aliases__, _alias_meta, [:X]}, fun]}, meta, args} ->
+        {fun, meta, args}
+
+      other ->
+        other
+    end)
+  end
+
+  defp simplify_runtime_expr_ast(ast) do
+    Macro.postwalk(ast, fn
+      {:field, _meta, [value]} when is_binary(value) ->
+        value
+
+      other ->
+        other
+    end)
   end
 
   defp adapter_outputs_for_example(id, query, fragments) do

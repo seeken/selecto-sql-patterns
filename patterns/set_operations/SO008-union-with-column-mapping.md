@@ -47,6 +47,8 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 customers =
   Selecto.configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name", "tier"])
@@ -56,10 +58,7 @@ vendor_contacts =
   |> Selecto.select(["company_name", "segment"])
 
 Selecto.union(customers, vendor_contacts,
-  column_mapping: [
-    {"name", "company_name"},
-    {"tier", "segment"}
-  ]
+  column_mapping: [{"name", "company_name"}, {"tier", "segment"}]
 )
 ```
 

@@ -301,7 +301,7 @@
     if (!baseCode) return null
 
     const lines = baseCode.split("\n")
-    const prefix = ["import Selecto.ExprMacros", "alias Selecto.Expr, as: X", ""]
+    const prefix = ["import Selecto.Expr", ""]
 
     const hasAssignment = lines.some((line) => line.trimStart().startsWith("query ="))
     const body = hasAssignment ? lines.join("\n") : ["query =", ...lines.map((line) => `  ${line}`)].join("\n")

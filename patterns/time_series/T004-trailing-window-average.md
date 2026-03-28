@@ -47,16 +47,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, inserted_at, total]))
+|> Selecto.select(["order_number", "inserted_at", "total"])
 |> Selecto.window_function(:avg, ["total"],
-  over: [
-    order_by: order_by([asc(inserted_at)]),
-    frame: {:rows, {:preceding, 2}, :current_row}
-  ],
+  over: [order_by: [asc("inserted_at")], frame: {:rows, {:preceding, 2}, :current_row}],
   as: "trailing_avg_total"
 )
-|> Selecto.order_by(order_by([asc(inserted_at)]))
+|> Selecto.order_by([asc("inserted_at")])
 ```
 
 ## Selecto Yielded SQL

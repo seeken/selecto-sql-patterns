@@ -38,10 +38,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([id, order_number, total]))
-|> Selecto.filter(where(id > 1000))
-|> Selecto.order_by(order_by([asc(id)]))
+|> Selecto.select(["id", "order_number", "total"])
+|> Selecto.filter(gt("id", 1000))
+|> Selecto.order_by([asc("id")])
 |> Selecto.limit(25)
 ```
 

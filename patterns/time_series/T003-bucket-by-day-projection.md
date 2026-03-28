@@ -40,13 +40,15 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select([
-  X.field("order_number"),
+  "order_number",
   {:field, {:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"},
-  X.field("total")
+  "total"
 ])
-|> Selecto.order_by(order_by([asc(inserted_at)]))
+|> Selecto.order_by([asc("inserted_at")])
 ```
 
 ## Selecto Yielded SQL

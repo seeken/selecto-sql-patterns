@@ -38,11 +38,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(product_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([name, tags]))
-|> Selecto.filter(where(array_overlap(tags, ["featured", "clearance"])))
-|> Selecto.filter(where(active == true))
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.select(["name", "tags"])
+|> Selecto.filter(array_overlap("tags", ["featured", "clearance"]))
+|> Selecto.filter(eq("active", true))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

@@ -47,11 +47,13 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
-|> Selecto.select(select([order_number, customer_id, total]))
+|> Selecto.select(["order_number", "customer_id", "total"])
 |> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("platinum")}})
-|> Selecto.filter(where(status == "processing"))
-|> Selecto.order_by(order_by([desc(total)]))
+|> Selecto.filter(eq("status", "processing"))
+|> Selecto.order_by([desc("total")])
 ```
 
 ## Selecto Yielded SQL

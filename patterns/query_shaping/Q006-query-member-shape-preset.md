@@ -40,10 +40,12 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(customer_domain_with_shape_members(), :mock_connection, validate: false)
 |> Selecto.with_subquery(:processing_orders_member)
-|> Selecto.select(select([name, tier, processing_orders_member.order_number]))
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.select(["name", "tier", "processing_orders_member.order_number"])
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

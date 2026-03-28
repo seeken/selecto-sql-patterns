@@ -46,9 +46,11 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 subquery_query =
   Selecto.configure(order_domain(), :mock_connection, validate: false)
-  |> Selecto.select([{:count, "*"}])
+  |> Selecto.select(count: "*")
   |> Selecto.filter({"status", "delivered"})
 
 Selecto.configure(product_domain(), :mock_connection, validate: false)

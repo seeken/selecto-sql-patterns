@@ -43,12 +43,14 @@ query =
 ## Selecto Expr
 
 ```elixir
+import Selecto.Expr
+
 Selecto.configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
-|> Selecto.filter({
-  :raw_sql_filter,
-  "ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000)"
-})
+|> Selecto.filter(
+  {:raw_sql_filter,
+   "ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000)"}
+)
 |> Selecto.order_by({"id", :asc})
 ```
 
