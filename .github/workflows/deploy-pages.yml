@@ -26,6 +26,20 @@ jobs:
           ref: main
           path: selecto
 
+      - name: Checkout Selecto PostgreSQL adapter
+        uses: actions/checkout@v4
+        with:
+          repository: seeken/selecto_db_postgresql
+          ref: main
+          path: vendor/selecto_db_postgresql
+
+      - name: Checkout Selecto SQLite adapter
+        uses: actions/checkout@v4
+        with:
+          repository: seeken/selecto_db_sqlite
+          ref: main
+          path: vendor/selecto_db_sqlite
+
       - name: Setup BEAM
         uses: erlef/setup-beam@v1
         with:
@@ -40,7 +54,9 @@ jobs:
       - name: Regenerate yielded SQL
         env:
           SELECTO_PATH: selecto
-        run: elixir scripts/verify_examples.exs --dump-sql patterns/SELECTO_YIELDED_SQL.md
+          SELECTO_DB_POSTGRESQL_PATH: vendor/selecto_db_postgresql
+          SELECTO_DB_SQLITE_PATH: vendor/selecto_db_sqlite
+        run: elixir scripts/verify_examples.exs --dump-all
 
       - name: Build static book site
         run: python scripts/build_book_site.py

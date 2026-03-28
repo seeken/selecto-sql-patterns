@@ -1,11 +1,13 @@
 selecto_path = System.get_env("SELECTO_PATH", "../selecto")
+postgresql_adapter_path = System.get_env("SELECTO_DB_POSTGRESQL_PATH", "../selecto_db_postgresql")
+sqlite_adapter_path = System.get_env("SELECTO_DB_SQLITE_PATH", "../selecto_db_sqlite")
 System.put_env("SELECTO_ECOSYSTEM_USE_LOCAL", "1")
 
 Mix.install([
   {:jason, "~> 1.4"},
   {:selecto, path: selecto_path, override: true},
-  {:selecto_db_postgresql, path: "../selecto_db_postgresql"},
-  {:selecto_db_sqlite, path: "../selecto_db_sqlite"}
+  {:selecto_db_postgresql, path: postgresql_adapter_path},
+  {:selecto_db_sqlite, path: sqlite_adapter_path}
 ])
 
 defmodule SelectoSqlPatterns.VerifyExamples do
