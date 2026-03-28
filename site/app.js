@@ -541,10 +541,7 @@
     }
 
     const markdown = await res.text()
-    const cleanedMarkdown = stripSection(
-      stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto Expr"),
-      "Selecto"
-    )
+    const cleanedMarkdown = stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto")
 
     doc.innerHTML = marked.parse(cleanedMarkdown)
     injectAdapterPanel(entry, markdown, preferredAdapterKey)
