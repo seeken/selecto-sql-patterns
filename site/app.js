@@ -318,6 +318,25 @@
     return markdown.replace(pattern, "\n")
   }
 
+  function removeRenderedSections(headings) {
+    const targets = new Set(headings)
+    const nodes = Array.from(doc.querySelectorAll("h2"))
+
+    nodes.forEach((heading) => {
+      if (!targets.has(heading.textContent.trim())) return
+
+      let cursor = heading.nextElementSibling
+      const toRemove = [heading]
+
+      while (cursor && cursor.tagName !== "H2") {
+        toRemove.push(cursor)
+        cursor = cursor.nextElementSibling
+      }
+
+      toRemove.forEach((node) => node.remove())
+    })
+  }
+
   function transformSelectoCode(baseCode, adapterKey) {
     if (!baseCode) return null
 
@@ -726,6 +745,7 @@
     )
 
     doc.innerHTML = marked.parse(cleanedMarkdown)
+    removeRenderedSections(["Selecto", "Selecto Expr", "Selecto Yielded SQL"])
     injectAdapterPanel(entry, markdown, preferredAdapterKey)
     prettifySqlBlocks()
     highlightCodeBlocks()
