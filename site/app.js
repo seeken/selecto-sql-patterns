@@ -13,7 +13,6 @@
   let activePath = null
   let gapOnly = false
   let activeAdapterKey = null
-  const canonicalSqlAdapterKey = "postgresql"
 
   function adapterModuleName(adapterKey) {
     switch (adapterKey) {
@@ -460,38 +459,29 @@
 
       panel.appendChild(commandCard)
 
-      if (adapter.key === canonicalSqlAdapterKey) {
-        panel.classList.add("single-card")
+      const outputCard = document.createElement("div")
+      outputCard.className = "adapter-card"
 
-        const canonicalNote = document.createElement("p")
-        canonicalNote.className = "adapter-reference-note"
-        canonicalNote.textContent = "Reference SQL is shown above in the original SQL section."
-        commandCard.appendChild(canonicalNote)
+      const outputLabel = document.createElement("h3")
+      outputLabel.className = "adapter-card-title"
+      outputLabel.textContent = `${adapter.label} SQL`
+      outputCard.appendChild(outputLabel)
+
+      if (output && output.status === "ok") {
+        outputCard.appendChild(buildCodeBlock("sql", prettifySqlString(output.sql)))
+
+        const params = document.createElement("p")
+        params.className = "adapter-params"
+        params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
+        outputCard.appendChild(params)
       } else {
-        const outputCard = document.createElement("div")
-        outputCard.className = "adapter-card"
-
-        const outputLabel = document.createElement("h3")
-        outputLabel.className = "adapter-card-title"
-        outputLabel.textContent = `${adapter.label} SQL`
-        outputCard.appendChild(outputLabel)
-
-        if (output && output.status === "ok") {
-          outputCard.appendChild(buildCodeBlock("sql", prettifySqlString(output.sql)))
-
-          const params = document.createElement("p")
-          params.className = "adapter-params"
-          params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
-          outputCard.appendChild(params)
-        } else {
-          const unavailable = document.createElement("p")
-          unavailable.className = "adapter-unavailable"
-          unavailable.textContent = output && output.error ? output.error : "No adapter output available."
-          outputCard.appendChild(unavailable)
-        }
-
-        panel.appendChild(outputCard)
+        const unavailable = document.createElement("p")
+        unavailable.className = "adapter-unavailable"
+        unavailable.textContent = output && output.error ? output.error : "No adapter output available."
+        outputCard.appendChild(unavailable)
       }
+
+      panel.appendChild(outputCard)
 
       body.appendChild(panel)
       tabs.appendChild(button)
@@ -531,25 +521,16 @@
     const panel = buildAdapterPanel(entry, markdown, preferredAdapterKey)
     if (!panel) return
 
-    const sqlHeading = Array.from(doc.querySelectorAll("h2")).find(
-      (heading) => heading.textContent.trim() === "SQL"
+    const notesHeading = Array.from(doc.querySelectorAll("h2")).find(
+      (heading) => heading.textContent.trim() === "Notes"
     )
 
-    if (!sqlHeading) {
-      doc.prepend(panel)
+    if (notesHeading) {
+      notesHeading.insertAdjacentElement("beforebegin", panel)
       return
     }
 
-    let anchor = sqlHeading.nextElementSibling
-    while (anchor && anchor.tagName !== "H2") {
-      if (anchor.tagName === "PRE") {
-        anchor.insertAdjacentElement("afterend", panel)
-        return
-      }
-      anchor = anchor.nextElementSibling
-    }
-
-    sqlHeading.insertAdjacentElement("afterend", panel)
+    doc.appendChild(panel)
   }
 
   async function loadEntry(entry, preferredAdapterKey = activeAdapterKey) {
@@ -568,7 +549,10 @@
     }
 
     const markdown = await res.text()
-    const cleanedMarkdown = stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto")
+    const cleanedMarkdown = stripSection(
+      stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto Expr"),
+      "Selecto"
+    )
 
     doc.innerHTML = marked.parse(cleanedMarkdown)
     injectAdapterPanel(entry, markdown, preferredAdapterKey)
