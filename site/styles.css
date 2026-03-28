@@ -297,6 +297,21 @@ body {
   background: #fbfcfa;
 }
 
+.adapter-unavailable-title {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.adapter-unavailable-detail,
+.adapter-unavailable-reason {
+  margin: 0;
+}
+
+.adapter-unavailable-reason {
+  margin-top: 10px;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

@@ -400,6 +400,39 @@
     }
   }
 
+  function explainAdapterGap(error) {
+    const message = error || "No adapter output available."
+
+    if (message.includes("lateral/apply joins")) {
+      return {
+        title: "Join type not supported",
+        detail:
+          "This pattern depends on lateral or apply joins, and this adapter does not expose an equivalent join shape in Selecto yet."
+      }
+    }
+
+    if (message.includes("FTS5-configured field")) {
+      return {
+        title: "SQLite FTS setup required",
+        detail:
+          "SQLite can only render this example when the searched field is backed by an FTS5 virtual table or equivalent text-search configuration."
+      }
+    }
+
+    if (message.includes("does not support text search")) {
+      return {
+        title: "Text search not supported",
+        detail:
+          "This adapter currently lacks the full-text search feature needed for this pattern, so Selecto cannot generate adapter SQL for it."
+      }
+    }
+
+    return {
+      title: "Adapter gap",
+      detail: message
+    }
+  }
+
   function buildAdapterPanel(entry, markdown, preferredAdapterKey) {
     const outputs = adapterOutputs.patterns[entry.id]
     const selectoSection = extractSectionCode(markdown, "Selecto")
@@ -475,9 +508,27 @@
         params.innerHTML = `<strong>Params:</strong> <code>${JSON.stringify(output.params)}</code>`
         outputCard.appendChild(params)
       } else {
-        const unavailable = document.createElement("p")
+        const explanation = explainAdapterGap(output && output.error)
+        const unavailable = document.createElement("div")
         unavailable.className = "adapter-unavailable"
-        unavailable.textContent = output && output.error ? output.error : "No adapter output available."
+
+        const unavailableTitle = document.createElement("strong")
+        unavailableTitle.className = "adapter-unavailable-title"
+        unavailableTitle.textContent = explanation.title
+
+        const unavailableDetail = document.createElement("p")
+        unavailableDetail.className = "adapter-unavailable-detail"
+        unavailableDetail.textContent = explanation.detail
+
+        const unavailableReason = document.createElement("p")
+        unavailableReason.className = "adapter-unavailable-reason"
+        unavailableReason.innerHTML = `<strong>Reason:</strong> <code>${
+          output && output.error ? output.error : "No adapter output available."
+        }</code>`
+
+        unavailable.appendChild(unavailableTitle)
+        unavailable.appendChild(unavailableDetail)
+        unavailable.appendChild(unavailableReason)
         outputCard.appendChild(unavailable)
       }
 
