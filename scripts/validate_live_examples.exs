@@ -240,7 +240,28 @@ defmodule SelectoSqlPatterns.LiveValidation do
     %{id: "S002", assert: {:columns_include, ["name"]}},
     %{id: "S003", assert: {:columns_include, ["order_number", "status", "total"]}},
     %{id: "S004", assert: {:columns_include, ["name"]}},
-    %{id: "S005", assert: {:columns_include, ["order_number", "customer_id", "total"]}}
+    %{id: "S005", assert: {:columns_include, ["order_number", "customer_id", "total"]}},
+    %{id: "S006", assert: {:columns_include, ["order_number", "status", "total"]}},
+    %{id: "S007", assert: {:columns_include, ["order_number", "customer_id", "total"]}},
+    %{
+      id: "S008",
+      assert: {:columns_include, ["order_number", "status", "total"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite quantifier subqueries with ALL still need dedicated live-execution handling in this smoke harness."}
+      }
+    },
+    %{
+      id: "S009",
+      assert: {:columns_include, ["order_number", "status", "total"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite quantifier subqueries with ANY still need dedicated live-execution handling in this smoke harness."}
+      }
+    },
+    %{id: "S010", assert: {:columns_include, ["order_number", "customer_id", "total"]}}
   ]
 
   @adapters [

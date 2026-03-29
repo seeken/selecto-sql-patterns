@@ -146,6 +146,62 @@
         "row_count": 6
       }
     },
+    "S008": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "reason": "SQLite quantifier subqueries with ALL still need dedicated live-execution handling in this smoke harness.",
+        "status": "generated_only"
+      }
+    },
     "Q006": {
       "duckdb": {
         "reason": "DuckDB query-member shape validation needs a dedicated smoke assertion for subquery member aliases.",
@@ -413,6 +469,68 @@
       "sqlite": {
         "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
         "status": "generated_only"
+      }
+    },
+    "S006": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
       }
     },
     "J001": {
@@ -888,6 +1006,62 @@
         "row_count": 4
       }
     },
+    "S009": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "sqlite": {
+        "reason": "SQLite quantifier subqueries with ANY still need dedicated live-execution handling in this smoke harness.",
+        "status": "generated_only"
+      }
+    },
     "S002": {
       "duckdb": {
         "status": "executed",
@@ -1066,6 +1240,68 @@
           "warehouse_zone"
         ],
         "row_count": 3
+      }
+    },
+    "S007": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       }
     },
     "T005": {
@@ -1264,6 +1500,68 @@
           "moving_avg_total"
         ],
         "row_count": 6
+      }
+    },
+    "S010": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
       }
     },
     "J007": {
@@ -2239,5 +2537,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T01:46:34Z"
+  "generated_at": "2026-03-29T02:28:43Z"
 }
