@@ -292,6 +292,32 @@
         "row_count": 1
       }
     },
+    "JA003": {
+      "duckdb": {
+        "reason": "DuckDB array overlap validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      }
+    },
     "JA004": {
       "duckdb": {
         "reason": "DuckDB JSON path-exists validation is not wired into this harness yet.",
@@ -397,6 +423,32 @@
           "warehouse_zone"
         ],
         "row_count": 3
+      }
+    },
+    "JA006": {
+      "duckdb": {
+        "reason": "DuckDB array containment validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       }
     },
     "JA007": {
@@ -570,6 +622,169 @@
           "total"
         ],
         "row_count": 6
+      }
+    },
+    "Q006": {
+      "duckdb": {
+        "reason": "DuckDB query-member shape validation needs a dedicated smoke assertion for subquery member aliases.",
+        "status": "generated_only"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      }
+    },
+    "Q007": {
+      "duckdb": {
+        "reason": "DuckDB CTE shape validation needs a dedicated smoke assertion for joined CTE aliases.",
+        "status": "generated_only"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      }
+    },
+    "Q008": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 5
+      },
+      "sqlite": {
+        "reason": "SQLite still rejects the parenthesized set-operation form generated for this query-shaping pattern.",
+        "status": "generated_only"
       }
     },
     "SO001": {
@@ -754,5 +969,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T00:14:36Z"
+  "generated_at": "2026-03-29T00:34:16Z"
 }
