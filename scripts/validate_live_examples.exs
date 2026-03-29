@@ -488,6 +488,126 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:generated_only,
            "MSSQL still needs EXCEPT ALL execution handling in this smoke harness."}
       }
+    },
+    %{
+      id: "Q001",
+      assert: {:columns_include, ["name", "email"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "sqlite" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mysql" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mariadb" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mssql" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "duckdb" =>
+          {:generated_only,
+           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
+      }
+    },
+    %{
+      id: "Q002",
+      assert: {:columns_include, ["product_name", "quantity"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "sqlite" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mysql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mariadb" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mssql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "duckdb" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
+      }
+    },
+    %{
+      id: "Q003",
+      assert: {:columns_include, ["product_name", "quantity"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "sqlite" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mysql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mariadb" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mssql" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "duckdb" =>
+          {:generated_only,
+           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
+      }
+    },
+    %{
+      id: "Q004",
+      assert: {:columns_include, ["name", "email"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "sqlite" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mysql" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mariadb" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mssql" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "duckdb" =>
+          {:generated_only,
+           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
+      }
+    },
+    %{
+      id: "Q005",
+      assert: {:columns_include, ["name", "email"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "sqlite" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mysql" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mariadb" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "mssql" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
+        "duckdb" =>
+          {:generated_only,
+           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
+      }
     }
   ]
 
