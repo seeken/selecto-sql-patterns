@@ -900,6 +900,142 @@
         "row_count": 4
       }
     },
+    "T002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "T004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 6
+      }
+    },
     "W001": {
       "duckdb": {
         "status": "executed",
@@ -967,7 +1103,205 @@
         ],
         "row_count": 4
       }
+    },
+    "W002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "W003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "W004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      }
     }
   },
-  "generated_at": "2026-03-29T00:34:16Z"
+  "generated_at": "2026-03-29T00:55:48Z"
 }

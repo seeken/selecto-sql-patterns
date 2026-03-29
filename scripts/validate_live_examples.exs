@@ -197,7 +197,12 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:generated_only,
            "SQLite still rejects the parenthesized set-operation form generated for this query-shaping pattern."}
       }
-    }
+    },
+    %{id: "W002", assert: {:columns_include, ["id", "customer_id", "total"]}},
+    %{id: "W003", assert: {:columns_include, ["id", "customer_id", "total"]}},
+    %{id: "W004", assert: {:columns_include, ["order_number", "total"]}},
+    %{id: "T002", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
+    %{id: "T004", assert: {:columns_include, ["order_number", "inserted_at", "total"]}}
   ]
 
   @adapters [
