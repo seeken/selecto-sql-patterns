@@ -136,6 +136,24 @@
     return `Live smoke: ${parts.join(", ")}`
   }
 
+  function sidebarValidationBadges(entry) {
+    const patternResults = liveValidation.patterns?.[entry.id]
+    const adapters = liveValidation.adapters || []
+    if (!patternResults || adapters.length === 0) return []
+
+    return adapters
+      .map((adapter) => ({ adapter, result: patternResults[adapter.key] }))
+      .filter(({ result }) => result && result.status !== "executed")
+      .map(({ adapter, result }) => {
+        const label = liveValidationLabel(result)
+        return {
+          adapter,
+          result,
+          label
+        }
+      })
+  }
+
   function renderSidebar(filterText) {
     const q = (filterText || "").trim().toLowerCase()
     sidebar.innerHTML = ""
@@ -198,6 +216,26 @@
           })
 
           button.appendChild(icons)
+        }
+
+        const validationBadges = sidebarValidationBadges(entry)
+        if (validationBadges.length > 0) {
+          const validations = document.createElement("span")
+          validations.className = "item-validation-icons"
+
+          validationBadges.forEach(({ adapter, label, result }) => {
+            const icon = document.createElement("span")
+            icon.className = `item-validation-icon item-validation-${label ? label.tone : "muted"}`
+            icon.title = `${adapter.label}: ${label ? label.text : result.status}`
+            icon.textContent = `${adapterShortLabel(adapter.key)} ${label ? label.text[0] : "?"}`
+            icon.addEventListener("click", (event) => {
+              event.stopPropagation()
+              loadEntry(entry, adapter.key)
+            })
+            validations.appendChild(icon)
+          })
+
+          button.appendChild(validations)
         }
 
         button.addEventListener("click", () => {

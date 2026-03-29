@@ -63,6 +63,30 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:unsupported_expected,
            "DuckDB does not currently support the text-search feature used by this pattern."}
       }
+    },
+    %{
+      id: "JA002",
+      assert: {:columns_include, ["name"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "PostgreSQL smoke validation still needs seeded JSON product fixtures before this path can execute live."},
+        "sqlite" =>
+          {:unsupported_expected,
+           "SQLite JSON smoke validation is not wired into this harness yet."},
+        "mysql" =>
+          {:generated_only,
+           "MySQL smoke validation still needs seeded JSON product fixtures before this path can execute live."},
+        "mariadb" =>
+          {:generated_only,
+           "MariaDB smoke validation still needs seeded JSON product fixtures before this path can execute live."},
+        "mssql" =>
+          {:generated_only,
+           "MSSQL smoke validation still needs seeded JSON product fixtures before this path can execute live."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB JSON field-path validation is not wired into this harness yet."}
+      }
     }
   ]
 

@@ -129,7 +129,7 @@ body {
   font-size: 12px;
 }
 
-.item span:not(.item-id):not(.item-gap-icons):not(.item-gap-icon) {
+.item span:not(.item-id):not(.item-gap-icons):not(.item-gap-icon):not(.item-validation-icons):not(.item-validation-icon) {
   flex: 1;
   min-width: 0;
 }
@@ -150,6 +150,46 @@ body {
   background: #f6dfc8;
   border: 1px solid #ebc49b;
   cursor: pointer;
+}
+
+.item-validation-icons {
+  display: inline-flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.item-validation-icon {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 3px 7px;
+  font-size: 11px;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.item-validation-success {
+  background: #dff1e4;
+  color: #24553a;
+  border-color: #b9dec4;
+}
+
+.item-validation-warning {
+  background: #f6dfc8;
+  color: #7a3f08;
+  border-color: #ebc49b;
+}
+
+.item-validation-error {
+  background: #f8d8d8;
+  color: #7c1f1f;
+  border-color: #ecb3b3;
+}
+
+.item-validation-muted {
+  background: #edf1eb;
+  color: #5e6c61;
+  border-color: #d2d9cf;
 }
 
 .content {

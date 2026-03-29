@@ -191,6 +191,32 @@
         "status": "unsupported_expected"
       }
     },
+    "JA002": {
+      "duckdb": {
+        "reason": "DuckDB JSON field-path validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "MariaDB smoke validation still needs seeded JSON product fixtures before this path can execute live.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "MSSQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "MySQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "PostgreSQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite JSON smoke validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      }
+    },
     "P002": {
       "duckdb": {
         "status": "executed",
@@ -435,5 +461,5 @@
       }
     }
   },
-  "generated_at": "2026-03-28T23:41:40Z"
+  "generated_at": "2026-03-29T00:01:39Z"
 }
