@@ -202,7 +202,12 @@ defmodule SelectoSqlPatterns.LiveValidation do
     %{id: "W003", assert: {:columns_include, ["id", "customer_id", "total"]}},
     %{id: "W004", assert: {:columns_include, ["order_number", "total"]}},
     %{id: "T002", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
-    %{id: "T004", assert: {:columns_include, ["order_number", "inserted_at", "total"]}}
+    %{id: "T004", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
+    %{id: "W005", assert: {:columns_include, ["id", "total"]}},
+    %{id: "W006", assert: {:columns_include, ["first_name", "department", "salary"]}},
+    %{id: "W007", assert: {:columns_include, ["id", "customer_id", "total"]}},
+    %{id: "W008", assert: {:columns_include, ["order_number", "status", "total"]}},
+    %{id: "T005", assert: {:columns_include, ["order_number", "inserted_at", "total"]}}
   ]
 
   @adapters [

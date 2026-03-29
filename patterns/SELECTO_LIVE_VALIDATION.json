@@ -1036,6 +1036,74 @@
         "row_count": 6
       }
     },
+    "T005": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 6
+      }
+    },
     "W001": {
       "duckdb": {
         "status": "executed",
@@ -1301,7 +1369,273 @@
         ],
         "row_count": 6
       }
+    },
+    "W005": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "W006": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      }
+    },
+    "W007": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "W008": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 6
+      }
     }
   },
-  "generated_at": "2026-03-29T00:55:48Z"
+  "generated_at": "2026-03-29T01:07:10Z"
 }
