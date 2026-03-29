@@ -27,715 +27,6 @@
     }
   ],
   "patterns": {
-    "A003": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          "avg(selecto_root.total)"
-        ],
-        "row_count": 3
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          "AVG(selecto_root.total)"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          ""
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          "AVG(selecto_root.total)"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          "avg"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "status",
-          "AVG(selecto_root.total)"
-        ],
-        "row_count": 3
-      }
-    },
-    "F004": {
-      "duckdb": {
-        "reason": "DuckDB does not currently support the text-search feature used by this pattern.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "reason": "MariaDB text-search support is not wired into this smoke harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mssql": {
-        "reason": "MSSQL full-text search support is not wired into this smoke harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mysql": {
-        "reason": "MySQL smoke validation still needs a MATCH-compatible full-text index before this pattern can execute live.",
-        "status": "generated_only"
-      },
-      "postgresql": {
-        "reason": "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live.",
-        "status": "generated_only"
-      },
-      "sqlite": {
-        "reason": "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute.",
-        "status": "unsupported_expected"
-      }
-    },
-    "J001": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name"
-        ],
-        "row_count": 3
-      }
-    },
-    "J007": {
-      "duckdb": {
-        "reason": "Adapter does not support lateral/apply joins",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "reason": "Adapter does not support lateral/apply joins",
-        "status": "unsupported_expected"
-      },
-      "mssql": {
-        "reason": "APPLY join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
-        "status": "generated_only"
-      },
-      "mysql": {
-        "reason": "Adapter does not support lateral/apply joins",
-        "status": "unsupported_expected"
-      },
-      "postgresql": {
-        "reason": "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
-        "status": "generated_only"
-      },
-      "sqlite": {
-        "reason": "Adapter does not support lateral/apply joins",
-        "status": "unsupported_expected"
-      }
-    },
-    "JA001": {
-      "duckdb": {
-        "reason": "DuckDB JSON containment is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "price_band"
-        ],
-        "row_count": 1
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "price_band"
-        ],
-        "row_count": 1
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "price_band"
-        ],
-        "row_count": 1
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "price_band"
-        ],
-        "row_count": 1
-      },
-      "sqlite": {
-        "reason": "SQLite does not support the JSON containment helper used by this pattern.",
-        "status": "unsupported_expected"
-      }
-    },
-    "JA002": {
-      "duckdb": {
-        "reason": "DuckDB JSON field-path validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
-        ],
-        "row_count": 1
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          ""
-        ],
-        "row_count": 1
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
-        ],
-        "row_count": 1
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "?column?"
-        ],
-        "row_count": 1
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
-        ],
-        "row_count": 1
-      }
-    },
-    "JA003": {
-      "duckdb": {
-        "reason": "DuckDB array overlap validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "mssql": {
-        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "mysql": {
-        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "postgresql": {
-        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "sqlite": {
-        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      }
-    },
-    "JA004": {
-      "duckdb": {
-        "reason": "DuckDB JSON path-exists validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      }
-    },
-    "JA005": {
-      "duckdb": {
-        "reason": "DuckDB JSON order-by validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone"
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone"
-        ],
-        "row_count": 3
-      }
-    },
-    "JA006": {
-      "duckdb": {
-        "reason": "DuckDB array containment validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "mssql": {
-        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "mysql": {
-        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "postgresql": {
-        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      },
-      "sqlite": {
-        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
-        "status": "generated_only"
-      }
-    },
-    "JA007": {
-      "duckdb": {
-        "reason": "DuckDB JSON field-path equality is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
-        ],
-        "row_count": 1
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          ""
-        ],
-        "row_count": 1
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
-        ],
-        "row_count": 1
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "?column?"
-        ],
-        "row_count": 1
-      },
-      "sqlite": {
-        "reason": "SQLite JSON field-path equality still needs boolean coercion handling in the smoke fixture to execute live.",
-        "status": "generated_only"
-      }
-    },
-    "JA008": {
-      "duckdb": {
-        "reason": "DuckDB JSON multi-select extraction is not wired into this harness yet.",
-        "status": "unsupported_expected"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "sku",
-          "warehouse_zone",
-          "stock_quantity"
-        ],
-        "row_count": 3
-      }
-    },
-    "P002": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "order_number",
-          "total"
-        ],
-        "row_count": 6
-      }
-    },
-    "Q006": {
-      "duckdb": {
-        "reason": "DuckDB query-member shape validation needs a dedicated smoke assertion for subquery member aliases.",
-        "status": "generated_only"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier",
-          "order_number"
-        ],
-        "row_count": 3
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier",
-          "order_number"
-        ],
-        "row_count": 3
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier",
-          "order_number"
-        ],
-        "row_count": 3
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier",
-          "order_number"
-        ],
-        "row_count": 3
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier",
-          "order_number"
-        ],
-        "row_count": 3
-      }
-    },
-    "Q007": {
-      "duckdb": {
-        "reason": "DuckDB CTE shape validation needs a dedicated smoke assertion for joined CTE aliases.",
-        "status": "generated_only"
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name",
-          "total"
-        ],
-        "row_count": 6
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "name",
-          "total"
-        ],
-        "row_count": 6
-      }
-    },
     "Q008": {
       "duckdb": {
         "status": "executed",
@@ -785,187 +76,6 @@
       "sqlite": {
         "reason": "SQLite still rejects the parenthesized set-operation form generated for this query-shaping pattern.",
         "status": "generated_only"
-      }
-    },
-    "SO001": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier"
-        ],
-        "row_count": 5
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier"
-        ],
-        "row_count": 5
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier"
-        ],
-        "row_count": 5
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier"
-        ],
-        "row_count": 5
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "name",
-          "tier"
-        ],
-        "row_count": 5
-      },
-      "sqlite": {
-        "reason": "SQLite still rejects the parenthesized UNION form generated for this pattern during execution.",
-        "status": "generated_only"
-      }
-    },
-    "T001": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total"
-        ],
-        "row_count": 4
-      }
-    },
-    "T002": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "inserted_at",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
       }
     },
     "T004": {
@@ -1036,6 +146,928 @@
         "row_count": 6
       }
     },
+    "Q006": {
+      "duckdb": {
+        "reason": "DuckDB query-member shape validation needs a dedicated smoke assertion for subquery member aliases.",
+        "status": "generated_only"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 3
+      }
+    },
+    "W010": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 6
+      }
+    },
+    "JA002": {
+      "duckdb": {
+        "reason": "DuckDB JSON field-path validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "?column?"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
+        ],
+        "row_count": 1
+      }
+    },
+    "W007": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "JA006": {
+      "duckdb": {
+        "reason": "DuckDB array containment validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      }
+    },
+    "J001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 3
+      }
+    },
+    "W006": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
+      }
+    },
+    "JA007": {
+      "duckdb": {
+        "reason": "DuckDB JSON field-path equality is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          ""
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "?column?"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite JSON field-path equality still needs boolean coercion handling in the smoke fixture to execute live.",
+        "status": "generated_only"
+      }
+    },
+    "Q007": {
+      "duckdb": {
+        "reason": "DuckDB CTE shape validation needs a dedicated smoke assertion for joined CTE aliases.",
+        "status": "generated_only"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 6
+      }
+    },
+    "T002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "SO001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 5
+      },
+      "sqlite": {
+        "reason": "SQLite still rejects the parenthesized UNION form generated for this pattern during execution.",
+        "status": "generated_only"
+      }
+    },
+    "S005": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 2
+      }
+    },
+    "T001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      }
+    },
+    "S002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 4
+      }
+    },
+    "P002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 6
+      }
+    },
+    "JA005": {
+      "duckdb": {
+        "reason": "DuckDB JSON order-by validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      }
+    },
     "T005": {
       "duckdb": {
         "status": "executed",
@@ -1100,142 +1132,6 @@
           "inserted_at",
           "total",
           "previous_total"
-        ],
-        "row_count": 6
-      }
-    },
-    "W001": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_salary_rank"
-        ],
-        "row_count": 4
-      }
-    },
-    "W002": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
-        ],
-        "row_count": 6
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "id",
-          "customer_id",
-          "total",
-          "running_total"
         ],
         "row_count": 6
       }
@@ -1308,68 +1204,6 @@
         "row_count": 6
       }
     },
-    "W004": {
-      "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      },
-      "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      },
-      "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      },
-      "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      },
-      "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      },
-      "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "order_number",
-          "total",
-          "total_rank"
-        ],
-        "row_count": 6
-      }
-    },
     "W005": {
       "duckdb": {
         "status": "executed",
@@ -1432,83 +1266,159 @@
         "row_count": 6
       }
     },
-    "W006": {
+    "J007": {
       "duckdb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       },
       "mariadb": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       },
       "mssql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "APPLY join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
       },
       "mysql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       },
       "postgresql": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
       },
       "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "first_name",
-          "department",
-          "salary",
-          "department_rank"
-        ],
-        "row_count": 4
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       }
     },
-    "W007": {
+    "A003": {
       "duckdb": {
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "status",
+          "avg(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          ""
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "avg"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
+      }
+    },
+    "JA008": {
+      "duckdb": {
+        "reason": "DuckDB JSON multi-select extraction is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      }
+    },
+    "T006": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
       },
@@ -1516,10 +1426,11 @@
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
       },
@@ -1527,10 +1438,11 @@
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
       },
@@ -1538,10 +1450,11 @@
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
       },
@@ -1549,10 +1462,11 @@
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
       },
@@ -1560,12 +1474,107 @@
         "status": "executed",
         "aliases": [],
         "columns": [
-          "id",
-          "customer_id",
+          "order_number",
+          "status",
+          "inserted_at",
           "total",
-          "next_total"
+          "status_running_total"
         ],
         "row_count": 6
+      }
+    },
+    "JA003": {
+      "duckdb": {
+        "reason": "DuckDB array overlap validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      }
+    },
+    "T007": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 4
       }
     },
     "W008": {
@@ -1635,7 +1644,600 @@
         ],
         "row_count": 6
       }
+    },
+    "W004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 6
+      }
+    },
+    "S004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
+      }
+    },
+    "S003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      }
+    },
+    "T008": {
+      "duckdb": {
+        "reason": "DuckDB still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      },
+      "mariadb": {
+        "reason": "MariaDB still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "MSSQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "MySQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "PostgreSQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite still needs a less parenthesized UNION form for this timeseries set-operation pattern.",
+        "status": "generated_only"
+      }
+    },
+    "F004": {
+      "duckdb": {
+        "reason": "DuckDB does not currently support the text-search feature used by this pattern.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "MariaDB text-search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mssql": {
+        "reason": "MSSQL full-text search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mysql": {
+        "reason": "MySQL smoke validation still needs a MATCH-compatible full-text index before this pattern can execute live.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute.",
+        "status": "unsupported_expected"
+      }
+    },
+    "W001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
+      }
+    },
+    "JA004": {
+      "duckdb": {
+        "reason": "DuckDB JSON path-exists validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      }
+    },
+    "S001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 2
+      }
+    },
+    "W009": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 6
+      }
+    },
+    "W002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 6
+      }
+    },
+    "JA001": {
+      "duckdb": {
+        "reason": "DuckDB JSON containment is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite does not support the JSON containment helper used by this pattern.",
+        "status": "unsupported_expected"
+      }
     }
   },
-  "generated_at": "2026-03-29T01:07:10Z"
+  "generated_at": "2026-03-29T01:46:34Z"
 }
