@@ -197,24 +197,49 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "MariaDB smoke validation still needs seeded JSON product fixtures before this path can execute live.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "MSSQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "MySQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "postgresql": {
-        "reason": "PostgreSQL smoke validation still needs seeded JSON product fixtures before this path can execute live.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "?column?"
+        ],
+        "row_count": 1
       },
       "sqlite": {
-        "reason": "SQLite JSON smoke validation is not wired into this harness yet.",
-        "status": "unsupported_expected"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
+        ],
+        "row_count": 1
       }
     },
     "P002": {
@@ -461,5 +486,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T00:01:39Z"
+  "generated_at": "2026-03-29T00:07:55Z"
 }
