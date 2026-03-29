@@ -308,6 +308,186 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:generated_only,
            "MSSQL still needs INTERSECT ALL execution handling in this smoke harness."}
       }
+    },
+    %{
+      id: "F001",
+      assert: {:columns_include, ["order_number", "name", "status"]},
+      adapters: %{
+        "mssql" =>
+          {:generated_only,
+           "MSSQL still needs list-parameter execution handling for NOT IN smoke cases."},
+        "duckdb" =>
+          {:generated_only,
+           "DuckDB still needs list-parameter execution handling for NOT IN smoke cases."}
+      }
+    },
+    %{id: "F002", assert: {:columns_include, ["order_number", "status", "total"]}},
+    %{
+      id: "F003",
+      assert: {:columns_include, ["order_number", "status", "total"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs list-parameter execution handling for IN smoke cases."},
+        "mysql" =>
+          {:generated_only,
+           "MySQL still needs list-parameter execution handling for IN smoke cases."},
+        "mariadb" =>
+          {:generated_only,
+           "MariaDB still needs list-parameter execution handling for IN smoke cases."},
+        "mssql" =>
+          {:generated_only,
+           "MSSQL still needs list-parameter execution handling for IN smoke cases."},
+        "duckdb" =>
+          {:generated_only,
+           "DuckDB still needs list-parameter execution handling for IN smoke cases."}
+      }
+    },
+    %{id: "F005", assert: {:columns_include, ["order_number", "status", "total"]}},
+    %{
+      id: "F006",
+      assert: {:columns_include, ["name"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage."},
+        "sqlite" =>
+          {:generated_only,
+           "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage."},
+        "mysql" =>
+          {:generated_only,
+           "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage."},
+        "mariadb" =>
+          {:generated_only,
+           "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage."},
+        "mssql" =>
+          {:generated_only,
+           "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB array containment validation is not wired into this harness yet."}
+      }
+    },
+    %{
+      id: "F007",
+      assert: {:columns_include, ["name"]},
+      adapters: %{
+        "duckdb" =>
+          {:generated_only,
+           "DuckDB still needs JSON field-exists path extraction support for this smoke case."}
+      }
+    },
+    %{id: "F008", assert: {:columns_include, ["order_number", "customer_id", "total"]}},
+    %{
+      id: "P001",
+      assert: {:columns_include, ["id", "order_number", "total"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "sqlite" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mysql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mariadb" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mssql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "duckdb" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."}
+      }
+    },
+    %{id: "P003", assert: {:columns_include, ["id", "order_number", "total"]}},
+    %{
+      id: "P004",
+      assert: {:columns_include, ["order_number", "name", "total"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "sqlite" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mysql" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mariadb" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mssql" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "duckdb" =>
+          {:generated_only,
+           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."}
+      }
+    },
+    %{id: "P005", assert: {:columns_include, ["id", "order_number", "inserted_at", "total"]}},
+    %{
+      id: "P006",
+      assert: {:columns_include, ["id", "order_number", "total"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "sqlite" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mysql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mariadb" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "mssql" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
+        "duckdb" =>
+          {:generated_only,
+           "Pagination smoke fixture does not yet include enough rows for offset-based execution."}
+      }
+    },
+    %{
+      id: "P007",
+      assert: {:columns_include, ["order_number", "total"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution."},
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs set-operation pagination execution handling for this UNION ALL pattern."},
+        "mysql" =>
+          {:generated_only,
+           "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution."},
+        "mariadb" =>
+          {:generated_only,
+           "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution."},
+        "mssql" =>
+          {:generated_only,
+           "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution."},
+        "duckdb" =>
+          {:generated_only,
+           "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution."}
+      }
+    },
+    %{id: "P008", assert: {:columns_include, ["id", "order_number", "total"]}},
+    %{
+      id: "SO007",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs EXCEPT ALL execution handling in this smoke harness."},
+        "mssql" =>
+          {:generated_only,
+           "MSSQL still needs EXCEPT ALL execution handling in this smoke harness."}
+      }
     }
   ]
 
@@ -783,11 +963,11 @@ defmodule SelectoSqlPatterns.LiveValidation do
 
   defp insert_statements do
     [
-      "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium')",
-      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00')",
+      "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
+      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14 14:20:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
-      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara')",
-      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob')",
+      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, true, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, true, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, false, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
@@ -798,11 +978,11 @@ defmodule SelectoSqlPatterns.LiveValidation do
 
   defp mssql_insert_statements do
     [
-      "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium')",
-      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00')",
+      "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
+      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14T14:20:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
-      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara')",
-      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob')",
+      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, 1, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, 1, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, 0, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
