@@ -261,7 +261,54 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "SQLite quantifier subqueries with ANY still need dedicated live-execution handling in this smoke harness."}
       }
     },
-    %{id: "S010", assert: {:columns_include, ["order_number", "customer_id", "total"]}}
+    %{id: "S010", assert: {:columns_include, ["order_number", "customer_id", "total"]}},
+    %{
+      id: "SO002",
+      assert: {:columns_include, ["order_number", "total"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs set-operation execution handling for this UNION ALL smoke case."}
+      }
+    },
+    %{
+      id: "SO003",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs INTERSECT execution handling in this smoke harness."}
+      }
+    },
+    %{
+      id: "SO004",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only, "SQLite still needs EXCEPT execution handling in this smoke harness."}
+      }
+    },
+    %{
+      id: "SO005",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs nested INTERSECT execution handling in this smoke harness."}
+      }
+    },
+    %{
+      id: "SO006",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs INTERSECT ALL execution handling in this smoke harness."},
+        "mssql" =>
+          {:generated_only,
+           "MSSQL still needs INTERSECT ALL execution handling in this smoke harness."}
+      }
+    }
   ]
 
   @adapters [
@@ -563,6 +610,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "IF OBJECT_ID('products', 'U') IS NOT NULL DROP TABLE products",
       "IF OBJECT_ID('reviews', 'U') IS NOT NULL DROP TABLE reviews",
+      "IF OBJECT_ID('premium_customers', 'U') IS NOT NULL DROP TABLE premium_customers",
+      "IF OBJECT_ID('active_customers', 'U') IS NOT NULL DROP TABLE active_customers",
+      "IF OBJECT_ID('blocked_customers', 'U') IS NOT NULL DROP TABLE blocked_customers",
       "IF OBJECT_ID('archived_orders', 'U') IS NOT NULL DROP TABLE archived_orders",
       "IF OBJECT_ID('orders', 'U') IS NOT NULL DROP TABLE orders",
       "IF OBJECT_ID('customers', 'U') IS NOT NULL DROP TABLE customers",
@@ -571,6 +621,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INT PRIMARY KEY, order_number VARCHAR(50), customer_id INT, status VARCHAR(50), total DECIMAL(10,2), inserted_at DATETIME2)",
       "CREATE TABLE archived_orders (id INT PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INT PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INT PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INT PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BIT, tags NVARCHAR(MAX), metadata NVARCHAR(MAX))",
       "CREATE TABLE reviews (id INT PRIMARY KEY, product_id INT, rating INT)",
       "CREATE TABLE employees (id INT PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -582,6 +635,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -590,6 +646,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags JSONB, metadata JSONB)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -601,6 +660,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -609,6 +671,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags JSON, metadata JSON)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -620,6 +685,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -628,6 +696,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags LONGTEXT, metadata LONGTEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -639,6 +710,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -647,6 +721,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR, customer_id INTEGER, status VARCHAR, total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR, total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR, sku VARCHAR, price DECIMAL(10,2), active BOOLEAN, tags JSON, metadata JSON)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR, department VARCHAR, salary DECIMAL(10,2))",
@@ -658,6 +735,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -666,6 +746,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags TEXT, metadata TEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -677,6 +760,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS premium_customers",
+      "DROP TABLE IF EXISTS active_customers",
+      "DROP TABLE IF EXISTS blocked_customers",
       "DROP TABLE IF EXISTS archived_orders",
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
@@ -685,6 +771,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
+      "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags TEXT, metadata TEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), department VARCHAR(100), salary DECIMAL(10,2))",
@@ -697,6 +786,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium')",
       "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
+      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob')",
+      "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, true, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, true, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, false, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
       "INSERT INTO employees (id, first_name, department, salary) VALUES (1, 'Ellen', 'Sales', 90000.00), (2, 'Marco', 'Sales', 85000.00), (3, 'Priya', 'Engineering', 120000.00), (4, 'Luis', 'Engineering', 110000.00)",
@@ -709,6 +801,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium')",
       "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
+      "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob')",
+      "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, 1, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, 1, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, 0, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
       "INSERT INTO employees (id, first_name, department, salary) VALUES (1, 'Ellen', 'Sales', 90000.00), (2, 'Marco', 'Sales', 85000.00), (3, 'Priya', 'Engineering', 120000.00), (4, 'Luis', 'Engineering', 110000.00)",

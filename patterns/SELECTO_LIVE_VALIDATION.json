@@ -445,6 +445,57 @@
         "row_count": 6
       }
     },
+    "SO005": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "reason": "SQLite still needs nested INTERSECT execution handling in this smoke harness.",
+        "status": "generated_only"
+      }
+    },
     "JA006": {
       "duckdb": {
         "reason": "DuckDB array containment validation is not wired into this harness yet.",
@@ -468,6 +519,57 @@
       },
       "sqlite": {
         "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
+      }
+    },
+    "SO002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 9
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 9
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 9
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 9
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 9
+      },
+      "sqlite": {
+        "reason": "SQLite still needs set-operation execution handling for this UNION ALL smoke case.",
         "status": "generated_only"
       }
     },
@@ -531,6 +633,57 @@
           "total"
         ],
         "row_count": 2
+      }
+    },
+    "SO003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite still needs INTERSECT execution handling in this smoke harness.",
+        "status": "generated_only"
       }
     },
     "J001": {
@@ -1304,6 +1457,57 @@
         "row_count": 1
       }
     },
+    "SO004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
+      },
+      "sqlite": {
+        "reason": "SQLite still needs EXCEPT execution handling in this smoke harness.",
+        "status": "generated_only"
+      }
+    },
     "T005": {
       "duckdb": {
         "status": "executed",
@@ -2005,6 +2209,52 @@
         "row_count": 6
       }
     },
+    "SO006": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "reason": "MSSQL still needs INTERSECT ALL execution handling in this smoke harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite still needs INTERSECT ALL execution handling in this smoke harness.",
+        "status": "generated_only"
+      }
+    },
     "S004": {
       "duckdb": {
         "status": "executed",
@@ -2537,5 +2787,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T02:28:43Z"
+  "generated_at": "2026-03-29T05:02:09Z"
 }
