@@ -191,6 +191,56 @@
         "status": "unsupported_expected"
       }
     },
+    "JA001": {
+      "duckdb": {
+        "reason": "DuckDB JSON containment is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite does not support the JSON containment helper used by this pattern.",
+        "status": "unsupported_expected"
+      }
+    },
     "JA002": {
       "duckdb": {
         "reason": "DuckDB JSON field-path validation is not wired into this harness yet.",
@@ -240,6 +290,224 @@
           "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
         ],
         "row_count": 1
+      }
+    },
+    "JA004": {
+      "duckdb": {
+        "reason": "DuckDB JSON path-exists validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      }
+    },
+    "JA005": {
+      "duckdb": {
+        "reason": "DuckDB JSON order-by validation is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
+      }
+    },
+    "JA007": {
+      "duckdb": {
+        "reason": "DuckDB JSON field-path equality is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          ""
+        ],
+        "row_count": 1
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "?column?"
+        ],
+        "row_count": 1
+      },
+      "sqlite": {
+        "reason": "SQLite JSON field-path equality still needs boolean coercion handling in the smoke fixture to execute live.",
+        "status": "generated_only"
+      }
+    },
+    "JA008": {
+      "duckdb": {
+        "reason": "DuckDB JSON multi-select extraction is not wired into this harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
       }
     },
     "P002": {
@@ -486,5 +754,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T00:07:55Z"
+  "generated_at": "2026-03-29T00:14:36Z"
 }

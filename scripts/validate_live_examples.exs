@@ -72,6 +72,56 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:unsupported_expected,
            "DuckDB JSON field-path validation is not wired into this harness yet."}
       }
+    },
+    %{
+      id: "JA001",
+      assert: {:columns_include, ["name", "sku"]},
+      adapters: %{
+        "sqlite" =>
+          {:unsupported_expected,
+           "SQLite does not support the JSON containment helper used by this pattern."},
+        "duckdb" =>
+          {:unsupported_expected, "DuckDB JSON containment is not wired into this harness yet."}
+      }
+    },
+    %{
+      id: "JA004",
+      assert: {:columns_include, ["name"]},
+      adapters: %{
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB JSON path-exists validation is not wired into this harness yet."}
+      }
+    },
+    %{
+      id: "JA005",
+      assert: {:columns_include, ["name", "sku"]},
+      adapters: %{
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB JSON order-by validation is not wired into this harness yet."}
+      }
+    },
+    %{
+      id: "JA007",
+      assert: {:columns_include, ["name", "sku"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite JSON field-path equality still needs boolean coercion handling in the smoke fixture to execute live."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB JSON field-path equality is not wired into this harness yet."}
+      }
+    },
+    %{
+      id: "JA008",
+      assert: {:columns_include, ["name", "sku"]},
+      adapters: %{
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB JSON multi-select extraction is not wired into this harness yet."}
+      }
     }
   ]
 
