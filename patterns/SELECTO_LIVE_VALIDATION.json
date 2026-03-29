@@ -83,6 +83,32 @@
         "row_count": 3
       }
     },
+    "F004": {
+      "duckdb": {
+        "reason": "DuckDB does not currently support the text-search feature used by this pattern.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "MariaDB text-search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mssql": {
+        "reason": "MSSQL full-text search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
+      },
+      "mysql": {
+        "reason": "MySQL smoke validation still needs a MATCH-compatible full-text index before this pattern can execute live.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute.",
+        "status": "unsupported_expected"
+      }
+    },
     "J001": {
       "duckdb": {
         "status": "executed",
@@ -409,5 +435,5 @@
       }
     }
   },
-  "generated_at": "2026-03-28T23:26:45Z"
+  "generated_at": "2026-03-28T23:41:40Z"
 }

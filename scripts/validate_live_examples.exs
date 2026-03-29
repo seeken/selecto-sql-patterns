@@ -39,6 +39,30 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:generated_only,
            "SQLite still rejects the parenthesized UNION form generated for this pattern during execution."}
       }
+    },
+    %{
+      id: "F004",
+      assert: {:columns_include, ["name", "sku"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live."},
+        "sqlite" =>
+          {:unsupported_expected,
+           "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute."},
+        "mysql" =>
+          {:generated_only,
+           "MySQL smoke validation still needs a MATCH-compatible full-text index before this pattern can execute live."},
+        "mariadb" =>
+          {:unsupported_expected,
+           "MariaDB text-search support is not wired into this smoke harness yet."},
+        "mssql" =>
+          {:unsupported_expected,
+           "MSSQL full-text search support is not wired into this smoke harness yet."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB does not currently support the text-search feature used by this pattern."}
+      }
     }
   ]
 

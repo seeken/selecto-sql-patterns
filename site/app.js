@@ -113,6 +113,29 @@
     }
   }
 
+  function liveValidationSummary(entry) {
+    const patternResults = liveValidation.patterns?.[entry.id]
+    const adapters = liveValidation.adapters || []
+    if (!patternResults || adapters.length === 0) return null
+
+    const counts = { executed: 0, failed: 0, unsupported_expected: 0, generated_only: 0, skipped: 0 }
+
+    adapters.forEach((adapter) => {
+      const status = patternResults[adapter.key]?.status
+      if (status && Object.prototype.hasOwnProperty.call(counts, status)) counts[status] += 1
+    })
+
+    const parts = []
+    if (counts.executed) parts.push(`${counts.executed} executed`)
+    if (counts.generated_only) parts.push(`${counts.generated_only} generated only`)
+    if (counts.unsupported_expected) parts.push(`${counts.unsupported_expected} unsupported`)
+    if (counts.failed) parts.push(`${counts.failed} failed`)
+    if (counts.skipped) parts.push(`${counts.skipped} skipped`)
+
+    if (parts.length === 0) return null
+    return `Live smoke: ${parts.join(", ")}`
+  }
+
   function renderSidebar(filterText) {
     const q = (filterText || "").trim().toLowerCase()
     sidebar.innerHTML = ""
@@ -508,8 +531,19 @@
     note.className = "shared-syntax-note"
     note.textContent = "These Selecto examples are shared across adapters unless an adapter tab calls out a syntax difference."
 
-    section.appendChild(title)
-    section.appendChild(note)
+    const validationSummary = liveValidationSummary(entry)
+    if (validationSummary) {
+      const summary = document.createElement("p")
+      summary.className = "shared-syntax-summary"
+      summary.textContent = validationSummary
+      section.appendChild(title)
+      section.appendChild(note)
+      section.appendChild(summary)
+    } else {
+      section.appendChild(title)
+      section.appendChild(note)
+    }
+
     section.appendChild(
       buildModeCard("Selecto", [
         {

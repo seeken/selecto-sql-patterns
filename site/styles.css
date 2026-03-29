@@ -211,6 +211,12 @@ body {
   color: var(--muted);
 }
 
+.shared-syntax-summary {
+  margin: -4px 0 14px;
+  color: var(--ink);
+  font-size: 14px;
+}
+
 .adapter-header {
   margin-bottom: 14px;
 }
