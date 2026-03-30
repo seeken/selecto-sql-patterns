@@ -822,30 +822,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
     %{id: "J003", assert: {:columns_include, ["name", "tier", "order_number", "total"]}},
     %{id: "J004", assert: {:columns_include, ["first_name"]}},
     %{id: "J005", assert: {:columns_include, ["name"]}},
-    %{
-      id: "J006",
-      assert: {:columns_include, ["order_number"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."},
-        "sqlite" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."},
-        "mysql" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."},
-        "mariadb" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."},
-        "mssql" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."},
-        "duckdb" =>
-          {:generated_only,
-           "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment."}
-      }
-    },
+    %{id: "J006", assert: {:columns_include, ["order_number"]}},
     %{
       id: "J008",
       assert: {:columns_include, ["name", "product_tag"]},
@@ -870,30 +847,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags."}
       }
     },
-    %{
-      id: "J009",
-      assert: {:columns_include, ["order_number"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."},
-        "sqlite" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."},
-        "mysql" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."},
-        "mariadb" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."},
-        "mssql" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."},
-        "duckdb" =>
-          {:generated_only,
-           "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations."}
-      }
-    },
+    %{id: "J009", assert: {:columns_include, ["order_number"]}},
     %{id: "J010", assert: {:columns_include, ["name"]}},
     %{id: "J011", assert: {:columns_include, ["order_number", "name", "total"]}},
     %{id: "J012", assert: {:columns_include, ["name", "tier", "order_number"]}},
@@ -1399,7 +1353,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14 14:20:00'), (1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15 09:10:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
-      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob'), (4, 'Dina')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, true, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, true, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, false, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
@@ -1414,7 +1368,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14T14:20:00'), (1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15T09:10:00')",
       "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
-      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (2, 'Bob'), (4, 'Dina')",
+      "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, 1, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, 1, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, 0, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",

@@ -1250,28 +1250,64 @@
     },
     "J009": {
       "duckdb": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       },
       "mariadb": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       },
       "mssql": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       },
       "mysql": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       },
       "postgresql": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       },
       "sqlite": {
-        "reason": "Repeated parameterized-join alias smoke validation still needs alias-specific fixture expectations.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 8
       }
     },
     "P007": {
@@ -1308,7 +1344,7 @@
           "id",
           "name"
         ],
-        "row_count": 4
+        "row_count": 3
       },
       "mariadb": {
         "status": "executed",
@@ -1317,7 +1353,7 @@
           "id",
           "name"
         ],
-        "row_count": 4
+        "row_count": 3
       },
       "mssql": {
         "status": "executed",
@@ -1326,7 +1362,7 @@
           "id",
           "name"
         ],
-        "row_count": 4
+        "row_count": 3
       },
       "mysql": {
         "status": "executed",
@@ -1335,7 +1371,7 @@
           "id",
           "name"
         ],
-        "row_count": 4
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -1344,7 +1380,7 @@
           "id",
           "name"
         ],
-        "row_count": 4
+        "row_count": 3
       },
       "sqlite": {
         "reason": "SQLite still needs nested INTERSECT execution handling in this smoke harness.",
@@ -1913,28 +1949,64 @@
     },
     "J006": {
       "duckdb": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       },
       "mariadb": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       },
       "mssql": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       },
       "mysql": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       },
       "postgresql": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       },
       "sqlite": {
-        "reason": "Parameterized join smoke validation still needs premium/standard alias fixtures and tier data alignment.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 8
       }
     },
     "F008": {
@@ -5308,5 +5380,5 @@
       }
     }
   },
-  "generated_at": "2026-03-30T15:32:49Z"
+  "generated_at": "2026-03-30T15:40:03Z"
 }
