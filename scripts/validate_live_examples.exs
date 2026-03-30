@@ -378,80 +378,11 @@ defmodule SelectoSqlPatterns.LiveValidation do
       }
     },
     %{id: "F008", assert: {:columns_include, ["order_number", "customer_id", "total"]}},
-    %{
-      id: "P001",
-      assert: {:columns_include, ["id", "order_number", "total"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "sqlite" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mysql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mariadb" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mssql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "duckdb" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."}
-      }
-    },
+    %{id: "P001", assert: {:columns_include, ["id", "order_number", "total"]}},
     %{id: "P003", assert: {:columns_include, ["id", "order_number", "total"]}},
-    %{
-      id: "P004",
-      assert: {:columns_include, ["order_number", "name", "total"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "sqlite" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mysql" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mariadb" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mssql" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "duckdb" =>
-          {:generated_only,
-           "Joined pagination smoke fixture does not yet include enough rows for offset-based execution."}
-      }
-    },
+    %{id: "P004", assert: {:columns_include, ["order_number", "name", "total"]}},
     %{id: "P005", assert: {:columns_include, ["id", "order_number", "inserted_at", "total"]}},
-    %{
-      id: "P006",
-      assert: {:columns_include, ["id", "order_number", "total"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "sqlite" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mysql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mariadb" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "mssql" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."},
-        "duckdb" =>
-          {:generated_only,
-           "Pagination smoke fixture does not yet include enough rows for offset-based execution."}
-      }
-    },
+    %{id: "P006", assert: {:columns_include, ["id", "order_number", "total"]}},
     %{
       id: "P007",
       assert: {:columns_include, ["order_number", "total"]},
@@ -1350,8 +1281,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
   defp insert_statements do
     [
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
-      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14 14:20:00'), (1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15 09:10:00')",
-      "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
+      orders_insert_statement(),
+      archived_orders_insert_statement(),
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
       "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
@@ -1365,8 +1296,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
   defp mssql_insert_statements do
     [
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
-      "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES (1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00'), (1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00'), (1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00'), (1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00'), (1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00'), (1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00'), (1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14T14:20:00'), (1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15T09:10:00')",
-      "INSERT INTO archived_orders (id, order_number, total) VALUES (2001, 'ORD-0901', 44.00), (2002, 'ORD-0902', 88.50), (2003, 'ORD-1003', 210.00)",
+      mssql_orders_insert_statement(),
+      mssql_archived_orders_insert_statement(),
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
       "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
@@ -1376,6 +1307,90 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')"
     ]
   end
+
+  defp orders_insert_statement do
+    rows =
+      [
+        "(1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00')",
+        "(1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00')",
+        "(1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00')",
+        "(1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00')",
+        "(1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00')",
+        "(1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00')",
+        "(1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14 14:20:00')",
+        "(1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15 09:10:00')"
+      ] ++ generated_order_rows(" ")
+
+    "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES " <>
+      Enum.join(rows, ", ")
+  end
+
+  defp archived_orders_insert_statement do
+    rows =
+      [
+        "(2001, 'ORD-0901', 44.00)",
+        "(2002, 'ORD-0902', 88.50)",
+        "(2003, 'ORD-1003', 210.00)"
+      ] ++ generated_archived_order_rows()
+
+    "INSERT INTO archived_orders (id, order_number, total) VALUES " <> Enum.join(rows, ", ")
+  end
+
+  defp mssql_orders_insert_statement do
+    rows =
+      [
+        "(1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00')",
+        "(1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00')",
+        "(1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00')",
+        "(1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00')",
+        "(1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00')",
+        "(1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00')",
+        "(1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14T14:20:00')",
+        "(1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15T09:10:00')"
+      ] ++ generated_order_rows("T")
+
+    "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES " <>
+      Enum.join(rows, ", ")
+  end
+
+  defp mssql_archived_orders_insert_statement do
+    rows =
+      [
+        "(2001, 'ORD-0901', 44.00)",
+        "(2002, 'ORD-0902', 88.50)",
+        "(2003, 'ORD-1003', 210.00)"
+      ] ++ generated_archived_order_rows()
+
+    "INSERT INTO archived_orders (id, order_number, total) VALUES " <> Enum.join(rows, ", ")
+  end
+
+  defp generated_order_rows(separator) do
+    1..60
+    |> Enum.map(fn offset ->
+      id = 1100 + offset
+      customer_id = rem(offset, 4) + 1
+      status = Enum.at(["processing", "delivered", "shipped", "delivered"], rem(offset, 4))
+      total = 60 + offset * 17
+      day = rem(offset, 28) + 1
+      hour = rem(offset, 9) + 9
+      minute = rem(offset * 7, 60)
+      timestamp = "2024-03-#{pad2(day)}#{separator}#{pad2(hour)}:#{pad2(minute)}:00"
+
+      "(#{id}, 'ORD-#{id}', #{customer_id}, '#{status}', #{total}.00, '#{timestamp}')"
+    end)
+  end
+
+  defp generated_archived_order_rows do
+    1..25
+    |> Enum.map(fn offset ->
+      id = 2100 + offset
+      total = 35 + offset * 11
+      "(#{id}, 'ARC-#{id}', #{total}.00)"
+    end)
+  end
+
+  defp pad2(number) when number < 10, do: "0#{number}"
+  defp pad2(number), do: Integer.to_string(number)
 end
 
 SelectoSqlPatterns.LiveValidation.run()
