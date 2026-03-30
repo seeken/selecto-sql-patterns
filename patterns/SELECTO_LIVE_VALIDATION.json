@@ -155,6 +155,32 @@
         "status": "generated_only"
       }
     },
+    "G007": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
+      }
+    },
     "P004": {
       "duckdb": {
         "reason": "Joined pagination smoke fixture does not yet include enough rows for offset-based execution.",
@@ -2177,6 +2203,32 @@
         "row_count": 7
       }
     },
+    "G008": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
+      }
+    },
     "W005": {
       "duckdb": {
         "status": "executed",
@@ -2350,6 +2402,32 @@
       },
       "sqlite": {
         "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
+      }
+    },
+    "G006": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
         "status": "unsupported_expected"
       }
     },
@@ -2830,6 +2908,62 @@
         "row_count": 4
       }
     },
+    "C004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 7
+      }
+    },
     "W008": {
       "duckdb": {
         "status": "executed",
@@ -3139,6 +3273,62 @@
         "columns": [
           "order_number",
           "status",
+          "total"
+        ],
+        "row_count": 7
+      }
+    },
+    "C001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 7
+      },
+      "mariadb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 7
+      },
+      "mssql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 7
+      },
+      "mysql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 7
+      },
+      "postgresql": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 7
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
           "total"
         ],
         "row_count": 7
@@ -3734,5 +3924,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T20:35:43Z"
+  "generated_at": "2026-03-30T03:30:01Z"
 }

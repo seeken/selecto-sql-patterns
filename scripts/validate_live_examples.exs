@@ -723,6 +723,81 @@ defmodule SelectoSqlPatterns.LiveValidation do
           {:unsupported_expected,
            "DuckDB spatial smoke execution is not wired into this harness."}
       }
+    },
+    %{
+      id: "G006",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness."},
+        "sqlite" =>
+          {:unsupported_expected, "SQLite has no spatial adapter configured in this harness."},
+        "mysql" =>
+          {:generated_only,
+           "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness."},
+        "mariadb" =>
+          {:generated_only,
+           "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness."},
+        "mssql" =>
+          {:generated_only,
+           "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB spatial smoke execution is not wired into this harness."}
+      }
+    },
+    %{
+      id: "G007",
+      assert: {:columns_include, ["geom_type"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness."},
+        "sqlite" =>
+          {:unsupported_expected, "SQLite has no spatial adapter configured in this harness."},
+        "mysql" =>
+          {:generated_only,
+           "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness."},
+        "mariadb" =>
+          {:generated_only,
+           "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness."},
+        "mssql" =>
+          {:generated_only,
+           "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB spatial smoke execution is not wired into this harness."}
+      }
+    },
+    %{
+      id: "G008",
+      assert: {:columns_include, ["id", "name"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness."},
+        "sqlite" =>
+          {:unsupported_expected, "SQLite has no spatial adapter configured in this harness."},
+        "mysql" =>
+          {:generated_only,
+           "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness."},
+        "mariadb" =>
+          {:generated_only,
+           "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness."},
+        "mssql" =>
+          {:generated_only,
+           "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB spatial smoke execution is not wired into this harness."}
+      }
+    },
+    %{id: "C001", assert: {:columns_include, ["order_number"]}},
+    %{
+      id: "C004",
+      assert: {:columns_include, ["order_number"]},
+      adapters: %{}
     }
   ]
 
