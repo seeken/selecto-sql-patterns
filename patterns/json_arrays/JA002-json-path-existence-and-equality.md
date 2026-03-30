@@ -43,7 +43,7 @@ import Selecto.Expr
 
 Selecto.configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "metadata.warehouse.zone"])
-|> Selecto.filter({"metadata.warehouse.zone", :exists})
+|> Selecto.filter(eq("metadata.warehouse.zone", :exists))
 |> Selecto.filter(eq("metadata.warehouse.zone", "A1"))
 |> Selecto.order_by([asc("name")])
 ```

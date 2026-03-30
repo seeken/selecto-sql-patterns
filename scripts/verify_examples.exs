@@ -269,6 +269,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
     ast
     |> expand_expr_macros()
+    |> rewrite_classic_runtime_expr_ast()
     |> unqualify_expr_calls()
     |> simplify_runtime_expr_ast()
     |> Macro.to_string()
@@ -312,6 +313,87 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       other ->
         other
     end)
+  end
+
+  defp rewrite_classic_runtime_expr_ast(ast) do
+    Macro.postwalk(ast, fn
+      {:{}, _meta, [field, value]} when is_binary(field) ->
+        rewrite_runtime_filter(field, value)
+
+      {:{}, _meta, [:and, filters]} when is_list(filters) ->
+        {:compact_and, [], [filters]}
+
+      {:{}, _meta, [:or, filters]} when is_list(filters) ->
+        {:compact_or, [], [filters]}
+
+      {:{}, _meta, [:field, expr, alias_name]} ->
+        {:as, [], [expr, alias_name]}
+
+      {:{}, _meta, [:func, function_name, [value], opts]}
+      when is_binary(function_name) and is_list(opts) ->
+        rewrite_runtime_func(function_name, value, opts)
+
+      {:{}, _meta, [:count, "*"]} ->
+        {:count, [], []}
+
+      {:count, meta, ["*"]} ->
+        {:count, meta, []}
+
+      {:count, meta, [:*]} ->
+        {:count, meta, []}
+
+      {field, value} when is_binary(field) ->
+        rewrite_runtime_filter(field, value)
+
+      {:and, filters} when is_list(filters) ->
+        {:compact_and, [], [filters]}
+
+      {:or, filters} when is_list(filters) ->
+        {:compact_or, [], [filters]}
+
+      {:field, expr, alias_name} ->
+        {:as, [], [expr, alias_name]}
+
+      {:func, function_name, [value], opts} when is_binary(function_name) and is_list(opts) ->
+        rewrite_runtime_func(function_name, value, opts)
+
+      other ->
+        other
+    end)
+  end
+
+  defp rewrite_runtime_filter(field, {:gt, value}), do: {:gt, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:gte, value}), do: {:gte, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:lt, value}), do: {:lt, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:lte, value}), do: {:lte, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:ne, value}), do: {:neq, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:like, value}), do: {:like, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:ilike, value}), do: {:ilike, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:contains, value}), do: {:contains, [], [field, value]}
+  defp rewrite_runtime_filter(field, {:between, min, max}), do: {:between, [], [field, min, max]}
+  defp rewrite_runtime_filter(field, {:in, values}), do: {:in, [], [field, values]}
+  defp rewrite_runtime_filter(field, {:not_in, values}), do: {:not_in, [], [field, values]}
+  defp rewrite_runtime_filter(field, :not_null), do: {:not_null, [], [field]}
+  defp rewrite_runtime_filter(field, nil), do: {:is_null, [], [field]}
+  defp rewrite_runtime_filter(field, :asc), do: {:asc, [], [field]}
+  defp rewrite_runtime_filter(field, :desc), do: {:desc, [], [field]}
+  defp rewrite_runtime_filter(field, value), do: {:eq, [], [field, value]}
+
+  defp rewrite_runtime_func(function_name, value, opts) do
+    expr =
+      case String.upcase(function_name) do
+        "SUM" -> {:sum, [], [value]}
+        "AVG" -> {:avg, [], [value]}
+        "MIN" -> {:min, [], [value]}
+        "MAX" -> {:max, [], [value]}
+        "COUNT" -> {:count, [], [value]}
+        _ -> {:func, [], [function_name, [value]]}
+      end
+
+    case Keyword.fetch(opts, :as) do
+      {:ok, alias_name} -> {:as, [], [expr, alias_name]}
+      :error -> expr
+    end
   end
 
   defp simplify_runtime_expr_ast(ast) do

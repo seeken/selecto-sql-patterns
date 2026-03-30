@@ -47,7 +47,7 @@ Selecto.configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.filter(
   {:exists, "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)"}
 )
-|> Selecto.order_by({"id", :asc})
+|> Selecto.order_by(asc("id"))
 ```
 
 ## Selecto Yielded SQL

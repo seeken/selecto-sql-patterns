@@ -62,7 +62,7 @@ archived_orders =
   |> Selecto.select(["order_number", "total"])
 
 Selecto.union(current_orders, archived_orders, all: true)
-|> Selecto.order_by({"order_number", :asc})
+|> Selecto.order_by(asc("order_number"))
 |> Selecto.limit(20)
 |> Selecto.offset(20)
 ```

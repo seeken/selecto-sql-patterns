@@ -25,7 +25,7 @@
       "key": "duckdb"
     }
   ],
-  "generated_at": "2026-03-28T19:18:24Z",
+  "generated_at": "2026-03-30T19:06:39Z",
   "patterns": {
     "C002": {
       "duckdb": {
@@ -47,7 +47,7 @@
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
@@ -611,7 +611,7 @@
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
@@ -770,7 +770,7 @@
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
       },
       "mssql": {
         "status": "ok",
@@ -780,7 +780,7 @@
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc"
       },
       "postgresql": {
         "status": "ok",
@@ -790,7 +790,7 @@
       "sqlite": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
       }
     },
     "W007": {
@@ -898,17 +898,17 @@
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mssql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "postgresql": {
         "status": "ok",
@@ -1360,17 +1360,17 @@
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mssql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, selecto_root.status, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "postgresql": {
         "status": "ok",
@@ -2314,7 +2314,7 @@
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
       },
       "mssql": {
         "status": "ok",
@@ -2324,7 +2324,7 @@
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc"
       },
       "postgresql": {
         "status": "ok",
@@ -2334,7 +2334,7 @@
       "sqlite": {
         "status": "ok",
         "params": [],
-        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
+        "sql": "select selecto_root.name, selecto_root.email, (SELECT json_group_array(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT json_group_array(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc"
       }
     },
     "W003": {
@@ -3212,17 +3212,17 @@
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mssql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH status_labels (\"status\", \"status_label\") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
+        "sql": "WITH status_labels AS (SELECT 'processing' AS \"status\", 'In Progress' AS \"status_label\" UNION ALL SELECT 'shipped' AS \"status\", 'In Transit' AS \"status_label\" UNION ALL SELECT 'delivered' AS \"status\", 'Completed' AS \"status_label\")\n\n        select selecto_root.order_number, status_labels.status_label\n        from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status"
       },
       "postgresql": {
         "status": "ok",
@@ -3871,52 +3871,44 @@
         "params": [
           100,
           500,
-          [
-            "processing",
-            "shipped",
-            "delivered"
-          ]
+          "processing",
+          "shipped",
+          "delivered"
         ],
-        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3, $4, $5) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mariadb": {
         "status": "ok",
         "params": [
           100,
           500,
-          [
-            "processing",
-            "shipped",
-            "delivered"
-          ]
+          "processing",
+          "shipped",
+          "delivered"
         ],
-        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mssql": {
         "status": "ok",
         "params": [
           100,
           500,
-          [
-            "processing",
-            "shipped",
-            "delivered"
-          ]
+          "processing",
+          "shipped",
+          "delivered"
         ],
-        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3, @p4, @p5) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mysql": {
         "status": "ok",
         "params": [
           100,
           500,
-          [
-            "processing",
-            "shipped",
-            "delivered"
-          ]
+          "processing",
+          "shipped",
+          "delivered"
         ],
-        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))\n      \n        order by selecto_root.order_number asc"
       },
       "postgresql": {
         "status": "ok",
@@ -3936,13 +3928,11 @@
         "params": [
           100,
           500,
-          [
-            "processing",
-            "shipped",
-            "delivered"
-          ]
+          "processing",
+          "shipped",
+          "delivered"
         ],
-        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))\n      \n        order by selecto_root.order_number asc"
       }
     },
     "G003": {
@@ -4045,42 +4035,34 @@
       "duckdb": {
         "status": "ok",
         "params": [
-          [
-            "cancelled",
-            "returned"
-          ]
+          "cancelled",
+          "returned"
         ],
-        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1, $2) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mariadb": {
         "status": "ok",
         "params": [
-          [
-            "cancelled",
-            "returned"
-          ]
+          "cancelled",
+          "returned"
         ],
-        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mssql": {
         "status": "ok",
         "params": [
-          [
-            "cancelled",
-            "returned"
-          ]
+          "cancelled",
+          "returned"
         ],
-        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1, @p2) ))\n      \n        order by selecto_root.order_number asc"
       },
       "mysql": {
         "status": "ok",
         "params": [
-          [
-            "cancelled",
-            "returned"
-          ]
+          "cancelled",
+          "returned"
         ],
-        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))\n      \n        order by selecto_root.order_number asc"
       },
       "postgresql": {
         "status": "ok",
@@ -4095,12 +4077,10 @@
       "sqlite": {
         "status": "ok",
         "params": [
-          [
-            "cancelled",
-            "returned"
-          ]
+          "cancelled",
+          "returned"
         ],
-        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))\n      \n        order by selecto_root.order_number asc"
+        "sql": "select selecto_root.order_number, customer.name, selecto_root.status\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))\n      \n        order by selecto_root.order_number asc"
       }
     }
   }

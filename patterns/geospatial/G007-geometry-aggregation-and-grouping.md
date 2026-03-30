@@ -47,7 +47,7 @@ import Selecto.Expr
 geom_type_expr = "ST_GeometryType(selecto_root.geom)"
 
 Selecto.configure(location_domain(), :mock_connection, validate: false)
-|> Selecto.select([{:field, {:raw_sql, geom_type_expr}, "geom_type"}, count: "*"])
+|> Selecto.select([as({:raw_sql, geom_type_expr}, "geom_type"), count: "*"])
 |> Selecto.group_by(raw_sql: geom_type_expr)
 |> Selecto.order_by({{:raw_sql, geom_type_expr}, :asc})
 ```

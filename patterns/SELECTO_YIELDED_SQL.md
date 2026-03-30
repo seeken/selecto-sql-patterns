@@ -3793,60 +3793,60 @@ select selecto_root.order_number, customer.name, selecto_root.status
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[["cancelled", "returned"]]`
+**Params:** `["cancelled", "returned"]`
 
 ### MySQL
 
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[["cancelled", "returned"]]`
+**Params:** `["cancelled", "returned"]`
 
 ### MariaDB
 
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?) ))
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[["cancelled", "returned"]]`
+**Params:** `["cancelled", "returned"]`
 
 ### MSSQL
 
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1) ))
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1, @p2) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[["cancelled", "returned"]]`
+**Params:** `["cancelled", "returned"]`
 
 ### DuckDB
 
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1) ))
+        where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1, $2) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[["cancelled", "returned"]]`
+**Params:** `["cancelled", "returned"]`
 
 ## F002
 
@@ -3941,60 +3941,60 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))
+        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+**Params:** `[100, 500, "processing", "shipped", "delivered"]`
 
 ### MySQL
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))
+        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+**Params:** `[100, 500, "processing", "shipped", "delivered"]`
 
 ### MariaDB
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?) ))
+        where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+**Params:** `[100, 500, "processing", "shipped", "delivered"]`
 
 ### MSSQL
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3) ))
+        where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3, @p4, @p5) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+**Params:** `[100, 500, "processing", "shipped", "delivered"]`
 
 ### DuckDB
 
 ```sql
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
-        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3) ))
+        where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3, $4, $5) ))
       
         order by selecto_root.order_number asc
 ```
 
-**Params:** `[100, 500, ["processing", "shipped", "delivered"]]`
+**Params:** `[100, 500, "processing", "shipped", "delivered"]`
 
 ## F004
 
@@ -5625,7 +5625,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
+select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -5635,7 +5635,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 ### MySQL
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -5645,7 +5645,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 ### MariaDB
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -5811,7 +5811,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+select selecto_root.name, selecto_root.email, (SELECT json_group_array(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT json_group_array(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -5821,7 +5821,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 ### MySQL
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -5831,7 +5831,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 ### MariaDB
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -7579,7 +7579,7 @@ WITH RECURSIVE order_chain (id, status) AS (
 ### MSSQL
 
 ```sql
-WITH RECURSIVE order_chain (id, status) AS (
+WITH order_chain (id, status) AS (
     
         select selecto_root.id, selecto_root.status
         from orders selecto_root
@@ -7767,7 +7767,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MySQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -7778,7 +7778,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MariaDB
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -7789,7 +7789,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MSSQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -7927,7 +7927,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MySQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -7938,7 +7938,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MariaDB
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -7949,7 +7949,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MSSQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label")
 
         select selecto_root.order_number, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -8057,7 +8057,7 @@ WITH RECURSIVE order_chain (id, status) AS (
 ### MSSQL
 
 ```sql
-WITH RECURSIVE order_chain (id, status) AS (
+WITH order_chain (id, status) AS (
     
         select selecto_root.id, selecto_root.status
         from orders selecto_root
@@ -8123,7 +8123,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MySQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, selecto_root.status, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -8134,7 +8134,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MariaDB
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, selecto_root.status, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status
@@ -8145,7 +8145,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ### MSSQL
 
 ```sql
-WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Progress'), ('shipped', 'In Transit'), ('delivered', 'Completed'))
+WITH status_labels AS (SELECT 'processing' AS "status", 'In Progress' AS "status_label" UNION ALL SELECT 'shipped' AS "status", 'In Transit' AS "status_label" UNION ALL SELECT 'delivered' AS "status", 'Completed' AS "status_label")
 
         select selecto_root.order_number, selecto_root.status, status_labels.status_label
         from orders selecto_root left join status_labels status_labels on status_labels.status = selecto_root.status

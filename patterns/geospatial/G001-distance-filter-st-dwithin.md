@@ -51,7 +51,7 @@ Selecto.configure(location_domain(), :mock_connection, validate: false)
   {:raw_sql_filter,
    "ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000)"}
 )
-|> Selecto.order_by({"id", :asc})
+|> Selecto.order_by(asc("id"))
 ```
 
 ## Selecto Yielded SQL

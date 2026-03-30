@@ -51,7 +51,7 @@ import Selecto.Expr
 
 Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "customer_id", "total"])
-|> Selecto.filter({"customer_id", {:subquery, :in, customer_id_subquery_by_tier("platinum")}})
+|> Selecto.filter(eq("customer_id", {:subquery, :in, customer_id_subquery_by_tier("platinum")}))
 |> Selecto.filter(eq("status", "processing"))
 |> Selecto.order_by([desc("total")])
 ```

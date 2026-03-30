@@ -45,7 +45,7 @@ import Selecto.Expr
 Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select([
   "order_number",
-  {:field, {:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"},
+  as({:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"),
   "total"
 ])
 |> Selecto.order_by([asc("inserted_at")])

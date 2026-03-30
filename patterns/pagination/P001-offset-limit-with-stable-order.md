@@ -41,7 +41,7 @@ import Selecto.Expr
 
 Selecto.configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "order_number", "total"])
-|> Selecto.order_by({"id", :asc})
+|> Selecto.order_by(asc("id"))
 |> Selecto.limit(25)
 |> Selecto.offset(50)
 ```

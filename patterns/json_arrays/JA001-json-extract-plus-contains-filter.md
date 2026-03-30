@@ -44,7 +44,7 @@ import Selecto.Expr
 Selecto.configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "sku"])
 |> Selecto.json_select([json_extract_text("metadata", "$.price_band", as: "price_band")])
-|> Selecto.json_filter({:json_contains, "metadata", %{"price_band" => "premium"}})
+|> Selecto.json_filter({:json_contains, "metadata", %{eq("price_band", "premium")}})
 |> Selecto.order_by([asc("name")])
 ```
 
