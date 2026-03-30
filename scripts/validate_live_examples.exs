@@ -309,40 +309,9 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "MSSQL still needs INTERSECT ALL execution handling in this smoke harness."}
       }
     },
-    %{
-      id: "F001",
-      assert: {:columns_include, ["order_number", "name", "status"]},
-      adapters: %{
-        "mssql" =>
-          {:generated_only,
-           "MSSQL still needs list-parameter execution handling for NOT IN smoke cases."},
-        "duckdb" =>
-          {:generated_only,
-           "DuckDB still needs list-parameter execution handling for NOT IN smoke cases."}
-      }
-    },
+    %{id: "F001", assert: {:columns_include, ["order_number", "name", "status"]}},
     %{id: "F002", assert: {:columns_include, ["order_number", "status", "total"]}},
-    %{
-      id: "F003",
-      assert: {:columns_include, ["order_number", "status", "total"]},
-      adapters: %{
-        "sqlite" =>
-          {:generated_only,
-           "SQLite still needs list-parameter execution handling for IN smoke cases."},
-        "mysql" =>
-          {:generated_only,
-           "MySQL still needs list-parameter execution handling for IN smoke cases."},
-        "mariadb" =>
-          {:generated_only,
-           "MariaDB still needs list-parameter execution handling for IN smoke cases."},
-        "mssql" =>
-          {:generated_only,
-           "MSSQL still needs list-parameter execution handling for IN smoke cases."},
-        "duckdb" =>
-          {:generated_only,
-           "DuckDB still needs list-parameter execution handling for IN smoke cases."}
-      }
-    },
+    %{id: "F003", assert: {:columns_include, ["order_number", "status", "total"]}},
     %{id: "F005", assert: {:columns_include, ["order_number", "status", "total"]}},
     %{
       id: "F006",
@@ -420,126 +389,11 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "MSSQL still needs EXCEPT ALL execution handling in this smoke harness."}
       }
     },
-    %{
-      id: "Q001",
-      assert: {:columns_include, ["name", "email"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "sqlite" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mysql" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mariadb" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mssql" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "duckdb" =>
-          {:generated_only,
-           "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
-      }
-    },
-    %{
-      id: "Q002",
-      assert: {:columns_include, ["product_name", "quantity"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "sqlite" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mysql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mariadb" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mssql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "duckdb" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
-      }
-    },
-    %{
-      id: "Q003",
-      assert: {:columns_include, ["product_name", "quantity"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "sqlite" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mysql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mariadb" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mssql" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "duckdb" =>
-          {:generated_only,
-           "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
-      }
-    },
-    %{
-      id: "Q004",
-      assert: {:columns_include, ["name", "email"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "sqlite" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mysql" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mariadb" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mssql" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "duckdb" =>
-          {:generated_only,
-           "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
-      }
-    },
-    %{
-      id: "Q005",
-      assert: {:columns_include, ["name", "email"]},
-      adapters: %{
-        "postgresql" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "sqlite" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mysql" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mariadb" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "mssql" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."},
-        "duckdb" =>
-          {:generated_only,
-           "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures."}
-      }
-    },
+    %{id: "Q001", assert: {:columns_include, ["name", "email"]}},
+    %{id: "Q002", assert: {:columns_include, ["product_name", "quantity"]}},
+    %{id: "Q003", assert: {:columns_include, ["product_name", "quantity"]}},
+    %{id: "Q004", assert: {:columns_include, ["name", "email"]}},
+    %{id: "Q005", assert: {:columns_include, ["name", "email"]}},
     %{
       id: "G001",
       assert: {:columns_include, ["id", "name"]},
@@ -1107,6 +961,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "IF OBJECT_ID('products', 'U') IS NOT NULL DROP TABLE products",
       "IF OBJECT_ID('reviews', 'U') IS NOT NULL DROP TABLE reviews",
+      "IF OBJECT_ID('attendees', 'U') IS NOT NULL DROP TABLE attendees",
+      "IF OBJECT_ID('events', 'U') IS NOT NULL DROP TABLE events",
       "IF OBJECT_ID('premium_customers', 'U') IS NOT NULL DROP TABLE premium_customers",
       "IF OBJECT_ID('active_customers', 'U') IS NOT NULL DROP TABLE active_customers",
       "IF OBJECT_ID('blocked_customers', 'U') IS NOT NULL DROP TABLE blocked_customers",
@@ -1116,8 +972,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "IF OBJECT_ID('employees', 'U') IS NOT NULL DROP TABLE employees",
       "IF OBJECT_ID('vendors', 'U') IS NOT NULL DROP TABLE vendors",
       "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INT PRIMARY KEY, order_number VARCHAR(50), customer_id INT, status VARCHAR(50), total DECIMAL(10,2), inserted_at DATETIME2)",
+      "CREATE TABLE orders (id INT PRIMARY KEY, order_id INT NULL, order_number VARCHAR(50), customer_id INT NULL, attendee_id INT NULL, product_name VARCHAR(255) NULL, quantity INT NULL, price DECIMAL(10,2) NULL, status VARCHAR(50), total DECIMAL(10,2), inserted_at DATETIME2)",
       "CREATE TABLE archived_orders (id INT PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INT PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INT PRIMARY KEY, event_id INT, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INT PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INT PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INT PRIMARY KEY, name VARCHAR(255))",
@@ -1132,6 +990,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS attendees",
+      "DROP TABLE IF EXISTS events",
       "DROP TABLE IF EXISTS premium_customers",
       "DROP TABLE IF EXISTS active_customers",
       "DROP TABLE IF EXISTS blocked_customers",
@@ -1141,8 +1001,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
@@ -1157,6 +1019,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS attendees",
+      "DROP TABLE IF EXISTS events",
       "DROP TABLE IF EXISTS premium_customers",
       "DROP TABLE IF EXISTS active_customers",
       "DROP TABLE IF EXISTS blocked_customers",
@@ -1166,8 +1030,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
@@ -1191,8 +1057,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
@@ -1216,8 +1084,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR, customer_id INTEGER, status VARCHAR, total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR, customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR, quantity INTEGER, price DECIMAL(10,2), status VARCHAR, total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR, total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR, date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR, email VARCHAR)",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR)",
@@ -1232,6 +1102,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS attendees",
+      "DROP TABLE IF EXISTS events",
       "DROP TABLE IF EXISTS premium_customers",
       "DROP TABLE IF EXISTS active_customers",
       "DROP TABLE IF EXISTS blocked_customers",
@@ -1241,8 +1113,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
@@ -1257,6 +1131,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS attendees",
+      "DROP TABLE IF EXISTS events",
       "DROP TABLE IF EXISTS premium_customers",
       "DROP TABLE IF EXISTS active_customers",
       "DROP TABLE IF EXISTS blocked_customers",
@@ -1266,8 +1142,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS employees",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
-      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), customer_id INTEGER, status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
+      "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
       "CREATE TABLE archived_orders (id INTEGER PRIMARY KEY, order_number VARCHAR(50), total DECIMAL(10,2))",
+      "CREATE TABLE events (event_id INTEGER PRIMARY KEY, name VARCHAR(255), date DATE)",
+      "CREATE TABLE attendees (attendee_id INTEGER PRIMARY KEY, event_id INTEGER, name VARCHAR(255), email VARCHAR(255))",
       "CREATE TABLE premium_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE active_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
       "CREATE TABLE blocked_customers (id INTEGER PRIMARY KEY, name VARCHAR(255))",
@@ -1283,6 +1161,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
       orders_insert_statement(),
       archived_orders_insert_statement(),
+      attendee_events_insert_statement(),
+      attendees_insert_statement(),
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
       "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
@@ -1298,6 +1178,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO customers (id, name, tier) VALUES (1, 'Alice', 'gold'), (2, 'Bob', 'silver'), (3, 'Cara', 'premium'), (4, 'Dina', 'platinum')",
       mssql_orders_insert_statement(),
       mssql_archived_orders_insert_statement(),
+      attendee_events_insert_statement(),
+      attendees_insert_statement(),
       "INSERT INTO premium_customers (id, name) VALUES (1, 'Alice'), (3, 'Cara'), (4, 'Dina')",
       "INSERT INTO active_customers (id, name) VALUES (1, 'Alice'), (4, 'Dina')",
       "INSERT INTO blocked_customers (id, name) VALUES (2, 'Bob')",
@@ -1311,17 +1193,21 @@ defmodule SelectoSqlPatterns.LiveValidation do
   defp orders_insert_statement do
     rows =
       [
-        "(1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05 10:00:00')",
-        "(1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10 12:00:00')",
-        "(1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18 09:00:00')",
-        "(1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03 08:30:00')",
-        "(1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28 15:15:00')",
-        "(1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10 11:45:00')",
-        "(1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14 14:20:00')",
-        "(1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15 09:10:00')"
+        "(1001, 1001, 'ORD-1001', 1, NULL, NULL, NULL, NULL, 'delivered', 120.50, '2024-01-05 10:00:00')",
+        "(1002, 1002, 'ORD-1002', 1, NULL, NULL, NULL, NULL, 'processing', 75.00, '2024-01-10 12:00:00')",
+        "(1003, 1003, 'ORD-1003', 2, NULL, NULL, NULL, NULL, 'delivered', 210.00, '2024-01-18 09:00:00')",
+        "(1004, 1004, 'ORD-1004', 3, NULL, NULL, NULL, NULL, 'shipped', 95.25, '2024-02-03 08:30:00')",
+        "(1005, 1005, 'ORD-1005', 2, NULL, NULL, NULL, NULL, 'delivered', 55.75, '2024-01-28 15:15:00')",
+        "(1006, 1006, 'ORD-1006', 3, NULL, NULL, NULL, NULL, 'processing', 180.00, '2024-02-10 11:45:00')",
+        "(1007, 1007, 'ORD-1007', 4, NULL, NULL, NULL, NULL, 'processing', 320.00, '2024-02-14 14:20:00')",
+        "(1008, 1008, 'ORD-1008', 4, NULL, NULL, NULL, NULL, 'delivered', 1450.00, '2024-02-15 09:10:00')",
+        "(3001, 3001, 'EVT-3001', NULL, 1, 'Badge', 2, 25.00, 'completed', 50.00, '2024-01-02 09:00:00')",
+        "(3002, 3002, 'EVT-3002', NULL, 1, 'Lanyard', 1, 5.00, 'completed', 5.00, '2024-01-02 09:05:00')",
+        "(3003, 3003, 'EVT-3003', NULL, 2, 'Notebook', 3, 12.00, 'completed', 36.00, '2024-01-03 10:00:00')",
+        "(3004, 3004, 'EVT-3004', NULL, 3, 'Sticker Pack', 4, 3.00, 'completed', 12.00, '2024-01-04 11:00:00')"
       ] ++ generated_order_rows(" ")
 
-    "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES " <>
+    "INSERT INTO orders (id, order_id, order_number, customer_id, attendee_id, product_name, quantity, price, status, total, inserted_at) VALUES " <>
       Enum.join(rows, ", ")
   end
 
@@ -1339,18 +1225,30 @@ defmodule SelectoSqlPatterns.LiveValidation do
   defp mssql_orders_insert_statement do
     rows =
       [
-        "(1001, 'ORD-1001', 1, 'delivered', 120.50, '2024-01-05T10:00:00')",
-        "(1002, 'ORD-1002', 1, 'processing', 75.00, '2024-01-10T12:00:00')",
-        "(1003, 'ORD-1003', 2, 'delivered', 210.00, '2024-01-18T09:00:00')",
-        "(1004, 'ORD-1004', 3, 'shipped', 95.25, '2024-02-03T08:30:00')",
-        "(1005, 'ORD-1005', 2, 'delivered', 55.75, '2024-01-28T15:15:00')",
-        "(1006, 'ORD-1006', 3, 'processing', 180.00, '2024-02-10T11:45:00')",
-        "(1007, 'ORD-1007', 4, 'processing', 320.00, '2024-02-14T14:20:00')",
-        "(1008, 'ORD-1008', 4, 'delivered', 1450.00, '2024-02-15T09:10:00')"
+        "(1001, 1001, 'ORD-1001', 1, NULL, NULL, NULL, NULL, 'delivered', 120.50, '2024-01-05T10:00:00')",
+        "(1002, 1002, 'ORD-1002', 1, NULL, NULL, NULL, NULL, 'processing', 75.00, '2024-01-10T12:00:00')",
+        "(1003, 1003, 'ORD-1003', 2, NULL, NULL, NULL, NULL, 'delivered', 210.00, '2024-01-18T09:00:00')",
+        "(1004, 1004, 'ORD-1004', 3, NULL, NULL, NULL, NULL, 'shipped', 95.25, '2024-02-03T08:30:00')",
+        "(1005, 1005, 'ORD-1005', 2, NULL, NULL, NULL, NULL, 'delivered', 55.75, '2024-01-28T15:15:00')",
+        "(1006, 1006, 'ORD-1006', 3, NULL, NULL, NULL, NULL, 'processing', 180.00, '2024-02-10T11:45:00')",
+        "(1007, 1007, 'ORD-1007', 4, NULL, NULL, NULL, NULL, 'processing', 320.00, '2024-02-14T14:20:00')",
+        "(1008, 1008, 'ORD-1008', 4, NULL, NULL, NULL, NULL, 'delivered', 1450.00, '2024-02-15T09:10:00')",
+        "(3001, 3001, 'EVT-3001', NULL, 1, 'Badge', 2, 25.00, 'completed', 50.00, '2024-01-02T09:00:00')",
+        "(3002, 3002, 'EVT-3002', NULL, 1, 'Lanyard', 1, 5.00, 'completed', 5.00, '2024-01-02T09:05:00')",
+        "(3003, 3003, 'EVT-3003', NULL, 2, 'Notebook', 3, 12.00, 'completed', 36.00, '2024-01-03T10:00:00')",
+        "(3004, 3004, 'EVT-3004', NULL, 3, 'Sticker Pack', 4, 3.00, 'completed', 12.00, '2024-01-04T11:00:00')"
       ] ++ generated_order_rows("T")
 
-    "INSERT INTO orders (id, order_number, customer_id, status, total, inserted_at) VALUES " <>
+    "INSERT INTO orders (id, order_id, order_number, customer_id, attendee_id, product_name, quantity, price, status, total, inserted_at) VALUES " <>
       Enum.join(rows, ", ")
+  end
+
+  defp attendee_events_insert_statement do
+    "INSERT INTO events (event_id, name, date) VALUES (1000, 'Launch Day', '2024-01-10'), (2000, 'Customer Summit', '2024-02-20')"
+  end
+
+  defp attendees_insert_statement do
+    "INSERT INTO attendees (attendee_id, event_id, name, email) VALUES (1, 1000, 'Avery', 'avery@example.com'), (2, 1000, 'Blair', 'blair@example.com'), (3, 2000, 'Casey', 'casey@example.com')"
   end
 
   defp mssql_archived_orders_insert_statement do
@@ -1376,7 +1274,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       minute = rem(offset * 7, 60)
       timestamp = "2024-03-#{pad2(day)}#{separator}#{pad2(hour)}:#{pad2(minute)}:00"
 
-      "(#{id}, 'ORD-#{id}', #{customer_id}, '#{status}', #{total}.00, '#{timestamp}')"
+      "(#{id}, #{id}, 'ORD-#{id}', #{customer_id}, NULL, NULL, NULL, NULL, '#{status}', #{total}.00, '#{timestamp}')"
     end)
   end
 

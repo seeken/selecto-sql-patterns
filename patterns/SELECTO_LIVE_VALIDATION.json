@@ -35,7 +35,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mariadb": {
         "status": "executed",
@@ -44,7 +44,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mssql": {
         "status": "executed",
@@ -53,7 +53,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mysql": {
         "status": "executed",
@@ -62,7 +62,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "postgresql": {
         "status": "executed",
@@ -71,7 +71,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "sqlite": {
         "status": "executed",
@@ -80,7 +80,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       }
     },
     "F007": {
@@ -260,7 +260,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mariadb": {
         "status": "executed",
@@ -269,7 +269,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mssql": {
         "status": "executed",
@@ -278,7 +278,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mysql": {
         "status": "executed",
@@ -287,7 +287,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "postgresql": {
         "status": "executed",
@@ -296,7 +296,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "sqlite": {
         "reason": "SQLite still rejects the parenthesized set-operation form generated for this query-shaping pattern.",
@@ -305,28 +305,58 @@
     },
     "Q003": {
       "duckdb": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "mariadb": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "postgresql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "sqlite": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       }
     },
     "G007": {
@@ -364,7 +394,7 @@
           "min(selecto_root.total)",
           "max(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mariadb": {
         "status": "executed",
@@ -374,7 +404,7 @@
           "MIN(selecto_root.total)",
           "MAX(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mssql": {
         "status": "executed",
@@ -384,7 +414,7 @@
           "",
           ""
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mysql": {
         "status": "executed",
@@ -394,7 +424,7 @@
           "MIN(selecto_root.total)",
           "MAX(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -404,7 +434,7 @@
           "min",
           "max"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -414,7 +444,7 @@
           "MIN(selecto_root.total)",
           "MAX(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       }
     },
     "P004": {
@@ -551,7 +581,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -562,7 +592,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -573,7 +603,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -584,7 +614,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -595,7 +625,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -606,7 +636,7 @@
           "total",
           "trailing_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "J012": {
@@ -680,7 +710,7 @@
           "status",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -690,7 +720,7 @@
           "status",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -700,7 +730,7 @@
           "status",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -710,7 +740,7 @@
           "status",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -720,7 +750,7 @@
           "status",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "reason": "SQLite quantifier subqueries with ALL still need dedicated live-execution handling in this smoke harness.",
@@ -785,28 +815,58 @@
     },
     "Q002": {
       "duckdb": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "mariadb": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "postgresql": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "sqlite": {
-        "reason": "Retarget smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       }
     },
     "C007": {
@@ -817,7 +877,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mariadb": {
         "status": "executed",
@@ -826,7 +886,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mssql": {
         "status": "executed",
@@ -835,7 +895,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "mysql": {
         "status": "executed",
@@ -844,7 +904,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "postgresql": {
         "status": "executed",
@@ -853,7 +913,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       },
       "sqlite": {
         "status": "executed",
@@ -862,7 +922,7 @@
           "order_number",
           "status"
         ],
-        "row_count": 86
+        "row_count": 90
       }
     },
     "J003": {
@@ -943,7 +1003,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -954,7 +1014,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -965,7 +1025,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -976,7 +1036,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -987,7 +1047,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -998,7 +1058,7 @@
           "total",
           "customer_order_count"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "JA002": {
@@ -1054,28 +1114,48 @@
     },
     "Q001": {
       "duckdb": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"Catalog Error: Scalar Function with name json_agg does not exist!\\nDid you mean \\\"json\\\"?\\n\\nLINE 2: ...        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"prod...\\n                                                                         ^\", details: %{}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "mariadb": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WH...' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 48, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WH...' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "mssql": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 15141, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "postgresql": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "sqlite": {
-        "reason": "Subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"no such function: json_build_object\", details: %{}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       }
     },
     "W007": {
@@ -1088,7 +1168,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -1099,7 +1179,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -1110,7 +1190,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -1121,7 +1201,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -1132,7 +1212,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1143,7 +1223,7 @@
           "total",
           "next_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "A004": {
@@ -1154,7 +1234,7 @@
           "name",
           "count_star()"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mariadb": {
         "status": "executed",
@@ -1163,7 +1243,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mssql": {
         "status": "executed",
@@ -1172,7 +1252,7 @@
           "name",
           ""
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mysql": {
         "status": "executed",
@@ -1181,7 +1261,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -1190,7 +1270,7 @@
           "name",
           "count"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -1199,7 +1279,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       }
     },
     "G002": {
@@ -1236,7 +1316,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -1245,7 +1325,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -1254,7 +1334,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -1263,7 +1343,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -1272,7 +1352,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1281,7 +1361,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "J009": {
@@ -1293,7 +1373,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -1303,7 +1383,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -1313,7 +1393,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -1323,7 +1403,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -1333,7 +1413,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1343,7 +1423,7 @@
           "name",
           "tier"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "P007": {
@@ -1432,7 +1512,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       },
       "mariadb": {
         "status": "executed",
@@ -1442,7 +1522,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       },
       "mssql": {
         "status": "executed",
@@ -1452,7 +1532,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       },
       "mysql": {
         "status": "executed",
@@ -1462,7 +1542,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       },
       "postgresql": {
         "status": "executed",
@@ -1472,7 +1552,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       },
       "sqlite": {
         "status": "executed",
@@ -1482,7 +1562,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 18
+        "row_count": 22
       }
     },
     "JA006": {
@@ -1519,7 +1599,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 96
+        "row_count": 100
       },
       "mariadb": {
         "status": "executed",
@@ -1528,7 +1608,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 96
+        "row_count": 100
       },
       "mssql": {
         "status": "executed",
@@ -1537,7 +1617,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 96
+        "row_count": 100
       },
       "mysql": {
         "status": "executed",
@@ -1546,7 +1626,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 96
+        "row_count": 100
       },
       "postgresql": {
         "status": "executed",
@@ -1555,7 +1635,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 96
+        "row_count": 100
       },
       "sqlite": {
         "reason": "SQLite still needs set-operation execution handling for this UNION ALL smoke case.",
@@ -1792,7 +1872,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -1802,7 +1882,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -1812,7 +1892,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -1822,7 +1902,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -1832,7 +1912,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1842,7 +1922,7 @@
           "status",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "W006": {
@@ -1976,7 +2056,7 @@
           "name",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -1986,7 +2066,7 @@
           "name",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -1996,7 +2076,7 @@
           "name",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2006,7 +2086,7 @@
           "name",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2016,7 +2096,7 @@
           "name",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "J006": {
@@ -2028,7 +2108,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -2038,7 +2118,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -2048,7 +2128,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -2058,7 +2138,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2068,7 +2148,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2078,7 +2158,7 @@
           "name",
           "name"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "F008": {
@@ -2153,7 +2233,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -2164,7 +2244,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -2175,7 +2255,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -2186,7 +2266,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2197,7 +2277,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2208,7 +2288,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "SO007": {
@@ -2429,7 +2509,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mariadb": {
         "status": "executed",
@@ -2439,7 +2519,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mssql": {
         "status": "executed",
@@ -2449,7 +2529,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mysql": {
         "status": "executed",
@@ -2459,7 +2539,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "postgresql": {
         "status": "executed",
@@ -2469,7 +2549,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "sqlite": {
         "status": "executed",
@@ -2479,7 +2559,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       }
     },
     "S009": {
@@ -2491,7 +2571,7 @@
           "status",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mariadb": {
         "status": "executed",
@@ -2501,7 +2581,7 @@
           "status",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mssql": {
         "status": "executed",
@@ -2511,7 +2591,7 @@
           "status",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "mysql": {
         "status": "executed",
@@ -2521,7 +2601,7 @@
           "status",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "postgresql": {
         "status": "executed",
@@ -2531,7 +2611,7 @@
           "status",
           "total"
         ],
-        "row_count": 67
+        "row_count": 71
       },
       "sqlite": {
         "reason": "SQLite quantifier subqueries with ANY still need dedicated live-execution handling in this smoke harness.",
@@ -2850,7 +2930,7 @@
           "name",
           "count_star()"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mariadb": {
         "status": "executed",
@@ -2859,7 +2939,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mssql": {
         "status": "executed",
@@ -2868,7 +2948,7 @@
           "name",
           ""
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mysql": {
         "status": "executed",
@@ -2877,7 +2957,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -2886,7 +2966,7 @@
           "name",
           "count"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -2895,7 +2975,7 @@
           "name",
           "count(*)"
         ],
-        "row_count": 4
+        "row_count": 5
       }
     },
     "A006": {
@@ -3007,28 +3087,64 @@
     },
     "Q005": {
       "duckdb": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "mariadb": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "postgresql": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "sqlite": {
-        "reason": "Count-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       }
     },
     "G005": {
@@ -3067,7 +3183,7 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -3078,7 +3194,7 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -3089,7 +3205,7 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -3100,7 +3216,7 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3111,7 +3227,7 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3122,33 +3238,55 @@
           "total",
           "previous_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "Q004": {
       "duckdb": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"Catalog Error: Scalar Function with name json_agg does not exist!\\nDid you mean \\\"json\\\"?\\n\\nLINE 2: ...        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders...\\n                                                                         ^\", details: %{}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "mariadb": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selec...' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 48, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selec...' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\\\"quantity\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "mssql": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 15141, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\\\"quantity\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       },
       "postgresql": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "sqlite": {
-        "reason": "Multi-subselect smoke validation still needs attendee/event fixture tables that do not conflict with the main order fixtures.",
-        "status": "generated_only"
+        "reason": "%Selecto.Error{type: :query_error, message: \"no such function: json_agg\", details: %{}, query: nil, params: []}",
+        "status": "failed",
+        "params": [],
+        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
       }
     },
     "W003": {
@@ -3161,7 +3299,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -3172,7 +3310,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -3183,7 +3321,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -3194,7 +3332,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3205,7 +3343,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3216,7 +3354,7 @@
           "total",
           "prev_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "G008": {
@@ -3253,7 +3391,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -3262,7 +3400,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -3271,7 +3409,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -3280,7 +3418,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3289,7 +3427,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3298,7 +3436,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "W005": {
@@ -3310,7 +3448,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -3320,7 +3458,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -3330,7 +3468,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -3340,7 +3478,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3350,7 +3488,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3360,7 +3498,7 @@
           "total",
           "moving_avg_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "G001": {
@@ -3661,7 +3799,7 @@
           "status",
           "avg(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mariadb": {
         "status": "executed",
@@ -3670,7 +3808,7 @@
           "status",
           "AVG(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mssql": {
         "status": "executed",
@@ -3679,7 +3817,7 @@
           "status",
           ""
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mysql": {
         "status": "executed",
@@ -3688,7 +3826,7 @@
           "status",
           "AVG(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -3697,7 +3835,7 @@
           "status",
           "avg"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -3706,7 +3844,7 @@
           "status",
           "AVG(selecto_root.total)"
         ],
-        "row_count": 3
+        "row_count": 4
       }
     },
     "A008": {
@@ -3773,7 +3911,7 @@
           "tier",
           "sum(selecto_root.total)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mariadb": {
         "status": "executed",
@@ -3782,7 +3920,7 @@
           "tier",
           "SUM(selecto_root.total)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mssql": {
         "status": "executed",
@@ -3791,7 +3929,7 @@
           "tier",
           ""
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "mysql": {
         "status": "executed",
@@ -3800,7 +3938,7 @@
           "tier",
           "SUM(selecto_root.total)"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -3809,7 +3947,7 @@
           "tier",
           "sum"
         ],
-        "row_count": 4
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -3818,7 +3956,7 @@
           "tier",
           "SUM(selecto_root.total)"
         ],
-        "row_count": 4
+        "row_count": 5
       }
     },
     "C003": {
@@ -3830,7 +3968,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       },
       "mariadb": {
         "status": "executed",
@@ -3840,7 +3978,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       },
       "mssql": {
         "status": "executed",
@@ -3850,7 +3988,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       },
       "mysql": {
         "status": "executed",
@@ -3860,7 +3998,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       },
       "postgresql": {
         "status": "executed",
@@ -3870,7 +4008,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       },
       "sqlite": {
         "status": "executed",
@@ -3880,7 +4018,7 @@
           "total",
           "total"
         ],
-        "row_count": 1156
+        "row_count": 1160
       }
     },
     "JA008": {
@@ -4023,7 +4161,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -4035,7 +4173,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -4047,7 +4185,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -4059,7 +4197,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4071,7 +4209,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4083,7 +4221,7 @@
           "total",
           "status_running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "JA003": {
@@ -4122,7 +4260,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mariadb": {
         "status": "executed",
@@ -4133,7 +4271,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mssql": {
         "status": "executed",
@@ -4144,7 +4282,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "mysql": {
         "status": "executed",
@@ -4155,7 +4293,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "postgresql": {
         "status": "executed",
@@ -4166,7 +4304,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       },
       "sqlite": {
         "status": "executed",
@@ -4177,7 +4315,7 @@
           "inserted_at",
           "total"
         ],
-        "row_count": 4
+        "row_count": 8
       }
     },
     "J008": {
@@ -4214,7 +4352,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -4223,7 +4361,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -4232,7 +4370,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -4241,7 +4379,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4250,7 +4388,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4259,7 +4397,7 @@
           "order_number",
           "status_label"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "W008": {
@@ -4272,7 +4410,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -4283,7 +4421,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -4294,7 +4432,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -4305,7 +4443,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4316,7 +4454,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4327,7 +4465,7 @@
           "total",
           "status_max_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "W004": {
@@ -4339,7 +4477,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -4349,7 +4487,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -4359,7 +4497,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -4369,7 +4507,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4379,7 +4517,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4389,7 +4527,7 @@
           "total",
           "total_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "SO006": {
@@ -4620,7 +4758,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -4629,7 +4767,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -4638,7 +4776,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -4647,7 +4785,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4656,7 +4794,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4665,7 +4803,7 @@
           "order_number",
           "total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "S003": {
@@ -4738,7 +4876,7 @@
           "status",
           "count_star()"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mariadb": {
         "status": "executed",
@@ -4747,7 +4885,7 @@
           "status",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mssql": {
         "status": "executed",
@@ -4756,7 +4894,7 @@
           "status",
           ""
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mysql": {
         "status": "executed",
@@ -4765,7 +4903,7 @@
           "status",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4774,7 +4912,7 @@
           "status",
           "count"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -4783,7 +4921,7 @@
           "status",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       }
     },
     "T008": {
@@ -5022,7 +5160,7 @@
           "sum(selecto_root.total)",
           "count_star()"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mariadb": {
         "status": "executed",
@@ -5032,7 +5170,7 @@
           "SUM(selecto_root.total)",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mssql": {
         "status": "executed",
@@ -5042,7 +5180,7 @@
           "",
           ""
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "mysql": {
         "status": "executed",
@@ -5052,7 +5190,7 @@
           "SUM(selecto_root.total)",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -5062,7 +5200,7 @@
           "sum",
           "count"
         ],
-        "row_count": 3
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -5072,7 +5210,7 @@
           "SUM(selecto_root.total)",
           "count(*)"
         ],
-        "row_count": 3
+        "row_count": 4
       }
     },
     "S001": {
@@ -5152,7 +5290,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -5162,7 +5300,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -5172,7 +5310,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -5182,7 +5320,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -5192,7 +5330,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -5202,7 +5340,7 @@
           "total",
           "total_percent_rank"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "J002": {
@@ -5263,20 +5401,44 @@
     },
     "F003": {
       "duckdb": {
-        "reason": "DuckDB still needs list-parameter execution handling for IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "mariadb": {
-        "reason": "MariaDB still needs list-parameter execution handling for IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "mssql": {
-        "reason": "MSSQL still needs list-parameter execution handling for IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "mysql": {
-        "reason": "MySQL still needs list-parameter execution handling for IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "postgresql": {
         "status": "executed",
@@ -5289,8 +5451,14 @@
         "row_count": 27
       },
       "sqlite": {
-        "reason": "SQLite still needs list-parameter execution handling for IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       }
     },
     "G003": {
@@ -5329,7 +5497,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mariadb": {
         "status": "executed",
@@ -5340,7 +5508,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mssql": {
         "status": "executed",
@@ -5351,7 +5519,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "mysql": {
         "status": "executed",
@@ -5362,7 +5530,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -5373,7 +5541,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -5384,7 +5552,7 @@
           "total",
           "running_total"
         ],
-        "row_count": 68
+        "row_count": 72
       }
     },
     "JA001": {
@@ -5439,8 +5607,14 @@
     },
     "F001": {
       "duckdb": {
-        "reason": "DuckDB still needs list-parameter execution handling for NOT IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "mariadb": {
         "status": "executed",
@@ -5453,8 +5627,14 @@
         "row_count": 68
       },
       "mssql": {
-        "reason": "MSSQL still needs list-parameter execution handling for NOT IN smoke cases.",
-        "status": "generated_only"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "mysql": {
         "status": "executed",
@@ -5488,5 +5668,5 @@
       }
     }
   },
-  "generated_at": "2026-03-30T16:43:59Z"
+  "generated_at": "2026-03-30T17:12:51Z"
 }
