@@ -415,6 +415,13 @@
     return markdown.replace(pattern, "\n")
   }
 
+  function stripKnownPatternSections(markdown) {
+    return ["Selecto", "Selecto Expr", "Selecto Yielded SQL"].reduce(
+      (current, heading) => stripSection(current, heading),
+      markdown
+    )
+  }
+
   function removeRenderedSections(headings) {
     const targets = new Set(headings)
     const nodes = Array.from(doc.querySelectorAll("h2, h3, h4"))
@@ -868,10 +875,7 @@
     }
 
     const markdown = await res.text()
-    const cleanedMarkdown = stripSection(
-      stripSection(stripSection(markdown, "Selecto Yielded SQL"), "Selecto Expr"),
-      "Selecto"
-    )
+    const cleanedMarkdown = stripKnownPatternSections(markdown)
 
     doc.innerHTML = marked.parse(cleanedMarkdown)
     removeRenderedSections(["Selecto", "Selecto Expr", "Selecto Yielded SQL"])
