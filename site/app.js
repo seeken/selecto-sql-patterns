@@ -411,7 +411,10 @@
 
   function stripSection(markdown, heading) {
     const escapedHeading = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    const pattern = new RegExp(`(^|\\n)## ${escapedHeading}\\r?\\n[\\s\\S]*?(?=\\n## |$)`, "m")
+    const pattern = new RegExp(
+      `(^|\\n)## ${escapedHeading}\\r?\\n[\\s\\S]*?(?=(?:\\r?\\n## )|\\s*$)`,
+      "m"
+    )
     return markdown.replace(pattern, "\n")
   }
 
