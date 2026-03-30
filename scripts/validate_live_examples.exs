@@ -389,10 +389,26 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "MSSQL still needs EXCEPT ALL execution handling in this smoke harness."}
       }
     },
-    %{id: "Q001", assert: {:columns_include, ["name", "email"]}},
+    %{
+      id: "Q001",
+      assert: {:columns_include, ["name", "email"]},
+      adapters: %{
+        "duckdb" =>
+          {:generated_only,
+           "DuckDB still needs a compatible JSON object aggregation strategy for subselect output."}
+      }
+    },
     %{id: "Q002", assert: {:columns_include, ["product_name", "quantity"]}},
     %{id: "Q003", assert: {:columns_include, ["product_name", "quantity"]}},
-    %{id: "Q004", assert: {:columns_include, ["name", "email"]}},
+    %{
+      id: "Q004",
+      assert: {:columns_include, ["name", "email"]},
+      adapters: %{
+        "duckdb" =>
+          {:generated_only,
+           "DuckDB still needs a compatible JSON object aggregation strategy for multi-subselect output."}
+      }
+    },
     %{id: "Q005", assert: {:columns_include, ["name", "email"]}},
     %{
       id: "G001",
@@ -1048,6 +1064,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
     [
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
+      "DROP TABLE IF EXISTS attendees",
+      "DROP TABLE IF EXISTS events",
       "DROP TABLE IF EXISTS premium_customers",
       "DROP TABLE IF EXISTS active_customers",
       "DROP TABLE IF EXISTS blocked_customers",

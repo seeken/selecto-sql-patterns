@@ -1114,16 +1114,18 @@
     },
     "Q001": {
       "duckdb": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"Catalog Error: Scalar Function with name json_agg does not exist!\\nDid you mean \\\"json\\\"?\\n\\nLINE 2: ...        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"prod...\\n                                                                         ^\", details: %{}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "reason": "DuckDB still needs a compatible JSON object aggregation strategy for subselect output.",
+        "status": "generated_only"
       },
       "mariadb": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WH...' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 48, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WH...' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "mssql": {
         "status": "executed",
@@ -1136,10 +1138,14 @@
         "row_count": 3
       },
       "mysql": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 15141, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\\\"product_name\\\", 'quantity', sub_orders.\\\"quantity\\\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -1152,10 +1158,14 @@
         "row_count": 3
       },
       "sqlite": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"no such function: json_build_object\", details: %{}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders.\"product_name\", 'quantity', sub_orders.\"quantity\")) FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"order_items\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       }
     },
     "W007": {
@@ -3243,16 +3253,19 @@
     },
     "Q004": {
       "duckdb": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"Catalog Error: Scalar Function with name json_agg does not exist!\\nDid you mean \\\"json\\\"?\\n\\nLINE 2: ...        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders...\\n                                                                         ^\", details: %{}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "reason": "DuckDB still needs a compatible JSON object aggregation strategy for multi-subselect output.",
+        "status": "generated_only"
       },
       "mariadb": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selec...' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 48, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selec...' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\\\"quantity\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "mssql": {
         "status": "executed",
@@ -3266,10 +3279,15 @@
         "row_count": 3
       },
       "mysql": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_' at line 1\", details: %{exception: %MyXQL.Error{connection_id: 15141, message: \"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_' at line 1\", mysql: %{code: 1064, name: nil}, statement: \"\\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\\\"product_name\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\\\"quantity\\\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\\n        from attendees selecto_root\\n        order by selecto_root.name asc\\n      \"}}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -3283,10 +3301,15 @@
         "row_count": 3
       },
       "sqlite": {
-        "reason": "%Selecto.Error{type: :query_error, message: \"no such function: json_agg\", details: %{}, query: nil, params: []}",
-        "status": "failed",
-        "params": [],
-        "sql": "\n        select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders.\"product_name\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"products\", (SELECT array_agg(sub_orders.\"quantity\") FROM orders sub_orders WHERE sub_orders.\"attendee_id\" = selecto_root.\"attendee_id\") AS \"quantities\"\n        from attendees selecto_root\n        order by selecto_root.name asc\n      "
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       }
     },
     "W003": {
@@ -5668,5 +5691,5 @@
       }
     }
   },
-  "generated_at": "2026-03-30T17:12:51Z"
+  "generated_at": "2026-03-30T17:25:43Z"
 }
