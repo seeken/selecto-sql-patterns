@@ -192,12 +192,23 @@
         id.textContent = entry.id
 
         const title = document.createElement("span")
+        title.className = "item-title"
         title.textContent = entry.title
 
         button.appendChild(id)
         button.appendChild(title)
 
         const coverage = adapterCoverage(entry)
+        let metaRow = null
+        function ensureMetaRow() {
+          if (!metaRow) {
+            metaRow = document.createElement("span")
+            metaRow.className = "item-meta-row"
+            button.appendChild(metaRow)
+          }
+          return metaRow
+        }
+
         if (coverage) {
           const icons = document.createElement("span")
           icons.className = "item-gap-icons"
@@ -215,7 +226,7 @@
             icons.appendChild(icon)
           })
 
-          button.appendChild(icons)
+          ensureMetaRow().appendChild(icons)
         }
 
         const validationBadges = sidebarValidationBadges(entry)
@@ -235,7 +246,7 @@
             validations.appendChild(icon)
           })
 
-          button.appendChild(validations)
+          ensureMetaRow().appendChild(validations)
         }
 
         button.addEventListener("click", () => {

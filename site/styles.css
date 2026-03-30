@@ -99,7 +99,8 @@ body {
 
 .item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   gap: 8px;
   width: 100%;
   text-align: left;
@@ -127,6 +128,19 @@ body {
   min-width: 52px;
   color: var(--muted);
   font-size: 12px;
+}
+
+.item-title {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+.item-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  padding-left: 60px;
 }
 
 .item span:not(.item-id):not(.item-gap-icons):not(.item-gap-icon):not(.item-validation-icons):not(.item-validation-icon) {
@@ -455,6 +469,10 @@ body {
 
   .topbar-actions {
     gap: 8px;
+  }
+
+  .item-meta-row {
+    padding-left: 0;
   }
 
   .content {
