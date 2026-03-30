@@ -399,13 +399,14 @@
   }
 
   function stripSection(markdown, heading) {
-    const pattern = new RegExp(`(^|\\n)## ${heading}\\n[\\s\\S]*?(?=\\n## |$)`, "m")
+    const escapedHeading = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    const pattern = new RegExp(`(^|\\n)## ${escapedHeading}\\r?\\n[\\s\\S]*?(?=\\n## |$)`, "m")
     return markdown.replace(pattern, "\n")
   }
 
   function removeRenderedSections(headings) {
     const targets = new Set(headings)
-    const nodes = Array.from(doc.querySelectorAll("h2"))
+    const nodes = Array.from(doc.querySelectorAll("h2, h3, h4"))
 
     nodes.forEach((heading) => {
       if (!targets.has(heading.textContent.trim())) return
@@ -413,7 +414,7 @@
       let cursor = heading.nextElementSibling
       const toRemove = [heading]
 
-      while (cursor && cursor.tagName !== "H2") {
+      while (cursor && !/^H[234]$/.test(cursor.tagName)) {
         toRemove.push(cursor)
         cursor = cursor.nextElementSibling
       }
