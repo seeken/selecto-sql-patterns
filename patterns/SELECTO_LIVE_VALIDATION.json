@@ -600,6 +600,32 @@
         "row_count": 7
       }
     },
+    "G002": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
+      }
+    },
     "P007": {
       "duckdb": {
         "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
@@ -973,6 +999,32 @@
       "sqlite": {
         "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
         "status": "generated_only"
+      }
+    },
+    "G004": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
       }
     },
     "W006": {
@@ -1937,6 +1989,32 @@
         "status": "generated_only"
       }
     },
+    "G005": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
+      }
+    },
     "T005": {
       "duckdb": {
         "status": "executed",
@@ -2159,6 +2237,32 @@
           "moving_avg_total"
         ],
         "row_count": 7
+      }
+    },
+    "G001": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
       }
     },
     "S010": {
@@ -3435,6 +3539,32 @@
         "status": "generated_only"
       }
     },
+    "G003": {
+      "duckdb": {
+        "reason": "DuckDB spatial smoke execution is not wired into this harness.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "SQLite has no spatial adapter configured in this harness.",
+        "status": "unsupported_expected"
+      }
+    },
     "W002": {
       "duckdb": {
         "status": "executed",
@@ -3604,5 +3734,5 @@
       }
     }
   },
-  "generated_at": "2026-03-29T20:20:57Z"
+  "generated_at": "2026-03-29T20:35:43Z"
 }
