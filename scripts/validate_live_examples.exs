@@ -658,22 +658,22 @@ defmodule SelectoSqlPatterns.LiveValidation do
       adapters: %{
         "postgresql" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."},
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."},
         "sqlite" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."},
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."},
         "mysql" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."},
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."},
         "mariadb" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."},
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."},
         "mssql" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."},
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."},
         "duckdb" =>
           {:generated_only,
-           "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions."}
+           "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto."}
       }
     }
   ]

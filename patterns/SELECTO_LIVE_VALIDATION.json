@@ -3614,27 +3614,27 @@
     },
     "T003": {
       "duckdb": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       },
       "mssql": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       },
       "mysql": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       },
       "postgresql": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       },
       "sqlite": {
-        "reason": "date_trunc day-bucket smoke validation still needs adapter-specific timestamp bucketing assertions.",
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
         "status": "generated_only"
       }
     },
@@ -5691,5 +5691,5 @@
       }
     }
   },
-  "generated_at": "2026-03-30T17:25:43Z"
+  "generated_at": "2026-03-31T02:08:13Z"
 }
