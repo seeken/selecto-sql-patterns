@@ -1,22 +1,14 @@
 selecto_path = System.get_env("SELECTO_PATH", "../selecto")
 postgresql_adapter_path = System.get_env("SELECTO_DB_POSTGRESQL_PATH", "../selecto_db_postgresql")
-sqlite_adapter_path = System.get_env("SELECTO_DB_SQLITE_PATH", "../selecto_db_sqlite")
-mysql_adapter_path = System.get_env("SELECTO_DB_MYSQL_PATH", "../selecto_db_mysql")
-mariadb_adapter_path = System.get_env("SELECTO_DB_MARIADB_PATH", "../selecto_db_mariadb")
-mssql_adapter_path = System.get_env("SELECTO_DB_MSSQL_PATH", "../selecto_db_mssql")
-duckdb_adapter_path = System.get_env("SELECTO_DB_DUCKDB_PATH", "../selecto_db_duckdb")
 System.put_env("SELECTO_ECOSYSTEM_USE_LOCAL", "1")
 
 Mix.install([
   {:jason, "~> 1.4"},
   {:selecto, path: selecto_path, override: true},
-  {:selecto_db_postgresql, path: postgresql_adapter_path},
-  {:selecto_db_sqlite, path: sqlite_adapter_path},
-  {:selecto_db_mysql, path: mysql_adapter_path},
-  {:selecto_db_mariadb, path: mariadb_adapter_path},
-  {:selecto_db_mssql, path: mssql_adapter_path},
-  {:selecto_db_duckdb, path: duckdb_adapter_path}
+  {:selecto_db_postgresql, path: postgresql_adapter_path}
 ])
+
+Code.require_file(Path.join([selecto_path, "test", "support", "selecto_db_adapter_stubs.exs"]))
 
 defmodule SelectoSqlPatterns.VerifyExamples do
   import Selecto.ExprMacros
