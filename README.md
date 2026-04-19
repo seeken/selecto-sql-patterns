@@ -14,6 +14,8 @@ and regression checks across the Selecto ecosystem.
 - Keep clear source attribution and licensing for every imported pattern.
 - Group patterns by topic so we can cover common real-world query shapes.
 - Make examples runnable and testable with expected SQL output checks.
+- Add companion guides for Selecto capability areas that are adjacent to SQL
+  pattern authoring but not a single query shape on their own.
 
 ## Current Scope
 
@@ -38,6 +40,9 @@ and regression checks across the Selecto ecosystem.
 - `patterns/_template.md` pattern authoring template
 - `patterns/joins/DOMAIN_CONFIGURATION.md` shared domain setup for join-focused examples
 - `patterns/ESCAPE_HATCH_GUIDE.md` rules for lateral/raw SQL escape-hatch patterns
+- `patterns/VIEW_BACKED_DOMAINS_GUIDE.md` view and materialized-view source metadata
+- `patterns/PUBLISHED_VIEWS_GUIDE.md` published view specs and DDL generation
+- `patterns/OVERLAY_DSL_GUIDE.md` additive overlay authoring for joins and schemas
 - `CATALOG.md` high-level tracking for planned pattern coverage
 - `scripts/verify_examples.exs` runs `Selecto.to_sql/1` for every published pattern example
 
@@ -48,6 +53,8 @@ and regression checks across the Selecto ecosystem.
 - For SQL assertions in tests, prefer case-insensitive keyword checks.
 - For lateral/raw SQL examples, follow `patterns/ESCAPE_HATCH_GUIDE.md`.
 - Prefer `Selecto.Expr` and `Selecto.ExprMacros` in new examples when they make patterns easier to read.
+- Companion guides document view publication, overlay authoring, and related
+  domain-shaping surfaces that are not part of the 106-query pattern matrix.
 
 ## Verify Examples
 

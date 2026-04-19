@@ -25,7 +25,7 @@
       "key": "duckdb"
     }
   ],
-  "generated_at": "2026-03-30T19:06:39Z",
+  "generated_at": "2026-04-19T04:48:26Z",
   "patterns": {
     "C002": {
       "duckdb": {
@@ -33,42 +33,42 @@
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = $1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mariadb": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mssql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = @p1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "postgresql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = $1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "sqlite": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       }
     },
     "F007": {
@@ -597,42 +597,42 @@
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = $1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mariadb": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mssql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = @p1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "postgresql": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = $1 ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       },
       "sqlite": {
         "status": "ok",
         "params": [
           "processing"
         ],
-        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n    UNION ALL\n    \n        select selecto_root.id, selecto_root.status\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
+        "sql": "WITH RECURSIVE order_chain (id, status) AS (\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n        where (( cte_order_chain.status = ? ))\n      \n    UNION ALL\n    \n        select cte_order_chain.id, cte_order_chain.status\n        from orders cte_order_chain\n)\n\n        select selecto_root.order_number, order_chain.status\n        from orders selecto_root left join order_chain order_chain on order_chain.id = selecto_root.id"
       }
     },
     "J003": {
@@ -1471,42 +1471,42 @@
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       },
       "mariadb": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       },
       "mssql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       },
       "mysql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       },
       "postgresql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       },
       "sqlite": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
+        "sql": "WITH delivered_totals (id, total) AS (\n    \n        select cte_delivered_totals.id, cte_delivered_totals.total\n        from orders cte_delivered_totals\n        where (( cte_delivered_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, customer.name, delivered_totals.total\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id\n        order by selecto_root.order_number asc"
       }
     },
     "J006": {
@@ -2417,32 +2417,32 @@
       "duckdb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mssql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "postgresql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "sqlite": {
         "status": "ok",
         "params": [],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       }
     },
     "W005": {
@@ -2743,6 +2743,50 @@
         "sql": "(\n        select selecto_root.name, selecto_root.tier\n        from customers selecto_root)\nUNION\n(\n        select selecto_root.company_name, selecto_root.segment\n        from vendor_contacts selecto_root)"
       }
     },
+    "Q009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = @p1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = ? ))\n      \n        order by selecto_root.name asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = $1 ))\n      \n        order by selecto_root.name asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "premium"
+        ],
+        "sql": "select selecto_root.customer_id, selecto_root.name, selecto_root.tier\n        from active_customers_view selecto_root\n        where (( selecto_root.tier = ? ))\n      \n        order by selecto_root.name asc"
+      }
+    },
     "P003": {
       "duckdb": {
         "status": "ok",
@@ -2899,32 +2943,32 @@
       "duckdb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       },
       "mariadb": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       },
       "mssql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       },
       "mysql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       },
       "postgresql": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       },
       "sqlite": {
         "status": "ok",
         "params": [],
-        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select selecto_root.customer_id, selecto_root.total\n        from orders selecto_root\n),\n    order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
+        "sql": "WITH customer_spend (customer_id, total) AS (\n    \n        select cte_customer_spend.customer_id, cte_customer_spend.total\n        from orders cte_customer_spend\n),\n    order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n)\n\n        select selecto_root.order_number, order_totals.total, customer_spend.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id left join customer_spend customer_spend on customer_spend.customer_id = selecto_root.customer_id"
       }
     },
     "JA008": {
@@ -3203,6 +3247,38 @@
         "sql": "select selecto_root.name, product_tag\n        from products selecto_root CROSS JOIN LATERAL UNNEST(\"selecto_root\".\"tags\") AS product_tag\n        where (( selecto_root.active = ? ))"
       }
     },
+    "Q010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, selecto_root.status, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      }
+    },
     "C004": {
       "duckdb": {
         "status": "ok",
@@ -3451,42 +3527,42 @@
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mariadb": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mssql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = @p1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "mysql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "postgresql": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = $1 ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       },
       "sqlite": {
         "status": "ok",
         "params": [
           "delivered"
         ],
-        "sql": "WITH order_totals (id, total) AS (\n    \n        select selecto_root.id, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
+        "sql": "WITH order_totals (id, total) AS (\n    \n        select cte_order_totals.id, cte_order_totals.total\n        from orders cte_order_totals\n        where (( cte_order_totals.status = ? ))\n      \n)\n\n        select selecto_root.order_number, order_totals.total\n        from orders selecto_root left join order_totals order_totals on order_totals.id = selecto_root.id"
       }
     },
     "S003": {

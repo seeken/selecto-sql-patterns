@@ -12,6 +12,7 @@ Code.require_file(Path.join([selecto_path, "test", "support", "selecto_db_adapte
 
 defmodule SelectoSqlPatterns.VerifyExamples do
   import Selecto.ExprMacros
+  import Selecto.Sigil
 
   alias Selecto.Expr, as: X
 
@@ -126,6 +127,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
        ["left join", "processing_orders_member", "from customers", "order by"]},
       {"Q007", query_q007(), ["with", "delivered_totals", "left join", "order by"]},
       {"Q008", query_q008(), ["union all", "except", "from archived_orders", "select"]},
+      {"Q009", query_q009(), ["from active_customers_view", "where", "order by", "tier"]},
+      {"Q010", query_q010(), ["from orders", "left join", "customers customer", "order by"]},
       {"T001", query_t001(), [">=", "<", "where", "order by"]},
       {"T002", query_t002(), ["sum", "over", "order by", "running_total"]},
       {"T003", query_t003(),
@@ -492,6 +495,41 @@ defmodule SelectoSqlPatterns.VerifyExamples do
         %{status: :unsupported, error: error} -> raise "#{id} failed for validation run: #{error}"
       end
     end)
+
+    published_view_examples = [
+      {"PV001", order_domain_with_published_views(), :order_rollup,
+       ["select", "status", "from orders"], "CREATE VIEW reporting.order_rollup AS"},
+      {"PV002", order_domain_with_published_views(), :recent_order_snapshot,
+       ["select", "status", "inserted_at"],
+       "CREATE MATERIALIZED VIEW reporting.recent_order_snapshot AS"}
+    ]
+
+    Enum.each(published_view_examples, fn {id, domain, spec_key, sql_fragments, ddl_fragment} ->
+      spec = domain.published_views[spec_key]
+
+      case Selecto.ViewPublisher.build_sql(domain, spec) do
+        {:ok, result} ->
+          normalized_sql = normalize_sql(result.sql)
+          assert_sql_sanity!(id, normalized_sql)
+          assert_fragments!(id, normalized_sql, sql_fragments)
+
+          unless String.contains?(result.ddl, ddl_fragment) do
+            raise "#{id} failed: expected DDL to include '#{ddl_fragment}'. DDL was: #{result.ddl}"
+          end
+
+          IO.puts("PASS #{id} published_view")
+
+        {:error, errors} ->
+          raise "#{id} failed for published view build: #{Enum.join(errors, "; ")}"
+      end
+    end)
+
+    if Selecto.ViewPublisher.refresh_sql("reporting.recent_order_snapshot", concurrently: true) !=
+         "REFRESH MATERIALIZED VIEW CONCURRENTLY reporting.recent_order_snapshot;" do
+      raise "PV003 failed: concurrent refresh SQL did not match expected output"
+    end
+
+    IO.puts("PASS PV003 published_view_refresh")
   end
 
   defp employee_domain do
@@ -801,6 +839,137 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       },
       schemas: %{},
       joins: %{}
+    }
+  end
+
+  defp active_customer_view_domain do
+    %{
+      name: "ActiveCustomerView",
+      source: %{
+        source_table: "active_customers_view",
+        primary_key: :customer_id,
+        source_kind: :view,
+        readonly: true,
+        fields: [:customer_id, :name, :tier],
+        redact_fields: [],
+        columns: %{
+          customer_id: %{type: :integer},
+          name: %{type: :string},
+          tier: %{type: :string}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defmodule OrderCustomerOverlay do
+    use Selecto.Config.OverlayDSL
+
+    defschema(:customers, %{
+      source_table: "customers",
+      primary_key: :id,
+      fields: [:id, :name, :tier],
+      redact_fields: [],
+      columns: %{
+        id: %{type: :integer},
+        name: %{type: :string},
+        tier: %{type: :string}
+      },
+      associations: %{}
+    })
+
+    defsource_assoc(:customer, %{
+      queryable: :customers,
+      field: :customer,
+      owner_key: :customer_id,
+      related_key: :id
+    })
+
+    defjoin(:customer, %{
+      name: "Customer",
+      type: :left,
+      source: "customers",
+      on: [%{left: "customer_id", right: "id"}],
+      fields: %{
+        name: %{type: :string},
+        tier: %{type: :string}
+      }
+    })
+  end
+
+  defp order_domain_for_overlay do
+    %{
+      name: "Orders",
+      source: %{
+        source_table: "orders",
+        primary_key: :id,
+        fields: [:id, :order_number, :status, :customer_id],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          order_number: %{type: :string},
+          status: %{type: :string},
+          customer_id: %{type: :integer}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{}
+    }
+  end
+
+  defp order_domain_with_overlay_customer_join do
+    Selecto.Config.Overlay.merge(order_domain_for_overlay(), OrderCustomerOverlay.overlay())
+  end
+
+  defp order_domain_with_published_views do
+    %{
+      name: "Orders",
+      source: %{
+        source_table: "orders",
+        primary_key: :id,
+        fields: [:id, :status, :inserted_at],
+        redact_fields: [],
+        columns: %{
+          id: %{type: :integer},
+          status: %{type: :string},
+          inserted_at: %{type: :naive_datetime}
+        },
+        associations: %{}
+      },
+      schemas: %{},
+      joins: %{},
+      published_views: %{
+        order_rollup: %{
+          database_name: "reporting.order_rollup",
+          kind: :view,
+          query: fn selecto ->
+            selecto
+            |> Selecto.select(select([as(id, "order_id"), as(status, "status")]))
+          end,
+          columns: %{
+            order_id: %{type: :integer},
+            status: %{type: :string}
+          }
+        },
+        recent_order_snapshot: %{
+          database_name: "reporting.recent_order_snapshot",
+          kind: :materialized_view,
+          query: fn selecto ->
+            selecto
+            |> Selecto.select(
+              select([as(id, "order_id"), as(status, "status"), as(inserted_at, "inserted_at")])
+            )
+          end,
+          columns: %{
+            order_id: %{type: :integer},
+            status: %{type: :string},
+            inserted_at: %{type: :naive_datetime}
+          }
+        }
+      }
     }
   end
 
@@ -1932,6 +2101,23 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     merged_orders = Selecto.union(current_orders, archived_orders, all: true)
 
     Selecto.except(merged_orders, archived_orders)
+  end
+
+  defp query_q009 do
+    customer_tier = "premium"
+
+    Selecto.configure(active_customer_view_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([customer_id, name, tier]))
+    |> Selecto.filter(~SELECTO"tier == ^customer_tier")
+    |> Selecto.order_by(order_by([asc(name)]))
+  end
+
+  defp query_q010 do
+    Selecto.configure(order_domain_with_overlay_customer_join(), :mock_connection,
+      validate: false
+    )
+    |> Selecto.select(select([order_number, status, customer.name]))
+    |> Selecto.order_by(order_by([asc(order_number)]))
   end
 
   defp query_t001 do

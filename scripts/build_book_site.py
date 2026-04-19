@@ -83,6 +83,26 @@ def build_manifest() -> dict:
             "path": "patterns/ESCAPE_HATCH_GUIDE.md",
         },
         {
+            "id": "EXPR",
+            "title": extract_title(PATTERNS_DIR / "EXPRESSION_DSL_GUIDE.md"),
+            "path": "patterns/EXPRESSION_DSL_GUIDE.md",
+        },
+        {
+            "id": "VIEW-DOMAINS",
+            "title": extract_title(PATTERNS_DIR / "VIEW_BACKED_DOMAINS_GUIDE.md"),
+            "path": "patterns/VIEW_BACKED_DOMAINS_GUIDE.md",
+        },
+        {
+            "id": "PUBLISHED-VIEWS",
+            "title": extract_title(PATTERNS_DIR / "PUBLISHED_VIEWS_GUIDE.md"),
+            "path": "patterns/PUBLISHED_VIEWS_GUIDE.md",
+        },
+        {
+            "id": "OVERLAY",
+            "title": extract_title(PATTERNS_DIR / "OVERLAY_DSL_GUIDE.md"),
+            "path": "patterns/OVERLAY_DSL_GUIDE.md",
+        },
+        {
             "id": "CATALOG",
             "title": extract_title(ROOT / "CATALOG.md"),
             "path": "CATALOG.md",

@@ -6013,9 +6013,9 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = $1 ))
       
 )
 
@@ -6031,9 +6031,9 @@ WITH delivered_totals (id, total) AS (
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = ? ))
       
 )
 
@@ -6049,9 +6049,9 @@ WITH delivered_totals (id, total) AS (
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = ? ))
       
 )
 
@@ -6067,9 +6067,9 @@ WITH delivered_totals (id, total) AS (
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = ? ))
       
 )
 
@@ -6085,9 +6085,9 @@ WITH delivered_totals (id, total) AS (
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = @p1 ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = @p1 ))
       
 )
 
@@ -6103,9 +6103,9 @@ WITH delivered_totals (id, total) AS (
 ```sql
 WITH delivered_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = $1 ))
       
 )
 
@@ -6222,6 +6222,142 @@ EXCEPT
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
+```
+
+**Params:** `[]`
+
+## Q009
+
+### PostgreSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+### SQLite
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+### MySQL
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = ? ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = @p1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, selecto_root.name, selecto_root.tier
+        from active_customers_view selecto_root
+        where (( selecto_root.tier = $1 ))
+      
+        order by selecto_root.name asc
+```
+
+**Params:** `["premium"]`
+
+## Q010
+
+### PostgreSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, customer.name
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -7393,9 +7529,9 @@ select selecto_root.id, selecto_root.name
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = $1 ))
       
 )
 
@@ -7410,9 +7546,9 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = ? ))
       
 )
 
@@ -7427,9 +7563,9 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = ? ))
       
 )
 
@@ -7444,9 +7580,9 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = ? ))
       
 )
 
@@ -7461,9 +7597,9 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = @p1 ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = @p1 ))
       
 )
 
@@ -7478,9 +7614,9 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = $1 ))
       
 )
 
@@ -7497,14 +7633,14 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = $1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7518,14 +7654,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7539,14 +7675,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7560,14 +7696,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7581,14 +7717,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = @p1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = @p1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7602,14 +7738,14 @@ WITH order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = $1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7625,13 +7761,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7645,13 +7781,13 @@ WITH customer_spend (customer_id, total) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7665,13 +7801,13 @@ WITH customer_spend (customer_id, total) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7685,13 +7821,13 @@ WITH customer_spend (customer_id, total) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7705,13 +7841,13 @@ WITH customer_spend (customer_id, total) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7725,13 +7861,13 @@ WITH customer_spend (customer_id, total) AS (
 ```sql
 WITH customer_spend (customer_id, total) AS (
     
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -7815,8 +7951,8 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7830,8 +7966,8 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7845,8 +7981,8 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7860,8 +7996,8 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7875,8 +8011,8 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7890,8 +8026,8 @@ WITH order_totals (id, total) AS (
 ```sql
 WITH order_totals (id, total) AS (
     
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7975,14 +8111,14 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = $1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -7996,14 +8132,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -8017,14 +8153,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -8038,14 +8174,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = ? ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = ? ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -8059,14 +8195,14 @@ WITH RECURSIVE order_chain (id, status) AS (
 ```sql
 WITH order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = @p1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = @p1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
@@ -8080,14 +8216,14 @@ WITH order_chain (id, status) AS (
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = $1 ))
       
     UNION ALL
     
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status
