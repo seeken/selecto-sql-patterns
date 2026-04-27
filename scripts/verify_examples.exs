@@ -1,14 +1,46 @@
 selecto_path = System.get_env("SELECTO_PATH", "../selecto")
 postgresql_adapter_path = System.get_env("SELECTO_DB_POSTGRESQL_PATH", "../selecto_db_postgresql")
+mariadb_adapter_path = System.get_env("SELECTO_DB_MARIADB_PATH", "../selecto_db_mariadb")
+mssql_adapter_path = System.get_env("SELECTO_DB_MSSQL_PATH", "../selecto_db_mssql")
+duckdb_adapter_path = System.get_env("SELECTO_DB_DUCKDB_PATH", "../selecto_db_duckdb")
 System.put_env("SELECTO_ECOSYSTEM_USE_LOCAL", "1")
 
-Mix.install([
-  {:jason, "~> 1.4"},
-  {:selecto, path: selecto_path, override: true},
-  {:selecto_db_postgresql, path: postgresql_adapter_path}
-])
+live_validation? =
+  System.get_env("SELECTO_SQL_PATTERNS_LIVE_VALIDATION") == "1" or
+    System.get_env("SELECTO_SQL_PATTERNS_REAL_ADAPTERS") == "1"
 
-Code.require_file(Path.join([selecto_path, "test", "support", "selecto_db_adapter_stubs.exs"]))
+path_dep = fn app, path ->
+  if File.dir?(path) do
+    {app, path: path, override: true}
+  end
+end
+
+deps =
+  [
+    {:jason, "~> 1.4"},
+    {:selecto, path: selecto_path, override: true},
+    {:selecto_db_postgresql, path: postgresql_adapter_path, override: true}
+  ] ++
+    if live_validation? do
+      [
+        {:myxql, "~> 0.7"},
+        {:exqlite, "~> 0.13"},
+        path_dep.(:selecto_db_mariadb, mariadb_adapter_path),
+        path_dep.(:selecto_db_mssql, mssql_adapter_path),
+        path_dep.(:selecto_db_duckdb, duckdb_adapter_path)
+      ]
+      |> Enum.reject(&is_nil/1)
+    else
+      []
+    end
+
+Mix.install(deps)
+
+if live_validation? do
+  Code.require_file("live_adapter_compat.exs", __DIR__)
+else
+  Code.require_file(Path.join([selecto_path, "test", "support", "selecto_db_adapter_stubs.exs"]))
+end
 
 defmodule SelectoSqlPatterns.VerifyExamples do
   import Selecto.ExprMacros
@@ -62,6 +94,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"A008", query_a008(), ["select", "avg", "where", "group by"]},
       {"A009", query_a009(), ["select", "min", "max", "group by"]},
       {"A010", query_a010(), ["select", "count", "avg", "group by"]},
+      {"E001", query_e001(), ["case when", "then", "else", "order by"]},
+      {"E002", query_e002(), ["coalesce", "nullif", "left join", "order by"]},
+      {"E003", query_e003(), ["count(distinct", "stddev", "variance", "group by"]},
+      {"E004", query_e004(), ["rollup", "count(*)", "group by", "order by"]},
       {"W001", query_w001(), ["select", "row_number", "over", "partition by"]},
       {"W002", query_w002(), ["select", "sum", "over", "order by"]},
       {"W003", query_w003(), ["select", "lag", "over", "partition by"]},
@@ -436,6 +472,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp format_markdown_adapter_output(adapter, %{status: :ok, sql: sql, params: params}) do
+    sql = trim_trailing_line_whitespace(sql)
+
     [
       "### ",
       adapter.label,
@@ -465,6 +503,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> String.replace(~r/\s+/, " ")
     |> String.trim()
     |> String.downcase()
+  end
+
+  defp trim_trailing_line_whitespace(sql) do
+    sql
+    |> String.trim()
+    |> String.split("\n")
+    |> Enum.map(&String.trim_trailing/1)
+    |> Enum.join("\n")
   end
 
   defp assert_fragments!(id, sql, fragments) do
@@ -1492,6 +1538,61 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.select(select([name, count(reviews.id), as(avg(reviews.rating), "avg_rating")]))
     |> Selecto.group_by(["name"])
     |> Selecto.order_by(order_by([asc(name)]))
+  end
+
+  defp query_e001 do
+    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    |> Selecto.select(
+      select([
+        order_number,
+        status,
+        as(
+          case_when(
+            [
+              {status == "processing", "Open"},
+              {status == "shipped", "In Transit"},
+              {status == "delivered", "Closed"}
+            ],
+            "Other"
+          ),
+          "status_bucket"
+        )
+      ])
+    )
+    |> Selecto.order_by(order_by([asc(order_number)]))
+  end
+
+  defp query_e002 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(
+      select([
+        order_number,
+        as(coalesce(customer.name, lit("Unassigned")), "customer_name"),
+        as(nullif(status, lit("processing")), "non_processing_status")
+      ])
+    )
+    |> Selecto.order_by(order_by([asc(order_number)]))
+  end
+
+  defp query_e003 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(
+      select([
+        status,
+        as(count_distinct(customer_id), "distinct_customer_count"),
+        as(stddev(total), "stddev_total"),
+        as(variance(total), "variance_total")
+      ])
+    )
+    |> Selecto.group_by(["status"])
+    |> Selecto.order_by(order_by([asc(status)]))
+  end
+
+  defp query_e004 do
+    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    |> Selecto.select(select([customer.tier, status, as(count(), "order_count")]))
+    |> Selecto.group_by(group_by([rollup([customer.tier, status])]))
+    |> Selecto.order_by(order_by([asc(customer.tier), asc(status)]))
   end
 
   defp query_w001 do

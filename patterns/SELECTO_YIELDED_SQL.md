@@ -10,7 +10,7 @@ Generated from `Selecto.to_sql/1` for every example in this repository.
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = $1 ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -22,7 +22,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -34,7 +34,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -46,7 +46,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -58,7 +58,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = @p1 ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -70,7 +70,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = $1 ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -84,7 +84,7 @@ select selecto_root.order_number, customer.name
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -96,7 +96,7 @@ select selecto_root.name, COUNT(reviews.id)
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -108,7 +108,7 @@ select selecto_root.name, COUNT(reviews.id)
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -120,7 +120,7 @@ select selecto_root.name, COUNT(reviews.id)
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -132,7 +132,7 @@ select selecto_root.name, COUNT(reviews.id)
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -144,7 +144,7 @@ select selecto_root.name, COUNT(reviews.id)
 select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -300,7 +300,7 @@ select selecto_root.first_name, manager.first_name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -312,7 +312,7 @@ select selecto_root.name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -324,7 +324,7 @@ select selecto_root.name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -336,7 +336,7 @@ select selecto_root.name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -348,7 +348,7 @@ select selecto_root.name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -360,7 +360,7 @@ select selecto_root.name
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -592,7 +592,7 @@ select selecto_root.order_number, "customer:alias_a".name, "customer:alias_b".ti
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -604,7 +604,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -616,7 +616,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -628,7 +628,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -640,7 +640,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -652,7 +652,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -838,7 +838,7 @@ select selecto_root.name, selecto_root.tier, processing_orders.order_number
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -850,7 +850,7 @@ select selecto_root.status, count(*)
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -862,7 +862,7 @@ select selecto_root.status, count(*)
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -874,7 +874,7 @@ select selecto_root.status, count(*)
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -886,7 +886,7 @@ select selecto_root.status, count(*)
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -898,7 +898,7 @@ select selecto_root.status, count(*)
 select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -912,9 +912,9 @@ select selecto_root.status, count(*)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = $1 ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -926,9 +926,9 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = ? ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -940,9 +940,9 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = ? ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -954,9 +954,9 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = ? ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -968,9 +968,9 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = @p1 ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -982,9 +982,9 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = $1 ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 
@@ -998,7 +998,7 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1010,7 +1010,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1022,7 +1022,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1034,7 +1034,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1046,7 +1046,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1058,7 +1058,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1072,7 +1072,7 @@ select selecto_root.status, AVG(selecto_root.total)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1084,7 +1084,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1096,7 +1096,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1108,7 +1108,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1120,7 +1120,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1132,7 +1132,7 @@ select customer.name, count(*)
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 
@@ -1146,7 +1146,7 @@ select customer.name, count(*)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1158,7 +1158,7 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1170,7 +1170,7 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1182,7 +1182,7 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1194,7 +1194,7 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1206,7 +1206,7 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1220,9 +1220,9 @@ select customer.tier, SUM(selecto_root.total)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = $1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1234,9 +1234,9 @@ select customer.tier, count(*)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1248,9 +1248,9 @@ select customer.tier, count(*)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1262,9 +1262,9 @@ select customer.tier, count(*)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1276,9 +1276,9 @@ select customer.tier, count(*)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = @p1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1290,9 +1290,9 @@ select customer.tier, count(*)
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = $1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1306,7 +1306,7 @@ select customer.tier, count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1318,7 +1318,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1330,7 +1330,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1342,7 +1342,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1354,7 +1354,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1366,7 +1366,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1380,9 +1380,9 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = $1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1394,9 +1394,9 @@ select customer.tier, AVG(selecto_root.total)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1408,9 +1408,9 @@ select customer.tier, AVG(selecto_root.total)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1422,9 +1422,9 @@ select customer.tier, AVG(selecto_root.total)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = ? ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1436,9 +1436,9 @@ select customer.tier, AVG(selecto_root.total)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = @p1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1450,9 +1450,9 @@ select customer.tier, AVG(selecto_root.total)
 select customer.tier, AVG(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = $1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 
@@ -1466,7 +1466,7 @@ select customer.tier, AVG(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1478,7 +1478,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1490,7 +1490,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1502,7 +1502,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1514,7 +1514,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1526,7 +1526,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 
@@ -1540,7 +1540,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -1552,7 +1552,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -1564,7 +1564,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -1576,7 +1576,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -1588,7 +1588,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 
@@ -1600,8 +1600,281 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
 select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+## E001
+
+### PostgreSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = $1 )) then 'Open' when (( selecto_root.status = $2 )) then 'In Transit' when (( selecto_root.status = $3 )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+### SQLite
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = @p1 )) then 'Open' when (( selecto_root.status = @p2 )) then 'In Transit' when (( selecto_root.status = @p3 )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = $1 )) then 'Open' when (( selecto_root.status = $2 )) then 'In Transit' when (( selecto_root.status = $3 )) then 'Closed' else 'Other' end
+        from orders selecto_root
+        order by selecto_root.order_number asc
+```
+
+**Params:** `["processing", "shipped", "delivered"]`
+
+## E002
+
+### PostgreSQL
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        order by selecto_root.order_number asc
+```
+
+**Params:** `[]`
+
+## E003
+
+### PostgreSQL
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), STDEV(selecto_root.total), VAR(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)
+        from orders selecto_root
+        group by selecto_root.status
+
+        order by selecto_root.status asc
+```
+
+**Params:** `[]`
+
+## E004
+
+### PostgreSQL
+
+```sql
+select * from (
+        select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by rollup( customer.tier, selecto_root.status )
+      ) as rollupfix
+        order by 1 asc nulls first, 2 asc nulls first
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status
+
+        order by customer.tier asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status
+
+        order by customer.tier asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status
+
+        order by customer.tier asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status
+
+        order by customer.tier asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status
+
+        order by customer.tier asc, selecto_root.status asc
 ```
 
 **Params:** `[]`
@@ -2178,7 +2451,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2194,7 +2467,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2210,7 +2483,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2226,7 +2499,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2242,7 +2515,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = @p1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2258,7 +2531,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2358,7 +2631,7 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2370,7 +2643,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2382,7 +2655,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2394,7 +2667,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2406,7 +2679,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2418,7 +2691,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2436,7 +2709,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2452,7 +2725,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2468,7 +2741,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2484,7 +2757,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2500,7 +2773,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2516,7 +2789,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -2534,7 +2807,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2550,7 +2823,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2566,7 +2839,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2582,7 +2855,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2598,7 +2871,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = @p1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2614,7 +2887,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2628,7 +2901,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2640,7 +2913,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2652,7 +2925,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2664,7 +2937,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2676,7 +2949,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p1) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2688,7 +2961,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2706,7 +2979,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2722,7 +2995,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2738,7 +3011,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2754,7 +3027,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2770,7 +3043,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = @p1 ))
       ) ) and ( selecto_root.status = @p2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2786,7 +3059,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2804,7 +3077,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2820,7 +3093,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2836,7 +3109,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2852,7 +3125,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2868,7 +3141,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = @p1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2884,7 +3157,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -2902,7 +3175,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = $1 ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2918,7 +3191,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2934,7 +3207,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2950,7 +3223,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2966,7 +3239,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = @p1 ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2982,7 +3255,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = $1 ))
       ) ))
-      
+
         order by selecto_root.total asc
 ```
 
@@ -2996,7 +3269,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3008,7 +3281,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3020,7 +3293,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3032,7 +3305,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3044,7 +3317,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = @p1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = @p2)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3056,7 +3329,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3782,7 +4055,7 @@ UNION
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( NOT (selecto_root.status = ANY($1)) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3794,7 +4067,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3806,7 +4079,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3818,7 +4091,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3830,7 +4103,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (@p1, @p2) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3842,7 +4115,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN ($1, $2) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3856,7 +4129,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3868,7 +4141,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3880,7 +4153,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3892,7 +4165,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3904,7 +4177,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = @p1 ) or ( selecto_root.status = @p2 ))) and ( selecto_root.total > @p3 ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3916,7 +4189,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = $1 ) or ( selecto_root.status = $2 ))) and ( selecto_root.total > $3 ))))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -3930,7 +4203,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status = ANY($3) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3942,7 +4215,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3954,7 +4227,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3966,7 +4239,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3978,7 +4251,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between @p1 and @p2 ) and ( selecto_root.status IN (@p3, @p4, @p5) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -3990,7 +4263,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status IN ($3, $4, $5) ))
-      
+
         order by selecto_root.order_number asc
 ```
 
@@ -4004,7 +4277,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.name, selecto_root.sku
         from products selecto_root
         where (( selecto_root.name @@ websearch_to_tsquery($1) ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4020,7 +4293,7 @@ _Unavailable:_ `SQLite text search requires an FTS5-configured field`
 select selecto_root.name, selecto_root.sku
         from products selecto_root
         where (( MATCH(selecto_root.name) AGAINST (? IN NATURAL LANGUAGE MODE) ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4046,7 +4319,7 @@ _Unavailable:_ `Adapter does not support text search`
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4058,7 +4331,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4070,7 +4343,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4082,7 +4355,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4094,7 +4367,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = @p1  ) ) and ( selecto_root.total > @p2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4106,7 +4379,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4120,7 +4393,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4132,7 +4405,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4144,7 +4417,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4156,7 +4429,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4168,7 +4441,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> @p1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4180,7 +4453,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4194,7 +4467,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4206,7 +4479,7 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4218,7 +4491,7 @@ select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.z
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4230,7 +4503,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4242,7 +4515,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
         from products selecto_root
         where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4254,7 +4527,7 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
 select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -4272,7 +4545,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4288,7 +4561,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4304,7 +4577,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4320,7 +4593,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4336,7 +4609,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = @p1 ))
       ) ) and ( selecto_root.status = @p2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4352,7 +4625,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
-      
+
         order by selecto_root.total desc
 ```
 
@@ -4366,7 +4639,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         limit 25
         offset 50
 ```
@@ -4379,7 +4652,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         limit 25
         offset 50
 ```
@@ -4392,7 +4665,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         limit 25
         offset 50
 ```
@@ -4405,7 +4678,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         limit 25
         offset 50
 ```
@@ -4418,7 +4691,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         offset 50 rows fetch next 25 rows only
 ```
 
@@ -4430,7 +4703,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.id asc
-      
+
         limit 25
         offset 50
 ```
@@ -4445,9 +4718,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > $1 ))
-      
+
         order by selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4459,9 +4732,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
-      
+
         order by selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4473,9 +4746,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
-      
+
         order by selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4487,9 +4760,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
-      
+
         order by selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4501,9 +4774,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > @p1 ))
-      
+
         order by selecto_root.id asc
-      
+
         offset 0 rows fetch next 25 rows only
 ```
 
@@ -4515,9 +4788,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > $1 ))
-      
+
         order by selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4531,9 +4804,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < $1 ))
-      
+
         order by selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4545,9 +4818,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
-      
+
         order by selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4559,9 +4832,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
-      
+
         order by selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4573,9 +4846,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
-      
+
         order by selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4587,9 +4860,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < @p1 ))
-      
+
         order by selecto_root.id desc
-      
+
         offset 0 rows fetch next 20 rows only
 ```
 
@@ -4601,9 +4874,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < $1 ))
-      
+
         order by selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4617,7 +4890,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
         offset 30
 ```
@@ -4630,7 +4903,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
         offset 30
 ```
@@ -4643,7 +4916,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
         offset 30
 ```
@@ -4656,7 +4929,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
         offset 30
 ```
@@ -4669,7 +4942,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         offset 30 rows fetch next 15 rows only
 ```
 
@@ -4681,7 +4954,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
         offset 30
 ```
@@ -4696,9 +4969,9 @@ select selecto_root.order_number, customer.name, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > $1 ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4710,9 +4983,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4724,9 +4997,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4738,9 +5011,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4752,9 +5025,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > @p1 ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         offset 0 rows fetch next 25 rows only
 ```
 
@@ -4766,9 +5039,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > $1 ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 
@@ -4782,7 +5055,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
         offset 40
 ```
@@ -4795,7 +5068,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
         offset 40
 ```
@@ -4808,7 +5081,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
         offset 40
 ```
@@ -4821,7 +5094,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
         offset 40
 ```
@@ -4834,7 +5107,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         offset 40 rows fetch next 20 rows only
 ```
 
@@ -4846,7 +5119,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
         offset 40
 ```
@@ -4964,9 +5237,9 @@ offset 20
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4978,9 +5251,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -4992,9 +5265,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -5006,9 +5279,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -5020,9 +5293,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < @p1 ) or ((( selecto_root.total = @p2 ) and ( selecto_root.id < @p3 ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         offset 0 rows fetch next 20 rows only
 ```
 
@@ -5034,9 +5307,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 
@@ -5050,7 +5323,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
         from products selecto_root
         where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5062,7 +5335,7 @@ select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_
 select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.price_band') AS "price_band"
         from products selecto_root
         where (( json_extract("selecto_root"."metadata", '$.price_band') = 'premium' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5074,7 +5347,7 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
         from products selecto_root
         where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5086,7 +5359,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
         from products selecto_root
         where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5098,7 +5371,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.price_band') AS [price_band]
         from products selecto_root
         where (( JSON_VALUE(selecto_root.metadata, '$.price_band') = 'premium' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5110,7 +5383,7 @@ select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$
 select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
         from products selecto_root
         where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5124,7 +5397,7 @@ select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_
 select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5136,7 +5409,7 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ) and ( json_extract("selecto_root"."metadata", '$.warehouse.zone') = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5148,7 +5421,7 @@ select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.z
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5160,7 +5433,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5172,7 +5445,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
         from products selecto_root
         where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ) and ( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5184,7 +5457,7 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
 select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5198,7 +5471,7 @@ select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5210,7 +5483,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5222,7 +5495,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5234,7 +5507,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5246,7 +5519,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && @p1 ) and ( selecto_root.active = @p2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5258,7 +5531,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5272,7 +5545,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
         from products selecto_root
         where (( "metadata"->'stock' ? 'quantity' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5284,7 +5557,7 @@ select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
 select selecto_root.name, json_extract("selecto_root"."metadata", '$.stock.quantity') AS "stock_quantity"
         from products selecto_root
         where (( json_type("selecto_root"."metadata", '$.stock.quantity') IS NOT NULL ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5296,7 +5569,7 @@ select selecto_root.name, json_extract("selecto_root"."metadata", '$.stock.quant
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5308,7 +5581,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5320,7 +5593,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]
         from products selecto_root
         where (( (JSON_QUERY(selecto_root.metadata, '$.stock.quantity') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.stock.quantity') IS NOT NULL) ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5332,7 +5605,7 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') 
 select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
         from products selecto_root
         where (( "metadata"->'stock' ? 'quantity' ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5408,7 +5681,7 @@ select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' A
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5420,7 +5693,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5432,7 +5705,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5444,7 +5717,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5456,7 +5729,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> @p1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5468,7 +5741,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5482,7 +5755,7 @@ select selecto_root.name, selecto_root.tags
 select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5494,7 +5767,7 @@ select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{wareho
 select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.warehouse.zone')
         from products selecto_root
         where (( json_extract("selecto_root"."metadata", '$.warehouse.zone') = ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5506,7 +5779,7 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5518,7 +5791,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))
         from products selecto_root
         where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5530,7 +5803,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
         from products selecto_root
         where (( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ) and ( selecto_root.active = @p2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -5542,7 +5815,7 @@ select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$
 select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
         from products selecto_root
         where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6012,11 +6285,11 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = $1 ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6030,11 +6303,11 @@ WITH delivered_totals (id, total) AS (
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6048,11 +6321,11 @@ WITH delivered_totals (id, total) AS (
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6066,11 +6339,11 @@ WITH delivered_totals (id, total) AS (
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6084,11 +6357,11 @@ WITH delivered_totals (id, total) AS (
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = @p1 ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6102,11 +6375,11 @@ WITH delivered_totals (id, total) AS (
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
+
         select cte_delivered_totals.id, cte_delivered_totals.total
         from orders cte_delivered_totals
         where (( cte_delivered_totals.status = $1 ))
-      
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total
@@ -6234,7 +6507,7 @@ EXCEPT
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6246,7 +6519,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6258,7 +6531,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6270,7 +6543,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6282,7 +6555,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = @p1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6294,7 +6567,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = $1 ))
-      
+
         order by selecto_root.name asc
 ```
 
@@ -6370,7 +6643,7 @@ select selecto_root.order_number, selecto_root.status, customer.name
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6382,7 +6655,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6394,7 +6667,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6406,7 +6679,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6418,7 +6691,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= @p1 and selecto_root.inserted_at < @p2) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6430,7 +6703,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
-      
+
         order by selecto_root.inserted_at asc
 ```
 
@@ -6754,9 +7027,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at,
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 
@@ -6768,9 +7041,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 
@@ -6782,9 +7055,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 
@@ -6796,9 +7069,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 
@@ -6810,9 +7083,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < @p1 ) or ((( selecto_root.inserted_at = @p2 ) and ( selecto_root.id < @p3 ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         offset 0 rows fetch next 25 rows only
 ```
 
@@ -6824,9 +7097,9 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 
@@ -6938,7 +7211,7 @@ limit 50
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -6950,7 +7223,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -6962,7 +7235,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -6974,7 +7247,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -6986,7 +7259,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -6998,7 +7271,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7012,7 +7285,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7024,7 +7297,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7036,7 +7309,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7048,7 +7321,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7060,7 +7333,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7072,7 +7345,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7086,7 +7359,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7098,7 +7371,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7110,7 +7383,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7122,7 +7395,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7134,7 +7407,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7146,7 +7419,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7160,7 +7433,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7172,7 +7445,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7184,7 +7457,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7196,7 +7469,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7208,7 +7481,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7220,7 +7493,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7234,7 +7507,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7246,7 +7519,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7258,7 +7531,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7270,7 +7543,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7282,7 +7555,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7294,7 +7567,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7308,7 +7581,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         limit 10
 ```
 
@@ -7320,7 +7593,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         limit 10
 ```
 
@@ -7332,7 +7605,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         limit 10
 ```
 
@@ -7344,7 +7617,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         limit 10
 ```
 
@@ -7356,7 +7629,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         offset 0 rows fetch next 10 rows only
 ```
 
@@ -7368,7 +7641,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
         order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
-      
+
         limit 10
 ```
 
@@ -7382,7 +7655,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7394,7 +7667,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7406,7 +7679,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7418,7 +7691,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7430,7 +7703,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7442,7 +7715,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 
@@ -7456,7 +7729,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7468,7 +7741,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7480,7 +7753,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7492,7 +7765,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7504,7 +7777,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = @p1) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7516,7 +7789,7 @@ select selecto_root.id, selecto_root.name
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = $1) ))
-      
+
         order by selecto_root.id asc
 ```
 
@@ -7528,11 +7801,11 @@ select selecto_root.id, selecto_root.name
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = $1 ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7545,11 +7818,11 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7562,11 +7835,11 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7579,11 +7852,11 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = ? ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7596,11 +7869,11 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = @p1 ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7613,11 +7886,11 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
         where (( cte_order_totals.status = $1 ))
-      
+
 )
 
         select selecto_root.order_number, order_totals.total
@@ -7632,13 +7905,13 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = $1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7653,13 +7926,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7674,13 +7947,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7695,13 +7968,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7716,13 +7989,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = @p1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7737,13 +8010,13 @@ WITH order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = $1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -7760,12 +8033,12 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7780,12 +8053,12 @@ WITH customer_spend (customer_id, total) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7800,12 +8073,12 @@ WITH customer_spend (customer_id, total) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7820,12 +8093,12 @@ WITH customer_spend (customer_id, total) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7840,12 +8113,12 @@ WITH customer_spend (customer_id, total) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7860,12 +8133,12 @@ WITH customer_spend (customer_id, total) AS (
 
 ```sql
 WITH customer_spend (customer_id, total) AS (
-    
+
         select cte_customer_spend.customer_id, cte_customer_spend.total
         from orders cte_customer_spend
 ),
     order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7950,7 +8223,7 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7965,7 +8238,7 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7980,7 +8253,7 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -7995,7 +8268,7 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -8010,7 +8283,7 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -8025,7 +8298,7 @@ WITH order_totals (id, total) AS (
 
 ```sql
 WITH order_totals (id, total) AS (
-    
+
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
 )
@@ -8110,13 +8383,13 @@ WITH status_labels ("status", "status_label") AS (VALUES ('processing', 'In Prog
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = $1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -8131,13 +8404,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -8152,13 +8425,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -8173,13 +8446,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = ? ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -8194,13 +8467,13 @@ WITH RECURSIVE order_chain (id, status) AS (
 
 ```sql
 WITH order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = @p1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )
@@ -8215,13 +8488,13 @@ WITH order_chain (id, status) AS (
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
         where (( cte_order_chain.status = $1 ))
-      
+
     UNION ALL
-    
+
         select cte_order_chain.id, cte_order_chain.status
         from orders cte_order_chain
 )

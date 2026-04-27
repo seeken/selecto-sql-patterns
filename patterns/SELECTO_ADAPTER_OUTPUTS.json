@@ -25,7 +25,7 @@
       "key": "duckdb"
     }
   ],
-  "generated_at": "2026-04-19T04:48:26Z",
+  "generated_at": "2026-04-27T04:31:34Z",
   "patterns": {
     "C002": {
       "duckdb": {
@@ -101,6 +101,38 @@
         "status": "ok",
         "params": [],
         "sql": "select selecto_root.name, json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')\n        from products selecto_root\n        where (( json_type(\"selecto_root\".\"metadata\", '$.warehouse.zone') IS NOT NULL ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "E004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier, selecto_root.status\n      \n        order by customer.tier asc, selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier, selecto_root.status\n      \n        order by customer.tier asc, selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier, selecto_root.status\n      \n        order by customer.tier asc, selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier, selecto_root.status\n      \n        order by customer.tier asc, selecto_root.status asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select * from (\n        select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by rollup( customer.tier, selecto_root.status )\n      ) as rollupfix\n        order by 1 asc nulls first, 2 asc nulls first"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select customer.tier, selecto_root.status, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        group by customer.tier, selecto_root.status\n      \n        order by customer.tier asc, selecto_root.status asc"
       }
     },
     "J004": {
@@ -685,6 +717,62 @@
         "sql": "select selecto_root.name, selecto_root.tier, high_value_delivered.order_number, high_value_delivered.total\n        from customers selecto_root inner join (\n        select subq_root_orders_high_value_delivered.customer_id, subq_root_orders_high_value_delivered.order_number, subq_root_orders_high_value_delivered.total\n        from orders subq_root_orders_high_value_delivered\n        where (((( subq_root_orders_high_value_delivered.status = ? ) and ( subq_root_orders_high_value_delivered.total > ? ))))\n      ) high_value_delivered on selecto_root.id = high_value_delivered.customer_id"
       }
     },
+    "E001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = $1 )) then 'Open' when (( selecto_root.status = $2 )) then 'In Transit' when (( selecto_root.status = $3 )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = @p1 )) then 'Open' when (( selecto_root.status = @p2 )) then 'In Transit' when (( selecto_root.status = @p3 )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = $1 )) then 'Open' when (( selecto_root.status = $2 )) then 'In Transit' when (( selecto_root.status = $3 )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [
+          "processing",
+          "shipped",
+          "delivered"
+        ],
+        "sql": "select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end\n        from orders selecto_root\n        order by selecto_root.order_number asc"
+      }
+    },
     "W010": {
       "duckdb": {
         "status": "ok",
@@ -823,6 +911,38 @@
         "status": "ok",
         "params": [],
         "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"next_total\"\n        from orders selecto_root"
+      }
+    },
+    "E002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        order by selecto_root.order_number asc"
       }
     },
     "A004": {
@@ -4073,6 +4193,38 @@
         "status": "ok",
         "params": [],
         "sql": "select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS \"running_total\"\n        from orders selecto_root"
+      }
+    },
+    "E003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), STDEV(selecto_root.total), VAR(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(selecto_root.total), variance(selecto_root.total)\n        from orders selecto_root\n        group by selecto_root.status\n      \n        order by selecto_root.status asc"
       }
     },
     "JA001": {

@@ -1,6 +1,7 @@
 #!/usr/bin/env elixir
 
 System.put_env("SELECTO_SQL_PATTERNS_NO_AUTO", "1")
+System.put_env("SELECTO_SQL_PATTERNS_LIVE_VALIDATION", "1")
 Code.require_file("verify_examples.exs", __DIR__)
 
 defmodule SelectoSqlPatterns.LiveValidation do
@@ -12,6 +13,21 @@ defmodule SelectoSqlPatterns.LiveValidation do
   @smoke_patterns [
     %{id: "J001", assert: {:columns_include, ["order_number", "name"]}},
     %{id: "A003", assert: {:columns_include, ["status"]}},
+    %{id: "E001", assert: {:columns_include, ["order_number", "status"]}},
+    %{
+      id: "E002",
+      assert: {:columns_include, ["order_number"]}
+    },
+    %{
+      id: "E003",
+      assert: {:columns_include, ["status"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite smoke validation does not register stddev/variance aggregate functions."}
+      }
+    },
+    %{id: "E004", assert: {:columns_include, ["tier", "status"]}},
     %{id: "W001", assert: {:columns_include, ["first_name", "department", "salary"]}},
     %{id: "P002", assert: {:columns_include, ["id", "order_number", "total"]}},
     %{id: "T001", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
@@ -390,6 +406,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       }
     },
     %{
+      id: "SO008",
+      assert: {:columns_include, ["name", "tier"]},
+      adapters: %{
+        "sqlite" =>
+          {:generated_only,
+           "SQLite still needs set-operation execution handling for this column-mapped UNION smoke case."}
+      }
+    },
+    %{
       id: "Q001",
       assert: {:columns_include, ["name", "email"]},
       adapters: %{
@@ -410,6 +435,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
       }
     },
     %{id: "Q005", assert: {:columns_include, ["name", "email"]}},
+    %{id: "Q009", assert: {:columns_include, ["customer_id", "name", "tier"]}},
+    %{id: "Q010", assert: {:columns_include, ["order_number", "status", "name"]}},
     %{
       id: "G001",
       assert: {:columns_include, ["id", "name"]},
@@ -984,8 +1011,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "IF OBJECT_ID('blocked_customers', 'U') IS NOT NULL DROP TABLE blocked_customers",
       "IF OBJECT_ID('archived_orders', 'U') IS NOT NULL DROP TABLE archived_orders",
       "IF OBJECT_ID('orders', 'U') IS NOT NULL DROP TABLE orders",
+      "IF OBJECT_ID('active_customers_view', 'V') IS NOT NULL DROP VIEW active_customers_view",
       "IF OBJECT_ID('customers', 'U') IS NOT NULL DROP TABLE customers",
       "IF OBJECT_ID('employees', 'U') IS NOT NULL DROP TABLE employees",
+      "IF OBJECT_ID('vendor_contacts', 'U') IS NOT NULL DROP TABLE vendor_contacts",
       "IF OBJECT_ID('vendors', 'U') IS NOT NULL DROP TABLE vendors",
       "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INT PRIMARY KEY, order_id INT NULL, order_number VARCHAR(50), customer_id INT NULL, attendee_id INT NULL, product_name VARCHAR(255) NULL, quantity INT NULL, price DECIMAL(10,2) NULL, status VARCHAR(50), total DECIMAL(10,2), inserted_at DATETIME2)",
@@ -998,12 +1027,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BIT, tags NVARCHAR(MAX), metadata NVARCHAR(MAX))",
       "CREATE TABLE reviews (id INT PRIMARY KEY, product_id INT, rating INT)",
       "CREATE TABLE employees (id INT PRIMARY KEY, first_name VARCHAR(255), manager_id INT NULL, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("mssql"),
+      active_customers_view_sql()
     ] ++ mssql_insert_statements()
   end
 
   defp fixture_sql("postgresql") do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS attendees",
@@ -1015,6 +1047,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1027,12 +1060,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags JSONB, metadata JSONB)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("postgresql"),
+      active_customers_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("mysql") do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS attendees",
@@ -1044,6 +1080,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1056,12 +1093,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags JSON, metadata JSON)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("mysql"),
+      active_customers_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("mariadb") do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS attendees",
@@ -1073,6 +1113,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1085,12 +1126,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags LONGTEXT, metadata LONGTEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("mariadb"),
+      active_customers_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("duckdb") do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS premium_customers",
@@ -1100,6 +1144,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR, customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR, quantity INTEGER, price DECIMAL(10,2), status VARCHAR, total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1112,12 +1157,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR, sku VARCHAR, price DECIMAL(10,2), active BOOLEAN, tags JSON, metadata JSON)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR, manager_id INTEGER, department VARCHAR, salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)",
+      vendor_contacts_table_sql("duckdb"),
+      active_customers_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("sqlite") do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS attendees",
@@ -1129,6 +1177,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1141,12 +1190,15 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags TEXT, metadata TEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("sqlite"),
+      active_customers_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql(_adapter_key) do
     [
+      "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
       "DROP TABLE IF EXISTS attendees",
@@ -1158,6 +1210,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "DROP TABLE IF EXISTS orders",
       "DROP TABLE IF EXISTS customers",
       "DROP TABLE IF EXISTS employees",
+      "DROP TABLE IF EXISTS vendor_contacts",
       "DROP TABLE IF EXISTS vendors",
       "CREATE TABLE customers (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       "CREATE TABLE orders (id INTEGER PRIMARY KEY, order_id INTEGER, order_number VARCHAR(50), customer_id INTEGER, attendee_id INTEGER, product_name VARCHAR(255), quantity INTEGER, price DECIMAL(10,2), status VARCHAR(50), total DECIMAL(10,2), inserted_at TIMESTAMP)",
@@ -1170,8 +1223,22 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(255), sku VARCHAR(50), price DECIMAL(10,2), active BOOLEAN, tags TEXT, metadata TEXT)",
       "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER, rating INTEGER)",
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
-      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))"
+      "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
+      vendor_contacts_table_sql("default"),
+      active_customers_view_sql()
     ] ++ insert_statements()
+  end
+
+  defp vendor_contacts_table_sql("mssql") do
+    "CREATE TABLE vendor_contacts (id INT PRIMARY KEY, company_name VARCHAR(255), segment VARCHAR(50))"
+  end
+
+  defp vendor_contacts_table_sql(_adapter_key) do
+    "CREATE TABLE vendor_contacts (id INTEGER PRIMARY KEY, company_name VARCHAR(255), segment VARCHAR(50))"
+  end
+
+  defp active_customers_view_sql do
+    "CREATE VIEW active_customers_view AS SELECT id AS customer_id, name, tier FROM customers WHERE tier IN ('premium', 'platinum')"
   end
 
   defp insert_statements do
@@ -1187,7 +1254,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, true, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, true, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, false, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
       "INSERT INTO employees (id, first_name, manager_id, department, salary) VALUES (1, 'Ellen', NULL, 'Sales', 90000.00), (2, 'Marco', 1, 'Sales', 85000.00), (3, 'Priya', NULL, 'Engineering', 120000.00), (4, 'Luis', 3, 'Engineering', 110000.00)",
-      "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')"
+      "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')",
+      vendor_contacts_insert_statement()
     ]
   end
 
@@ -1204,8 +1272,13 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "INSERT INTO products (id, name, sku, price, active, tags, metadata) VALUES (1, 'Charger', 'SKU-1', 49.99, 1, '[\"featured\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"A1\"},\"stock\":{\"quantity\":12},\"price_band\":\"premium\"}'), (2, 'Cable', 'SKU-2', 19.99, 1, '[\"clearance\",\"electronics\"]', '{\"warehouse\":{\"zone\":\"B2\"},\"stock\":{\"quantity\":3},\"price_band\":\"budget\"}'), (3, 'Stand', 'SKU-3', 29.99, 0, '[\"office\"]', '{\"stock\":{\"quantity\":0},\"price_band\":\"standard\"}')",
       "INSERT INTO reviews (id, product_id, rating) VALUES (1, 1, 5), (2, 1, 4), (3, 2, 3)",
       "INSERT INTO employees (id, first_name, manager_id, department, salary) VALUES (1, 'Ellen', NULL, 'Sales', 90000.00), (2, 'Marco', 1, 'Sales', 85000.00), (3, 'Priya', NULL, 'Engineering', 120000.00), (4, 'Luis', 3, 'Engineering', 110000.00)",
-      "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')"
+      "INSERT INTO vendors (id, name, tier) VALUES (1, 'SupplyCo', 'gold'), (2, 'Northwind', 'silver')",
+      vendor_contacts_insert_statement()
     ]
+  end
+
+  defp vendor_contacts_insert_statement do
+    "INSERT INTO vendor_contacts (id, company_name, segment) VALUES (1, 'SupplyCo AP', 'gold'), (2, 'Northwind Buyer Desk', 'silver')"
   end
 
   defp orders_insert_statement do

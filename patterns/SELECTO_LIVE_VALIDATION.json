@@ -5689,7 +5689,261 @@
         ],
         "row_count": 68
       }
+    },
+    "E004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "status",
+          "count_star()"
+        ],
+        "row_count": 14
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "status",
+          "count(*)"
+        ],
+        "row_count": 8
+      }
+    },
+    "E001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "CASE  WHEN ((selecto_root.status = $1)) THEN ('Open') WHEN ((selecto_root.status = $2)) THEN ('In Transit') WHEN ((selecto_root.status = $3)) THEN ('Closed') ELSE 'Other' END"
+        ],
+        "row_count": 72
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end"
+        ],
+        "row_count": 72
+      }
+    },
+    "E002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "COALESCE(customer.\"name\", 'Unassigned')",
+          "\"nullif\"(selecto_root.status, 'processing')"
+        ],
+        "row_count": 72
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "coalesce( customer.name, 'Unassigned' )",
+          "nullif( selecto_root.status, 'processing' )"
+        ],
+        "row_count": 72
+      }
+    },
+    "SO008": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "reason": "SQLite still needs set-operation execution handling for this column-mapped UNION smoke case.",
+        "status": "generated_only"
+      }
+    },
+    "Q009": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
+      }
+    },
+    "Q010": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
+      }
+    },
+    "E003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "count(DISTINCT selecto_root.customer_id)",
+          "stddev(selecto_root.total)",
+          "variance(selecto_root.total)"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "reason": "SQLite smoke validation does not register stddev/variance aggregate functions.",
+        "status": "generated_only"
+      }
     }
   },
-  "generated_at": "2026-03-31T02:08:13Z"
+  "generated_at": "2026-04-27T04:32:20Z"
 }

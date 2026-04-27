@@ -34,6 +34,7 @@ def build_manifest() -> dict:
     categories = [
         ("joins", "Joins"),
         ("aggregates", "Aggregates"),
+        ("expressions", "Expressions"),
         ("windows", "Window Functions"),
         ("subqueries", "Subqueries"),
         ("ctes", "CTEs"),

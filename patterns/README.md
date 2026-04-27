@@ -16,6 +16,7 @@ not best expressed as one SQL query shape.
 
 - `joins/`
 - `aggregates/`
+- `expressions/`
 - `windows/`
 - `subqueries/`
 - `ctes/`

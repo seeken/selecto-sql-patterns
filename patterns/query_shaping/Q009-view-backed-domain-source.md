@@ -39,15 +39,14 @@ query =
 ## Selecto Expr
 
 ```elixir
-import Selecto.ExprMacros
-import Selecto.Sigil
+import Selecto.Expr
 
 customer_tier = "premium"
 
 Selecto.configure(active_customer_view_domain(), :mock_connection, validate: false)
-|> Selecto.select(select([customer_id, name, tier]))
+|> Selecto.select(["customer_id", "name", "tier"])
 |> Selecto.filter(~SELECTO"tier == ^customer_tier")
-|> Selecto.order_by(order_by([asc(name)]))
+|> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL

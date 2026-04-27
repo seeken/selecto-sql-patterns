@@ -6,6 +6,7 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 | --- | ---: | ---: |
 | Joins | 12 | 12 |
 | Aggregates | 10 | 10 |
+| Expressions | 4 | 4 |
 | Window functions | 10 | 10 |
 | Subqueries | 10 | 10 |
 | CTEs | 8 | 8 |
@@ -16,7 +17,7 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 | Query shaping | 10 | 10 |
 | Time-series | 8 | 8 |
 | Geospatial | 8 | 8 |
-| **Total** | **108** | **108** |
+| **Total** | **112** | **112** |
 
 ## Companion Guides
 
@@ -33,6 +34,7 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 
 - `J###` for joins
 - `A###` for aggregates
+- `E###` for expressions
 - `W###` for window functions
 - `S###` for subqueries
 - `C###` for CTEs

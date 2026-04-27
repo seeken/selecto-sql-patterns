@@ -21,6 +21,7 @@ and regression checks across the Selecto ecosystem.
 
 - Joins
 - Aggregates
+- Expressions
 - Window functions
 - Subqueries
 - CTEs
@@ -54,7 +55,7 @@ and regression checks across the Selecto ecosystem.
 - For lateral/raw SQL examples, follow `patterns/ESCAPE_HATCH_GUIDE.md`.
 - Prefer `Selecto.Expr` and `Selecto.ExprMacros` in new examples when they make patterns easier to read.
 - Companion guides document view publication, overlay authoring, and related
-  domain-shaping surfaces that are not part of the 106-query pattern matrix.
+  domain-shaping surfaces that are not part of the 112-query pattern matrix.
 
 ## Verify Examples
 
@@ -93,6 +94,13 @@ Run the real-DB smoke validation harness and export execution status:
 ```bash
 elixir scripts/validate_live_examples.exs --output patterns/SELECTO_LIVE_VALIDATION.json
 ```
+
+The live harness pulls local adapter repos when available. Override their
+locations with `SELECTO_DB_POSTGRESQL_PATH`, `SELECTO_DB_MARIADB_PATH`,
+`SELECTO_DB_MSSQL_PATH`, and `SELECTO_DB_DUCKDB_PATH`. Configure real database
+connections with `SELECTO_LIVE_POSTGRES_*`, `SELECTO_LIVE_MYSQL_*`,
+`SELECTO_LIVE_MARIADB_*`, and `SELECTO_LIVE_MSSQL_*`; SQLite and DuckDB use
+`SELECTO_LIVE_SQLITE_PATH` and `SELECTO_LIVE_DUCKDB_PATH` or temporary files.
 
 ## Browse as HTML
 
