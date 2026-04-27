@@ -31,6 +31,7 @@ and regression checks across the Selecto ecosystem.
 - JSON and array
 - Query shaping
 - Time-series
+- Cohort analysis
 - Geospatial
 
 ## Repository Layout
@@ -55,7 +56,7 @@ and regression checks across the Selecto ecosystem.
 - For lateral/raw SQL examples, follow `patterns/ESCAPE_HATCH_GUIDE.md`.
 - Prefer `Selecto.Expr` and `Selecto.ExprMacros` in new examples when they make patterns easier to read.
 - Companion guides document view publication, overlay authoring, and related
-  domain-shaping surfaces that are not part of the 112-query pattern matrix.
+  domain-shaping surfaces that are not part of the 120-query pattern matrix.
 
 ## Verify Examples
 

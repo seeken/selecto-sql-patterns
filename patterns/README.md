@@ -26,6 +26,7 @@ not best expressed as one SQL query shape.
 - `json_arrays/`
 - `query_shaping/`
 - `time_series/`
+- `cohort_analysis/`
 - `geospatial/`
 
 ## Companion Guides

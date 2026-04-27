@@ -32,6 +32,32 @@ defmodule SelectoSqlPatterns.LiveValidation do
     %{id: "P002", assert: {:columns_include, ["id", "order_number", "total"]}},
     %{id: "T001", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
     %{
+      id: "T009",
+      assert: {:columns_include, []},
+      adapters: %{
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+      }
+    },
+    %{
+      id: "T010",
+      assert: {:columns_include, ["status"]},
+      adapters: %{
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+      }
+    },
+    %{id: "T011", assert: {:columns_include, ["customer_id", "order_number", "inserted_at"]}},
+    %{id: "T012", assert: {:columns_include, ["customer_id", "order_number", "inserted_at"]}},
+    %{id: "CA001", assert: {:columns_include, ["customer_id"]}},
+    %{
+      id: "CA002",
+      assert: {:columns_include, []},
+      adapters: %{
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+      }
+    },
+    %{id: "CA003", assert: {:columns_include, ["cohort_start", "status"]}},
+    %{id: "CA004", assert: {:columns_include, ["customer_id", "cohort_start"]}},
+    %{
       id: "J007",
       assert: {:columns_include, ["name"]},
       adapters: %{
@@ -1002,6 +1028,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
 
   defp fixture_sql("mssql") do
     [
+      "IF OBJECT_ID('first_order_cohorts', 'V') IS NOT NULL DROP VIEW first_order_cohorts",
+      "IF OBJECT_ID('active_customers_view', 'V') IS NOT NULL DROP VIEW active_customers_view",
       "IF OBJECT_ID('products', 'U') IS NOT NULL DROP TABLE products",
       "IF OBJECT_ID('reviews', 'U') IS NOT NULL DROP TABLE reviews",
       "IF OBJECT_ID('attendees', 'U') IS NOT NULL DROP TABLE attendees",
@@ -1011,7 +1039,6 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "IF OBJECT_ID('blocked_customers', 'U') IS NOT NULL DROP TABLE blocked_customers",
       "IF OBJECT_ID('archived_orders', 'U') IS NOT NULL DROP TABLE archived_orders",
       "IF OBJECT_ID('orders', 'U') IS NOT NULL DROP TABLE orders",
-      "IF OBJECT_ID('active_customers_view', 'V') IS NOT NULL DROP VIEW active_customers_view",
       "IF OBJECT_ID('customers', 'U') IS NOT NULL DROP TABLE customers",
       "IF OBJECT_ID('employees', 'U') IS NOT NULL DROP TABLE employees",
       "IF OBJECT_ID('vendor_contacts', 'U') IS NOT NULL DROP TABLE vendor_contacts",
@@ -1029,12 +1056,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INT PRIMARY KEY, first_name VARCHAR(255), manager_id INT NULL, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INT PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("mssql"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ mssql_insert_statements()
   end
 
   defp fixture_sql("postgresql") do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1062,12 +1091,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("postgresql"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("mysql") do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1095,12 +1126,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("mysql"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("mariadb") do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1128,12 +1161,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("mariadb"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("duckdb") do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1159,12 +1194,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR, manager_id INTEGER, department VARCHAR, salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR, tier VARCHAR)",
       vendor_contacts_table_sql("duckdb"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql("sqlite") do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1192,12 +1229,14 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("sqlite"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
   defp fixture_sql(_adapter_key) do
     [
+      "DROP VIEW IF EXISTS first_order_cohorts",
       "DROP VIEW IF EXISTS active_customers_view",
       "DROP TABLE IF EXISTS products",
       "DROP TABLE IF EXISTS reviews",
@@ -1225,7 +1264,8 @@ defmodule SelectoSqlPatterns.LiveValidation do
       "CREATE TABLE employees (id INTEGER PRIMARY KEY, first_name VARCHAR(255), manager_id INTEGER, department VARCHAR(100), salary DECIMAL(10,2))",
       "CREATE TABLE vendors (id INTEGER PRIMARY KEY, name VARCHAR(255), tier VARCHAR(50))",
       vendor_contacts_table_sql("default"),
-      active_customers_view_sql()
+      active_customers_view_sql(),
+      first_order_cohorts_view_sql()
     ] ++ insert_statements()
   end
 
@@ -1239,6 +1279,10 @@ defmodule SelectoSqlPatterns.LiveValidation do
 
   defp active_customers_view_sql do
     "CREATE VIEW active_customers_view AS SELECT id AS customer_id, name, tier FROM customers WHERE tier IN ('premium', 'platinum')"
+  end
+
+  defp first_order_cohorts_view_sql do
+    "CREATE VIEW first_order_cohorts AS SELECT customer_id, MIN(inserted_at) AS cohort_start FROM orders WHERE customer_id IS NOT NULL GROUP BY customer_id"
   end
 
   defp insert_statements do

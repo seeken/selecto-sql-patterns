@@ -44,6 +44,7 @@ def build_manifest() -> dict:
         ("json_arrays", "JSON & Array"),
         ("query_shaping", "Query Shaping"),
         ("time_series", "Time-Series"),
+        ("cohort_analysis", "Cohort Analysis"),
         ("geospatial", "Geospatial"),
     ]
 

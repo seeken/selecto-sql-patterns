@@ -174,6 +174,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"T006", query_t006(), ["sum", "partition by", "order by", "status_running_total"]},
       {"T007", query_t007(), ["where", " or ", "order by", "limit"]},
       {"T008", query_t008(), ["union all", "inserted_at", "order by", "limit"]},
+      {"T009", query_t009(), ["date_trunc('day'", "sum", "group by", "order by"]},
+      {"T010", query_t010(), ["date_trunc('day'", "status", "count", "group by"]},
+      {"T011", query_t011(), ["lag(", "partition by", "customer_id", "order by"]},
+      {"T012", query_t012(), ["lead(", "partition by", "customer_id", "order by"]},
+      {"CA001", query_ca001(), ["min", "customer_id", "group by", "order by"]},
+      {"CA002", query_ca002(), ["date_trunc('month'", "count", "group by", "order by"]},
+      {"CA003", query_ca003(), ["first_order_cohorts", "left join", "status", "group by"]},
+      {"CA004", query_ca004(), ["row_number", "partition by", "cohort_start", "order by"]},
       {"G001", query_g001(), ["st_dwithin", "where", "order by", "from locations"]},
       {"G002", query_g002(), ["exists (", "st_intersects", "where", "from locations"]},
       {"G003", query_g003(), ["st_contains", "st_geomfromtext", "where", "from locations"]},
@@ -754,13 +762,14 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       source: %{
         source_table: "orders",
         primary_key: :id,
-        fields: [:id, :order_number, :status, :total, :inserted_at],
+        fields: [:id, :order_number, :status, :total, :customer_id, :inserted_at],
         redact_fields: [],
         columns: %{
           id: %{type: :integer},
           order_number: %{type: :string},
           status: %{type: :string},
           total: %{type: :decimal},
+          customer_id: %{type: :integer},
           inserted_at: %{type: :naive_datetime}
         },
         associations: %{}
@@ -1190,6 +1199,65 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       },
       schemas: %{},
       joins: %{}
+    }
+  end
+
+  defp first_order_cohort_domain do
+    %{
+      name: "FirstOrderCohorts",
+      source: %{
+        source_table: "first_order_cohorts",
+        primary_key: :customer_id,
+        source_kind: :view,
+        readonly: true,
+        fields: [:customer_id, :cohort_start],
+        redact_fields: [],
+        columns: %{
+          customer_id: %{type: :integer},
+          cohort_start: %{type: :naive_datetime}
+        },
+        associations: %{
+          orders: %{
+            queryable: :orders,
+            field: :orders,
+            owner_key: :customer_id,
+            related_key: :customer_id
+          }
+        }
+      },
+      schemas: %{
+        orders: %{
+          source_table: "orders",
+          primary_key: :id,
+          fields: [:id, :order_number, :customer_id, :status, :total, :inserted_at],
+          redact_fields: [],
+          columns: %{
+            id: %{type: :integer},
+            order_number: %{type: :string},
+            customer_id: %{type: :integer},
+            status: %{type: :string},
+            total: %{type: :decimal},
+            inserted_at: %{type: :naive_datetime}
+          },
+          associations: %{}
+        }
+      },
+      joins: %{
+        orders: %{
+          name: "Orders",
+          type: :left,
+          source: "orders",
+          on: [%{left: "customer_id", right: "customer_id"}],
+          fields: %{
+            id: %{type: :integer},
+            order_number: %{type: :string},
+            customer_id: %{type: :integer},
+            status: %{type: :string},
+            total: %{type: :decimal},
+            inserted_at: %{type: :naive_datetime}
+          }
+        }
+      }
     }
   end
 
@@ -2308,6 +2376,93 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     Selecto.union(current_events, archived_events, all: true)
     |> Selecto.order_by(order_by([desc(inserted_at)]))
     |> Selecto.limit(50)
+  end
+
+  defp query_t009 do
+    day_bucket = "date_trunc('day', selecto_root.inserted_at)"
+
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      {:field, {:raw_sql, day_bucket}, "day_bucket"},
+      {:field, {:func, "SUM", ["total"]}, "daily_total"},
+      {:count, "*"}
+    ])
+    |> Selecto.group_by([{:raw_sql, day_bucket}])
+    |> Selecto.order_by({{:raw_sql, day_bucket}, :asc})
+  end
+
+  defp query_t010 do
+    day_bucket = "date_trunc('day', selecto_root.inserted_at)"
+
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      {:field, {:raw_sql, day_bucket}, "day_bucket"},
+      "status",
+      {:count, "*"}
+    ])
+    |> Selecto.group_by([{:raw_sql, day_bucket}, "status"])
+    |> Selecto.order_by([{{:raw_sql, day_bucket}, :asc}, {"status", :asc}])
+  end
+
+  defp query_t011 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([customer_id, order_number, inserted_at]))
+    |> Selecto.filter(where(customer_id != nil))
+    |> Selecto.window_function(:lag, ["inserted_at", 1],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(inserted_at)])],
+      as: "previous_order_at"
+    )
+    |> Selecto.order_by(order_by([asc(customer_id), asc(inserted_at)]))
+  end
+
+  defp query_t012 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([customer_id, order_number, inserted_at]))
+    |> Selecto.filter(where(customer_id != nil))
+    |> Selecto.window_function(:lead, ["inserted_at", 1],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(inserted_at)])],
+      as: "next_order_at"
+    )
+    |> Selecto.order_by(order_by([asc(customer_id), asc(inserted_at)]))
+  end
+
+  defp query_ca001 do
+    Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([customer_id, as(min(inserted_at), "cohort_start")]))
+    |> Selecto.filter(where(customer_id != nil))
+    |> Selecto.group_by(["customer_id"])
+    |> Selecto.order_by(order_by([asc(customer_id)]))
+  end
+
+  defp query_ca002 do
+    cohort_month = "date_trunc('month', selecto_root.cohort_start)"
+
+    Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+    |> Selecto.select([
+      {:field, {:raw_sql, cohort_month}, "cohort_month"},
+      {:count, "*"}
+    ])
+    |> Selecto.group_by([{:raw_sql, cohort_month}])
+    |> Selecto.order_by({{:raw_sql, cohort_month}, :asc})
+  end
+
+  defp query_ca003 do
+    Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+    |> Selecto.select(select([cohort_start, orders.status, count(orders.id)]))
+    |> Selecto.group_by(["cohort_start", "orders.status"])
+    |> Selecto.order_by(order_by([asc(cohort_start), asc(orders.status)]))
+  end
+
+  defp query_ca004 do
+    Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+    |> Selecto.select(
+      select([customer_id, cohort_start, orders.order_number, orders.inserted_at])
+    )
+    |> Selecto.window_function(:row_number, [],
+      over: [partition_by: ["customer_id"], order_by: order_by([asc(orders.inserted_at)])],
+      as: "cohort_order_number"
+    )
+    |> Selecto.order_by(order_by([asc(customer_id), asc(orders.inserted_at)]))
   end
 
   defp query_g001 do

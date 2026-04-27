@@ -25,7 +25,7 @@
       "key": "duckdb"
     }
   ],
-  "generated_at": "2026-04-27T04:31:34Z",
+  "generated_at": "2026-04-27T18:59:33Z",
   "patterns": {
     "C002": {
       "duckdb": {
@@ -413,6 +413,38 @@
           "gold"
         ],
         "sql": "select selecto_root.order_number, gold_customers.name, selecto_root.total\n        from orders selecto_root inner join (\n        select subq_root_customers_gold_customers.id, subq_root_customers_gold_customers.name, subq_root_customers_gold_customers.tier\n        from customers subq_root_customers_gold_customers\n        where (( subq_root_customers_gold_customers.tier = ? ))\n      ) gold_customers on selecto_root.customer_id = gold_customers.id\n        order by selecto_root.order_number asc"
+      }
+    },
+    "CA003": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.cohort_start, orders.status, COUNT(orders.id)\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        group by selecto_root.cohort_start, orders.status\n      \n        order by selecto_root.cohort_start asc, orders.status asc"
       }
     },
     "T004": {
@@ -1383,6 +1415,38 @@
         "sql": "select selecto_root.order_number, customer.name\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( customer.id is not null ) and ( selecto_root.status = ? ))\n      \n        order by selecto_root.order_number asc"
       }
     },
+    "CA004": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS \"cohort_order_number\"\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS [cohort_order_number]\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS \"cohort_order_number\"\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS \"cohort_order_number\"\n        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id\n        order by selecto_root.customer_id asc, orders.inserted_at asc"
+      }
+    },
     "F006": {
       "duckdb": {
         "status": "ok",
@@ -1469,6 +1533,38 @@
         "status": "ok",
         "params": [],
         "sql": "select selecto_root.id, selecto_root.name\n        from locations selecto_root\n        where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))\n      \n        order by selecto_root.id asc"
+      }
+    },
+    "T011": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"previous_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS [previous_order_at]\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"previous_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"previous_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
       }
     },
     "C008": {
@@ -2083,6 +2179,38 @@
         "sql": "select selecto_root.id, selecto_root.order_number, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.id > ? ))\n      \n        order by selecto_root.id asc\n      \n        limit 25"
       }
     },
+    "CA001": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, MIN(selecto_root.inserted_at)\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        group by selecto_root.customer_id\n      \n        order by selecto_root.customer_id asc"
+      }
+    },
     "JA005": {
       "duckdb": {
         "status": "ok",
@@ -2295,6 +2423,70 @@
           "delivered"
         ],
         "sql": "select customer.tier, count(*)\n        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id\n        where (( selecto_root.status = ? ))\n      \n        group by customer.tier\n      \n        order by customer.tier asc"
+      }
+    },
+    "T012": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"next_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS [next_order_at]\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"next_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS \"next_order_at\"\n        from orders selecto_root\n        where (( selecto_root.customer_id is not null ))\n      \n        order by selecto_root.customer_id asc, selecto_root.inserted_at asc"
+      }
+    },
+    "CA002": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('month', selecto_root.cohort_start), count(*)\n        from first_order_cohorts selecto_root\n        group by date_trunc('month', selecto_root.cohort_start)\n      \n        order by date_trunc('month', selecto_root.cohort_start) asc"
       }
     },
     "SO004": {
@@ -3997,6 +4189,38 @@
         "sql": "select selecto_root.order_number, selecto_root.customer_id, selecto_root.status, selecto_root.total\n        from orders selecto_root\n        where (( selecto_root.customer_id in (\n        select subq_root_customers.id\n        from customers subq_root_customers\n        where (( subq_root_customers.tier = ? ))\n      ) ))\n      \n        order by selecto_root.total desc"
       }
     },
+    "T010": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc"
+      }
+    },
     "W009": {
       "duckdb": {
         "status": "ok",
@@ -4257,6 +4481,38 @@
         "status": "ok",
         "params": [],
         "sql": "select selecto_root.name, selecto_root.sku, json_extract(\"selecto_root\".\"metadata\", '$.price_band') AS \"price_band\"\n        from products selecto_root\n        where (( json_extract(\"selecto_root\".\"metadata\", '$.price_band') = 'premium' ))\n      \n        order by selecto_root.name asc"
+      }
+    },
+    "T009": {
+      "duckdb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
+      },
+      "mariadb": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
+      },
+      "mssql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
+      },
+      "mysql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
+      },
+      "postgresql": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
+      },
+      "sqlite": {
+        "status": "ok",
+        "params": [],
+        "sql": "select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)\n        from orders selecto_root\n        group by date_trunc('day', selecto_root.inserted_at)\n      \n        order by date_trunc('day', selecto_root.inserted_at) asc"
       }
     },
     "F001": {

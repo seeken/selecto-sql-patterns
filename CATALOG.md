@@ -15,9 +15,10 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 | Pagination | 8 | 8 |
 | JSON and array | 8 | 8 |
 | Query shaping | 10 | 10 |
-| Time-series | 8 | 8 |
+| Time-series | 12 | 12 |
+| Cohort analysis | 4 | 4 |
 | Geospatial | 8 | 8 |
-| **Total** | **112** | **112** |
+| **Total** | **120** | **120** |
 
 ## Companion Guides
 
@@ -44,4 +45,5 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 - `JA###` for JSON and array patterns
 - `Q###` for query shaping
 - `T###` for time-series
+- `CA###` for cohort analysis
 - `G###` for geospatial

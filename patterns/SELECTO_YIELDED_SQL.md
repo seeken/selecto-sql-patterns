@@ -7203,6 +7203,598 @@ limit 50
 
 **Params:** `[]`
 
+## T009
+
+### PostgreSQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at)
+
+        order by date_trunc('day', selecto_root.inserted_at) asc
+```
+
+**Params:** `[]`
+
+## T010
+
+### PostgreSQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*)
+        from orders selecto_root
+        group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
+
+        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+```
+
+**Params:** `[]`
+
+## T011
+
+### PostgreSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "previous_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "previous_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS [previous_order_at]
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "previous_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## T012
+
+### PostgreSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "next_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "next_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS [next_order_at]
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "next_order_at"
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+```
+
+**Params:** `[]`
+
+## CA001
+
+### PostgreSQL
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, MIN(selecto_root.inserted_at)
+        from orders selecto_root
+        where (( selecto_root.customer_id is not null ))
+
+        group by selecto_root.customer_id
+
+        order by selecto_root.customer_id asc
+```
+
+**Params:** `[]`
+
+## CA002
+
+### PostgreSQL
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select date_trunc('month', selecto_root.cohort_start), count(*)
+        from first_order_cohorts selecto_root
+        group by date_trunc('month', selecto_root.cohort_start)
+
+        order by date_trunc('month', selecto_root.cohort_start) asc
+```
+
+**Params:** `[]`
+
+## CA003
+
+### PostgreSQL
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.cohort_start, orders.status, COUNT(orders.id)
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        group by selecto_root.cohort_start, orders.status
+
+        order by selecto_root.cohort_start asc, orders.status asc
+```
+
+**Params:** `[]`
+
+## CA004
+
+### PostgreSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS "cohort_order_number"
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS "cohort_order_number"
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS [cohort_order_number]
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+```sql
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS "cohort_order_number"
+        from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
+        order by selecto_root.customer_id asc, orders.inserted_at asc
+```
+
+**Params:** `[]`
+
 ## G001
 
 ### PostgreSQL

@@ -5943,7 +5943,298 @@
         "reason": "SQLite smoke validation does not register stddev/variance aggregate functions.",
         "status": "generated_only"
       }
+    },
+    "CA003": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          "count(orders.id)"
+        ],
+        "row_count": 7
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          "COUNT(orders.id)"
+        ],
+        "row_count": 7
+      }
+    },
+    "CA004": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
+      }
+    },
+    "T011": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
+      }
+    },
+    "CA001": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "min(selecto_root.inserted_at)"
+        ],
+        "row_count": 4
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "MIN(selecto_root.inserted_at)"
+        ],
+        "row_count": 4
+      }
+    },
+    "T012": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
+      }
+    },
+    "CA002": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc('month', selecto_root.cohort_start)",
+          "count_star()"
+        ],
+        "row_count": 2
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "reason": "SQLite smoke validation does not provide date_trunc.",
+        "status": "generated_only"
+      }
+    },
+    "T010": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc('day', selecto_root.inserted_at)",
+          "status",
+          "count_star()"
+        ],
+        "row_count": 39
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "reason": "SQLite smoke validation does not provide date_trunc.",
+        "status": "generated_only"
+      }
+    },
+    "T009": {
+      "duckdb": {
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc('day', selecto_root.inserted_at)",
+          "sum(selecto_root.total)",
+          "count_star()"
+        ],
+        "row_count": 39
+      },
+      "mariadb": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mssql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "mysql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "postgresql": {
+        "reason": "connection not configured",
+        "status": "skipped"
+      },
+      "sqlite": {
+        "reason": "SQLite smoke validation does not provide date_trunc.",
+        "status": "generated_only"
+      }
     }
   },
-  "generated_at": "2026-04-27T04:32:20Z"
+  "generated_at": "2026-04-27T19:00:22Z"
 }
