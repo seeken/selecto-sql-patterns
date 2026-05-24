@@ -1,6 +1,6 @@
 # Query Shaping
 
-Planned IDs: `Q001` to `Q010`
+Planned IDs: `Q001` to `Q011`
 
 - `Q001` subselect aggregated related rows ✅
 - `Q002` retarget to joined target schema ✅
@@ -12,3 +12,4 @@ Planned IDs: `Q001` to `Q010`
 - `Q008` shape with set-operation envelope ✅
 - `Q009` view-backed domain source ✅
 - `Q010` shape with overlay-added join ✅
+- `Q011` nested JSON subselect tree ✅

@@ -14,11 +14,11 @@ Tracking plan for the first rebuild pack plus companion capability guides.
 | Filtering and predicate logic | 8 | 8 |
 | Pagination | 8 | 8 |
 | JSON and array | 8 | 8 |
-| Query shaping | 10 | 10 |
+| Query shaping | 11 | 11 |
 | Time-series | 12 | 12 |
 | Cohort analysis | 4 | 4 |
 | Geospatial | 8 | 8 |
-| **Total** | **120** | **120** |
+| **Total** | **121** | **121** |
 
 ## Companion Guides
 

@@ -165,6 +165,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"Q008", query_q008(), ["union all", "except", "from archived_orders", "select"]},
       {"Q009", query_q009(), ["from active_customers_view", "where", "order by", "tier"]},
       {"Q010", query_q010(), ["from orders", "left join", "customers customer", "order by"]},
+      {"Q011", query_q011(),
+       ["json_agg", "'items'", "from order_items", "sub_orders_items", "order_id"]},
       {"T001", query_t001(), [">=", "<", "where", "order by"]},
       {"T002", query_t002(), ["sum", "over", "order by", "running_total"]},
       {"T003", query_t003(),
@@ -1081,6 +1083,26 @@ defmodule SelectoSqlPatterns.VerifyExamples do
             product_name: %{type: :string},
             quantity: %{type: :integer},
             price: %{type: :decimal}
+          },
+          associations: %{
+            order_items: %{
+              queryable: :order_items,
+              field: :order_items,
+              owner_key: :order_id,
+              related_key: :order_id
+            }
+          }
+        },
+        order_items: %{
+          source_table: "order_items",
+          primary_key: :order_item_id,
+          fields: [:order_item_id, :order_id, :sku, :quantity],
+          redact_fields: [],
+          columns: %{
+            order_item_id: %{type: :integer},
+            order_id: %{type: :integer},
+            sku: %{type: :string},
+            quantity: %{type: :integer}
           },
           associations: %{}
         }
@@ -2287,6 +2309,30 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     )
     |> Selecto.select(select([order_number, status, customer.name]))
     |> Selecto.order_by(order_by([asc(order_number)]))
+  end
+
+  defp query_q011 do
+    Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+    |> Selecto.select(select([name, email]))
+    |> Selecto.subselect([
+      %{
+        fields: ["product_name"],
+        target_schema: :orders,
+        format: :json_agg,
+        alias: "orders",
+        join_path: [:orders],
+        nested: [
+          %{
+            key: "items",
+            fields: ["sku", "quantity"],
+            target_schema: :order_items,
+            format: :json_agg,
+            join_path: [:orders, :order_items]
+          }
+        ]
+      }
+    ])
+    |> Selecto.order_by(order_by([asc(name)]))
   end
 
   defp query_t001 do
