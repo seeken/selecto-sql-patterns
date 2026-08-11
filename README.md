@@ -45,6 +45,7 @@ and regression checks across the Selecto ecosystem.
 - `patterns/VIEW_BACKED_DOMAINS_GUIDE.md` view and materialized-view source metadata
 - `patterns/PUBLISHED_VIEWS_GUIDE.md` published view specs and DDL generation
 - `patterns/OVERLAY_DSL_GUIDE.md` additive overlay authoring for joins and schemas
+- `patterns/PORTABLE_WRITES_GUIDE.md` domain-governed write preview patterns
 - `CATALOG.md` high-level tracking for planned pattern coverage
 - `scripts/verify_examples.exs` runs `Selecto.to_sql/1` for every published pattern example
 
@@ -102,6 +103,12 @@ locations with `SELECTO_DB_POSTGRESQL_PATH`, `SELECTO_DB_MARIADB_PATH`,
 connections with `SELECTO_LIVE_POSTGRES_*`, `SELECTO_LIVE_MYSQL_*`,
 `SELECTO_LIVE_MARIADB_*`, and `SELECTO_LIVE_MSSQL_*`; SQLite and DuckDB use
 `SELECTO_LIVE_SQLITE_PATH` and `SELECTO_LIVE_DUCKDB_PATH` or temporary files.
+
+Verify portable write previews against the current write-capable adapter:
+
+```bash
+elixir scripts/verify_portable_writes.exs
+```
 
 ## Browse as HTML
 

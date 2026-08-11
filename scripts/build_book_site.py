@@ -105,6 +105,11 @@ def build_manifest() -> dict:
             "path": "patterns/OVERLAY_DSL_GUIDE.md",
         },
         {
+            "id": "PORTABLE-WRITES",
+            "title": extract_title(PATTERNS_DIR / "PORTABLE_WRITES_GUIDE.md"),
+            "path": "patterns/PORTABLE_WRITES_GUIDE.md",
+        },
+        {
             "id": "CATALOG",
             "title": extract_title(ROOT / "CATALOG.md"),
             "path": "CATALOG.md",

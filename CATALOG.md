@@ -30,6 +30,8 @@ Tracking plan for the first rebuild pack plus companion capability guides.
   association overlays
 - `patterns/EXPRESSION_DSL_GUIDE.md` for `Selecto.Expr`, `Selecto.ExprMacros`,
   `group_by/1`, and `~SELECTO`
+- `patterns/PORTABLE_WRITES_GUIDE.md` for governed insert, update, upsert,
+  delete, tenant scope, foreign-key guards, and atomic cardinality
 
 ## Naming
 

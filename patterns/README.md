@@ -36,3 +36,4 @@ not best expressed as one SQL query shape.
 - `VIEW_BACKED_DOMAINS_GUIDE.md`
 - `PUBLISHED_VIEWS_GUIDE.md`
 - `OVERLAY_DSL_GUIDE.md`
+- `PORTABLE_WRITES_GUIDE.md`
