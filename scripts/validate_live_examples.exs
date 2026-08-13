@@ -759,6 +759,12 @@ defmodule SelectoSqlPatterns.LiveValidation do
     if opts[:summary] do
       print_summary(payload)
     end
+
+    failed = count_status(payload, "failed")
+
+    if failed > 0 do
+      raise "Live validation recorded #{failed} failed adapter-pattern results"
+    end
   end
 
   defp parse_args(argv) do
@@ -981,11 +987,26 @@ defmodule SelectoSqlPatterns.LiveValidation do
   end
 
   defp bind_query(query, %{key: "postgresql"}, connection) do
-    %{query | adapter: nil, connection: connection, postgrex_opts: connection}
+    SelectoSqlPatterns.VerifyExamples.retarget_runtime(query, %{
+      adapter: nil,
+      connection: connection,
+      postgrex_opts: connection
+    })
   end
 
   defp bind_query(query, adapter, connection) do
-    %{query | adapter: adapter.module, connection: connection, postgrex_opts: connection}
+    SelectoSqlPatterns.VerifyExamples.retarget_runtime(query, %{
+      adapter: adapter.module,
+      connection: connection,
+      postgrex_opts: connection
+    })
+  end
+
+  defp count_status(payload, status) do
+    Enum.sum(for {_pattern, adapters} <- payload.patterns,
+                 {_adapter, result} <- adapters,
+                 result.status == status,
+                 do: 1)
   end
 
   defp assert_result({:columns_include, expected_columns}, rows, columns, aliases) do

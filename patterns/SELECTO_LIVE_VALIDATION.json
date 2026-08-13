@@ -50,8 +50,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -85,8 +90,12 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -121,8 +130,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -158,8 +173,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -196,8 +216,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -234,8 +261,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "reason": "SQLite still needs EXCEPT execution handling in this smoke harness.",
@@ -267,8 +299,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -306,8 +345,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 71
       },
       "sqlite": {
         "reason": "SQLite quantifier subqueries with ANY still need dedicated live-execution handling in this smoke harness.",
@@ -338,8 +383,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "sqlite": {
         "status": "executed",
@@ -370,8 +421,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -401,8 +452,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -432,8 +488,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -463,8 +519,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "reason": "SQLite still needs EXCEPT ALL execution handling in this smoke harness.",
@@ -494,8 +555,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count"
+        ],
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -530,8 +596,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "avg"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -566,8 +637,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "sqlite": {
         "reason": "SQLite still rejects the parenthesized UNION form generated for this pattern during execution.",
@@ -598,8 +674,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -634,8 +716,12 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -670,8 +756,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count",
+          "avg"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -708,8 +800,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -746,8 +844,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -784,8 +888,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "sqlite": {
         "status": "executed",
@@ -822,8 +932,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 15
       },
       "sqlite": {
         "status": "executed",
@@ -860,8 +976,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          "count"
+        ],
+        "row_count": 7
       },
       "sqlite": {
         "status": "executed",
@@ -898,8 +1020,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 25
       },
       "sqlite": {
         "status": "executed",
@@ -937,8 +1065,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "sqlite": {
         "status": "executed",
@@ -976,8 +1111,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 18
       },
       "sqlite": {
         "status": "executed",
@@ -1008,8 +1149,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "Adapter does not support lateral/apply joins",
@@ -1040,8 +1181,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 22
       },
       "sqlite": {
         "status": "executed",
@@ -1077,8 +1224,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "sqlite": {
         "status": "executed",
@@ -1113,8 +1265,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "sqlite": {
         "reason": "SQLite still needs set-operation execution handling for this column-mapped UNION smoke case.",
@@ -1144,8 +1301,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 100
       },
       "sqlite": {
         "reason": "SQLite still needs set-operation execution handling for this UNION ALL smoke case.",
@@ -1176,8 +1338,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "sqlite": {
         "status": "executed",
@@ -1214,8 +1382,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "min",
+          "max"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -1253,8 +1427,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number",
+          "total"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -1286,8 +1467,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -1318,8 +1505,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -1350,8 +1537,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "sqlite": {
         "status": "executed",
@@ -1389,8 +1582,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "sqlite": {
         "status": "executed",
@@ -1427,8 +1627,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc",
+          "count"
+        ],
+        "row_count": 2
       },
       "sqlite": {
         "reason": "SQLite smoke validation does not provide date_trunc.",
@@ -1453,8 +1658,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -1485,8 +1690,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 68
       },
       "sqlite": {
         "status": "executed",
@@ -1517,8 +1728,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -1548,8 +1759,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -1584,8 +1800,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "sqlite": {
         "status": "executed",
@@ -1620,8 +1841,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -1657,8 +1883,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "status",
+          "count"
+        ],
+        "row_count": 14
       },
       "sqlite": {
         "status": "executed",
@@ -1696,8 +1928,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1729,8 +1968,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -1761,8 +2000,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc",
+          "sum",
+          "count"
+        ],
+        "row_count": 39
       },
       "sqlite": {
         "reason": "SQLite smoke validation does not provide date_trunc.",
@@ -1792,8 +2037,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "reason": "SQLite still needs nested INTERSECT execution handling in this smoke harness.",
@@ -1823,8 +2073,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "sqlite": {
         "reason": "SQLite still needs INTERSECT execution handling in this smoke harness.",
@@ -1855,8 +2110,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "date_trunc",
+          "status",
+          "count"
+        ],
+        "row_count": 39
       },
       "sqlite": {
         "reason": "SQLite smoke validation does not provide date_trunc.",
@@ -1886,8 +2147,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "min"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -1923,8 +2189,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "case"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -1960,8 +2232,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 71
       },
       "sqlite": {
         "reason": "SQLite still rejects the parenthesized set-operation form generated for this query-shaping pattern.",
@@ -1993,8 +2270,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 25
       },
       "sqlite": {
         "status": "executed",
@@ -2032,8 +2316,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2071,8 +2361,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2109,8 +2406,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 34
       },
       "sqlite": {
         "status": "executed",
@@ -2148,8 +2450,16 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "inserted_at",
+          "total",
+          "status_running_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2189,8 +2499,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2228,8 +2545,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "sqlite": {
         "status": "executed",
@@ -2265,8 +2588,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count"
+        ],
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -2296,8 +2624,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -2329,8 +2657,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
       },
       "sqlite": {
         "status": "executed",
@@ -2368,8 +2703,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2400,8 +2741,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "PostgreSQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite still needs a less parenthesized UNION form for this timeseries set-operation pattern.",
@@ -2432,8 +2773,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -2464,8 +2811,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -2503,8 +2857,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 31
       },
       "sqlite": {
         "status": "executed",
@@ -2542,8 +2902,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2582,8 +2949,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -2615,8 +2989,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -2641,8 +3015,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute.",
@@ -2673,8 +3047,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total"
+        ],
+        "row_count": 1160
       },
       "sqlite": {
         "status": "executed",
@@ -2705,8 +3085,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -2737,8 +3117,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -2769,8 +3155,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "?column?"
+        ],
+        "row_count": 2
       },
       "sqlite": {
         "status": "executed",
@@ -2805,8 +3196,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "sum"
+        ],
+        "row_count": 5
       },
       "sqlite": {
         "status": "executed",
@@ -2842,8 +3238,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -2880,8 +3282,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "reason": "SQLite quantifier subqueries with ALL still need dedicated live-execution handling in this smoke harness.",
@@ -2906,8 +3314,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "?column?"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "reason": "SQLite JSON field-path equality still needs boolean coercion handling in the smoke fixture to execute live.",
@@ -2938,8 +3352,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "sqlite": {
         "status": "executed",
@@ -2975,8 +3395,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3011,8 +3436,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "sqlite": {
         "reason": "SQLite still needs INTERSECT ALL execution handling in this smoke harness.",
@@ -3043,8 +3473,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "sqlite": {
         "status": "executed",
@@ -3081,8 +3517,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 35
       },
       "sqlite": {
         "status": "executed",
@@ -3118,8 +3560,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "count"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3149,8 +3596,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
@@ -3175,8 +3622,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "sqlite": {
         "status": "executed",
@@ -3214,8 +3667,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
       },
       "sqlite": {
         "status": "executed",
@@ -3254,8 +3714,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3287,8 +3754,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -3318,8 +3785,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "sum"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3357,8 +3829,16 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
       },
       "sqlite": {
         "status": "executed",
@@ -3391,8 +3871,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite has no spatial adapter configured in this harness.",
@@ -3417,8 +3897,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3449,8 +3935,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
@@ -3475,8 +3961,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3512,8 +4003,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "coalesce",
+          "nullif"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3544,8 +4041,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "?column?"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "status": "executed",
@@ -3581,8 +4083,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "sqlite": {
         "status": "executed",
@@ -3619,8 +4127,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 17
       },
       "sqlite": {
         "status": "executed",
@@ -3657,8 +4171,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 17
       },
       "sqlite": {
         "status": "executed",
@@ -3696,8 +4216,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3729,8 +4256,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3768,8 +4302,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "sum",
+          "count"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -3805,8 +4345,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3836,8 +4381,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "sqlite": {
         "status": "executed",
@@ -3868,8 +4419,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
       },
       "sqlite": {
         "reason": "SQLite does not support the JSON containment helper used by this pattern.",
@@ -3899,8 +4456,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "first_name"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -3936,8 +4498,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -3968,8 +4536,8 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
+        "status": "generated_only"
       },
       "sqlite": {
         "reason": "SQLite still needs set-operation pagination execution handling for this UNION ALL pattern.",
@@ -4001,8 +4569,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "count",
+          "stddev",
+          "variance"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "reason": "SQLite smoke validation does not register stddev/variance aggregate functions.",
@@ -4032,8 +4607,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "count"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -4070,8 +4650,15 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4109,8 +4696,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "sqlite": {
         "status": "executed",
@@ -4147,8 +4740,14 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "sqlite": {
         "status": "executed",
@@ -4184,8 +4783,13 @@
         "status": "skipped"
       },
       "postgresql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "avg"
+        ],
+        "row_count": 4
       },
       "sqlite": {
         "status": "executed",
@@ -4198,5 +4802,5 @@
       }
     }
   },
-  "generated_at": "2026-08-06T14:23:22Z"
+  "generated_at": "2026-08-12T21:50:17Z"
 }

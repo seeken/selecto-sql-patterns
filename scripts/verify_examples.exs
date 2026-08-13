@@ -456,7 +456,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   defp render_adapter_output(id, query, fragments, adapter) do
-    query = Map.put(query, :adapter, adapter.module)
+    query = retarget_runtime(query, %{adapter: adapter.module})
 
     try do
       {sql, params} = Selecto.to_sql(query)
@@ -479,6 +479,23 @@ defmodule SelectoSqlPatterns.VerifyExamples do
           error: Exception.message(error)
         }
     end
+  end
+
+  def retarget_runtime(query, runtime) when is_map(runtime) do
+    set_operations =
+      query.set
+      |> Map.get(:set_operations, [])
+      |> Enum.map(fn operation ->
+        %{
+          operation
+          | left_query: retarget_runtime(operation.left_query, runtime),
+            right_query: retarget_runtime(operation.right_query, runtime)
+        }
+      end)
+
+    query
+    |> Map.merge(Map.take(runtime, [:adapter, :connection, :postgrex_opts]))
+    |> put_in([Access.key!(:set), :set_operations], set_operations)
   end
 
   defp format_markdown_adapter_output(adapter, %{status: :ok, sql: sql, params: params}) do
@@ -554,10 +571,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
 
     published_view_examples = [
       {"PV001", order_domain_with_published_views(), :order_rollup,
-       ["select", "status", "from orders"], "CREATE VIEW reporting.order_rollup AS"},
+       ["select", "status", "from orders"], "CREATE VIEW \"reporting\".\"order_rollup\" AS"},
       {"PV002", order_domain_with_published_views(), :recent_order_snapshot,
        ["select", "status", "inserted_at"],
-       "CREATE MATERIALIZED VIEW reporting.recent_order_snapshot AS"}
+       "CREATE MATERIALIZED VIEW \"reporting\".\"recent_order_snapshot\" AS"}
     ]
 
     Enum.each(published_view_examples, fn {id, domain, spec_key, sql_fragments, ddl_fragment} ->
@@ -581,7 +598,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     end)
 
     if Selecto.ViewPublisher.refresh_sql("reporting.recent_order_snapshot", concurrently: true) !=
-         "REFRESH MATERIALIZED VIEW CONCURRENTLY reporting.recent_order_snapshot;" do
+         "REFRESH MATERIALIZED VIEW CONCURRENTLY \"reporting\".\"recent_order_snapshot\";" do
       raise "PV003 failed: concurrent refresh SQL did not match expected output"
     end
 
