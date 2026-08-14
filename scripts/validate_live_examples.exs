@@ -27,7 +27,17 @@ defmodule SelectoSqlPatterns.LiveValidation do
            "SQLite smoke validation does not register stddev/variance aggregate functions."}
       }
     },
-    %{id: "E004", assert: {:columns_include, ["tier", "status"]}},
+    %{
+      id: "E004",
+      assert: {:columns_include, ["tier", "status"]},
+      adapters: %{
+        "sqlite" => {:unsupported_expected, "SQLite does not support ROLLUP grouping"},
+        "mysql" => {:unsupported_expected, "The MySQL adapter does not claim ROLLUP support"},
+        "mariadb" =>
+          {:generated_only,
+           "MariaDB supports WITH ROLLUP but rejects this example's WITH ROLLUP plus ORDER BY combination."}
+      }
+    },
     %{id: "W001", assert: {:columns_include, ["first_name", "department", "salary"]}},
     %{id: "P002", assert: {:columns_include, ["id", "order_number", "total"]}},
     %{id: "T001", assert: {:columns_include, ["order_number", "inserted_at", "total"]}},
@@ -35,14 +45,32 @@ defmodule SelectoSqlPatterns.LiveValidation do
       id: "T009",
       assert: {:columns_include, []},
       adapters: %{
-        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."},
+        "mysql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression."},
+        "mariadb" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression."},
+        "mssql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression."}
       }
     },
     %{
       id: "T010",
       assert: {:columns_include, ["status"]},
       adapters: %{
-        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."},
+        "mysql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression."},
+        "mariadb" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression."},
+        "mssql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression."}
       }
     },
     %{id: "T011", assert: {:columns_include, ["customer_id", "order_number", "inserted_at"]}},
@@ -52,7 +80,16 @@ defmodule SelectoSqlPatterns.LiveValidation do
       id: "CA002",
       assert: {:columns_include, []},
       adapters: %{
-        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."}
+        "sqlite" => {:generated_only, "SQLite smoke validation does not provide date_trunc."},
+        "mysql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression."},
+        "mariadb" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression."},
+        "mssql" =>
+          {:generated_only,
+           "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression."}
       }
     },
     %{id: "CA003", assert: {:columns_include, ["cohort_start", "status"]}},
@@ -739,7 +776,7 @@ defmodule SelectoSqlPatterns.LiveValidation do
       connection: :postgresql
     },
     %{key: "sqlite", label: "SQLite", module: SelectoDBSQLite.Adapter, connection: :sqlite},
-    %{key: "mysql", label: "MySQL", module: SelectoDBMySQL.Adapter, connection: :mysql},
+    %{key: "mysql", label: "MySQL", module: Selecto.DB.MySQL, connection: :mysql},
     %{key: "mariadb", label: "MariaDB", module: SelectoDBMariaDB.Adapter, connection: :mariadb},
     %{key: "mssql", label: "MSSQL", module: SelectoDBMSSQL.Adapter, connection: :mssql},
     %{key: "duckdb", label: "DuckDB", module: SelectoDBDuckDB.Adapter, connection: :duckdb}
@@ -986,27 +1023,20 @@ defmodule SelectoSqlPatterns.LiveValidation do
     end
   end
 
-  defp bind_query(query, %{key: "postgresql"}, connection) do
-    SelectoSqlPatterns.VerifyExamples.retarget_runtime(query, %{
-      adapter: nil,
-      connection: connection,
-      postgrex_opts: connection
-    })
-  end
-
   defp bind_query(query, adapter, connection) do
     SelectoSqlPatterns.VerifyExamples.retarget_runtime(query, %{
       adapter: adapter.module,
-      connection: connection,
-      postgrex_opts: connection
+      connection: connection
     })
   end
 
   defp count_status(payload, status) do
-    Enum.sum(for {_pattern, adapters} <- payload.patterns,
-                 {_adapter, result} <- adapters,
-                 result.status == status,
-                 do: 1)
+    Enum.sum(
+      for {_pattern, adapters} <- payload.patterns,
+          {_adapter, result} <- adapters,
+          result.status == status,
+          do: 1
+    )
   end
 
   defp assert_result({:columns_include, expected_columns}, rows, columns, aliases) do
