@@ -1893,14 +1893,8 @@
         "row_count": 14
       },
       "sqlite": {
-        "status": "executed",
-        "aliases": [],
-        "columns": [
-          "tier",
-          "status",
-          "count(*)"
-        ],
-        "row_count": 8
+        "reason": "SQLite does not support ROLLUP grouping",
+        "status": "unsupported_expected"
       }
     },
     "W008": {
@@ -4802,5 +4796,5 @@
       }
     }
   },
-  "generated_at": "2026-08-12T21:50:17Z"
+  "generated_at": "2026-08-14T17:07:23Z"
 }
