@@ -233,6 +233,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   end
 
   def run do
+    verify_domain_root!()
     examples = examples()
 
     Enum.each(examples, fn {id, query, fragments} ->
@@ -438,8 +439,10 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp rewrite_runtime_filter(field, {:lte, value}), do: {:lte, [], [field, value]}
   defp rewrite_runtime_filter(field, {:ne, value}), do: {:neq, [], [field, value]}
   defp rewrite_runtime_filter(field, {:like, value}), do: {:like, [], [field, value]}
+
   defp rewrite_runtime_filter(field, {:case_insensitive_like, value}),
     do: {:case_insensitive_like, [], [field, value]}
+
   defp rewrite_runtime_filter(field, {:contains, value}), do: {:contains, [], [field, value]}
   defp rewrite_runtime_filter(field, {:between, min, max}), do: {:between, [], [field, min, max]}
   defp rewrite_runtime_filter(field, {:in, values}), do: {:in, [], [field, values]}
@@ -493,6 +496,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {sql, params} = Selecto.to_sql(query)
       normalized = normalize_sql(sql)
       assert_sql_sanity!(id, normalized)
+      assert_domain_root!(id, normalized, query)
 
       if adapter.verify == :strict do
         assert_fragments!(id, normalized, fragments)
@@ -593,6 +597,54 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     if String.contains?(sql, "nil.") do
       raise "#{id} failed: SQL contained invalid nil-qualified selector. SQL was: #{sql}"
     end
+  end
+
+  defp assert_domain_root!(id, sql, query) do
+    root = query |> Selecto.source_table() |> to_string() |> String.downcase()
+    escaped = Regex.escape(root)
+
+    unless Regex.match?(~r/\bfrom\s+(?:["`\[])?#{escaped}(?:["`\]])?(?:\s|$)/, sql) do
+      raise "#{id} failed: SQL root did not come from domain source #{inspect(root)}. SQL was: #{sql}"
+    end
+  end
+
+  def verify_domain_root! do
+    source = File.read!(@source_file)
+
+    if Regex.match?(~r/Selecto\.from\s*\(/, source) do
+      raise "query examples must not call a root-level Selecto.from operation"
+    end
+
+    Enum.each(@adapters, fn adapter ->
+      query =
+        configure(
+          %{
+            name: "Domain root contract",
+            source: %{
+              source_table: "selecto_domain_root_contract",
+              primary_key: :id,
+              fields: [:id],
+              redact_fields: [],
+              columns: %{id: %{type: :integer}},
+              associations: %{}
+            },
+            schemas: %{},
+            joins: %{}
+          },
+          :compile_only,
+          adapter: adapter.module,
+          validate: false
+        )
+        |> Selecto.select(["id"])
+
+      case render_adapter_output("ROOT", query, ["select"], adapter) do
+        %{status: :ok} ->
+          IO.puts("PASS ROOT #{adapter.key}")
+
+        %{status: :unsupported, error: error} ->
+          raise "ROOT failed for #{adapter.key}: #{error}"
+      end
+    end)
   end
 
   defp run_validation_sensitive_examples! do
@@ -2808,6 +2860,9 @@ end
 
 unless System.get_env("SELECTO_SQL_PATTERNS_NO_AUTO") == "1" do
   case System.argv() do
+    ["--verify-domain-root"] ->
+      SelectoSqlPatterns.VerifyExamples.verify_domain_root!()
+
     ["--dump-sql", output_path] ->
       SelectoSqlPatterns.VerifyExamples.dump_sql_markdown(output_path)
 
