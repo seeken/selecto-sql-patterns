@@ -2281,7 +2281,7 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Selecto.json_select([
       X.json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")
     ])
-    |> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity", nil})
+    |> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity"})
     |> Selecto.order_by(order_by([asc(name)]))
   end
 
