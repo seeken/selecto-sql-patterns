@@ -501,6 +501,30 @@ defmodule SelectoSqlPatterns.LiveValidation do
     %{id: "Q009", assert: {:columns_include, ["customer_id", "name", "tier"]}},
     %{id: "Q010", assert: {:columns_include, ["order_number", "status", "name"]}},
     %{
+      id: "Q011",
+      assert: {:columns_include, ["name", "email", "orders"]},
+      adapters: %{
+        "postgresql" =>
+          {:generated_only,
+           "Nested JSON tree execution still needs an order_items fixture in this smoke harness."},
+        "sqlite" =>
+          {:generated_only,
+           "Nested JSON tree execution still needs an order_items fixture in this smoke harness."},
+        "mysql" =>
+          {:generated_only,
+           "Nested JSON tree execution still needs an order_items fixture in this smoke harness."},
+        "mariadb" =>
+          {:generated_only,
+           "Nested JSON tree execution still needs an order_items fixture in this smoke harness."},
+        "mssql" =>
+          {:generated_only,
+           "Nested JSON tree execution still needs an order_items fixture in this smoke harness."},
+        "duckdb" =>
+          {:unsupported_expected,
+           "DuckDB does not support this nested JSON aggregation output in the canonical adapter oracle."}
+      }
+    },
+    %{
       id: "G001",
       assert: {:columns_include, ["id", "name"]},
       adapters: %{
@@ -827,9 +851,18 @@ defmodule SelectoSqlPatterns.LiveValidation do
       generated_at: DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601(),
       mode: "smoke",
       adapters: Enum.map(@adapters, &Map.take(&1, [:key, :label])),
+      engines:
+        Enum.into(@adapters, %{}, fn adapter ->
+          env_key = "SELECTO_LIVE_" <> String.upcase(adapter.key) <> "_ENGINE"
+          {adapter.key, System.get_env(env_key) || default_engine_label(adapter.key)}
+        end),
       patterns: patterns
     }
   end
+
+  defp default_engine_label("sqlite"), do: "SQLite temporary-file fixture"
+  defp default_engine_label("duckdb"), do: "DuckDB temporary-file fixture"
+  defp default_engine_label(_adapter), do: "engine identity not recorded"
 
   defp connect_available_adapters(opts) do
     Enum.into(@adapters, %{}, fn adapter ->

@@ -38,16 +38,31 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -78,16 +93,28 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -118,16 +145,34 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -161,16 +206,31 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -204,16 +264,37 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_salary_rank"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -249,16 +330,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -287,16 +383,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -333,16 +450,34 @@
         "row_count": 71
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 71
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 71
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 71
       },
       "postgresql": {
         "status": "executed",
@@ -371,16 +506,34 @@
         "row_count": 20
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "postgresql": {
         "status": "executed",
@@ -409,16 +562,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial parameterized exists smoke validation requires geo fixtures and is not executed in this harness.",
@@ -440,16 +593,31 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -476,16 +644,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial containment smoke validation requires geo fixtures and is not executed in this harness.",
@@ -507,16 +675,26 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MSSQL still needs EXCEPT ALL execution handling in this smoke harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -543,16 +721,31 @@
         "row_count": 5
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count(*)"
+        ],
+        "row_count": 5
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 5
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count(*)"
+        ],
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -584,16 +777,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          ""
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -625,16 +833,31 @@
         "row_count": 6
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "postgresql": {
         "status": "executed",
@@ -662,16 +885,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "total",
+          "moving_avg_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -704,16 +945,28 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -744,16 +997,34 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "COUNT(reviews.id)",
+          "AVG(reviews.rating)"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "",
+          ""
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "COUNT(reviews.id)",
+          "AVG(reviews.rating)"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -788,16 +1059,34 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_count"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -832,16 +1121,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "tier"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -876,16 +1183,34 @@
         "row_count": 19
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "postgresql": {
         "status": "executed",
@@ -920,16 +1245,34 @@
         "row_count": 15
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 15
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 15
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 15
       },
       "postgresql": {
         "status": "executed",
@@ -964,16 +1307,34 @@
         "row_count": 7
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          "COUNT(orders.id)"
+        ],
+        "row_count": 7
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          ""
+        ],
+        "row_count": 7
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "cohort_start",
+          "status",
+          "COUNT(orders.id)"
+        ],
+        "row_count": 7
       },
       "postgresql": {
         "status": "executed",
@@ -1008,16 +1369,34 @@
         "row_count": 25
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 25
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 25
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 25
       },
       "postgresql": {
         "status": "executed",
@@ -1053,16 +1432,37 @@
         "row_count": 17
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "postgresql": {
         "status": "executed",
@@ -1099,16 +1499,34 @@
         "row_count": 18
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 18
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 18
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 18
       },
       "postgresql": {
         "status": "executed",
@@ -1137,16 +1555,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "APPLY join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Adapter does not support lateral/apply joins",
+        "status": "unsupported_expected"
       },
       "postgresql": {
         "reason": "Lateral join smoke case needs a richer seeded product/order dataset before live execution is meaningful.",
@@ -1169,16 +1587,34 @@
         "row_count": 22
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 22
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 22
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 22
       },
       "postgresql": {
         "status": "executed",
@@ -1212,16 +1648,31 @@
         "row_count": 90
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "postgresql": {
         "status": "executed",
@@ -1253,16 +1704,31 @@
         "row_count": 6
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier"
+        ],
+        "row_count": 6
       },
       "postgresql": {
         "status": "executed",
@@ -1289,16 +1755,31 @@
         "row_count": 100
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 100
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 100
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 100
       },
       "postgresql": {
         "status": "executed",
@@ -1326,16 +1807,34 @@
         "row_count": 68
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "status"
+        ],
+        "row_count": 68
       },
       "postgresql": {
         "status": "executed",
@@ -1370,16 +1869,34 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "MIN(selecto_root.total)",
+          "MAX(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "MIN(selecto_root.total)",
+          "MAX(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -1415,16 +1932,37 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number",
+          "total"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number",
+          "total"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number",
+          "total"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -1455,16 +1993,34 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -1493,16 +2049,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Array-contains smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -1525,16 +2081,34 @@
         "row_count": 17
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "postgresql": {
         "status": "executed",
@@ -1570,16 +2144,37 @@
         "row_count": 8
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "postgresql": {
         "status": "executed",
@@ -1615,16 +2210,16 @@
         "row_count": 2
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "postgresql": {
         "status": "executed",
@@ -1646,16 +2241,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial bbox smoke validation requires geo fixtures and is not executed in this harness.",
@@ -1678,16 +2273,34 @@
         "row_count": 68
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 68
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 68
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 68
       },
       "postgresql": {
         "status": "executed",
@@ -1716,16 +2329,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial distance-order smoke validation requires geo fixtures and is not executed in this harness.",
@@ -1747,16 +2360,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "COUNT(reviews.id)"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "COUNT(reviews.id)"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -1788,16 +2416,31 @@
         "row_count": 90
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status"
+        ],
+        "row_count": 90
       },
       "postgresql": {
         "status": "executed",
@@ -1829,16 +2472,31 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -1871,16 +2529,22 @@
         "row_count": 14
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MariaDB supports WITH ROLLUP but rejects this example's WITH ROLLUP plus ORDER BY combination.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "status",
+          ""
+        ],
+        "row_count": 14
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "The MySQL adapter does not claim ROLLUP support",
+        "status": "unsupported_expected"
       },
       "postgresql": {
         "status": "executed",
@@ -1910,16 +2574,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total",
+          "status_max_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -1950,16 +2635,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial grouping smoke validation requires geo fixtures and is not executed in this harness.",
@@ -1982,16 +2667,16 @@
         "row_count": 39
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "postgresql": {
         "status": "executed",
@@ -2019,16 +2704,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -2055,16 +2755,31 @@
         "row_count": 2
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "postgresql": {
         "status": "executed",
@@ -2092,16 +2807,16 @@
         "row_count": 39
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MariaDB requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; SQL Server requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "This example intentionally uses raw PostgreSQL date_trunc SQL; MySQL requires a portable datetime-bucket expression.",
+        "status": "generated_only"
       },
       "postgresql": {
         "status": "executed",
@@ -2129,16 +2844,31 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "MIN(selecto_root.inserted_at)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "MIN(selecto_root.inserted_at)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -2171,16 +2901,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          ""
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2214,16 +2962,31 @@
         "row_count": 71
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 71
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 71
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 71
       },
       "postgresql": {
         "status": "executed",
@@ -2252,16 +3015,37 @@
         "row_count": 25
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 25
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 25
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 25
       },
       "postgresql": {
         "status": "executed",
@@ -2298,16 +3082,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "name"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2343,16 +3145,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "previous_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2388,16 +3211,31 @@
         "row_count": 34
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 34
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 34
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name"
+        ],
+        "row_count": 34
       },
       "postgresql": {
         "status": "executed",
@@ -2432,16 +3270,40 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "inserted_at",
+          "total",
+          "status_running_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "inserted_at",
+          "total",
+          "status_running_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "inserted_at",
+          "total",
+          "status_running_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2481,16 +3343,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "next_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2527,16 +3410,34 @@
         "row_count": 27
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 27
       },
       "postgresql": {
         "status": "executed",
@@ -2570,16 +3471,31 @@
         "row_count": 5
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count(*)"
+        ],
+        "row_count": 5
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 5
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "count(*)"
+        ],
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -2606,16 +3522,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial exists-join smoke validation requires geo fixtures and is not executed in this harness.",
@@ -2639,16 +3555,37 @@
         "row_count": 68
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "previous_order_at"
+        ],
+        "row_count": 68
       },
       "postgresql": {
         "status": "executed",
@@ -2685,16 +3622,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_rank"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2723,16 +3678,16 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MariaDB still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MSSQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MySQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "PostgreSQL still needs a simplified UNION wrapper for this timeseries set-operation pattern.",
@@ -2755,16 +3710,34 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "name",
+          "tier"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -2793,16 +3766,37 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "products",
+          "quantities"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -2839,16 +3833,34 @@
         "row_count": 31
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 31
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 31
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 31
       },
       "postgresql": {
         "status": "executed",
@@ -2884,16 +3896,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "prev_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -2931,16 +3964,37 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "department",
+          "salary",
+          "department_rank"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -2971,16 +4025,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial predicate smoke validation requires geo fixtures and is not executed in this harness.",
@@ -2997,16 +4051,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MariaDB text-search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MSSQL full-text search support is not wired into this smoke harness yet.",
+        "status": "unsupported_expected"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MySQL smoke validation still needs a MATCH-compatible full-text index before this pattern can execute live.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "PostgreSQL smoke validation still needs seeded text-search indexes before this pattern can execute live.",
@@ -3015,6 +4069,32 @@
       "sqlite": {
         "reason": "SQLite needs an FTS5-backed field configuration before this text-search pattern can execute.",
         "status": "unsupported_expected"
+      }
+    },
+    "Q011": {
+      "duckdb": {
+        "reason": "DuckDB does not support this nested JSON aggregation output in the canonical adapter oracle.",
+        "status": "unsupported_expected"
+      },
+      "mariadb": {
+        "reason": "Nested JSON tree execution still needs an order_items fixture in this smoke harness.",
+        "status": "generated_only"
+      },
+      "mssql": {
+        "reason": "Nested JSON tree execution still needs an order_items fixture in this smoke harness.",
+        "status": "generated_only"
+      },
+      "mysql": {
+        "reason": "Nested JSON tree execution still needs an order_items fixture in this smoke harness.",
+        "status": "generated_only"
+      },
+      "postgresql": {
+        "reason": "Nested JSON tree execution still needs an order_items fixture in this smoke harness.",
+        "status": "generated_only"
+      },
+      "sqlite": {
+        "reason": "Nested JSON tree execution still needs an order_items fixture in this smoke harness.",
+        "status": "generated_only"
       }
     },
     "C003": {
@@ -3029,16 +4109,34 @@
         "row_count": 1160
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total"
+        ],
+        "row_count": 1160
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total"
+        ],
+        "row_count": 1160
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total"
+        ],
+        "row_count": 1160
       },
       "postgresql": {
         "status": "executed",
@@ -3067,16 +4165,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Array-overlap smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -3099,16 +4197,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "name"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3137,16 +4253,31 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 2
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 2
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 2
       },
       "postgresql": {
         "status": "executed",
@@ -3178,16 +4309,31 @@
         "row_count": 5
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "SUM(selecto_root.total)"
+        ],
+        "row_count": 5
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          ""
+        ],
+        "row_count": 5
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "SUM(selecto_root.total)"
+        ],
+        "row_count": 5
       },
       "postgresql": {
         "status": "executed",
@@ -3220,16 +4366,34 @@
         "row_count": 1
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -3264,16 +4428,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3296,16 +4478,34 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          ""
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -3334,16 +4534,34 @@
         "row_count": 20
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "postgresql": {
         "status": "executed",
@@ -3377,16 +4595,31 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3418,16 +4651,26 @@
         "row_count": 2
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "MSSQL still needs INTERSECT ALL execution handling in this smoke harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "name"
+        ],
+        "row_count": 2
       },
       "postgresql": {
         "status": "executed",
@@ -3455,16 +4698,34 @@
         "row_count": 17
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "total"
+        ],
+        "row_count": 17
       },
       "postgresql": {
         "status": "executed",
@@ -3499,16 +4760,34 @@
         "row_count": 35
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 35
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 35
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "order_number",
+          "total"
+        ],
+        "row_count": 35
       },
       "postgresql": {
         "status": "executed",
@@ -3542,16 +4821,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "count(*)"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          ""
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "tier",
+          "count(*)"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -3578,16 +4872,16 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "UNNEST join smoke validation still needs true array-backed tags fixtures instead of JSON/text tags.",
@@ -3604,16 +4898,34 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "tier",
+          "order_number"
+        ],
+        "row_count": 19
       },
       "postgresql": {
         "status": "executed",
@@ -3649,16 +4961,37 @@
         "row_count": 68
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "order_number",
+          "inserted_at",
+          "next_order_at"
+        ],
+        "row_count": 68
       },
       "postgresql": {
         "status": "executed",
@@ -3696,16 +5029,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "running_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3736,16 +5090,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Array-containment smoke validation still needs adapter-specific array fixtures instead of JSON-backed tag storage.",
@@ -3767,16 +5121,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "SUM(selecto_root.total)"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          ""
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "SUM(selecto_root.total)"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -3811,16 +5180,40 @@
         "row_count": 68
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "customer_id",
+          "cohort_start",
+          "order_number",
+          "inserted_at",
+          "cohort_order_number"
+        ],
+        "row_count": 68
       },
       "postgresql": {
         "status": "executed",
@@ -3853,16 +5246,16 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Spatial buffer/intersects smoke validation requires geo fixtures and is not executed in this harness.",
@@ -3879,16 +5272,34 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -3917,16 +5328,16 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "date_trunc day-bucket smoke validation still needs proper structured datetime truncation support in Selecto.",
@@ -3943,16 +5354,31 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -3985,16 +5411,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "coalesce( customer.name, 'Unassigned' )",
+          "nullif( selecto_root.status, 'processing' )"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "",
+          ""
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "coalesce( customer.name, 'Unassigned' )",
+          "nullif( selecto_root.status, 'processing' )"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4023,16 +5467,31 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          ""
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone'))"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -4065,16 +5524,34 @@
         "row_count": 20
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "order_number",
+          "total"
+        ],
+        "row_count": 20
       },
       "postgresql": {
         "status": "executed",
@@ -4109,16 +5586,34 @@
         "row_count": 17
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 17
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 17
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "name",
+          "total"
+        ],
+        "row_count": 17
       },
       "postgresql": {
         "status": "executed",
@@ -4153,16 +5648,34 @@
         "row_count": 17
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 17
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 17
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "customer_id",
+          "total"
+        ],
+        "row_count": 17
       },
       "postgresql": {
         "status": "executed",
@@ -4198,16 +5711,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total",
+          "trailing_avg_total"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4238,16 +5772,37 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "warehouse_zone",
+          "stock_quantity"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -4284,16 +5839,34 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "SUM(selecto_root.total)",
+          "count(*)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "SUM(selecto_root.total)",
+          "count(*)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4327,16 +5900,31 @@
         "row_count": 3
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "product_name",
+          "quantity"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -4363,16 +5951,34 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "email",
+          "order_items"
+        ],
+        "row_count": 3
       },
       "postgresql": {
         "status": "executed",
@@ -4401,16 +6007,34 @@
         "status": "unsupported_expected"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "name",
+          "sku",
+          "price_band"
+        ],
+        "row_count": 1
       },
       "postgresql": {
         "status": "executed",
@@ -4438,16 +6062,31 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "first_name"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "first_name"
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "first_name",
+          "first_name"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4480,16 +6119,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "total",
+          "total_percent_rank"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4518,16 +6175,16 @@
         "status": "generated_only"
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
+        "status": "generated_only"
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
+        "status": "generated_only"
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
+        "status": "generated_only"
       },
       "postgresql": {
         "reason": "Set-operation pagination still needs a simplified UNION wrapper or a larger fixture window for live execution.",
@@ -4551,16 +6208,37 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "COUNT(DISTINCT selecto_root.customer_id)",
+          "stddev(selecto_root.total)",
+          "variance(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "",
+          "",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "COUNT(DISTINCT selecto_root.customer_id)",
+          "stddev(selecto_root.total)",
+          "variance(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4589,16 +6267,31 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "count(*)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "count(*)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4632,16 +6325,37 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "id",
+          "customer_id",
+          "total",
+          "customer_order_count"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4678,16 +6392,34 @@
         "row_count": 72
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "status",
+          "status_label"
+        ],
+        "row_count": 72
       },
       "postgresql": {
         "status": "executed",
@@ -4722,16 +6454,34 @@
         "row_count": 8
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "order_number",
+          "inserted_at",
+          "total"
+        ],
+        "row_count": 8
       },
       "postgresql": {
         "status": "executed",
@@ -4765,16 +6515,31 @@
         "row_count": 4
       },
       "mariadb": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "mssql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          ""
+        ],
+        "row_count": 4
       },
       "mysql": {
-        "reason": "connection not configured",
-        "status": "skipped"
+        "status": "executed",
+        "aliases": [],
+        "columns": [
+          "status",
+          "AVG(selecto_root.total)"
+        ],
+        "row_count": 4
       },
       "postgresql": {
         "status": "executed",
@@ -4796,5 +6561,13 @@
       }
     }
   },
-  "generated_at": "2026-08-14T17:07:23Z"
+  "generated_at": "2026-08-25T22:38:22Z",
+  "engines": {
+    "duckdb": "DuckDB temporary-file fixture",
+    "mariadb": "MariaDB 12.3.2 via Selecto MariaDB adapter",
+    "mssql": "Microsoft SQL Server 2022 16.0.4265.3 on Beep via SSH tunnel",
+    "mysql": "MariaDB 12.3.2 via Selecto MySQL adapter; compatibility boundary",
+    "postgresql": "PostgreSQL 18 on Beep via SSH tunnel",
+    "sqlite": "SQLite temporary-file fixture"
+  }
 }
