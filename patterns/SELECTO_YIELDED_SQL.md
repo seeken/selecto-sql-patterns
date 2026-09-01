@@ -439,15 +439,15 @@ select selecto_root.name, delivered_stats.count
 
 ### SQLite
 
-_Unavailable:_ `Adapter does not support lateral/apply joins`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ### MySQL
 
-_Unavailable:_ `Adapter does not support lateral/apply joins`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ### MariaDB
 
-_Unavailable:_ `Adapter does not support lateral/apply joins`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ### MSSQL
 
@@ -457,14 +457,14 @@ select selecto_root.name, delivered_stats.count
         select count(*)
         from orders subq_root_orders
         where (( subq_root_orders.status = @p1 ))
-      ) AS delivered_stats
+      ) AS [delivered_stats]
 ```
 
 **Params:** `["delivered"]`
 
 ### DuckDB
 
-_Unavailable:_ `Adapter does not support lateral/apply joins`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## J008
 
@@ -480,53 +480,23 @@ select selecto_root.name, product_tag
 
 ### SQLite
 
-```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
-        where (( selecto_root.active = ? ))
-```
-
-**Params:** `[true]`
+_Unavailable:_ `SQLite does not support this collection operation`
 
 ### MySQL
 
-```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag
-        where (( selecto_root.active = ? ))
-```
-
-**Params:** `[true]`
+_Unavailable:_ `MySQL does not support this collection operation`
 
 ### MariaDB
 
-```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST(`selecto_root`.`tags`) AS product_tag
-        where (( selecto_root.active = ? ))
-```
-
-**Params:** `[true]`
+_Unavailable:_ `MariaDB does not support this collection operation`
 
 ### MSSQL
 
-```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST([selecto_root].[tags]) AS product_tag
-        where (( selecto_root.active = @p1 ))
-```
-
-**Params:** `[true]`
+_Unavailable:_ `SQL Server does not support this collection operation`
 
 ### DuckDB
 
-```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
-        where (( selecto_root.active = $1 ))
-```
-
-**Params:** `[true]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## J009
 
@@ -1809,46 +1779,29 @@ select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(sel
 ### PostgreSQL
 
 ```sql
-select * from (
-        select customer.tier, selecto_root.status, count(*)
+select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by rollup( customer.tier, selecto_root.status )
-      ) as rollupfix
-        order by 1 asc nulls first, 2 asc nulls first
+
+        order by customer.tier asc, selecto_root.status asc
 ```
 
 **Params:** `[]`
 
 ### SQLite
 
-```sql
-select customer.tier, selecto_root.status, count(*)
-        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        group by customer.tier, selecto_root.status
-
-        order by customer.tier asc, selecto_root.status asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `adapter SelectoDBSQLite.Adapter does not implement rollup rendering`
 
 ### MySQL
 
-```sql
-select customer.tier, selecto_root.status, count(*)
-        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        group by customer.tier, selecto_root.status
-
-        order by customer.tier asc, selecto_root.status asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `adapter Selecto.DB.MySQL does not implement rollup rendering`
 
 ### MariaDB
 
 ```sql
 select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        group by customer.tier, selecto_root.status
+        group by customer.tier, selecto_root.status with rollup
 
         order by customer.tier asc, selecto_root.status asc
 ```
@@ -1860,7 +1813,7 @@ select customer.tier, selecto_root.status, count(*)
 ```sql
 select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        group by customer.tier, selecto_root.status
+        group by ROLLUP( customer.tier, selecto_root.status )
 
         order by customer.tier asc, selecto_root.status asc
 ```
@@ -1872,7 +1825,7 @@ select customer.tier, selecto_root.status, count(*)
 ```sql
 select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        group by customer.tier, selecto_root.status
+        group by ROLLUP( customer.tier, selecto_root.status )
 
         order by customer.tier asc, selecto_root.status asc
 ```
@@ -4285,7 +4238,7 @@ select selecto_root.name, selecto_root.sku
 
 ### SQLite
 
-_Unavailable:_ `SQLite text search requires an FTS5-configured field`
+_Unavailable:_ `SQLite text search requires FTS5-configured fields`
 
 ### MySQL
 
@@ -4301,15 +4254,15 @@ select selecto_root.name, selecto_root.sku
 
 ### MariaDB
 
-_Unavailable:_ `Adapter does not support text search`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ### MSSQL
 
-_Unavailable:_ `Adapter does not support text search`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ### DuckDB
 
-_Unavailable:_ `Adapter does not support text search`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## F005
 
@@ -4401,70 +4354,30 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured"]]`
+_Unavailable:_ `SQLite does not support this collection operation`
 
 ### MySQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured"]]`
+_Unavailable:_ `MySQL does not support this collection operation`
 
 ### MariaDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured"]]`
+_Unavailable:_ `MariaDB does not support this collection operation`
 
 ### MSSQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> @p1 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured"]]`
+_Unavailable:_ `SQL Server does not support this collection operation`
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> $1 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured"]]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## F007
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+select selecto_root.name, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
         from products selecto_root
         where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
 
@@ -4512,9 +4425,9 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 ### MSSQL
 
 ```sql
-select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+select selecto_root.name, JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone')
         from products selecto_root
-        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ))
+        where (( (JSON_QUERY([selecto_root].[metadata], '$.warehouse.zone') IS NOT NULL OR JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') IS NOT NULL) ))
 
         order by selecto_root.name asc
 ```
@@ -4523,15 +4436,7 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
 
 ### DuckDB
 
-```sql
-select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
-        from products selecto_root
-        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## F008
 
@@ -5138,7 +5043,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 limit 20
 offset 20
 ```
@@ -5155,7 +5060,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 limit 20
 offset 20
 ```
@@ -5172,7 +5077,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 limit 20
 offset 20
 ```
@@ -5189,7 +5094,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 limit 20
 offset 20
 ```
@@ -5206,7 +5111,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 offset 20 rows fetch next 20 rows only
 ```
 
@@ -5222,7 +5127,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
+ORDER BY 1 asc
 limit 20
 offset 20
 ```
@@ -5320,7 +5225,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
+select selecto_root.name, selecto_root.sku, "metadata"->>'price_band' AS "price_band"
         from products selecto_root
         where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
 
@@ -5368,9 +5273,9 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ### MSSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.price_band') AS [price_band]
+select selecto_root.name, selecto_root.sku, JSON_VALUE([selecto_root].[metadata], '$.price_band') AS [price_band]
         from products selecto_root
-        where (( JSON_VALUE(selecto_root.metadata, '$.price_band') = 'premium' ))
+        where (( JSON_VALUE([selecto_root].[metadata], '$.price_band') = 'premium' ))
 
         order by selecto_root.name asc
 ```
@@ -5379,24 +5284,16 @@ select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
-        from products selecto_root
-        where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA002
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+select selecto_root.name, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
         from products selecto_root
-        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone'] = $1 ))
 
         order by selecto_root.name asc
 ```
@@ -5442,9 +5339,9 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 ### MSSQL
 
 ```sql
-select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+select selecto_root.name, JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone')
         from products selecto_root
-        where (( (JSON_QUERY(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') IS NOT NULL) ) and ( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ))
+        where (( (JSON_QUERY([selecto_root].[metadata], '$.warehouse.zone') IS NOT NULL OR JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') IS NOT NULL) ) and ( JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') = @p1 ))
 
         order by selecto_root.name asc
 ```
@@ -5453,15 +5350,7 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
 
 ### DuckDB
 
-```sql
-select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
-        from products selecto_root
-        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `["A1"]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA003
 
@@ -5479,70 +5368,30 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"], true]`
+_Unavailable:_ `SQLite does not support this collection operation`
 
 ### MySQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"], true]`
+_Unavailable:_ `MySQL does not support this collection operation`
 
 ### MariaDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags && ? ) and ( selecto_root.active = ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"], true]`
+_Unavailable:_ `MariaDB does not support this collection operation`
 
 ### MSSQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags && @p1 ) and ( selecto_root.active = @p2 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"], true]`
+_Unavailable:_ `SQL Server does not support this collection operation`
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"], true]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA004
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+select selecto_root.name, "metadata"#>>ARRAY['stock', 'quantity'] AS "stock_quantity"
         from products selecto_root
         where (( "metadata"->'stock' ? 'quantity' ))
 
@@ -5590,9 +5439,9 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
 ### MSSQL
 
 ```sql
-select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]
+select selecto_root.name, JSON_VALUE([selecto_root].[metadata], '$.stock.quantity') AS [stock_quantity]
         from products selecto_root
-        where (( (JSON_QUERY(selecto_root.metadata, '$.stock.quantity') IS NOT NULL OR JSON_VALUE(selecto_root.metadata, '$.stock.quantity') IS NOT NULL) ))
+        where (( (JSON_QUERY([selecto_root].[metadata], '$.stock.quantity') IS NOT NULL OR JSON_VALUE([selecto_root].[metadata], '$.stock.quantity') IS NOT NULL) ))
 
         order by selecto_root.name asc
 ```
@@ -5601,24 +5450,16 @@ select selecto_root.name, JSON_VALUE(selecto_root.metadata, '$.stock.quantity') 
 
 ### DuckDB
 
-```sql
-select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
-        from products selecto_root
-        where (( "metadata"->'stock' ? 'quantity' ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA005
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone"
+select selecto_root.name, selecto_root.sku, "metadata"#>>ARRAY['warehouse', 'zone'] AS "warehouse_zone"
         from products selecto_root
-        order by metadata -> 'warehouse' ->> 'zone' asc
+        order by "metadata"#>>ARRAY['warehouse', 'zone'] asc
 ```
 
 **Params:** `[]`
@@ -5656,22 +5497,16 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ### MSSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone]
+select selecto_root.name, selecto_root.sku, JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') AS [warehouse_zone]
         from products selecto_root
-        order by JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') asc
+        order by JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') asc
 ```
 
 **Params:** `[]`
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone"
-        from products selecto_root
-        order by metadata -> 'warehouse' ->> 'zone' asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA006
 
@@ -5689,72 +5524,32 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"]]`
+_Unavailable:_ `SQLite does not support this collection operation`
 
 ### MySQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"]]`
+_Unavailable:_ `MySQL does not support this collection operation`
 
 ### MariaDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> ? ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"]]`
+_Unavailable:_ `MariaDB does not support this collection operation`
 
 ### MSSQL
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> @p1 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"]]`
+_Unavailable:_ `SQL Server does not support this collection operation`
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.tags
-        from products selecto_root
-        where (( selecto_root.tags @> $1 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `[["featured", "clearance"]]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA007
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
+select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
         from products selecto_root
-        where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
+        where (( "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone'] = $1 ) and ( selecto_root.active = $2 ))
 
         order by selecto_root.name asc
 ```
@@ -5800,9 +5595,9 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ### MSSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone')
+select selecto_root.name, selecto_root.sku, JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone')
         from products selecto_root
-        where (( JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') = @p1 ) and ( selecto_root.active = @p2 ))
+        where (( JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') = @p1 ) and ( selecto_root.active = @p2 ))
 
         order by selecto_root.name asc
 ```
@@ -5811,22 +5606,14 @@ select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>'{warehouse,zone}'
-        from products selecto_root
-        where (( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ) and ( selecto_root.active = $2 ))
-
-        order by selecto_root.name asc
-```
-
-**Params:** `["A1", true]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## JA008
 
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone", metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+select selecto_root.name, selecto_root.sku, "metadata"#>>ARRAY['warehouse', 'zone'] AS "warehouse_zone", "metadata"#>>ARRAY['stock', 'quantity'] AS "stock_quantity"
         from products selecto_root
         order by selecto_root.name asc
 ```
@@ -5866,7 +5653,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ### MSSQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$.warehouse.zone') AS [warehouse_zone], JSON_VALUE(selecto_root.metadata, '$.stock.quantity') AS [stock_quantity]
+select selecto_root.name, selecto_root.sku, JSON_VALUE([selecto_root].[metadata], '$.warehouse.zone') AS [warehouse_zone], JSON_VALUE([selecto_root].[metadata], '$.stock.quantity') AS [stock_quantity]
         from products selecto_root
         order by selecto_root.name asc
 ```
@@ -5875,13 +5662,7 @@ select selecto_root.name, selecto_root.sku, JSON_VALUE(selecto_root.metadata, '$
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone", metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
-        from products selecto_root
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## Q001
 
@@ -5937,13 +5718,7 @@ select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_order
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
-        from attendees selecto_root
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## Q002
 
@@ -6074,7 +5849,7 @@ select t.product_name, t.quantity
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT ARRAY_AGG(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
         from attendees selecto_root
         order by selecto_root.name asc
 ```
@@ -6123,13 +5898,7 @@ select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_order
 
 ### DuckDB
 
-```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
-        from attendees selecto_root
-        order by selecto_root.name asc
-```
-
-**Params:** `[]`
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
 
 ## Q005
 
@@ -6635,6 +6404,62 @@ select selecto_root.order_number, selecto_root.status, customer.name
 
 **Params:** `[]`
 
+## Q011
+
+### PostgreSQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object('product_name', sub_orders."product_name", 'items', COALESCE((SELECT json_agg(json_build_object('sku', sub_orders_items."sku", 'quantity', sub_orders_items."quantity")) FROM order_items sub_orders_items WHERE sub_orders_items."order_id" = sub_orders."order_id"), '[]'::json))) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "orders"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### SQLite
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_object('product_name', sub_orders."product_name", 'items', COALESCE((SELECT json_group_array(json_object('sku', sub_orders_items."sku", 'quantity', sub_orders_items."quantity")) FROM order_items sub_orders_items WHERE sub_orders_items."order_id" = sub_orders."order_id"), '[]'))) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "orders"
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MySQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'items', COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sku', sub_orders_items.`sku`, 'quantity', sub_orders_items.`quantity`)) FROM order_items sub_orders_items WHERE sub_orders_items.`order_id` = sub_orders.`order_id`), JSON_ARRAY()))) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `orders`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MariaDB
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'items', COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sku', sub_orders_items.`sku`, 'quantity', sub_orders_items.`quantity`)) FROM order_items sub_orders_items WHERE sub_orders_items.`order_id` = sub_orders.`order_id`), JSON_ARRAY()))) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `orders`
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### MSSQL
+
+```sql
+select selecto_root.name, selecto_root.email, (SELECT COALESCE((SELECT sub_orders.[product_name] AS [product_name] FROM orders sub_orders WHERE sub_orders.[attendee_id] = selecto_root.[attendee_id] FOR JSON PATH), '[]')) AS [orders]
+        from attendees selecto_root
+        order by selecto_root.name asc
+```
+
+**Params:** `[]`
+
+### DuckDB
+
+_Unavailable:_ `Adapter does not support the requested SQL fragment`
+
 ## T001
 
 ### PostgreSQL
@@ -7117,7 +6942,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 limit 50
 ```
 
@@ -7133,7 +6958,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 limit 50
 ```
 
@@ -7149,7 +6974,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 limit 50
 ```
 
@@ -7165,7 +6990,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 limit 50
 ```
 
@@ -7181,7 +7006,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 offset 0 rows fetch next 50 rows only
 ```
 
@@ -7197,7 +7022,7 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
+ORDER BY 2 desc
 limit 50
 ```
 
@@ -8329,51 +8154,19 @@ select selecto_root.id, selecto_root.name
 
 ### SQLite
 
-```sql
-select selecto_root.id, selecto_root.name
-        from locations selecto_root
-        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-
-        order by selecto_root.id asc
-```
-
-**Params:** `["delivery"]`
+_Unavailable:_ `adapter placeholder count does not match the finalized parameter count`
 
 ### MySQL
 
-```sql
-select selecto_root.id, selecto_root.name
-        from locations selecto_root
-        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-
-        order by selecto_root.id asc
-```
-
-**Params:** `["delivery"]`
+_Unavailable:_ `adapter placeholder count does not match the finalized parameter count`
 
 ### MariaDB
 
-```sql
-select selecto_root.id, selecto_root.name
-        from locations selecto_root
-        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = ?) ))
-
-        order by selecto_root.id asc
-```
-
-**Params:** `["delivery"]`
+_Unavailable:_ `adapter placeholder count does not match the finalized parameter count`
 
 ### MSSQL
 
-```sql
-select selecto_root.id, selecto_root.name
-        from locations selecto_root
-        where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom) AND r.kind = @p1) ))
-
-        order by selecto_root.id asc
-```
-
-**Params:** `["delivery"]`
+_Unavailable:_ `adapter placeholder count does not match the finalized parameter count`
 
 ### DuckDB
 
@@ -8624,15 +8417,15 @@ WITH RECURSIVE order_chain (id, status) AS (
 ### PostgreSQL
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -8644,15 +8437,15 @@ WITH customer_spend (customer_id, total) AS (
 ### SQLite
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -8664,15 +8457,15 @@ WITH customer_spend (customer_id, total) AS (
 ### MySQL
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -8684,15 +8477,15 @@ WITH customer_spend (customer_id, total) AS (
 ### MariaDB
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -8704,15 +8497,15 @@ WITH customer_spend (customer_id, total) AS (
 ### MSSQL
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
@@ -8724,15 +8517,15 @@ WITH customer_spend (customer_id, total) AS (
 ### DuckDB
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-
-        select cte_customer_spend.customer_id, cte_customer_spend.total
-        from orders cte_customer_spend
-),
-    order_totals (id, total) AS (
+WITH order_totals (id, total) AS (
 
         select cte_order_totals.id, cte_order_totals.total
         from orders cte_order_totals
+),
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total
