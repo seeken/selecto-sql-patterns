@@ -6561,13 +6561,13 @@
       }
     }
   },
-  "generated_at": "2026-08-25T22:38:22Z",
+  "generated_at": "2026-09-03T21:31:27Z",
   "engines": {
     "duckdb": "DuckDB temporary-file fixture",
-    "mariadb": "MariaDB 12.3.2 via Selecto MariaDB adapter",
-    "mssql": "Microsoft SQL Server 2022 16.0.4265.3 on Beep via SSH tunnel",
-    "mysql": "MariaDB 12.3.2 via Selecto MySQL adapter; compatibility boundary",
-    "postgresql": "PostgreSQL 18 on Beep via SSH tunnel",
+    "mariadb": "MariaDB 11.4 isolated Compose fixture",
+    "mssql": "SQL Server 2022 isolated Compose fixture",
+    "mysql": "MySQL 8.4 isolated Compose fixture",
+    "postgresql": "PostgreSQL 17 isolated Compose fixture",
     "sqlite": "SQLite temporary-file fixture"
   }
 }

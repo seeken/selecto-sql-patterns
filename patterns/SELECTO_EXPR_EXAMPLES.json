@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T04:55:39Z",
+  "generated_at": "2026-09-10T05:14:12Z",
   "patterns": {
     "C004": "configure(order_domain(), :mock_connection, validate: false)\n|> Selecto.with_values(\n  [[\"processing\", \"In Progress\"], [\"shipped\", \"In Transit\"], [\"delivered\", \"Completed\"]],\n  columns: [\"status\", \"status_label\"],\n  as: \"status_labels\",\n  join: [owner_key: :status, related_key: :status]\n)\n|> Selecto.select([\"order_number\", \"status_labels.status_label\"])",
     "S004": "reviewed_products =\n  configure(review_domain(), :mock_connection, validate: false)\n  |> Selecto.select([\"product_id\"])\n  |> Selecto.group_by([\"product_id\"])\n\nconfigure(product_domain(), :mock_connection, validate: false)\n|> Selecto.select([\"name\"])\n|> Selecto.join_subquery(:reviewed_products, reviewed_products,\n  type: :left,\n  on: [%{left: \"id\", right: \"product_id\"}]\n)\n|> Selecto.filter(is_null(\"reviewed_products.product_id\"))\n|> Selecto.order_by([asc(\"name\")])",
