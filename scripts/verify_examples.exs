@@ -184,7 +184,8 @@ defmodule SelectoSqlPatterns.VerifyExamples do
       {"JA007", query_ja007(), ["#>>", "active", "where", "order by"]},
       {"JA008", query_ja008(), ["#>>array", "warehouse_zone", "stock_quantity", "order by"]},
       {"Q001", query_q001(), ["json_agg", "json_build_object", "from orders", "order_items"]},
-      {"Q002", query_q002(), ["from orders", "exists (", "from events", "inner join"]},
+      {"Q002", query_q002(),
+       ["from orders", "exists (", "from events", "selecto_retarget_context"]},
       {"Q003", query_q003(), ["from orders", " in (", "from events", "join attendees"]},
       {"Q004", query_q004(), ["json_agg", "array_agg", "products", "quantities"]},
       {"Q005", query_q005(), ["count(", "order_count", "from orders", "where"]},
@@ -541,6 +542,23 @@ defmodule SelectoSqlPatterns.VerifyExamples do
     |> Map.merge(%{adapter: adapter, connection: connection})
     |> Map.put(:runtime, Selecto.Runtime.Context.new(adapter, connection))
     |> put_in([Access.key!(:set), :set_operations], set_operations)
+    |> retarget_origin_runtime(runtime)
+  end
+
+  # A retargeted query compiles its context from the origin query it keeps in
+  # its retarget state, so the origin must render for the same adapter.
+  defp retarget_origin_runtime(query, runtime) do
+    case Map.get(query.set, :retarget_state) do
+      %{origin: %Selecto{} = origin} = state ->
+        put_in(
+          query,
+          [Access.key!(:set), :retarget_state],
+          %{state | origin: retarget_runtime(origin, runtime)}
+        )
+
+      _ ->
+        query
+    end
   end
 
   defp format_markdown_adapter_output(adapter, %{status: :ok, sql: sql, params: params}) do
@@ -2336,15 +2354,15 @@ defmodule SelectoSqlPatterns.VerifyExamples do
   defp query_q002 do
     configure(event_retarget_domain(), :mock_connection, validate: false)
     |> Selecto.filter(where(event_id == 1000))
-    |> Selecto.select(select([orders.product_name, orders.quantity]))
-    |> Selecto.retarget(:orders, subquery_strategy: :exists)
+    |> Selecto.retarget(:orders, strategy: :exists)
+    |> Selecto.select(select([product_name, quantity]))
   end
 
   defp query_q003 do
     configure(event_retarget_domain(), :mock_connection, validate: false)
     |> Selecto.filter(where(event_id == 2000))
-    |> Selecto.select(select([orders.product_name, orders.quantity]))
-    |> Selecto.retarget(:orders, subquery_strategy: :in)
+    |> Selecto.retarget(:orders, strategy: :in)
+    |> Selecto.select(select([product_name, quantity]))
   end
 
   defp query_q004 do

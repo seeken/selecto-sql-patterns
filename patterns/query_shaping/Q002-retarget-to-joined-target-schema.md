@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Source: Selecto Retarget Integration Tests
+- Source: Selecto Retarget Tests
 - Source URL: https://github.com/seeken/selecto
 - Source License: MIT
 - Dialect: postgres
@@ -10,7 +10,7 @@
 
 ## Problem
 
-Start from event filters, then retarget the query root to related orders while preserving filter context.
+Filter events, then retarget the query to the orders their attendees placed and select order columns.
 
 ## SQL
 
@@ -33,8 +33,8 @@ WHERE EXISTS (
 query =
   Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
   |> Selecto.filter({"event_id", 1000})
-  |> Selecto.select(["orders.product_name", "orders.quantity"])
-  |> Selecto.retarget(:orders, subquery_strategy: :exists)
+  |> Selecto.retarget(:orders, strategy: :exists)
+  |> Selecto.select(["product_name", "quantity"])
 
 {sql, params} = Selecto.to_sql(query)
 ```
@@ -46,16 +46,20 @@ import Selecto.Expr
 
 Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
 |> Selecto.filter(eq("event_id", 1000))
-|> Selecto.select(["orders.product_name", "orders.quantity"])
-|> Selecto.retarget(:orders, subquery_strategy: :exists)
+|> Selecto.retarget(:orders, strategy: :exists)
+|> Selecto.select(["product_name", "quantity"])
 ```
 
 ## Selecto Yielded SQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = $1 ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -64,10 +68,16 @@ select t.product_name, t.quantity
 
 - includes keyword: `from orders`
 - includes keyword: `exists (`
-- includes keyword: `inner join`
+- includes keyword: `selecto_retarget_context`
 - includes keyword: `from events`
 
 ## Notes
 
-- `retarget/3` retargets output to a joined schema while reusing existing root predicates.
-- `subquery_strategy: :exists` emits a correlated EXISTS envelope.
+- `retarget/3` returns a query rooted at the target join (`:orders`, or the
+  path `"attendees.orders"`). Select, filter, and order after the retarget
+  with target-relative names such as `"product_name"`.
+- The filters set before the retarget become its context: the result is the
+  distinct orders the original joined read reaches under those filters.
+  Selections, ordering, grouping, and limits set before it are discarded.
+- `strategy: :exists` correlates the target key with the context query as a
+  derived table. It returns the same rows as the default `:in` strategy.

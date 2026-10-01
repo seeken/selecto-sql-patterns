@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- Source: Selecto Retarget Integration Tests
+- Source: Selecto Retarget Tests
 - Source URL: https://github.com/seeken/selecto
 - Source License: MIT
 - Dialect: postgres
@@ -10,7 +10,7 @@
 
 ## Problem
 
-Retarget an event-filtered query to orders using the retarget IN-subquery strategy.
+Retarget an event-filtered query to its attendees' orders using the IN-subquery strategy.
 
 ## SQL
 
@@ -32,8 +32,8 @@ WHERE o.order_id IN (
 query =
   Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
   |> Selecto.filter({"event_id", 2000})
-  |> Selecto.select(["orders.product_name", "orders.quantity"])
-  |> Selecto.retarget(:orders, subquery_strategy: :in)
+  |> Selecto.retarget(:orders, strategy: :in)
+  |> Selecto.select(["product_name", "quantity"])
 
 {sql, params} = Selecto.to_sql(query)
 ```
@@ -45,16 +45,20 @@ import Selecto.Expr
 
 Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
 |> Selecto.filter(eq("event_id", 2000))
-|> Selecto.select(["orders.product_name", "orders.quantity"])
-|> Selecto.retarget(:orders, subquery_strategy: :in)
+|> Selecto.retarget(:orders, strategy: :in)
+|> Selecto.select(["product_name", "quantity"])
 ```
 
 ## Selecto Yielded SQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = $1 ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -68,5 +72,9 @@ select t.product_name, t.quantity
 
 ## Notes
 
-- `subquery_strategy: :in` produces an ID-set membership retarget shape.
-- This strategy works well when target primary keys are natural correlation anchors.
+- `strategy: :in` is the default. It keeps the target rows whose primary key
+  is in the set the context query selects through the join path.
+- The context is the original query's joined read under all of its filters,
+  including required filters, so a filter on `attendees` would narrow the
+  result to those attendees' orders.
+- The target must be table-backed and list its primary key in `fields`.

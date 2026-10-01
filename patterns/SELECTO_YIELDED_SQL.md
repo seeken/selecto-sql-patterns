@@ -5725,9 +5725,13 @@ _Unavailable:_ `Adapter does not support the requested SQL fragment`
 ### PostgreSQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = $1 ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5735,9 +5739,13 @@ select t.product_name, t.quantity
 ### SQLite
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = ? ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5745,9 +5753,13 @@ select t.product_name, t.quantity
 ### MySQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = ? ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5755,9 +5767,13 @@ select t.product_name, t.quantity
 ### MariaDB
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = ? ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5765,9 +5781,13 @@ select t.product_name, t.quantity
 ### MSSQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = @p1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = @p1 ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5775,9 +5795,13 @@ select t.product_name, t.quantity
 ### DuckDB
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where EXISTS (SELECT 1 FROM events sub_s INNER JOIN attendees j_attendees ON sub_s.event_id = j_attendees.event_id INNER JOIN orders j_orders ON j_attendees.attendee_id = j_orders.attendee_id WHERE j_orders.order_id = t.order_id AND sub_s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( exists (select 1 from (
+        select orders.order_id
+        from events selecto_root left join attendees attendees on attendees.event_id = selecto_root.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( selecto_root.event_id = $1 ))
+      ) selecto_retarget_context where selecto_retarget_context.order_id = selecto_root.order_id) ))
 ```
 
 **Params:** `[1000]`
@@ -5787,9 +5811,13 @@ select t.product_name, t.quantity
 ### PostgreSQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = $1 ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -5797,9 +5825,13 @@ select t.product_name, t.quantity
 ### SQLite
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = ? ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -5807,9 +5839,13 @@ select t.product_name, t.quantity
 ### MySQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = ? ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -5817,9 +5853,13 @@ select t.product_name, t.quantity
 ### MariaDB
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = ?)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = ? ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -5827,9 +5867,13 @@ select t.product_name, t.quantity
 ### MSSQL
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = @p1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = @p1 ))
+      ) ))
 ```
 
 **Params:** `[2000]`
@@ -5837,9 +5881,13 @@ select t.product_name, t.quantity
 ### DuckDB
 
 ```sql
-select t.product_name, t.quantity
-        from orders t
-        where t.order_id IN (SELECT DISTINCT j2.order_id FROM events s JOIN attendees j1 ON s.event_id = j1.event_id JOIN orders j2 ON j1.attendee_id = j2.attendee_id WHERE s.event_id = $1)
+select selecto_root.product_name, selecto_root.quantity
+        from orders selecto_root
+        where (( selecto_root.order_id in (
+        select orders.order_id
+        from events subq_root_events left join attendees attendees on attendees.event_id = subq_root_events.event_id left join orders orders on orders.attendee_id = attendees.attendee_id
+        where (( subq_root_events.event_id = $1 ))
+      ) ))
 ```
 
 **Params:** `[2000]`
