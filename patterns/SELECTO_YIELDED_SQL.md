@@ -446,7 +446,7 @@ _Unavailable:_ `SQLite lateral query is outside the bounded correlated row shape
 ```sql
 select selecto_root.name, delivered_stats.count
         from products selecto_root LEFT JOIN LATERAL (
-        select count(*) AS "7d47f6bc-f837-483a-b067-8cf3d48333b5"
+        select count(*) AS count
         from orders subq_root_orders
         where (( subq_root_orders.status = ? ))
       ) AS `delivered_stats` ON TRUE

@@ -25,7 +25,7 @@
       "key": "duckdb"
     }
   ],
-  "generated_at": "2026-11-13T06:36:23Z",
+  "generated_at": "2026-11-13T17:50:05Z",
   "patterns": {
     "C004": {
       "duckdb": {
@@ -1007,7 +1007,7 @@
         "params": [
           "delivered"
         ],
-        "sql": "select selecto_root.name, delivered_stats.count\n        from products selecto_root LEFT JOIN LATERAL (\n        select count(*) AS \"d9d8d4b2-3b70-4c7d-ae8a-ecf10d99065b\"\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) AS `delivered_stats` ON TRUE"
+        "sql": "select selecto_root.name, delivered_stats.count\n        from products selecto_root LEFT JOIN LATERAL (\n        select count(*) AS count\n        from orders subq_root_orders\n        where (( subq_root_orders.status = ? ))\n      ) AS `delivered_stats` ON TRUE"
       },
       "postgresql": {
         "status": "ok",

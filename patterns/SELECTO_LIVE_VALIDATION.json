@@ -6561,14 +6561,14 @@
       }
     }
   },
-  "generated_at": "2026-11-13T06:36:53Z",
+  "generated_at": "2026-11-13T17:50:12Z",
   "engines": {
-    "duckdb": "DuckDB in-memory fixture",
-    "mariadb": "tmpfs MariaDB 11.4 on port 33111",
+    "duckdb": "DuckDB :memory: fixture",
+    "mariadb": "engine identity not recorded",
     "mssql": "SQL Server 2022 isolated Compose fixture",
-    "mysql": "tmpfs MySQL 8.4 on port 33110",
-    "postgresql": "RAM PostgreSQL on port 55696",
-    "sqlite": "SQLite in-memory fixture"
+    "mysql": "engine identity not recorded",
+    "postgresql": "engine identity not recorded",
+    "sqlite": "SQLite :memory: fixture"
   },
   "adapter_availability": {
     "postgresql": "available",
@@ -6579,14 +6579,14 @@
     "duckdb": "available"
   },
   "adapter_recorded_at": {
-    "postgresql": "2026-11-13T06:36:53Z",
-    "sqlite": "2026-11-13T06:36:53Z",
-    "mysql": "2026-11-13T06:36:53Z",
-    "mariadb": "2026-11-13T06:36:53Z",
+    "postgresql": "2026-11-13T17:50:12Z",
+    "sqlite": "2026-11-13T17:50:12Z",
+    "mysql": "2026-11-13T17:50:12Z",
+    "mariadb": "2026-11-13T17:50:12Z",
     "mssql": "2026-09-03T21:31:27Z",
-    "duckdb": "2026-11-13T06:36:53Z"
+    "duckdb": "2026-11-13T17:50:12Z"
   },
   "unavailable_adapters": {
-    "mssql": "No SQL Server supplied for this refresh; prior results retained without re-execution."
+    "mssql": "No SQL Server supplied; prior results and evidence date retained without re-execution."
   }
 }
