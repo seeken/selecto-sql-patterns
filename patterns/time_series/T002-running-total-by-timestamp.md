@@ -43,7 +43,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "inserted_at", "total"])
 |> Selecto.window_function(:sum, ["total"],
   over: [order_by: [asc("inserted_at")]],
@@ -55,7 +55,7 @@ Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS running_total
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "running_total"
         from orders selecto_root
         order by selecto_root.inserted_at asc
 ```

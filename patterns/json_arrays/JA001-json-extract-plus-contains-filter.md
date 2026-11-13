@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "sku"])
 |> Selecto.json_select([json_extract_text("metadata", "$.price_band", as: "price_band")])
 |> Selecto.json_filter({:json_contains, "metadata", %{eq("price_band", "premium")}})
@@ -51,10 +51,10 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, metadata ->> 'price_band' AS "price_band"
+select selecto_root.name, selecto_root.sku, "metadata"->>'price_band' AS "price_band"
         from products selecto_root
-        where (( metadata @> '{"price_band":"premium"}' ))
-      
+        where (( "metadata" @> '{"price_band":"premium"}'::jsonb ))
+
         order by selecto_root.name asc
 ```
 

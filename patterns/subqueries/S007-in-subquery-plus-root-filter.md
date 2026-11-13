@@ -49,7 +49,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "customer_id", "total"])
 |> Selecto.filter(eq("customer_id", {:subquery, :in, customer_id_subquery_by_tier("gold")}))
 |> Selecto.filter(eq("status", "delivered"))
@@ -66,7 +66,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from customers subq_root_customers
         where (( subq_root_customers.tier = $1 ))
       ) ) and ( selecto_root.status = $2 ))
-      
+
         order by selecto_root.total desc
 ```
 

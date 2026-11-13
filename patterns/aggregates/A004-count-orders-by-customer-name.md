@@ -39,7 +39,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["customer.name", count("*")])
 |> Selecto.group_by(["customer.name"])
 |> Selecto.order_by([asc("customer.name")])
@@ -51,7 +51,7 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 

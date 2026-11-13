@@ -42,20 +42,20 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name"])
 |> Selecto.json_select([json_extract_text("metadata", "$.stock.quantity", as: "stock_quantity")])
-|> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity", nil})
+|> Selecto.json_filter({:json_path_exists, "metadata", "$.stock.quantity"})
 |> Selecto.order_by([asc("name")])
 ```
 
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, metadata -> 'stock' ->> 'quantity' AS "stock_quantity"
+select selecto_root.name, "metadata"#>>ARRAY['stock', 'quantity'] AS "stock_quantity"
         from products selecto_root
-        where (( JSONB_PATH_EXISTS(metadata, '$.stock.quantity') ))
-      
+        where (( "metadata"->'stock' ? 'quantity' ))
+
         order by selecto_root.name asc
 ```
 

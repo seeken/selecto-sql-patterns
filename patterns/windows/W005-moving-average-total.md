@@ -47,7 +47,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "total"])
 |> Selecto.window_function(:avg, ["total"],
   over: [order_by: [asc("id")], frame: {:rows, :unbounded_preceding, :current_row}],
@@ -58,7 +58,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS moving_avg_total
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "moving_avg_total"
         from orders selecto_root
 ```
 

@@ -1,7 +1,6 @@
 workspace = Path.expand("..", __DIR__) |> Path.dirname()
 
 selecto_path = System.get_env("SELECTO_PATH") || Path.join(workspace, "selecto")
-updato_path = System.get_env("SELECTO_UPDATO_PATH") || Path.join(workspace, "selecto_updato")
 
 postgres_path =
   System.get_env("SELECTO_DB_POSTGRESQL_PATH") ||
@@ -9,7 +8,6 @@ postgres_path =
 
 Mix.install([
   {:selecto, path: selecto_path},
-  {:selecto_updato, path: updato_path},
   {:selecto_db_postgresql, path: postgres_path}
 ])
 
@@ -92,7 +90,7 @@ insert =
 
 [%{text: insert_sql, params: insert_params}] = insert.statements
 true = insert_sql =~ "INSERT INTO \"work_items\""
-true = insert_sql =~ "EXISTS (SELECT 1 FROM \"projects\" WHERE \"id\" = $"
+true = insert_sql =~ "EXISTS (SELECT 1 FROM \"projects\" WHERE \"id\" OPERATOR(pg_catalog.=) $"
 true = 7 in insert_params
 true = 42 in insert_params
 

@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "total"])
 |> Selecto.window_function(:dense_rank, [], over: [order_by: [desc("total")]], as: "total_rank")
 ```
@@ -49,7 +49,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS total_rank
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS "total_rank"
         from orders selecto_root
 ```
 

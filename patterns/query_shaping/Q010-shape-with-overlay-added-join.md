@@ -38,7 +38,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_overlay_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_overlay_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "status", "customer.name"])
 |> Selecto.order_by([asc("order_number")])
 ```

@@ -43,7 +43,7 @@ import Selecto.Expr
 
 customer_tier = "premium"
 
-Selecto.configure(active_customer_view_domain(), :mock_connection, validate: false)
+configure(active_customer_view_domain(), :mock_connection, validate: false)
 |> Selecto.select(["customer_id", "name", "tier"])
 |> Selecto.filter(~SELECTO"tier == ^customer_tier")
 |> Selecto.order_by([asc("name")])
@@ -55,7 +55,7 @@ Selecto.configure(active_customer_view_domain(), :mock_connection, validate: fal
 select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = $1 ))
-      
+
         order by selecto_root.name asc
 ```
 

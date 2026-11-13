@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
+configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
 |> Selecto.select(["name", count("reviews.id")])
 |> Selecto.group_by(["name"])
 |> Selecto.order_by([asc("name")])
@@ -50,10 +50,10 @@ Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, count(reviews.id)
+select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
-      
+
         order by selecto_root.name asc
 ```
 

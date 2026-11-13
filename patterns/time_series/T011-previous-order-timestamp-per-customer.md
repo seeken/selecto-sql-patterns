@@ -48,7 +48,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select(["customer_id", "order_number", "inserted_at"])
 |> Selecto.filter(not_null("customer_id"))
 |> Selecto.window_function(:lag, ["inserted_at", 1],

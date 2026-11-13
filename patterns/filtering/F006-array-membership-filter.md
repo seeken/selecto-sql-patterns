@@ -38,7 +38,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "tags"])
 |> Selecto.filter(array_contains("tags", ["featured"]))
 |> Selecto.order_by([asc("name")])
@@ -50,7 +50,7 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags @> $1 ))
-      
+
         order by selecto_root.name asc
 ```
 

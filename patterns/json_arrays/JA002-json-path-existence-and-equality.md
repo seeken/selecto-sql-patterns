@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "metadata.warehouse.zone"])
 |> Selecto.filter(eq("metadata.warehouse.zone", :exists))
 |> Selecto.filter(eq("metadata.warehouse.zone", "A1"))
@@ -51,10 +51,10 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, "selecto_root"."metadata"#>>'{warehouse,zone}'
+select selecto_root.name, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
         from products selecto_root
-        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>'{warehouse,zone}' = $1 ))
-      
+        where (( "selecto_root"."metadata"->'warehouse' ? 'zone' ) and ( "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone'] = $1 ))
+
         order by selecto_root.name asc
 ```
 

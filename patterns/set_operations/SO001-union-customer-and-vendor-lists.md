@@ -44,11 +44,11 @@ query = Selecto.union(customers, vendors)
 import Selecto.Expr
 
 customers =
-  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name", "tier"])
 
 vendors =
-  Selecto.configure(vendor_domain(), :mock_connection, validate: false)
+  configure(vendor_domain(), :mock_connection, validate: false)
   |> Selecto.select(["name", "tier"])
 
 Selecto.union(customers, vendors)

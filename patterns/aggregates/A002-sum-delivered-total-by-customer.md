@@ -40,7 +40,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["customer_id", as(sum("total"), "total_spend")])
 |> Selecto.filter(eq("status", "delivered"))
 |> Selecto.group_by(["customer_id"])
@@ -53,9 +53,9 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select selecto_root.customer_id, SUM(selecto_root.total)
         from orders selecto_root
         where (( selecto_root.status = $1 ))
-      
+
         group by selecto_root.customer_id
-      
+
         order by selecto_root.customer_id asc
 ```
 

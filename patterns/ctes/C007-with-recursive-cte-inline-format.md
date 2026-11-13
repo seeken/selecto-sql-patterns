@@ -57,16 +57,16 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.with_recursive_cte(
   "order_chain",
   fn ->
-    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "status"])
     |> Selecto.filter(eq("status", "processing"))
   end,
   fn _cte_ref ->
-    Selecto.configure(order_domain(), :mock_connection, validate: false)
+    configure(order_domain(), :mock_connection, validate: false)
     |> Selecto.select(["id", "status"])
   end,
   columns: ["id", "status"],
@@ -79,15 +79,15 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 
 ```sql
 WITH RECURSIVE order_chain (id, status) AS (
-    
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
-      
+
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
+        where (( cte_order_chain.status = $1 ))
+
     UNION ALL
-    
-        select selecto_root.id, selecto_root.status
-        from orders selecto_root
+
+        select cte_order_chain.id, cte_order_chain.status
+        from orders cte_order_chain
 )
 
         select selecto_root.order_number, order_chain.status

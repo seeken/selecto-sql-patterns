@@ -51,11 +51,11 @@ query =
 import Selecto.Expr
 
 delivered_orders =
-  Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+  configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["customer_id", "order_number", "total"])
   |> Selecto.filter(eq("status", "delivered"))
 
-Selecto.configure(customer_domain(), :mock_connection, validate: false)
+configure(customer_domain(), :mock_connection, validate: false)
 |> Selecto.join_subquery(:delivered_orders, delivered_orders,
   type: :left,
   on: [%{left: "id", right: "customer_id"}]

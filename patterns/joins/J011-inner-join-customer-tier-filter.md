@@ -53,11 +53,11 @@ query =
 import Selecto.Expr
 
 gold_customers =
-  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name", "tier"])
   |> Selecto.filter(eq("tier", "gold"))
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.join_subquery(:gold_customers, gold_customers,
   type: :inner,
   on: [%{left: "customer_id", right: "id"}]

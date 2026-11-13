@@ -46,7 +46,7 @@ import Selecto.Expr
 
 cohort_month = "date_trunc('month', selecto_root.cohort_start)"
 
-Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+configure(first_order_cohort_domain(), :mock_connection, validate: false)
 |> Selecto.select([as({:raw_sql, cohort_month}, "cohort_month"), count: "*"])
 |> Selecto.group_by(raw_sql: cohort_month)
 |> Selecto.order_by({{:raw_sql, cohort_month}, :asc})

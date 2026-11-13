@@ -54,13 +54,13 @@ order_totals_cte =
   Selecto.Advanced.CTE.create_cte(
     "order_totals",
     fn ->
-      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      configure(order_domain_with_customer_join(), :mock_connection, validate: false)
       |> Selecto.select(["id", "total"])
     end,
     columns: ["id", "total"]
   )
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.with_ctes([order_totals_cte], joins: true)
 |> Selecto.select(["order_number", "order_totals.total"])
 ```
@@ -69,9 +69,9 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 
 ```sql
 WITH order_totals (id, total) AS (
-    
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 )
 
         select selecto_root.order_number, order_totals.total

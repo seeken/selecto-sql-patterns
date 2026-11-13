@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.unnest("tags", as: "product_tag")
 |> Selecto.select(["name", "product_tag"])
 |> Selecto.filter(eq("active", true))
@@ -50,8 +50,8 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
+select selecto_root.name, product_tag.value
+        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag(value)
         where (( selecto_root.active = $1 ))
 ```
 

@@ -45,7 +45,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(employee_domain(), :mock_connection, validate: false)
+configure(employee_domain(), :mock_connection, validate: false)
 |> Selecto.select(["first_name", "department", "salary"])
 |> Selecto.window_function(:row_number, [],
   over: [partition_by: ["department"], order_by: [desc("salary")]],
@@ -56,7 +56,7 @@ Selecto.configure(employee_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS department_salary_rank
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_salary_rank"
         from employees selecto_root
 ```
 

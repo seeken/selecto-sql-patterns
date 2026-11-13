@@ -48,7 +48,7 @@ import Selecto.Expr
 star_domain =
   order_domain_with_customer_join() |> put_in([:joins, :customer, :type], :star_dimension)
 
-Selecto.configure(star_domain, :mock_connection, validate: false)
+configure(star_domain, :mock_connection, validate: false)
 |> Selecto.select(["customer.name", count("*")])
 |> Selecto.group_by(["customer.name"])
 |> Selecto.order_by([asc("customer.name")])
@@ -60,7 +60,7 @@ Selecto.configure(star_domain, :mock_connection, validate: false)
 select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
-      
+
         order by customer.name asc
 ```
 

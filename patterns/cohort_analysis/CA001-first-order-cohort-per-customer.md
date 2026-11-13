@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select(["customer_id", as(min("inserted_at"), "cohort_start")])
 |> Selecto.filter(not_null("customer_id"))
 |> Selecto.group_by(["customer_id"])

@@ -46,7 +46,7 @@ import Selecto.Expr
 
 geom_type_expr = "ST_GeometryType(selecto_root.geom)"
 
-Selecto.configure(location_domain(), :mock_connection, validate: false)
+configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select([as({:raw_sql, geom_type_expr}, "geom_type"), count: "*"])
 |> Selecto.group_by(raw_sql: geom_type_expr)
 |> Selecto.order_by({{:raw_sql, geom_type_expr}, :asc})
@@ -58,7 +58,7 @@ Selecto.configure(location_domain(), :mock_connection, validate: false)
 select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
-      
+
         order by ST_GeometryType(selecto_root.geom) asc
 ```
 

@@ -61,7 +61,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
 |> Selecto.select(["name", "email"])
 |> Selecto.subselect([
   %{fields: ["product_name"], target_schema: :orders, format: :json_agg, alias: "products"},
@@ -73,7 +73,7 @@ Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT array_agg(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
+select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT ARRAY_AGG(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
         from attendees selecto_root
         order by selecto_root.name asc
 ```

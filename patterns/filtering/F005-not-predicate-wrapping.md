@@ -40,7 +40,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "status", "total"])
 |> Selecto.filter(not eq("status", "cancelled"))
 |> Selecto.filter(gt("total", 50))
@@ -53,7 +53,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = $1  ) ) and ( selecto_root.total > $2 ))
-      
+
         order by selecto_root.total desc
 ```
 

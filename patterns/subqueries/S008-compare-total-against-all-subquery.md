@@ -47,7 +47,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "status", "total"])
 |> Selecto.filter({"total", :>, {:subquery, :all, order_total_subquery_by_status("returned")}})
 |> Selecto.order_by([desc("total")])
@@ -63,7 +63,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders subq_root_orders
         where (( subq_root_orders.status = $1 ))
       ) ))
-      
+
         order by selecto_root.total desc
 ```
 

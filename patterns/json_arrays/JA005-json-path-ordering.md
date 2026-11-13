@@ -39,7 +39,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "sku"])
 |> Selecto.json_select([json_extract_text("metadata", "$.warehouse.zone", as: "warehouse_zone")])
 |> Selecto.json_order_by(json_extract_text("metadata", "$.warehouse.zone", :asc))
@@ -48,9 +48,9 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.name, selecto_root.sku, metadata -> 'warehouse' ->> 'zone' AS "warehouse_zone"
+select selecto_root.name, selecto_root.sku, "metadata"#>>ARRAY['warehouse', 'zone'] AS "warehouse_zone"
         from products selecto_root
-        order by metadata -> 'warehouse' ->> 'zone' asc
+        order by "metadata"#>>ARRAY['warehouse', 'zone'] asc
 ```
 
 **Params:** `[]`

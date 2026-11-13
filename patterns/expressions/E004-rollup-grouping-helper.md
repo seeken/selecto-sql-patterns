@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["customer.tier", "status", as(count("*"), "order_count")])
 |> Selecto.group_by(group_by([rollup([customer.tier, status])]))
 |> Selecto.order_by([asc("customer.tier"), asc("status")])
@@ -51,12 +51,11 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 ## Selecto Yielded SQL
 
 ```sql
-select * from (
-        select customer.tier, selecto_root.status, count(*)
+select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by rollup( customer.tier, selecto_root.status )
-      ) as rollupfix
-        order by 1 asc nulls first, 2 asc nulls first
+
+        order by customer.tier asc, selecto_root.status asc
 ```
 
 **Params:** `[]`

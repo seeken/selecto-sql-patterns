@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "customer.name", "status"])
 |> Selecto.filter(not_null("customer.id"))
 |> Selecto.filter(not_in("status", ["cancelled", "returned"]))
@@ -54,7 +54,7 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( NOT (selecto_root.status = ANY($1)) ))
-      
+
         order by selecto_root.order_number asc
 ```
 

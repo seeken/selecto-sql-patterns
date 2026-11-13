@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["customer.tier", count("*")])
 |> Selecto.filter(eq("status", "delivered"))
 |> Selecto.group_by(["customer.tier"])
@@ -54,9 +54,9 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select customer.tier, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( selecto_root.status = $1 ))
-      
+
         group by customer.tier
-      
+
         order by customer.tier asc
 ```
 

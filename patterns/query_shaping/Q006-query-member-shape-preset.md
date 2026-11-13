@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(customer_domain_with_shape_members(), :mock_connection, validate: false)
+configure(customer_domain_with_shape_members(), :mock_connection, validate: false)
 |> Selecto.with_subquery(:processing_orders_member)
 |> Selecto.select(["name", "tier", "processing_orders_member.order_number"])
 |> Selecto.order_by([asc("name")])

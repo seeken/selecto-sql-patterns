@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "status", "total"])
 |> Selecto.window_function(:max, ["total"],
   over: [partition_by: ["status"]],
@@ -53,7 +53,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS status_max_total
+select selecto_root.order_number, selecto_root.status, selecto_root.total, MAX(selecto_root.total) OVER (PARTITION BY selecto_root.status) AS "status_max_total"
         from orders selecto_root
 ```
 

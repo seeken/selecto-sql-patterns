@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "order_number", "inserted_at", "total"])
 |> Selecto.filter(gt("inserted_at", ~N[2024-01-15 00:00:00]))
 |> Selecto.order_by([asc("inserted_at")])
@@ -55,9 +55,9 @@ Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (( selecto_root.inserted_at > $1 ))
-      
+
         order by selecto_root.inserted_at asc, selecto_root.id asc
-      
+
         limit 25
 ```
 

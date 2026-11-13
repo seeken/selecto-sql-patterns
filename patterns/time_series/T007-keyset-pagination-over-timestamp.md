@@ -52,7 +52,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "order_number", "inserted_at", "total"])
 |> Selecto.filter(
   compact_or([
@@ -79,9 +79,9 @@ Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
 select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.inserted_at < $1 ) or ((( selecto_root.inserted_at = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.inserted_at desc, selecto_root.id desc
-      
+
         limit 25
 ```
 

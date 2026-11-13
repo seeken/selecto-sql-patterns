@@ -45,7 +45,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(location_domain(), :mock_connection, validate: false)
+configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
 |> Selecto.filter(
   {:raw_sql_filter,
@@ -60,7 +60,7 @@ Selecto.configure(location_domain(), :mock_connection, validate: false)
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
-      
+
         order by selecto_root.id asc
 ```
 

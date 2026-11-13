@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "customer.name", "total"])
 |> Selecto.order_by([asc("customer.name")])
 |> Selecto.order_by([asc("order_number")])
@@ -55,9 +55,8 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         order by customer.name asc, selecto_root.order_number asc
-      
+
         limit 15
-      
         offset 30
 ```
 

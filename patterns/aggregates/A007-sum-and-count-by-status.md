@@ -45,7 +45,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["status", as(sum("total"), "total_amount"), count("*")])
 |> Selecto.group_by(["status"])
 |> Selecto.order_by([asc("status")])
@@ -57,7 +57,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 

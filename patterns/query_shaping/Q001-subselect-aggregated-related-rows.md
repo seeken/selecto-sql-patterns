@@ -50,7 +50,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
+configure(attendee_domain_with_orders_join(), :mock_connection, validate: false)
 |> Selecto.select(["name", "email"])
 |> Selecto.subselect([
   %{

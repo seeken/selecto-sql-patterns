@@ -44,11 +44,11 @@ query = Selecto.intersect(premium_customers, active_customers, all: true)
 import Selecto.Expr
 
 premium_customers =
-  Selecto.configure(premium_customer_domain(), :mock_connection, validate: false)
+  configure(premium_customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])
 
 active_customers =
-  Selecto.configure(active_customer_domain(), :mock_connection, validate: false)
+  configure(active_customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])
 
 Selecto.intersect(premium_customers, active_customers, all: true)

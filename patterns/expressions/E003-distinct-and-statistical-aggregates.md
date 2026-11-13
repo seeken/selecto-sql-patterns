@@ -47,7 +47,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select([
   "status",
   as(count_distinct("customer_id"), "distinct_customer_count"),

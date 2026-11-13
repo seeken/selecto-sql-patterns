@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+configure(first_order_cohort_domain(), :mock_connection, validate: false)
 |> Selecto.select(["cohort_start", "orders.status", count("orders.id")])
 |> Selecto.group_by(["cohort_start", "orders.status"])
 |> Selecto.order_by([asc("cohort_start"), asc("orders.status")])

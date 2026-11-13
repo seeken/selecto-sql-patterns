@@ -49,7 +49,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join_filter(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join_filter(), :mock_connection, validate: false)
 |> Selecto.join_parameterize(:customer, "tier_premium", tier: "premium")
 |> Selecto.join_parameterize(:customer, "tier_standard", tier: "standard")
 |> Selecto.select(["order_number", "customer:tier_premium.name", "customer:tier_standard.name"])
@@ -59,7 +59,7 @@ Selecto.configure(order_domain_with_customer_join_filter(), :mock_connection, va
 
 ```sql
 select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_standard".name
-        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and "customer:tier_premium".tier = $1 left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and "customer:tier_standard".tier = $2
+        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and  "customer:tier_premium".tier = $1  left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and  "customer:tier_standard".tier = $2
 ```
 
 **Params:** `["premium", "standard"]`

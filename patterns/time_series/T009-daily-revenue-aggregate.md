@@ -48,7 +48,7 @@ import Selecto.Expr
 
 day_bucket = "date_trunc('day', selecto_root.inserted_at)"
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select([
   as({:raw_sql, day_bucket}, "day_bucket"),
   as(

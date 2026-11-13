@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+configure(order_timeseries_domain(), :mock_connection, validate: false)
 |> Selecto.select([
   "order_number",
   as({:raw_sql, "date_trunc('day', selecto_root.inserted_at)"}, "day_bucket"),

@@ -48,7 +48,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(first_order_cohort_domain(), :mock_connection, validate: false)
+configure(first_order_cohort_domain(), :mock_connection, validate: false)
 |> Selecto.select(["customer_id", "cohort_start", "orders.order_number", "orders.inserted_at"])
 |> Selecto.window_function(:row_number, [],
   over: [partition_by: ["customer_id"], order_by: [asc("orders.inserted_at")]],

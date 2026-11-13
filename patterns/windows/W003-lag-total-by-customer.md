@@ -45,7 +45,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["id", "customer_id", "total"])
 |> Selecto.window_function(:lag, ["total", 1],
   over: [partition_by: ["customer_id"], order_by: [asc("id")]],
@@ -56,7 +56,7 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS prev_total
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "prev_total"
         from orders selecto_root
 ```
 

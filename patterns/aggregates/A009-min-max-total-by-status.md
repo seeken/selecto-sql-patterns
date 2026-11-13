@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["status", as(min("total"), "min_total"), as(max("total"), "max_total")])
 |> Selecto.group_by(["status"])
 |> Selecto.order_by([asc("status")])
@@ -54,7 +54,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
-      
+
         order by selecto_root.status asc
 ```
 

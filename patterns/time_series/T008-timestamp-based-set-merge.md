@@ -49,11 +49,11 @@ query =
 import Selecto.Expr
 
 current_events =
-  Selecto.configure(order_timeseries_domain(), :mock_connection, validate: false)
+  configure(order_timeseries_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "inserted_at", "total"])
 
 archived_events =
-  Selecto.configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
+  configure(archived_order_timeseries_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "inserted_at", "total"])
 
 Selecto.union(current_events, archived_events, all: true)
@@ -71,8 +71,8 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.inserted_at desc
-LIMIT 50
+ORDER BY 2 desc
+limit 50
 ```
 
 **Params:** `[]`

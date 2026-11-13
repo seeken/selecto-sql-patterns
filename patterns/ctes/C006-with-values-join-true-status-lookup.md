@@ -49,7 +49,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.with_values([["processing", "In Progress"], ["shipped", "In Transit"]],
   columns: ["status", "status_label"],
   as: "status_labels",

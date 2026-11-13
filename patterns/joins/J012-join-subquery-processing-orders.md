@@ -53,11 +53,11 @@ query =
 import Selecto.Expr
 
 processing_orders =
-  Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+  configure(order_domain_with_customer_join(), :mock_connection, validate: false)
   |> Selecto.select(["customer_id", "order_number"])
   |> Selecto.filter(eq("status", "processing"))
 
-Selecto.configure(customer_domain(), :mock_connection, validate: false)
+configure(customer_domain(), :mock_connection, validate: false)
 |> Selecto.join_subquery(:processing_orders, processing_orders,
   type: :left,
   on: [%{left: "id", right: "customer_id"}]

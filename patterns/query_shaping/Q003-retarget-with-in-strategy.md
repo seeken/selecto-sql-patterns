@@ -43,7 +43,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(event_retarget_domain(), :mock_connection, validate: false)
+configure(event_retarget_domain(), :mock_connection, validate: false)
 |> Selecto.filter(eq("event_id", 2000))
 |> Selecto.retarget(:orders, strategy: :in)
 |> Selecto.select(["product_name", "quantity"])

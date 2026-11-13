@@ -54,11 +54,11 @@ query =
 import Selecto.Expr
 
 current_orders =
-  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "total"])
 
 archived_orders =
-  Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+  configure(archived_order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "total"])
 
 Selecto.union(current_orders, archived_orders, all: true)
@@ -77,9 +77,9 @@ UNION ALL
 (
         select selecto_root.order_number, selecto_root.total
         from archived_orders selecto_root)
-ORDER BY selecto_root.order_number asc
-LIMIT 20
-OFFSET 20
+ORDER BY 1 asc
+limit 20
+offset 20
 ```
 
 **Params:** `[]`

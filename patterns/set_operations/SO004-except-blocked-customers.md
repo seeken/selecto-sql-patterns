@@ -44,11 +44,11 @@ query = Selecto.except(all_customers, blocked_customers)
 import Selecto.Expr
 
 all_customers =
-  Selecto.configure(customer_domain(), :mock_connection, validate: false)
+  configure(customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])
 
 blocked_customers =
-  Selecto.configure(blocked_customer_domain(), :mock_connection, validate: false)
+  configure(blocked_customer_domain(), :mock_connection, validate: false)
   |> Selecto.select(["id", "name"])
 
 Selecto.except(all_customers, blocked_customers)

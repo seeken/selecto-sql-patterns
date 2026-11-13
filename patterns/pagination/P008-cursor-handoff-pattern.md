@@ -48,7 +48,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "order_number", "total"])
 |> Selecto.filter(
   compact_or([lt("total", 1000), compact_and([eq("total", 1000), lt("id", 500)])])
@@ -64,9 +64,9 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < $1 ) or ((( selecto_root.total = $2 ) and ( selecto_root.id < $3 ))))))
-      
+
         order by selecto_root.total desc, selecto_root.id desc
-      
+
         limit 20
 ```
 

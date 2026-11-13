@@ -41,7 +41,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
+configure(product_domain_with_reviews_join(), :mock_connection, validate: false)
 |> Selecto.select(["name"])
 |> Selecto.filter(is_null("reviews.id"))
 |> Selecto.order_by([asc("name")])
@@ -53,7 +53,7 @@ Selecto.configure(product_domain_with_reviews_join(), :mock_connection, validate
 select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
-      
+
         order by selecto_root.name asc
 ```
 

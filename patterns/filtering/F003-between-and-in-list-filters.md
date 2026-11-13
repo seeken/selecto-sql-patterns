@@ -40,7 +40,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain(), :mock_connection, validate: false)
+configure(order_domain(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "status", "total"])
 |> Selecto.filter(between("total", 100, 500))
 |> Selecto.filter("status" in ["processing", "shipped", "delivered"])
@@ -53,7 +53,7 @@ Selecto.configure(order_domain(), :mock_connection, validate: false)
 select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between $1 and $2 ) and ( selecto_root.status = ANY($3) ))
-      
+
         order by selecto_root.order_number asc
 ```
 

@@ -73,7 +73,7 @@ order_totals_cte =
   Selecto.Advanced.CTE.create_cte(
     "order_totals",
     fn ->
-      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      configure(order_domain_with_customer_join(), :mock_connection, validate: false)
       |> Selecto.select(["id", "total"])
     end,
     columns: ["id", "total"]
@@ -83,13 +83,13 @@ customer_spend_cte =
   Selecto.Advanced.CTE.create_cte(
     "customer_spend",
     fn ->
-      Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+      configure(order_domain_with_customer_join(), :mock_connection, validate: false)
       |> Selecto.select(["customer_id", "total"])
     end,
     columns: ["customer_id", "total"]
   )
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.with_ctes([order_totals_cte, customer_spend_cte], joins: true)
 |> Selecto.select(["order_number", "order_totals.total", "customer_spend.total"])
 ```
@@ -97,15 +97,15 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 ## Selecto Yielded SQL
 
 ```sql
-WITH customer_spend (customer_id, total) AS (
-    
-        select selecto_root.customer_id, selecto_root.total
-        from orders selecto_root
+WITH order_totals (id, total) AS (
+
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
 ),
-    order_totals (id, total) AS (
-    
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
+    customer_spend (customer_id, total) AS (
+
+        select cte_customer_spend.customer_id, cte_customer_spend.total
+        from orders cte_customer_spend
 )
 
         select selecto_root.order_number, order_totals.total, customer_spend.total

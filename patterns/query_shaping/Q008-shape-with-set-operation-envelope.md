@@ -47,11 +47,11 @@ query = Selecto.except(merged_orders, archived_orders)
 import Selecto.Expr
 
 current_orders =
-  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "total"])
 
 archived_orders =
-  Selecto.configure(archived_order_domain(), :mock_connection, validate: false)
+  configure(archived_order_domain(), :mock_connection, validate: false)
   |> Selecto.select(["order_number", "total"])
 
 merged_orders = Selecto.union(current_orders, archived_orders, all: true)

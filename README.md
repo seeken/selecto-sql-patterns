@@ -88,6 +88,7 @@ elixir scripts/verify_examples.exs --dump-expr-json patterns/SELECTO_EXPR_EXAMPL
 Sync the pattern markdown files so each one includes a `## Selecto Expr` section:
 
 ```bash
+python scripts/sync_yielded_sections.py
 python scripts/sync_expr_sections.py
 ```
 

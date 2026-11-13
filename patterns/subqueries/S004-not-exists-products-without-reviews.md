@@ -52,11 +52,11 @@ query =
 import Selecto.Expr
 
 reviewed_products =
-  Selecto.configure(review_domain(), :mock_connection, validate: false)
+  configure(review_domain(), :mock_connection, validate: false)
   |> Selecto.select(["product_id"])
   |> Selecto.group_by(["product_id"])
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name"])
 |> Selecto.join_subquery(:reviewed_products, reviewed_products,
   type: :left,
@@ -76,7 +76,7 @@ select selecto_root.name
         group by subq_root_reviews_reviewed_products.product_id
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
-      
+
         order by selecto_root.name asc
 ```
 

@@ -50,11 +50,11 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.with_cte(
   "order_totals",
   fn ->
-    Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+    configure(order_domain_with_customer_join(), :mock_connection, validate: false)
     |> Selecto.select(["id", "total"])
     |> Selecto.filter(eq("status", "delivered"))
   end,
@@ -68,11 +68,11 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 
 ```sql
 WITH order_totals (id, total) AS (
-    
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
-      
+
+        select cte_order_totals.id, cte_order_totals.total
+        from orders cte_order_totals
+        where (( cte_order_totals.status = $1 ))
+
 )
 
         select selecto_root.order_number, order_totals.total

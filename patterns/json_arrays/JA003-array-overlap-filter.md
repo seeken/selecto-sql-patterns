@@ -40,7 +40,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", "tags"])
 |> Selecto.filter(array_overlap("tags", ["featured", "clearance"]))
 |> Selecto.filter(eq("active", true))
@@ -53,7 +53,7 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 select selecto_root.name, selecto_root.tags
         from products selecto_root
         where (( selecto_root.tags && $1 ) and ( selecto_root.active = $2 ))
-      
+
         order by selecto_root.name asc
 ```
 

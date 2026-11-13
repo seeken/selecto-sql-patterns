@@ -39,7 +39,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
+configure(employee_domain_with_manager_join(), :mock_connection, validate: false)
 |> Selecto.select(["first_name", "manager.first_name"])
 |> Selecto.order_by([asc("first_name")])
 ```

@@ -48,13 +48,16 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["order_number", "customer_id", "total"])
 |> Selecto.filter(eq("status", "processing"))
 |> Selecto.filter(
   {:not,
-   {:exists, "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $1",
-    ["suspended"]}}
+   {:exists,
+    [
+      "SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ",
+      param: "suspended"
+    ]}}
 )
 |> Selecto.order_by([desc("total")])
 ```
@@ -65,7 +68,7 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = $1 ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = $2)  ) ))
-      
+
         order by selecto_root.total desc
 ```
 

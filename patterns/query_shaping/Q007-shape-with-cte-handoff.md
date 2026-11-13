@@ -44,7 +44,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_shape_members(), :mock_connection, validate: false)
+configure(order_domain_with_shape_members(), :mock_connection, validate: false)
 |> Selecto.with_cte(:delivered_totals)
 |> Selecto.select(["order_number", "customer.name", "delivered_totals.total"])
 |> Selecto.order_by([asc("order_number")])
@@ -54,11 +54,11 @@ Selecto.configure(order_domain_with_shape_members(), :mock_connection, validate:
 
 ```sql
 WITH delivered_totals (id, total) AS (
-    
-        select selecto_root.id, selecto_root.total
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
-      
+
+        select cte_delivered_totals.id, cte_delivered_totals.total
+        from orders cte_delivered_totals
+        where (( cte_delivered_totals.status = $1 ))
+
 )
 
         select selecto_root.order_number, customer.name, delivered_totals.total

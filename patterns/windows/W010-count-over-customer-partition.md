@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate: false)
+configure(order_domain_with_customer_join(), :mock_connection, validate: false)
 |> Selecto.select(["id", "customer_id", "total"])
 |> Selecto.window_function(:count, ["*"],
   over: [partition_by: ["customer_id"]],
@@ -53,7 +53,7 @@ Selecto.configure(order_domain_with_customer_join(), :mock_connection, validate:
 ## Selecto Yielded SQL
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS customer_order_count
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, COUNT(*) OVER (PARTITION BY selecto_root.customer_id) AS "customer_order_count"
         from orders selecto_root
 ```
 

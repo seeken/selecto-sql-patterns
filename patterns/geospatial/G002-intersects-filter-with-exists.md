@@ -42,7 +42,7 @@ query =
 ```elixir
 import Selecto.Expr
 
-Selecto.configure(location_domain(), :mock_connection, validate: false)
+configure(location_domain(), :mock_connection, validate: false)
 |> Selecto.select(["id", "name"])
 |> Selecto.filter(
   {:exists, "SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)"}
@@ -56,7 +56,7 @@ Selecto.configure(location_domain(), :mock_connection, validate: false)
 select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
-      
+
         order by selecto_root.id asc
 ```
 

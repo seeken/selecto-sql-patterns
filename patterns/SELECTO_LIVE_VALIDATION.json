@@ -4293,7 +4293,7 @@
         "aliases": [],
         "columns": [
           "name",
-          "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
+          "(SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT \"selecto_root\".\"metadata\" AS value) AS selecto_extract)"
         ],
         "row_count": 2
       }
@@ -5507,7 +5507,7 @@
         "aliases": [],
         "columns": [
           "name",
-          "json_extract(\"selecto_root\".\"metadata\", '$.warehouse.zone')"
+          "(SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT \"selecto_root\".\"metadata\" AS value) AS selecto_extract)"
         ],
         "row_count": 1
       }
@@ -6561,13 +6561,32 @@
       }
     }
   },
-  "generated_at": "2026-09-03T21:31:27Z",
+  "generated_at": "2026-11-13T06:36:53Z",
   "engines": {
-    "duckdb": "DuckDB temporary-file fixture",
-    "mariadb": "MariaDB 11.4 isolated Compose fixture",
+    "duckdb": "DuckDB in-memory fixture",
+    "mariadb": "tmpfs MariaDB 11.4 on port 33111",
     "mssql": "SQL Server 2022 isolated Compose fixture",
-    "mysql": "MySQL 8.4 isolated Compose fixture",
-    "postgresql": "PostgreSQL 17 isolated Compose fixture",
-    "sqlite": "SQLite temporary-file fixture"
+    "mysql": "tmpfs MySQL 8.4 on port 33110",
+    "postgresql": "RAM PostgreSQL on port 55696",
+    "sqlite": "SQLite in-memory fixture"
+  },
+  "adapter_availability": {
+    "postgresql": "available",
+    "sqlite": "available",
+    "mysql": "available",
+    "mariadb": "available",
+    "mssql": "unavailable",
+    "duckdb": "available"
+  },
+  "adapter_recorded_at": {
+    "postgresql": "2026-11-13T06:36:53Z",
+    "sqlite": "2026-11-13T06:36:53Z",
+    "mysql": "2026-11-13T06:36:53Z",
+    "mariadb": "2026-11-13T06:36:53Z",
+    "mssql": "2026-09-03T21:31:27Z",
+    "duckdb": "2026-11-13T06:36:53Z"
+  },
+  "unavailable_adapters": {
+    "mssql": "No SQL Server supplied for this refresh; prior results retained without re-execution."
   }
 }

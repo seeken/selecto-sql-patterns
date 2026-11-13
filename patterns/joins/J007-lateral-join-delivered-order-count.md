@@ -49,11 +49,11 @@ query =
 import Selecto.Expr
 
 subquery_query =
-  Selecto.configure(order_domain(), :mock_connection, validate: false)
+  configure(order_domain(), :mock_connection, validate: false)
   |> Selecto.select(count: "*")
   |> Selecto.filter(eq("status", "delivered"))
 
-Selecto.configure(product_domain(), :mock_connection, validate: false)
+configure(product_domain(), :mock_connection, validate: false)
 |> Selecto.select(["name", as({:raw_sql, "delivered_stats.count"}, "delivered_order_count")])
 |> Selecto.lateral_join(:left, fn _ -> subquery_query end, "delivered_stats")
 ```
@@ -64,8 +64,8 @@ Selecto.configure(product_domain(), :mock_connection, validate: false)
 select selecto_root.name, delivered_stats.count
         from products selecto_root LEFT JOIN LATERAL (
         select count(*)
-        from orders selecto_root
-        where (( selecto_root.status = $1 ))
+        from orders subq_root_orders
+        where (( subq_root_orders.status = $1 ))
       ) AS delivered_stats ON true
 ```
 

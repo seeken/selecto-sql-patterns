@@ -23,7 +23,7 @@ select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -35,7 +35,7 @@ select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -47,7 +47,7 @@ select selecto_root.order_number, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -97,7 +97,7 @@ select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -109,7 +109,7 @@ select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -121,7 +121,7 @@ select selecto_root.name, COUNT(reviews.id)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -247,7 +247,7 @@ select selecto_root.first_name, manager.first_name
 ```sql
 select selecto_root.first_name, manager.first_name
         from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
-        order by selecto_root.first_name asc
+        order by CASE WHEN selecto_root.first_name IS NULL THEN 1 ELSE 0 END asc, selecto_root.first_name asc
 ```
 
 **Params:** `[]`
@@ -257,7 +257,7 @@ select selecto_root.first_name, manager.first_name
 ```sql
 select selecto_root.first_name, manager.first_name
         from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
-        order by selecto_root.first_name asc
+        order by CASE WHEN selecto_root.first_name IS NULL THEN 1 ELSE 0 END asc, selecto_root.first_name asc
 ```
 
 **Params:** `[]`
@@ -267,7 +267,7 @@ select selecto_root.first_name, manager.first_name
 ```sql
 select selecto_root.first_name, manager.first_name
         from employees selecto_root left join employees manager on manager.id = selecto_root.manager_id
-        order by selecto_root.first_name asc
+        order by CASE WHEN selecto_root.first_name IS NULL THEN 1 ELSE 0 END asc, selecto_root.first_name asc
 ```
 
 **Params:** `[]`
@@ -313,7 +313,7 @@ select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -325,7 +325,7 @@ select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -337,7 +337,7 @@ select selecto_root.name
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         where (( reviews.id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -372,7 +372,7 @@ select selecto_root.name
 
 ```sql
 select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_standard".name
-        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and "customer:tier_premium".tier = $1 left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and "customer:tier_standard".tier = $2
+        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and  "customer:tier_premium".tier = $1  left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and  "customer:tier_standard".tier = $2
 ```
 
 **Params:** `["premium", "standard"]`
@@ -381,7 +381,7 @@ select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_s
 
 ```sql
 select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_standard".name
-        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and "customer:tier_premium".tier = ? left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and "customer:tier_standard".tier = ?
+        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and  "customer:tier_premium".tier = ?  left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and  "customer:tier_standard".tier = ?
 ```
 
 **Params:** `["premium", "standard"]`
@@ -390,7 +390,7 @@ select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_s
 
 ```sql
 select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name
-        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?
+        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and  `customer:tier_premium`.tier = ?  left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and  `customer:tier_standard`.tier = ?
 ```
 
 **Params:** `["premium", "standard"]`
@@ -399,7 +399,7 @@ select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_s
 
 ```sql
 select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_standard`.name
-        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and `customer:tier_premium`.tier = ? left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and `customer:tier_standard`.tier = ?
+        from orders selecto_root left join customers `customer:tier_premium` on `customer:tier_premium`.id = selecto_root.customer_id and  `customer:tier_premium`.tier = ?  left join customers `customer:tier_standard` on `customer:tier_standard`.id = selecto_root.customer_id and  `customer:tier_standard`.tier = ?
 ```
 
 **Params:** `["premium", "standard"]`
@@ -408,7 +408,7 @@ select selecto_root.order_number, `customer:tier_premium`.name, `customer:tier_s
 
 ```sql
 select selecto_root.order_number, [customer:tier_premium].name, [customer:tier_standard].name
-        from orders selecto_root left join customers [customer:tier_premium] on [customer:tier_premium].id = selecto_root.customer_id and [customer:tier_premium].tier = @p1 left join customers [customer:tier_standard] on [customer:tier_standard].id = selecto_root.customer_id and [customer:tier_standard].tier = @p2
+        from orders selecto_root left join customers [customer:tier_premium] on [customer:tier_premium].id = selecto_root.customer_id and  [customer:tier_premium].tier = @p1  left join customers [customer:tier_standard] on [customer:tier_standard].id = selecto_root.customer_id and  [customer:tier_standard].tier = @p2
 ```
 
 **Params:** `["premium", "standard"]`
@@ -417,7 +417,7 @@ select selecto_root.order_number, [customer:tier_premium].name, [customer:tier_s
 
 ```sql
 select selecto_root.order_number, "customer:tier_premium".name, "customer:tier_standard".name
-        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and "customer:tier_premium".tier = $1 left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and "customer:tier_standard".tier = $2
+        from orders selecto_root left join customers "customer:tier_premium" on "customer:tier_premium".id = selecto_root.customer_id and  "customer:tier_premium".tier = $1  left join customers "customer:tier_standard" on "customer:tier_standard".id = selecto_root.customer_id and  "customer:tier_standard".tier = $2
 ```
 
 **Params:** `["premium", "standard"]`
@@ -439,15 +439,24 @@ select selecto_root.name, delivered_stats.count
 
 ### SQLite
 
-_Unavailable:_ `Adapter does not support the requested SQL fragment`
+_Unavailable:_ `SQLite lateral query is outside the bounded correlated row shape`
 
 ### MySQL
 
-_Unavailable:_ `Adapter does not support the requested SQL fragment`
+```sql
+select selecto_root.name, delivered_stats.count
+        from products selecto_root LEFT JOIN LATERAL (
+        select count(*) AS "7d47f6bc-f837-483a-b067-8cf3d48333b5"
+        from orders subq_root_orders
+        where (( subq_root_orders.status = ? ))
+      ) AS `delivered_stats` ON TRUE
+```
+
+**Params:** `["delivered"]`
 
 ### MariaDB
 
-_Unavailable:_ `Adapter does not support the requested SQL fragment`
+_Unavailable:_ `MariaDB does not support this lateral join`
 
 ### MSSQL
 
@@ -471,8 +480,8 @@ _Unavailable:_ `Adapter does not support the requested SQL fragment`
 ### PostgreSQL
 
 ```sql
-select selecto_root.name, product_tag
-        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag
+select selecto_root.name, product_tag.value
+        from products selecto_root CROSS JOIN LATERAL UNNEST("selecto_root"."tags") AS product_tag(value)
         where (( selecto_root.active = $1 ))
 ```
 
@@ -480,15 +489,33 @@ select selecto_root.name, product_tag
 
 ### SQLite
 
-_Unavailable:_ `SQLite does not support this collection operation`
+```sql
+select selecto_root.name, product_tag.value
+        from products selecto_root CROSS JOIN json_each((SELECT CASE WHEN json_valid(selecto_array.value) THEN CASE WHEN json_type(selecto_array.value) = 'array' THEN selecto_array.value ELSE '[]' END ELSE '[]' END FROM (SELECT "selecto_root"."tags" AS value) AS selecto_array)) AS "product_tag"
+        where (( selecto_root.active = ? ))
+```
+
+**Params:** `[true]`
 
 ### MySQL
 
-_Unavailable:_ `MySQL does not support this collection operation`
+```sql
+select selecto_root.name, product_tag.value
+        from products selecto_root CROSS JOIN JSON_TABLE(`selecto_root`.`tags`, '$[*]' COLUMNS (value JSON PATH '$')) AS `product_tag`
+        where (( selecto_root.active = ? ))
+```
+
+**Params:** `[true]`
 
 ### MariaDB
 
-_Unavailable:_ `MariaDB does not support this collection operation`
+```sql
+select selecto_root.name, product_tag.value
+        from products selecto_root CROSS JOIN JSON_TABLE(`selecto_root`.`tags`, '$[*]' COLUMNS (value LONGTEXT PATH '$')) AS `product_tag`
+        where (( selecto_root.active = ? ))
+```
+
+**Params:** `[true]`
 
 ### MSSQL
 
@@ -575,7 +602,7 @@ select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -587,7 +614,7 @@ select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -599,7 +626,7 @@ select customer.name, count(*)
         from orders selecto_root LEFT JOIN customers customer ON selecto_root.customer_id = customer.id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -653,7 +680,7 @@ select selecto_root.order_number, gold_customers.name, selecto_root.total
         from customers subq_root_customers_gold_customers
         where (( subq_root_customers_gold_customers.tier = ? ))
       ) gold_customers on selecto_root.customer_id = gold_customers.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["gold"]`
@@ -667,7 +694,7 @@ select selecto_root.order_number, gold_customers.name, selecto_root.total
         from customers subq_root_customers_gold_customers
         where (( subq_root_customers_gold_customers.tier = ? ))
       ) gold_customers on selecto_root.customer_id = gold_customers.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["gold"]`
@@ -681,7 +708,7 @@ select selecto_root.order_number, gold_customers.name, selecto_root.total
         from customers subq_root_customers_gold_customers
         where (( subq_root_customers_gold_customers.tier = ? ))
       ) gold_customers on selecto_root.customer_id = gold_customers.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["gold"]`
@@ -739,7 +766,7 @@ select selecto_root.name, selecto_root.tier, processing_orders.order_number
         from orders subq_root_orders_processing_orders
         where (( subq_root_orders_processing_orders.status = ? ))
       ) processing_orders on selecto_root.id = processing_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -753,7 +780,7 @@ select selecto_root.name, selecto_root.tier, processing_orders.order_number
         from orders subq_root_orders_processing_orders
         where (( subq_root_orders_processing_orders.status = ? ))
       ) processing_orders on selecto_root.id = processing_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -767,7 +794,7 @@ select selecto_root.name, selecto_root.tier, processing_orders.order_number
         from orders subq_root_orders_processing_orders
         where (( subq_root_orders_processing_orders.status = ? ))
       ) processing_orders on selecto_root.id = processing_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -821,7 +848,7 @@ select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -833,7 +860,7 @@ select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -845,7 +872,7 @@ select selecto_root.status, count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -899,7 +926,7 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `["delivered"]`
@@ -913,7 +940,7 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `["delivered"]`
@@ -927,7 +954,7 @@ select selecto_root.customer_id, SUM(selecto_root.total)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `["delivered"]`
@@ -981,7 +1008,7 @@ select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -993,7 +1020,7 @@ select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1005,7 +1032,7 @@ select selecto_root.status, AVG(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1055,7 +1082,7 @@ select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -1067,7 +1094,7 @@ select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -1079,7 +1106,7 @@ select customer.name, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.name
 
-        order by customer.name asc
+        order by CASE WHEN MIN(customer.name) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.name) asc
 ```
 
 **Params:** `[]`
@@ -1129,7 +1156,7 @@ select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `[]`
@@ -1141,7 +1168,7 @@ select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `[]`
@@ -1153,7 +1180,7 @@ select customer.tier, SUM(selecto_root.total)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `[]`
@@ -1207,7 +1234,7 @@ select customer.tier, count(*)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1221,7 +1248,7 @@ select customer.tier, count(*)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1235,7 +1262,7 @@ select customer.tier, count(*)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1289,7 +1316,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1301,7 +1328,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1313,7 +1340,7 @@ select selecto_root.status, SUM(selecto_root.total), count(*)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1367,7 +1394,7 @@ select customer.tier, AVG(selecto_root.total)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1381,7 +1408,7 @@ select customer.tier, AVG(selecto_root.total)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1395,7 +1422,7 @@ select customer.tier, AVG(selecto_root.total)
 
         group by customer.tier
 
-        order by customer.tier asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc
 ```
 
 **Params:** `["delivered"]`
@@ -1449,7 +1476,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1461,7 +1488,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1473,7 +1500,7 @@ select selecto_root.status, MIN(selecto_root.total), MAX(selecto_root.total)
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1523,7 +1550,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -1535,7 +1562,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -1547,7 +1574,7 @@ select selecto_root.name, COUNT(reviews.id), AVG(reviews.rating)
         from products selecto_root left join reviews reviews on reviews.product_id = selecto_root.id
         group by selecto_root.name
 
-        order by selecto_root.name asc
+        order by CASE WHEN MIN(selecto_root.name) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.name) asc
 ```
 
 **Params:** `[]`
@@ -1593,7 +1620,7 @@ select selecto_root.order_number, selecto_root.status, case when (( selecto_root
 ```sql
 select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
         from orders selecto_root
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["processing", "shipped", "delivered"]`
@@ -1603,7 +1630,7 @@ select selecto_root.order_number, selecto_root.status, case when (( selecto_root
 ```sql
 select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
         from orders selecto_root
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["processing", "shipped", "delivered"]`
@@ -1613,7 +1640,7 @@ select selecto_root.order_number, selecto_root.status, case when (( selecto_root
 ```sql
 select selecto_root.order_number, selecto_root.status, case when (( selecto_root.status = ? )) then 'Open' when (( selecto_root.status = ? )) then 'In Transit' when (( selecto_root.status = ? )) then 'Closed' else 'Other' end
         from orders selecto_root
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["processing", "shipped", "delivered"]`
@@ -1655,7 +1682,7 @@ select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nulli
 ```sql
 select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -1665,7 +1692,7 @@ select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nulli
 ```sql
 select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -1675,7 +1702,7 @@ select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nulli
 ```sql
 select selecto_root.order_number, coalesce( customer.name, 'Unassigned' ), nullif( selecto_root.status, 'processing' )
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -1721,7 +1748,7 @@ select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(sel
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1733,7 +1760,7 @@ select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(sel
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1745,7 +1772,7 @@ select selecto_root.status, COUNT(DISTINCT selecto_root.customer_id), stddev(sel
         from orders selecto_root
         group by selecto_root.status
 
-        order by selecto_root.status asc
+        order by CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1794,7 +1821,15 @@ _Unavailable:_ `adapter SelectoDBSQLite.Adapter does not implement rollup render
 
 ### MySQL
 
-_Unavailable:_ `adapter Selecto.DB.MySQL does not implement rollup rendering`
+```sql
+select customer.tier, selecto_root.status, count(*)
+        from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
+        group by customer.tier, selecto_root.status WITH ROLLUP
+
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc, CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
+```
+
+**Params:** `[]`
 
 ### MariaDB
 
@@ -1803,7 +1838,7 @@ select customer.tier, selecto_root.status, count(*)
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         group by customer.tier, selecto_root.status with rollup
 
-        order by customer.tier asc, selecto_root.status asc
+        order by CASE WHEN MIN(customer.tier) IS NULL THEN 1 ELSE 0 END asc, MIN(customer.tier) asc, CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.status) asc
 ```
 
 **Params:** `[]`
@@ -1846,7 +1881,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RO
 ### SQLite
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_salary_rank"
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS "department_salary_rank"
         from employees selecto_root
 ```
 
@@ -1855,7 +1890,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RO
 ### MySQL
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS `department_salary_rank`
         from employees selecto_root
 ```
 
@@ -1864,7 +1899,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RO
 ### MariaDB
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_salary_rank`
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, ROW_NUMBER() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS `department_salary_rank`
         from employees selecto_root
 ```
 
@@ -1902,7 +1937,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(select
 ### SQLite
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "running_total"
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS "running_total"
         from orders selecto_root
 ```
 
@@ -1911,7 +1946,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(select
 ### MySQL
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `running_total`
         from orders selecto_root
 ```
 
@@ -1920,7 +1955,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(select
 ### MariaDB
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `running_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `running_total`
         from orders selecto_root
 ```
 
@@ -1958,7 +1993,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(select
 ### SQLite
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "prev_total"
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS "prev_total"
         from orders selecto_root
 ```
 
@@ -1967,7 +2002,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(select
 ### MySQL
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `prev_total`
         from orders selecto_root
 ```
 
@@ -1976,7 +2011,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(select
 ### MariaDB
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `prev_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LAG(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `prev_total`
         from orders selecto_root
 ```
 
@@ -2014,7 +2049,7 @@ select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER B
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS "total_rank"
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS "total_rank"
         from orders selecto_root
 ```
 
@@ -2023,7 +2058,7 @@ select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER B
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS `total_rank`
         from orders selecto_root
 ```
 
@@ -2032,7 +2067,7 @@ select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER B
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_rank`
+select selecto_root.order_number, selecto_root.total, DENSE_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS `total_rank`
         from orders selecto_root
 ```
 
@@ -2070,7 +2105,7 @@ select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER 
 ### SQLite
 
 ```sql
-select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "moving_avg_total"
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS "moving_avg_total"
         from orders selecto_root
 ```
 
@@ -2079,7 +2114,7 @@ select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER 
 ### MySQL
 
 ```sql
-select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
         from orders selecto_root
 ```
 
@@ -2088,7 +2123,7 @@ select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER 
 ### MariaDB
 
 ```sql
-select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
+select selecto_root.id, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS `moving_avg_total`
         from orders selecto_root
 ```
 
@@ -2126,7 +2161,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RA
 ### SQLite
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS "department_rank"
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS "department_rank"
         from employees selecto_root
 ```
 
@@ -2135,7 +2170,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RA
 ### MySQL
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS `department_rank`
         from employees selecto_root
 ```
 
@@ -2144,7 +2179,7 @@ select selecto_root.first_name, selecto_root.department, selecto_root.salary, RA
 ### MariaDB
 
 ```sql
-select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY selecto_root.salary DESC) AS `department_rank`
+select selecto_root.first_name, selecto_root.department, selecto_root.salary, RANK() OVER (PARTITION BY selecto_root.department ORDER BY CASE WHEN selecto_root.salary IS NULL THEN 0 ELSE 1 END ASC, selecto_root.salary DESC) AS `department_rank`
         from employees selecto_root
 ```
 
@@ -2182,7 +2217,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selec
 ### SQLite
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS "next_total"
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS "next_total"
         from orders selecto_root
 ```
 
@@ -2191,7 +2226,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selec
 ### MySQL
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `next_total`
         from orders selecto_root
 ```
 
@@ -2200,7 +2235,7 @@ select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selec
 ### MariaDB
 
 ```sql
-select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.id ASC) AS `next_total`
+select selecto_root.id, selecto_root.customer_id, selecto_root.total, LEAD(selecto_root.total) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END ASC, selecto_root.id ASC) AS `next_total`
         from orders selecto_root
 ```
 
@@ -2294,7 +2329,7 @@ select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS "total_percent_rank"
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS "total_percent_rank"
         from orders selecto_root
 ```
 
@@ -2303,7 +2338,7 @@ select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS `total_percent_rank`
         from orders selecto_root
 ```
 
@@ -2312,7 +2347,7 @@ select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY selecto_root.total DESC) AS `total_percent_rank`
+select selecto_root.order_number, selecto_root.total, PERCENT_RANK() OVER (ORDER BY CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END ASC, selecto_root.total DESC) AS `total_percent_rank`
         from orders selecto_root
 ```
 
@@ -2421,7 +2456,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2437,7 +2472,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2453,7 +2488,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.status,
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2515,7 +2550,7 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         from orders subq_root_orders_delivered_orders
         where (( subq_root_orders_delivered_orders.status = ? ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["delivered"]`
@@ -2529,7 +2564,7 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         from orders subq_root_orders_delivered_orders
         where (( subq_root_orders_delivered_orders.status = ? ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["delivered"]`
@@ -2543,7 +2578,7 @@ select selecto_root.name, delivered_orders.order_number, delivered_orders.total
         from orders subq_root_orders_delivered_orders
         where (( subq_root_orders_delivered_orders.status = ? ))
       ) delivered_orders on selecto_root.id = delivered_orders.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["delivered"]`
@@ -2597,7 +2632,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `[]`
@@ -2609,7 +2644,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `[]`
@@ -2621,7 +2656,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = 'gold') ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `[]`
@@ -2679,7 +2714,7 @@ select selecto_root.name
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -2695,7 +2730,7 @@ select selecto_root.name
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -2711,7 +2746,7 @@ select selecto_root.name
       ) reviewed_products on selecto_root.id = reviewed_products.product_id
         where (( reviewed_products.product_id is null ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -2777,7 +2812,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["silver"]`
@@ -2793,7 +2828,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["silver"]`
@@ -2809,7 +2844,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["silver"]`
@@ -2867,7 +2902,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2879,7 +2914,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2891,7 +2926,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold"]`
@@ -2949,7 +2984,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold", "delivered"]`
@@ -2965,7 +3000,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold", "delivered"]`
@@ -2981,7 +3016,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["gold", "delivered"]`
@@ -3047,7 +3082,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["returned"]`
@@ -3063,7 +3098,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["returned"]`
@@ -3079,7 +3114,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["returned"]`
@@ -3145,7 +3180,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total asc
+        order by CASE WHEN selecto_root.total IS NULL THEN 1 ELSE 0 END asc, selecto_root.total asc
 ```
 
 **Params:** `["delivered"]`
@@ -3161,7 +3196,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total asc
+        order by CASE WHEN selecto_root.total IS NULL THEN 1 ELSE 0 END asc, selecto_root.total asc
 ```
 
 **Params:** `["delivered"]`
@@ -3177,7 +3212,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         where (( subq_root_orders.status = ? ))
       ) ))
 
-        order by selecto_root.total asc
+        order by CASE WHEN selecto_root.total IS NULL THEN 1 ELSE 0 END asc, selecto_root.total asc
 ```
 
 **Params:** `["delivered"]`
@@ -3235,7 +3270,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "suspended"]`
@@ -3247,7 +3282,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "suspended"]`
@@ -3259,7 +3294,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         from orders selecto_root
         where (( selecto_root.status = ? ) and (not (  exists (SELECT 1 FROM customers c WHERE c.id = selecto_root.customer_id AND c.tier = ?)  ) ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "suspended"]`
@@ -3307,13 +3342,13 @@ UNION
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.name, selecto_root.tier
-        from customers selecto_root)
+        from customers selecto_root) AS selecto_set_operand
 UNION
-(
+SELECT * FROM (
         select selecto_root.name, selecto_root.tier
-        from vendors selecto_root)
+        from vendors selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -3393,13 +3428,13 @@ UNION ALL
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from orders selecto_root)
+        from orders selecto_root) AS selecto_set_operand
 UNION ALL
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from archived_orders selecto_root)
+        from archived_orders selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -3479,13 +3514,13 @@ INTERSECT
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from premium_customers selecto_root)
+        from premium_customers selecto_root) AS selecto_set_operand
 INTERSECT
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from active_customers selecto_root)
+        from active_customers selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -3565,13 +3600,13 @@ EXCEPT
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from customers selecto_root)
+        from customers selecto_root) AS selecto_set_operand
 EXCEPT
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from blocked_customers selecto_root)
+        from blocked_customers selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -3655,17 +3690,17 @@ INTERSECT
 ### SQLite
 
 ```sql
-((
+SELECT * FROM (SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from premium_customers selecto_root)
+        from premium_customers selecto_root) AS selecto_set_operand
 UNION
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from active_customers selecto_root))
+        from active_customers selecto_root) AS selecto_set_operand) AS selecto_set_operand
 INTERSECT
-(
+SELECT * FROM (
         select selecto_root.id, selecto_root.name
-        from customers selecto_root)
+        from customers selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -3760,17 +3795,7 @@ INTERSECT ALL
 
 ### SQLite
 
-```sql
-(
-        select selecto_root.id, selecto_root.name
-        from premium_customers selecto_root)
-INTERSECT ALL
-(
-        select selecto_root.id, selecto_root.name
-        from active_customers selecto_root)
-```
-
-**Params:** `[]`
+_Unavailable:_ `SQLite does not support INTERSECT ALL; use the distinct set operation or UNION ALL`
 
 ### MySQL
 
@@ -3846,17 +3871,7 @@ EXCEPT ALL
 
 ### SQLite
 
-```sql
-(
-        select selecto_root.id, selecto_root.name
-        from customers selecto_root)
-EXCEPT ALL
-(
-        select selecto_root.id, selecto_root.name
-        from blocked_customers selecto_root)
-```
-
-**Params:** `[]`
+_Unavailable:_ `SQLite does not support EXCEPT ALL; use the distinct set operation or UNION ALL`
 
 ### MySQL
 
@@ -3933,13 +3948,13 @@ UNION
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.name, selecto_root.tier
-        from customers selecto_root)
+        from customers selecto_root) AS selecto_set_operand
 UNION
-(
+SELECT * FROM (
         select selecto_root.company_name, selecto_root.segment
-        from vendor_contacts selecto_root)
+        from vendor_contacts selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -4021,7 +4036,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["cancelled", "returned"]`
@@ -4033,7 +4048,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["cancelled", "returned"]`
@@ -4045,7 +4060,7 @@ select selecto_root.order_number, customer.name, selecto_root.status
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
         where (( customer.id is not null ) and ( selecto_root.status NOT IN (?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["cancelled", "returned"]`
@@ -4095,7 +4110,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "shipped", 100]`
@@ -4107,7 +4122,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "shipped", 100]`
@@ -4119,7 +4134,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (((((( selecto_root.status = ? ) or ( selecto_root.status = ? ))) and ( selecto_root.total > ? ))))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["processing", "shipped", 100]`
@@ -4169,7 +4184,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[100, 500, "processing", "shipped", "delivered"]`
@@ -4181,7 +4196,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[100, 500, "processing", "shipped", "delivered"]`
@@ -4193,7 +4208,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where (( selecto_root.total between ? and ? ) and ( selecto_root.status IN (?, ?, ?) ))
 
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[100, 500, "processing", "shipped", "delivered"]`
@@ -4247,14 +4262,22 @@ select selecto_root.name, selecto_root.sku
         from products selecto_root
         where (( MATCH(selecto_root.name) AGAINST (? IN NATURAL LANGUAGE MODE) ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["wireless charger"]`
 
 ### MariaDB
 
-_Unavailable:_ `Adapter does not support the requested SQL fragment`
+```sql
+select selecto_root.name, selecto_root.sku
+        from products selecto_root
+        where (( MATCH(selecto_root.name) AGAINST (? IN NATURAL LANGUAGE MODE) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["wireless charger"]`
 
 ### MSSQL
 
@@ -4285,7 +4308,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["cancelled", 50]`
@@ -4297,7 +4320,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["cancelled", 50]`
@@ -4309,7 +4332,7 @@ select selecto_root.order_number, selecto_root.status, selecto_root.total
         from orders selecto_root
         where ((not (  selecto_root.status = ?  ) ) and ( selecto_root.total > ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["cancelled", 50]`
@@ -4354,15 +4377,39 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-_Unavailable:_ `SQLite does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_json_contains_exact_v1(selecto_root.tags, ?) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\"]"]`
 
 ### MySQL
 
-_Unavailable:_ `MySQL does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_CONTAINS(selecto_root.tags, CAST(? AS JSON)) ELSE 0 END) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\"]"]`
 
 ### MariaDB
 
-_Unavailable:_ `MariaDB does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_CONTAINS(selecto_root.tags, ?) ELSE 0 END) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\"]"]`
 
 ### MSSQL
 
@@ -4389,11 +4436,11 @@ select selecto_root.name, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
 ### SQLite
 
 ```sql
-select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
+select selecto_root.name, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract)
         from products selecto_root
-        where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ))
+        where (( (CASE WHEN "selecto_root"."metadata" IS NULL THEN NULL WHEN json_valid("selecto_root"."metadata") THEN (json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL) ELSE 0 END) ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -4405,7 +4452,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -4417,7 +4464,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -4467,7 +4514,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["platinum", "processing"]`
@@ -4483,7 +4530,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["platinum", "processing"]`
@@ -4499,7 +4546,7 @@ select selecto_root.order_number, selecto_root.customer_id, selecto_root.total
         where (( subq_root_customers.tier = ? ))
       ) ) and ( selecto_root.status = ? ))
 
-        order by selecto_root.total desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc
 ```
 
 **Params:** `["platinum", "processing"]`
@@ -4556,7 +4603,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
         offset 50
@@ -4569,7 +4616,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
         offset 50
@@ -4582,7 +4629,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
         offset 50
@@ -4638,7 +4685,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4652,7 +4699,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4666,7 +4713,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id > ? ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4724,7 +4771,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
 
-        order by selecto_root.id desc
+        order by CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -4738,7 +4785,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
 
-        order by selecto_root.id desc
+        order by CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -4752,7 +4799,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (( selecto_root.id < ? ))
 
-        order by selecto_root.id desc
+        order by CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -4807,7 +4854,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by customer.name asc, selecto_root.order_number asc
+        order by CASE WHEN customer.name IS NULL THEN 1 ELSE 0 END asc, customer.name asc, CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 
         limit 15
         offset 30
@@ -4820,7 +4867,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by customer.name asc, selecto_root.order_number asc
+        order by CASE WHEN customer.name IS NULL THEN 1 ELSE 0 END asc, customer.name asc, CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 
         limit 15
         offset 30
@@ -4833,7 +4880,7 @@ select selecto_root.order_number, customer.name, selecto_root.total
 ```sql
 select selecto_root.order_number, customer.name, selecto_root.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by customer.name asc, selecto_root.order_number asc
+        order by CASE WHEN customer.name IS NULL THEN 1 ELSE 0 END asc, customer.name asc, CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 
         limit 15
         offset 30
@@ -4889,7 +4936,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
 
-        order by selecto_root.inserted_at asc, selecto_root.id asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc, CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4903,7 +4950,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
 
-        order by selecto_root.inserted_at asc, selecto_root.id asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc, CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4917,7 +4964,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (( selecto_root.inserted_at > ? ))
 
-        order by selecto_root.inserted_at asc, selecto_root.id asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc, CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 
         limit 25
 ```
@@ -4972,7 +5019,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
         offset 40
@@ -4985,7 +5032,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
         offset 40
@@ -4998,7 +5045,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
 ```sql
 select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
         offset 40
@@ -5053,14 +5100,14 @@ offset 20
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from orders selecto_root)
+        from orders selecto_root) AS selecto_set_operand
 UNION ALL
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from archived_orders selecto_root)
-ORDER BY 1 asc
+        from archived_orders selecto_root) AS selecto_set_operand
+ORDER BY 1 asc nulls last
 limit 20
 offset 20
 ```
@@ -5071,13 +5118,13 @@ offset 20
 
 ```sql
 (
-        select selecto_root.order_number, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.total AS selecto_projection_2
         from orders selecto_root)
 UNION ALL
 (
-        select selecto_root.order_number, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.total AS selecto_projection_2
         from archived_orders selecto_root)
-ORDER BY 1 asc
+ORDER BY CASE WHEN `selecto_projection_1` IS NULL THEN 1 ELSE 0 END asc, 1 asc
 limit 20
 offset 20
 ```
@@ -5088,13 +5135,13 @@ offset 20
 
 ```sql
 (
-        select selecto_root.order_number, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.total AS selecto_projection_2
         from orders selecto_root)
 UNION ALL
 (
-        select selecto_root.order_number, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.total AS selecto_projection_2
         from archived_orders selecto_root)
-ORDER BY 1 asc
+ORDER BY CASE WHEN `selecto_projection_1` IS NULL THEN 1 ELSE 0 END asc, 1 asc
 limit 20
 offset 20
 ```
@@ -5157,7 +5204,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -5171,7 +5218,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -5185,7 +5232,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.total
         from orders selecto_root
         where (((( selecto_root.total < ? ) or ((( selecto_root.total = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.total desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.total IS NULL THEN 0 ELSE 1 END asc, selecto_root.total desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 20
 ```
@@ -5237,23 +5284,23 @@ select selecto_root.name, selecto_root.sku, "metadata"->>'price_band' AS "price_
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.price_band') AS "price_band"
+select selecto_root.name, selecto_root.sku, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.price_band') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.price_band') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) AS "price_band"
         from products selecto_root
-        where (( json_extract("selecto_root"."metadata", '$.price_band') = 'premium' ))
+        where (( selecto_json_contains_exact_v1("selecto_root"."metadata", ?) ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
-**Params:** `[]`
+**Params:** `["{\"price_band\":\"premium\"}"]`
 
 ### MySQL
 
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
         from products selecto_root
-        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
+        where (( JSON_CONTAINS(`selecto_root`.`metadata`, _utf8mb4 X'7B2270726963655F62616E64223A227072656D69756D227D') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5263,9 +5310,9 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.price_band')) AS `price_band`
         from products selecto_root
-        where (( JSON_CONTAINS(`selecto_root`.`metadata`, '{"price_band":"premium"}') ))
+        where (( JSON_CONTAINS(`selecto_root`.`metadata`, _utf8mb4 X'7B2270726963655F62616E64223A227072656D69756D227D') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5303,11 +5350,11 @@ select selecto_root.name, "selecto_root"."metadata"#>>ARRAY['warehouse', 'zone']
 ### SQLite
 
 ```sql
-select selecto_root.name, json_extract("selecto_root"."metadata", '$.warehouse.zone')
+select selecto_root.name, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract)
         from products selecto_root
-        where (( json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL ) and ( json_extract("selecto_root"."metadata", '$.warehouse.zone') = ? ))
+        where (( (CASE WHEN "selecto_root"."metadata" IS NULL THEN NULL WHEN json_valid("selecto_root"."metadata") THEN (json_type("selecto_root"."metadata", '$.warehouse.zone') IS NOT NULL) ELSE 0 END) ) and ( (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1"]`
@@ -5319,7 +5366,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1"]`
@@ -5331,7 +5378,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.warehouse.zone') ) and ( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1"]`
@@ -5368,15 +5415,39 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-_Unavailable:_ `SQLite does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (SELECT CASE WHEN selecto_arrays.lhs IS NULL THEN NULL WHEN json_valid(selecto_arrays.lhs) THEN CASE WHEN json_type(selecto_arrays.lhs) = 'array' THEN (EXISTS (SELECT 1 FROM json_each(selecto_arrays.lhs) AS l JOIN json_each(selecto_arrays.rhs) AS r ON ((l.type = r.type OR (l.type IN ('integer','real') AND r.type IN ('integer','real'))) AND l.value IS r.value))) ELSE 0 END ELSE 0 END FROM (SELECT selecto_root.tags AS lhs, ? AS rhs) AS selecto_arrays) ) and ( selecto_root.active = ? ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]", true]`
 
 ### MySQL
 
-_Unavailable:_ `MySQL does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_OVERLAPS(selecto_root.tags, CAST(? AS JSON)) ELSE 0 END) ) and ( selecto_root.active = ? ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]", true]`
 
 ### MariaDB
 
-_Unavailable:_ `MariaDB does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_OVERLAPS(selecto_root.tags, ?) ELSE 0 END) ) and ( selecto_root.active = ? ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]", true]`
 
 ### MSSQL
 
@@ -5403,11 +5474,11 @@ select selecto_root.name, "metadata"#>>ARRAY['stock', 'quantity'] AS "stock_quan
 ### SQLite
 
 ```sql
-select selecto_root.name, json_extract("selecto_root"."metadata", '$.stock.quantity') AS "stock_quantity"
+select selecto_root.name, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.stock.quantity') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.stock.quantity') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) AS "stock_quantity"
         from products selecto_root
-        where (( json_type("selecto_root"."metadata", '$.stock.quantity') IS NOT NULL ))
+        where (( (CASE WHEN "selecto_root"."metadata" IS NULL THEN NULL WHEN json_valid("selecto_root"."metadata") THEN (json_type("selecto_root"."metadata", '$.stock.quantity') IS NOT NULL) ELSE 0 END) ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5419,7 +5490,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5431,7 +5502,7 @@ select selecto_root.name, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '
         from products selecto_root
         where (( JSON_CONTAINS_PATH(`selecto_root`.`metadata`, 'one', '$.stock.quantity') ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5467,9 +5538,9 @@ select selecto_root.name, selecto_root.sku, "metadata"#>>ARRAY['warehouse', 'zon
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.warehouse.zone') AS "warehouse_zone"
+select selecto_root.name, selecto_root.sku, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) AS "warehouse_zone"
         from products selecto_root
-        order by json_extract("selecto_root"."metadata", '$.warehouse.zone') asc
+        order by (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) asc
 ```
 
 **Params:** `[]`
@@ -5479,7 +5550,7 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`
         from products selecto_root
-        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
+        order by CASE WHEN JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) IS NULL THEN 1 ELSE 0 END asc, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
 ```
 
 **Params:** `[]`
@@ -5489,7 +5560,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`
         from products selecto_root
-        order by JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
+        order by CASE WHEN JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) IS NULL THEN 1 ELSE 0 END asc, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) asc
 ```
 
 **Params:** `[]`
@@ -5524,15 +5595,39 @@ select selecto_root.name, selecto_root.tags
 
 ### SQLite
 
-_Unavailable:_ `SQLite does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( selecto_json_contains_exact_v1(selecto_root.tags, ?) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]"]`
 
 ### MySQL
 
-_Unavailable:_ `MySQL does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_CONTAINS(selecto_root.tags, CAST(? AS JSON)) ELSE 0 END) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]"]`
 
 ### MariaDB
 
-_Unavailable:_ `MariaDB does not support this collection operation`
+```sql
+select selecto_root.name, selecto_root.tags
+        from products selecto_root
+        where (( (CASE WHEN selecto_root.tags IS NULL THEN NULL WHEN JSON_TYPE(selecto_root.tags) = 'ARRAY' THEN JSON_CONTAINS(selecto_root.tags, ?) ELSE 0 END) ))
+
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
+```
+
+**Params:** `["[\"featured\",\"clearance\"]"]`
 
 ### MSSQL
 
@@ -5559,11 +5654,11 @@ select selecto_root.name, selecto_root.sku, "selecto_root"."metadata"#>>ARRAY['w
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.warehouse.zone')
+select selecto_root.name, selecto_root.sku, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract)
         from products selecto_root
-        where (( json_extract("selecto_root"."metadata", '$.warehouse.zone') = ? ) and ( selecto_root.active = ? ))
+        where (( (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) = ? ) and ( selecto_root.active = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1", true]`
@@ -5575,7 +5670,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
         from products selecto_root
         where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1", true]`
@@ -5587,7 +5682,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
         from products selecto_root
         where (( JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) = ? ) and ( selecto_root.active = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["A1", true]`
@@ -5623,9 +5718,9 @@ select selecto_root.name, selecto_root.sku, "metadata"#>>ARRAY['warehouse', 'zon
 ### SQLite
 
 ```sql
-select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadata", '$.warehouse.zone') AS "warehouse_zone", json_extract("selecto_root"."metadata", '$.stock.quantity') AS "stock_quantity"
+select selecto_root.name, selecto_root.sku, (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.warehouse.zone') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.warehouse.zone') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) AS "warehouse_zone", (SELECT CASE WHEN json_valid(selecto_extract.value) THEN CASE json_type(selecto_extract.value, '$.stock.quantity') WHEN 'true' THEN 'true' WHEN 'false' THEN 'false' WHEN 'null' THEN NULL ELSE CAST(json_extract(selecto_extract.value, '$.stock.quantity') AS TEXT) END END FROM (SELECT "selecto_root"."metadata" AS value) AS selecto_extract) AS "stock_quantity"
         from products selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5635,7 +5730,7 @@ select selecto_root.name, selecto_root.sku, json_extract("selecto_root"."metadat
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
         from products selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5645,7 +5740,7 @@ select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_r
 ```sql
 select selecto_root.name, selecto_root.sku, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.warehouse.zone')) AS `warehouse_zone`, JSON_UNQUOTE(JSON_EXTRACT(`selecto_root`.`metadata`, '$.stock.quantity')) AS `stock_quantity`
         from products selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5681,7 +5776,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_object('product_name', sub_orders."product_name", 'quantity', sub_orders."quantity")) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_items"
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5691,7 +5786,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_obje
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5701,7 +5796,7 @@ select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT(
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'quantity', sub_orders.`quantity`)) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_items`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5909,7 +6004,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(sub_orders."produ
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT json_group_array(sub_orders."product_name") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "products", (SELECT json_group_array(sub_orders."quantity") FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "quantities"
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5919,7 +6014,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_group_array(sub_order
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5929,7 +6024,7 @@ select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(sub_orders.`product_name`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `products`, (SELECT JSON_ARRAYAGG(sub_orders.`quantity`) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `quantities`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5965,7 +6060,7 @@ select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_o
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "order_count"
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5975,7 +6070,7 @@ select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_o
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -5985,7 +6080,7 @@ select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_o
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT count(*) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `order_count`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -6035,7 +6130,7 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
         from orders subq_root_orders_processing_orders_member
         where (( subq_root_orders_processing_orders_member.status = ? ))
       ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -6049,7 +6144,7 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
         from orders subq_root_orders_processing_orders_member
         where (( subq_root_orders_processing_orders_member.status = ? ))
       ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -6063,7 +6158,7 @@ select selecto_root.name, selecto_root.tier, processing_orders_member.order_numb
         from orders subq_root_orders_processing_orders_member
         where (( subq_root_orders_processing_orders_member.status = ? ))
       ) processing_orders_member on selecto_root.id = processing_orders_member.customer_id
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["processing"]`
@@ -6129,7 +6224,7 @@ WITH delivered_totals (id, total) AS (
 
         select selecto_root.order_number, customer.name, delivered_totals.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -6147,7 +6242,7 @@ WITH delivered_totals (id, total) AS (
 
         select selecto_root.order_number, customer.name, delivered_totals.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -6165,7 +6260,7 @@ WITH delivered_totals (id, total) AS (
 
         select selecto_root.order_number, customer.name, delivered_totals.total
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id left join delivered_totals delivered_totals on delivered_totals.id = selecto_root.id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `["delivered"]`
@@ -6229,17 +6324,17 @@ EXCEPT
 ### SQLite
 
 ```sql
-((
+SELECT * FROM (SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from orders selecto_root)
+        from orders selecto_root) AS selecto_set_operand
 UNION ALL
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from archived_orders selecto_root))
+        from archived_orders selecto_root) AS selecto_set_operand) AS selecto_set_operand
 EXCEPT
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.total
-        from archived_orders selecto_root)
+        from archived_orders selecto_root) AS selecto_set_operand
 ```
 
 **Params:** `[]`
@@ -6337,7 +6432,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["premium"]`
@@ -6349,7 +6444,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["premium"]`
@@ -6361,7 +6456,7 @@ select selecto_root.customer_id, selecto_root.name, selecto_root.tier
         from active_customers_view selecto_root
         where (( selecto_root.tier = ? ))
 
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `["premium"]`
@@ -6407,7 +6502,7 @@ select selecto_root.order_number, selecto_root.status, customer.name
 ```sql
 select selecto_root.order_number, selecto_root.status, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -6417,7 +6512,7 @@ select selecto_root.order_number, selecto_root.status, customer.name
 ```sql
 select selecto_root.order_number, selecto_root.status, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -6427,7 +6522,7 @@ select selecto_root.order_number, selecto_root.status, customer.name
 ```sql
 select selecto_root.order_number, selecto_root.status, customer.name
         from orders selecto_root left join customers customer on customer.id = selecto_root.customer_id
-        order by selecto_root.order_number asc
+        order by CASE WHEN selecto_root.order_number IS NULL THEN 1 ELSE 0 END asc, selecto_root.order_number asc
 ```
 
 **Params:** `[]`
@@ -6469,7 +6564,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_agg(json_build_object
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_object('product_name', sub_orders."product_name", 'items', COALESCE((SELECT json_group_array(json_object('sku', sub_orders_items."sku", 'quantity', sub_orders_items."quantity")) FROM order_items sub_orders_items WHERE sub_orders_items."order_id" = sub_orders."order_id"), '[]'))) FROM orders sub_orders WHERE sub_orders."attendee_id" = selecto_root."attendee_id") AS "orders"
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -6479,7 +6574,7 @@ select selecto_root.name, selecto_root.email, (SELECT json_group_array(json_obje
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'items', COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sku', sub_orders_items.`sku`, 'quantity', sub_orders_items.`quantity`)) FROM order_items sub_orders_items WHERE sub_orders_items.`order_id` = sub_orders.`order_id`), JSON_ARRAY()))) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `orders`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -6489,7 +6584,7 @@ select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT(
 ```sql
 select selecto_root.name, selecto_root.email, (SELECT JSON_ARRAYAGG(JSON_OBJECT('product_name', sub_orders.`product_name`, 'items', COALESCE((SELECT JSON_ARRAYAGG(JSON_OBJECT('sku', sub_orders_items.`sku`, 'quantity', sub_orders_items.`quantity`)) FROM order_items sub_orders_items WHERE sub_orders_items.`order_id` = sub_orders.`order_id`), JSON_ARRAY()))) FROM orders sub_orders WHERE sub_orders.`attendee_id` = selecto_root.`attendee_id`) AS `orders`
         from attendees selecto_root
-        order by selecto_root.name asc
+        order by CASE WHEN selecto_root.name IS NULL THEN 1 ELSE 0 END asc, selecto_root.name asc
 ```
 
 **Params:** `[]`
@@ -6515,7 +6610,7 @@ _Unavailable:_ `Adapter does not support the requested SQL fragment`
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
+        where (( ( selecto_root.inserted_at >= $1  and  selecto_root.inserted_at < $2 ) ))
 
         order by selecto_root.inserted_at asc
 ```
@@ -6527,9 +6622,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
+        where (( ( selecto_root.inserted_at >= ?  and  selecto_root.inserted_at < ? ) ))
 
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
@@ -6539,9 +6634,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
+        where (( ( selecto_root.inserted_at >= ?  and  selecto_root.inserted_at < ? ) ))
 
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
@@ -6551,9 +6646,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= ? and selecto_root.inserted_at < ?) ))
+        where (( ( selecto_root.inserted_at >= ?  and  selecto_root.inserted_at < ? ) ))
 
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[~N[2024-01-01 00:00:00], ~N[2024-02-01 00:00:00]]`
@@ -6563,7 +6658,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= @p1 and selecto_root.inserted_at < @p2) ))
+        where (( ( selecto_root.inserted_at >= @p1  and  selecto_root.inserted_at < @p2 ) ))
 
         order by selecto_root.inserted_at asc
 ```
@@ -6575,7 +6670,7 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
 ```sql
 select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
         from orders selecto_root
-        where (( (selecto_root.inserted_at >= $1 and selecto_root.inserted_at < $2) ))
+        where (( ( selecto_root.inserted_at >= $1  and  selecto_root.inserted_at < $2 ) ))
 
         order by selecto_root.inserted_at asc
 ```
@@ -6597,9 +6692,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "running_total"
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS "running_total"
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6607,9 +6702,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `running_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6617,9 +6712,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `running_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `running_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6661,7 +6756,7 @@ select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), s
 ```sql
 select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6671,7 +6766,7 @@ select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), s
 ```sql
 select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6681,7 +6776,7 @@ select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), s
 ```sql
 select selecto_root.order_number, date_trunc('day', selecto_root.inserted_at), selecto_root.total
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6721,9 +6816,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS "trailing_avg_total"
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS "trailing_avg_total"
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6731,9 +6826,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6741,9 +6836,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, AVG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS `trailing_avg_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6783,9 +6878,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS "previous_total"
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS "previous_total"
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6793,9 +6888,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `previous_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6803,9 +6898,9 @@ select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, 
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY selecto_root.inserted_at ASC) AS `previous_total`
+select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total, LAG(selecto_root.total) OVER (ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `previous_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6845,9 +6940,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at,
 ### SQLite
 
 ```sql
-select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS "status_running_total"
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS "status_running_total"
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6855,9 +6950,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at,
 ### MySQL
 
 ```sql
-select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `status_running_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6865,9 +6960,9 @@ select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at,
 ### MariaDB
 
 ```sql
-select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY selecto_root.inserted_at ASC) AS `status_running_total`
+select selecto_root.order_number, selecto_root.status, selecto_root.inserted_at, selecto_root.total, SUM(selecto_root.total) OVER (PARTITION BY selecto_root.status ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `status_running_total`
         from orders selecto_root
-        order by selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -6915,7 +7010,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.inserted_at desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 0 ELSE 1 END asc, selecto_root.inserted_at desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 25
 ```
@@ -6929,7 +7024,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.inserted_at desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 0 ELSE 1 END asc, selecto_root.inserted_at desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 25
 ```
@@ -6943,7 +7038,7 @@ select selecto_root.id, selecto_root.order_number, selecto_root.inserted_at, sel
         from orders selecto_root
         where (((( selecto_root.inserted_at < ? ) or ((( selecto_root.inserted_at = ? ) and ( selecto_root.id < ? ))))))
 
-        order by selecto_root.inserted_at desc, selecto_root.id desc
+        order by CASE WHEN selecto_root.inserted_at IS NULL THEN 0 ELSE 1 END asc, selecto_root.inserted_at desc, CASE WHEN selecto_root.id IS NULL THEN 0 ELSE 1 END asc, selecto_root.id desc
 
         limit 25
 ```
@@ -6999,14 +7094,14 @@ limit 50
 ### SQLite
 
 ```sql
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from orders selecto_root)
+        from orders selecto_root) AS selecto_set_operand
 UNION ALL
-(
+SELECT * FROM (
         select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
-        from archived_orders selecto_root)
-ORDER BY 2 desc
+        from archived_orders selecto_root) AS selecto_set_operand
+ORDER BY 2 desc nulls first
 limit 50
 ```
 
@@ -7016,13 +7111,13 @@ limit 50
 
 ```sql
 (
-        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.inserted_at AS selecto_projection_2, selecto_root.total AS selecto_projection_3
         from orders selecto_root)
 UNION ALL
 (
-        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.inserted_at AS selecto_projection_2, selecto_root.total AS selecto_projection_3
         from archived_orders selecto_root)
-ORDER BY 2 desc
+ORDER BY CASE WHEN `selecto_projection_2` IS NULL THEN 0 ELSE 1 END asc, 2 desc
 limit 50
 ```
 
@@ -7032,13 +7127,13 @@ limit 50
 
 ```sql
 (
-        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.inserted_at AS selecto_projection_2, selecto_root.total AS selecto_projection_3
         from orders selecto_root)
 UNION ALL
 (
-        select selecto_root.order_number, selecto_root.inserted_at, selecto_root.total
+        select selecto_root.order_number AS selecto_projection_1, selecto_root.inserted_at AS selecto_projection_2, selecto_root.total AS selecto_projection_3
         from archived_orders selecto_root)
-ORDER BY 2 desc
+ORDER BY CASE WHEN `selecto_projection_2` IS NULL THEN 0 ELSE 1 END asc, 2 desc
 limit 50
 ```
 
@@ -7097,7 +7192,7 @@ select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), cou
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at)
 
-        order by date_trunc('day', selecto_root.inserted_at) asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc
 ```
 
 **Params:** `[]`
@@ -7109,7 +7204,7 @@ select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), cou
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at)
 
-        order by date_trunc('day', selecto_root.inserted_at) asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc
 ```
 
 **Params:** `[]`
@@ -7121,7 +7216,7 @@ select date_trunc('day', selecto_root.inserted_at), SUM(selecto_root.total), cou
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at)
 
-        order by date_trunc('day', selecto_root.inserted_at) asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc
 ```
 
 **Params:** `[]`
@@ -7171,7 +7266,7 @@ select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
 
-        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc, CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, 2 asc
 ```
 
 **Params:** `[]`
@@ -7183,7 +7278,7 @@ select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
 
-        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc, CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, 2 asc
 ```
 
 **Params:** `[]`
@@ -7195,7 +7290,7 @@ select date_trunc('day', selecto_root.inserted_at), selecto_root.status, count(*
         from orders selecto_root
         group by date_trunc('day', selecto_root.inserted_at), selecto_root.status
 
-        order by date_trunc('day', selecto_root.inserted_at) asc, selecto_root.status asc
+        order by CASE WHEN MIN(date_trunc('day', selecto_root.inserted_at)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('day', selecto_root.inserted_at)) asc, CASE WHEN MIN(selecto_root.status) IS NULL THEN 1 ELSE 0 END asc, 2 asc
 ```
 
 **Params:** `[]`
@@ -7241,11 +7336,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### SQLite
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "previous_order_at"
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS "previous_order_at"
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7253,11 +7348,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### MySQL
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `previous_order_at`
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7265,11 +7360,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### MariaDB
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `previous_order_at`
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LAG(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `previous_order_at`
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7315,11 +7410,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### SQLite
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS "next_order_at"
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS "next_order_at"
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7327,11 +7422,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### MySQL
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `next_order_at`
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7339,11 +7434,11 @@ select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserte
 ### MariaDB
 
 ```sql
-select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY selecto_root.inserted_at ASC) AS `next_order_at`
+select selecto_root.customer_id, selecto_root.order_number, selecto_root.inserted_at, LEAD(selecto_root.inserted_at) OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END ASC, selecto_root.inserted_at ASC) AS `next_order_at`
         from orders selecto_root
         where (( selecto_root.customer_id is not null ))
 
-        order by selecto_root.customer_id asc, selecto_root.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN selecto_root.inserted_at IS NULL THEN 1 ELSE 0 END asc, selecto_root.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7397,7 +7492,7 @@ select selecto_root.customer_id, MIN(selecto_root.inserted_at)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `[]`
@@ -7411,7 +7506,7 @@ select selecto_root.customer_id, MIN(selecto_root.inserted_at)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `[]`
@@ -7425,7 +7520,7 @@ select selecto_root.customer_id, MIN(selecto_root.inserted_at)
 
         group by selecto_root.customer_id
 
-        order by selecto_root.customer_id asc
+        order by CASE WHEN MIN(selecto_root.customer_id) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.customer_id) asc
 ```
 
 **Params:** `[]`
@@ -7479,7 +7574,7 @@ select date_trunc('month', selecto_root.cohort_start), count(*)
         from first_order_cohorts selecto_root
         group by date_trunc('month', selecto_root.cohort_start)
 
-        order by date_trunc('month', selecto_root.cohort_start) asc
+        order by CASE WHEN MIN(date_trunc('month', selecto_root.cohort_start)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('month', selecto_root.cohort_start)) asc
 ```
 
 **Params:** `[]`
@@ -7491,7 +7586,7 @@ select date_trunc('month', selecto_root.cohort_start), count(*)
         from first_order_cohorts selecto_root
         group by date_trunc('month', selecto_root.cohort_start)
 
-        order by date_trunc('month', selecto_root.cohort_start) asc
+        order by CASE WHEN MIN(date_trunc('month', selecto_root.cohort_start)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('month', selecto_root.cohort_start)) asc
 ```
 
 **Params:** `[]`
@@ -7503,7 +7598,7 @@ select date_trunc('month', selecto_root.cohort_start), count(*)
         from first_order_cohorts selecto_root
         group by date_trunc('month', selecto_root.cohort_start)
 
-        order by date_trunc('month', selecto_root.cohort_start) asc
+        order by CASE WHEN MIN(date_trunc('month', selecto_root.cohort_start)) IS NULL THEN 1 ELSE 0 END asc, MIN(date_trunc('month', selecto_root.cohort_start)) asc
 ```
 
 **Params:** `[]`
@@ -7553,7 +7648,7 @@ select selecto_root.cohort_start, orders.status, COUNT(orders.id)
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
         group by selecto_root.cohort_start, orders.status
 
-        order by selecto_root.cohort_start asc, orders.status asc
+        order by CASE WHEN MIN(selecto_root.cohort_start) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.cohort_start) asc, CASE WHEN MIN(orders.status) IS NULL THEN 1 ELSE 0 END asc, MIN(orders.status) asc
 ```
 
 **Params:** `[]`
@@ -7565,7 +7660,7 @@ select selecto_root.cohort_start, orders.status, COUNT(orders.id)
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
         group by selecto_root.cohort_start, orders.status
 
-        order by selecto_root.cohort_start asc, orders.status asc
+        order by CASE WHEN MIN(selecto_root.cohort_start) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.cohort_start) asc, CASE WHEN MIN(orders.status) IS NULL THEN 1 ELSE 0 END asc, MIN(orders.status) asc
 ```
 
 **Params:** `[]`
@@ -7577,7 +7672,7 @@ select selecto_root.cohort_start, orders.status, COUNT(orders.id)
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
         group by selecto_root.cohort_start, orders.status
 
-        order by selecto_root.cohort_start asc, orders.status asc
+        order by CASE WHEN MIN(selecto_root.cohort_start) IS NULL THEN 1 ELSE 0 END asc, MIN(selecto_root.cohort_start) asc, CASE WHEN MIN(orders.status) IS NULL THEN 1 ELSE 0 END asc, MIN(orders.status) asc
 ```
 
 **Params:** `[]`
@@ -7621,9 +7716,9 @@ select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number,
 ### SQLite
 
 ```sql
-select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS "cohort_order_number"
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END ASC, orders.inserted_at ASC) AS "cohort_order_number"
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
-        order by selecto_root.customer_id asc, orders.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END asc, orders.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7631,9 +7726,9 @@ select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number,
 ### MySQL
 
 ```sql
-select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END ASC, orders.inserted_at ASC) AS `cohort_order_number`
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
-        order by selecto_root.customer_id asc, orders.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END asc, orders.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7641,9 +7736,9 @@ select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number,
 ### MariaDB
 
 ```sql
-select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY orders.inserted_at ASC) AS `cohort_order_number`
+select selecto_root.customer_id, selecto_root.cohort_start, orders.order_number, orders.inserted_at, ROW_NUMBER() OVER (PARTITION BY selecto_root.customer_id ORDER BY CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END ASC, orders.inserted_at ASC) AS `cohort_order_number`
         from first_order_cohorts selecto_root left join orders orders on orders.customer_id = selecto_root.customer_id
-        order by selecto_root.customer_id asc, orders.inserted_at asc
+        order by CASE WHEN selecto_root.customer_id IS NULL THEN 1 ELSE 0 END asc, selecto_root.customer_id asc, CASE WHEN orders.inserted_at IS NULL THEN 1 ELSE 0 END asc, orders.inserted_at asc
 ```
 
 **Params:** `[]`
@@ -7689,7 +7784,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7701,7 +7796,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7713,7 +7808,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_DWithin(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326), 1000) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7763,7 +7858,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7775,7 +7870,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7787,7 +7882,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( exists (SELECT 1 FROM regions r WHERE ST_Intersects(selecto_root.geom, r.geom)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7837,7 +7932,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7849,7 +7944,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7861,7 +7956,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Contains(ST_GeomFromText('POLYGON((-74.02 40.70, -73.95 40.70, -73.95 40.78, -74.02 40.78, -74.02 40.70))', 4326), selecto_root.geom) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7911,7 +8006,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7923,7 +8018,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7935,7 +8030,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( selecto_root.geom && ST_MakeEnvelope(-74.05, 40.68, -73.90, 40.82, 4326) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7985,7 +8080,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -7997,7 +8092,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -8009,7 +8104,7 @@ select selecto_root.id, selecto_root.name
         from locations selecto_root
         where (( ST_Intersects(selecto_root.geom, ST_Buffer(ST_SetSRID(ST_MakePoint(-73.98, 40.75), 4326), 0.01)) ))
 
-        order by selecto_root.id asc
+        order by CASE WHEN selecto_root.id IS NULL THEN 1 ELSE 0 END asc, selecto_root.id asc
 ```
 
 **Params:** `[]`
@@ -8057,7 +8152,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 ```sql
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
-        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+        order by CASE WHEN ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) IS NULL THEN 1 ELSE 0 END asc, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
 
         limit 10
 ```
@@ -8069,7 +8164,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 ```sql
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
-        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+        order by CASE WHEN ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) IS NULL THEN 1 ELSE 0 END asc, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
 
         limit 10
 ```
@@ -8081,7 +8176,7 @@ select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_Set
 ```sql
 select selecto_root.id, selecto_root.name, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326))
         from locations selecto_root
-        order by ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
+        order by CASE WHEN ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) IS NULL THEN 1 ELSE 0 END asc, ST_Distance(selecto_root.geom, ST_SetSRID(ST_MakePoint(-73.9857, 40.7484), 4326)) asc
 
         limit 10
 ```
@@ -8133,7 +8228,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
 
-        order by ST_GeometryType(selecto_root.geom) asc
+        order by CASE WHEN MIN(ST_GeometryType(selecto_root.geom)) IS NULL THEN 1 ELSE 0 END asc, MIN(ST_GeometryType(selecto_root.geom)) asc
 ```
 
 **Params:** `[]`
@@ -8145,7 +8240,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
 
-        order by ST_GeometryType(selecto_root.geom) asc
+        order by CASE WHEN MIN(ST_GeometryType(selecto_root.geom)) IS NULL THEN 1 ELSE 0 END asc, MIN(ST_GeometryType(selecto_root.geom)) asc
 ```
 
 **Params:** `[]`
@@ -8157,7 +8252,7 @@ select ST_GeometryType(selecto_root.geom), count(*)
         from locations selecto_root
         group by ST_GeometryType(selecto_root.geom)
 
-        order by ST_GeometryType(selecto_root.geom) asc
+        order by CASE WHEN MIN(ST_GeometryType(selecto_root.geom)) IS NULL THEN 1 ELSE 0 END asc, MIN(ST_GeometryType(selecto_root.geom)) asc
 ```
 
 **Params:** `[]`
